@@ -15,12 +15,23 @@ KNOWN_FACILITIES = {
         "facilities": [
             {"city": "Guadalajara", "country": "Mexico", "lat": 20.6597, "lng": -103.3496, "type": "Manufacturing"},
             {"city": "Austin", "country": "USA", "lat": 30.2672, "lng": -97.7431, "type": "Design Center"},
+            {"city": "Memphis", "country": "USA", "lat": 35.1495, "lng": -90.0490, "type": "Manufacturing"},
+            {"city": "Tijuana", "country": "Mexico", "lat": 32.5149, "lng": -117.0382, "type": "Manufacturing"},
+            {"city": "Ciudad Juarez", "country": "Mexico", "lat": 31.6904, "lng": -106.4245, "type": "Manufacturing"},
+            {"city": "Aguascalientes", "country": "Mexico", "lat": 21.8853, "lng": -102.2916, "type": "Manufacturing"},
             {"city": "Shanghai", "country": "China", "lat": 31.2304, "lng": 121.4737, "type": "Manufacturing"},
+            {"city": "Shenzhen", "country": "China", "lat": 22.5431, "lng": 114.0579, "type": "Manufacturing"},
             {"city": "Penang", "country": "Malaysia", "lat": 5.4141, "lng": 100.3288, "type": "Manufacturing"},
+            {"city": "Johor", "country": "Malaysia", "lat": 1.4927, "lng": 103.7414, "type": "Manufacturing"},
             {"city": "Chennai", "country": "India", "lat": 13.0827, "lng": 80.2707, "type": "Design Center"},
+            {"city": "Bangalore", "country": "India", "lat": 12.9716, "lng": 77.5946, "type": "Design Center"},
+            {"city": "Pune", "country": "India", "lat": 18.5204, "lng": 73.8567, "type": "Design Center"},
             {"city": "Zhuhai", "country": "China", "lat": 22.2769, "lng": 113.5678, "type": "Manufacturing"},
             {"city": "Sorocaba", "country": "Brazil", "lat": -23.5015, "lng": -47.4526, "type": "Manufacturing"},
+            {"city": "Manaus", "country": "Brazil", "lat": -3.1190, "lng": -60.0217, "type": "Manufacturing"},
             {"city": "Timisoara", "country": "Romania", "lat": 45.7489, "lng": 21.2087, "type": "Manufacturing"},
+            {"city": "Tczew", "country": "Poland", "lat": 54.0924, "lng": 18.7779, "type": "Manufacturing"},
+            {"city": "Taoyuan", "country": "Taiwan", "lat": 24.9937, "lng": 121.3010, "type": "Manufacturing", "website": "https://en.twf.com.tw"},
             {"city": "Suzhou", "country": "China", "lat": 31.2989, "lng": 120.5853, "type": "Manufacturing"},
         ]
     },
@@ -131,7 +142,7 @@ def get_regional_distribution(company: str) -> dict:
     
     regions = {
         "Americas": ["USA", "Canada", "Mexico", "Brazil"],
-        "EMEA": ["UK", "Hungary", "Romania", "Netherlands", "Spain", "Germany"],
+        "EMEA": ["UK", "Hungary", "Romania", "Netherlands", "Spain", "Germany", "Poland"],
         "APAC": ["China", "Malaysia", "Singapore", "India", "Japan", "Taiwan"],
     }
     
@@ -201,6 +212,7 @@ def get_all_facilities_map(include_extracted: bool = True) -> dict:
                 "lat": facility.get("lat"),
                 "lng": facility.get("lng"),
                 "type": facility.get("type", "Manufacturing"),
+                "website": facility.get("website"),
                 "is_headquarters": False,
                 "source": facility.get("source", "known"),
                 "confidence": facility.get("confidence", 1.0),

@@ -9,12 +9,128 @@ Features:
 5. AI-related dynamics for EMS companies
 """
 
+from collections import Counter
 from datetime import datetime
 from typing import Optional
 
 from fastapi import APIRouter
+from backend.analytics.classifier import classify_company_investments
+from backend.analytics.sentiment import analyze_company_sentiment
+from backend.analytics.trends import analyze_company_trends
+from backend.rag.retriever import search_documents
 
 router = APIRouter()
+
+
+TRACKED_COMPANIES = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+
+
+def _outlook_from_sentiment(score: float) -> str:
+    if score >= 0.25:
+        return "Very bullish"
+    if score >= 0.12:
+        return "Strong"
+    if score >= 0.03:
+        return "Positive"
+    if score <= -0.12:
+        return "Cautious"
+    return "Stable"
+
+
+def _extract_focus_areas(company: str) -> list[str]:
+    theme_keywords = {
+        "Liquid cooling": ["liquid cooling", "thermal", "cooling"],
+        "Power systems": ["power", "power module", "power management", "psu"],
+        "AI server assembly": ["ai server", "server assembly", "rack", "gpu server"],
+        "Cloud infrastructure": ["cloud", "hyperscale", "data center"],
+        "Networking": ["network", "ethernet", "switch", "interconnect"],
+        "Advanced packaging": ["advanced packaging", "packaging", "substrate"],
+        "Optical components": ["optical", "photonics", "transceiver"],
+        "Automation": ["automation", "robotics", "factory automation"],
+    }
+
+    docs = search_documents(
+        query=f"{company} AI data center investment strategy manufacturing",
+        company_filter=company,
+        n_results=30,
+    )
+
+    theme_counter: Counter[str] = Counter()
+    for doc in docs:
+        content = doc.get("content", "").lower()
+        for theme, keywords in theme_keywords.items():
+            hits = sum(content.count(k) for k in keywords)
+            if hits:
+                theme_counter[theme] += hits
+
+    top = [theme for theme, _ in theme_counter.most_common(3)]
+    return top or ["General AI/Data Center investment"]
+
+
+def _extract_evidence_highlights(company: str) -> list[str]:
+    docs = search_documents(
+        query=f"{company} expansion investment guidance AI data center",
+        company_filter=company,
+        n_results=6,
+    )
+
+    highlights: list[str] = []
+    for doc in docs:
+        content = (doc.get("content") or "").strip()
+        if not content:
+            continue
+        first_sentence = content.split(".")[0].strip()
+        if len(first_sentence) < 25:
+            continue
+        line = first_sentence[:180].rstrip()
+        if line not in highlights:
+            highlights.append(line)
+        if len(highlights) >= 3:
+            break
+
+    return highlights or ["No high-confidence evidence snippet found in current indexed documents."]
+
+
+def _build_dynamic_competitor_analysis() -> dict:
+    companies = []
+    generated_at = datetime.utcnow().isoformat() + "Z"
+
+    for company in TRACKED_COMPANIES:
+        classification = classify_company_investments(company, n_docs=60)
+        sentiment = analyze_company_sentiment(company, n_chunks=30)
+        trends = analyze_company_trends(company)
+
+        if classification.get("error"):
+            companies.append(
+                {
+                    "company": company,
+                    "status": "no_data",
+                    "message": classification["error"],
+                }
+            )
+            continue
+
+        sentiment_score = float(sentiment.get("sentiment_score", 0))
+        companies.append(
+            {
+                "company": company,
+                "status": "ok",
+                "documents_analyzed": classification.get("documents_analyzed", 0),
+                "ai_focus_pct": classification.get("overall_ai_focus_percentage", 0),
+                "investment_profile": classification.get("investment_focus", "Balanced"),
+                "sentiment_score": sentiment_score,
+                "outlook": _outlook_from_sentiment(sentiment_score),
+                "trend_outlook": trends.get("overall_outlook", "neutral"),
+                "focus_areas": _extract_focus_areas(company),
+                "evidence_highlights": _extract_evidence_highlights(company),
+            }
+        )
+
+    return {
+        "mode": "dynamic_from_indexed_documents",
+        "generated_at": generated_at,
+        "companies": companies,
+    }
 
 
 # ---------------------------------------------------------------------------
@@ -398,9 +514,12 @@ async def get_industry_news():
 
 
 @router.get("/competitor-investments")
-async def get_competitor_investments():
+async def get_competitor_investments(mode: str = "hybrid"):
     """Get competitor investment plans and guidance."""
-    return {
+    payload = {
+        "as_of": EMS_AI_DYNAMICS.get("last_updated"),
+        "growth_definition": "AI/DC revenue composite growth (proxy)",
+        "growth_period": "FY2025-FY2026",
         "competitors": [
             {
                 "company": c["company"],
@@ -421,3 +540,17 @@ async def get_competitor_investments():
             "beneficiaries": ["Celestica", "Jabil", "Flex"],
         },
     }
+
+    # Optional dynamic section built from indexed filings/transcripts in Chroma.
+    if mode in {"hybrid", "dynamic"}:
+        try:
+            payload["dynamic_analysis"] = _build_dynamic_competitor_analysis()
+        except Exception as e:
+            payload["dynamic_analysis"] = {
+                "mode": "dynamic_from_indexed_documents",
+                "generated_at": datetime.utcnow().isoformat() + "Z",
+                "error": f"Dynamic analysis failed: {e}",
+                "companies": [],
+            }
+
+    return payload

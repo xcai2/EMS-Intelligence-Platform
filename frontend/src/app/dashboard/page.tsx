@@ -274,8 +274,8 @@ export default function DashboardPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
-            <p className="text-slate-500 mt-1">AI-powered competitive intelligence overview</p>
+            <h1 className="text-3xl font-bold text-slate-900">Intelligence Overview</h1>
+            <p className="text-slate-500 mt-1">Cross-company view of AI investment, sentiment, anomalies, and company signals.</p>
           </div>
           <button
             onClick={fetchAllData}

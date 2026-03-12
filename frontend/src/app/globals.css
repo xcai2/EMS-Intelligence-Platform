@@ -124,3 +124,72 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Global day/night harmonization across pages with hardcoded Tailwind colors */
+@layer utilities {
+  html.dark .bg-white {
+    background-color: #0f172a !important;
+  }
+
+  html.dark .bg-slate-50 {
+    background-color: #111827 !important;
+  }
+
+  html.dark .bg-slate-100 {
+    background-color: #0b1220 !important;
+  }
+
+  html.dark .border-slate-100,
+  html.dark .border-slate-200,
+  html.dark .border-slate-300 {
+    border-color: #334155 !important;
+  }
+
+  html.dark .text-slate-950,
+  html.dark .text-slate-900 {
+    color: #e5e7eb !important;
+  }
+
+  html.dark .text-slate-700,
+  html.dark .text-slate-600 {
+    color: #cbd5e1 !important;
+  }
+
+  html.dark .text-slate-500,
+  html.dark .text-slate-400 {
+    color: #94a3b8 !important;
+  }
+
+  html.dark .from-slate-50 {
+    --tw-gradient-from: #0f172a var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: rgb(15 23 42 / 0) var(--tw-gradient-to-position) !important;
+  }
+
+  html.dark .from-slate-100 {
+    --tw-gradient-from: #0b1220 var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: rgb(11 18 32 / 0) var(--tw-gradient-to-position) !important;
+  }
+
+  html.dark .from-white {
+    --tw-gradient-from: #0f172a var(--tw-gradient-from-position) !important;
+    --tw-gradient-to: rgb(15 23 42 / 0) var(--tw-gradient-to-position) !important;
+  }
+
+  html.dark .via-white {
+    --tw-gradient-to: rgb(15 23 42 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), #0b1220 var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+  }
+
+  html.dark .via-slate-50 {
+    --tw-gradient-to: rgb(11 18 32 / 0) var(--tw-gradient-to-position) !important;
+    --tw-gradient-stops: var(--tw-gradient-from), #0f172a var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+  }
+
+  html.dark .to-slate-100 {
+    --tw-gradient-to: #111827 var(--tw-gradient-to-position) !important;
+  }
+
+  html.dark .to-white {
+    --tw-gradient-to: #020617 var(--tw-gradient-to-position) !important;
+  }
+}

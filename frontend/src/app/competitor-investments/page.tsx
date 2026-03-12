@@ -1,35 +1,27 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ChartDescription } from '@/components/ui/chart-description';
 import {
-  TrendingUp,
   Building2,
   Target,
   Lightbulb,
   RefreshCw,
   ArrowUpRight,
   Cpu,
-  DollarSign,
-  ChevronRight,
+  CalendarDays,
 } from 'lucide-react';
 import {
   BarChart,
   Bar,
+  Cell,
+  LabelList,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Cell,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  Radar,
-  Legend,
 } from 'recharts';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
@@ -49,8 +41,27 @@ interface HyperscalerDemand {
 }
 
 interface CompetitorData {
+  as_of?: string;
+  growth_definition?: string;
+  growth_period?: string;
   competitors: CompetitorInvestment[];
   hyperscaler_demand: HyperscalerDemand;
+}
+
+interface CompanySentiment {
+  company: string;
+  documents_analyzed: number;
+  sentiment_score: number;
+  ai_mentions: number;
+}
+
+interface EarningsCalendarRow {
+  company: string;
+  q1: string;
+  q2: string;
+  q3: string;
+  q4: string;
+  fy: string;
 }
 
 const COMPANY_COLORS: Record<string, string> = {
@@ -62,12 +73,55 @@ const COMPANY_COLORS: Record<string, string> = {
 };
 
 const OUTLOOK_COLORS: Record<string, string> = {
-  'Very bullish': 'bg-green-100 text-green-700 border-green-300',
-  'Strong': 'bg-emerald-100 text-emerald-700 border-emerald-300',
-  'Positive': 'bg-blue-100 text-blue-700 border-blue-300',
-  'Stable': 'bg-slate-100 text-slate-700 border-slate-300',
-  'Cautious': 'bg-amber-100 text-amber-700 border-amber-300',
+  'Very bullish': 'border border-green-300 bg-green-100 text-green-700 dark:border-green-700 dark:bg-green-900/40 dark:text-green-200',
+  'Strong': 'border border-emerald-300 bg-emerald-100 text-emerald-700 dark:border-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-200',
+  'Positive': 'border border-blue-300 bg-blue-100 text-blue-700 dark:border-blue-700 dark:bg-blue-900/40 dark:text-blue-200',
+  'Stable': 'border border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200',
+  'Cautious': 'border border-amber-300 bg-amber-100 text-amber-700 dark:border-amber-700 dark:bg-amber-900/40 dark:text-amber-200',
 };
+
+const ESTIMATED_EARNINGS_2026: EarningsCalendarRow[] = [
+  {
+    company: 'Flex',
+    q1: '2026/06/28',
+    q2: '2026/09/27',
+    q3: '2026/12/31',
+    q4: '2026/03/31',
+    fy: '2027/03/31',
+  },
+  {
+    company: 'Benchmark',
+    q1: '2026/03/31',
+    q2: '2026/06/30',
+    q3: '2026/09/30',
+    q4: '2026/12/31',
+    fy: '2026/12/31',
+  },
+  {
+    company: 'Jabil',
+    q1: '2026/11/30',
+    q2: '2026/03/18',
+    q3: '2026/05/31',
+    q4: '2026/08/31',
+    fy: '2026/08/31',
+  },
+  {
+    company: 'Celestica',
+    q1: '2026/03/31',
+    q2: '2026/06/30',
+    q3: '2026/09/30',
+    q4: '2026/12/31',
+    fy: '2026/12/31',
+  },
+  {
+    company: 'Sanmina',
+    q1: '2026/12/27',
+    q2: '2026/03/29',
+    q3: '2026/06/28',
+    q4: '2026/09/27',
+    fy: '2026/09/27',
+  },
+];
 
 function getOutlookStyle(outlook: string): string {
   for (const [key, value] of Object.entries(OUTLOOK_COLORS)) {
@@ -75,13 +129,15 @@ function getOutlookStyle(outlook: string): string {
       return value;
     }
   }
-  return 'bg-slate-100 text-slate-700 border-slate-300';
+  return 'border border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200';
 }
 
 export default function CompetitorInvestmentsPage() {
   const [data, setData] = useState<CompetitorData | null>(null);
+  const [sentiment, setSentiment] = useState<CompanySentiment[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCompany, setSelectedCompany] = useState<CompetitorInvestment | null>(null);
+  const [earningsView, setEarningsView] = useState<'next' | 'full'>('next');
 
   useEffect(() => {
     fetchData();
@@ -90,11 +146,20 @@ export default function CompetitorInvestmentsPage() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const res = await fetch(`${API_URL}/api/intelligence/competitor-investments`);
-      if (res.ok) {
-        const json = await res.json();
+      const [competitorRes, sentimentRes] = await Promise.all([
+        fetch(`${API_URL}/api/intelligence/competitor-investments`),
+        fetch(`${API_URL}/api/sentiment/compare`),
+      ]);
+
+      if (competitorRes.ok) {
+        const json = await competitorRes.json();
         setData(json);
         setSelectedCompany(json.competitors?.[0] || null);
+      }
+
+      if (sentimentRes.ok) {
+        const sentimentJson = await sentimentRes.json();
+        setSentiment(sentimentJson.comparison || []);
       }
     } catch (err) {
       console.error('Failed to fetch competitor data:', err);
@@ -102,6 +167,64 @@ export default function CompetitorInvestmentsPage() {
       setLoading(false);
     }
   };
+
+  const sentimentChartData = sentiment.map((row) => ({
+    company: row.company,
+    sentiment: Math.round((row.sentiment_score || 0) * 100),
+  }));
+
+  const parseCalendarDate = (value: string): Date | null => {
+    if (!value || value === '—') return null;
+    const parsed = new Date(value.replace(/\//g, '-') + 'T00:00:00');
+    return Number.isNaN(parsed.getTime()) ? null : parsed;
+  };
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const nextReleaseRows = ESTIMATED_EARNINGS_2026.map((row) => {
+    const rawEvents = [
+      { label: 'Q1', date: row.q1 },
+      { label: 'Q2', date: row.q2 },
+      { label: 'Q3', date: row.q3 },
+      { label: 'Q4', date: row.q4 },
+      { label: 'FY', date: row.fy },
+    ]
+      .map((item) => ({ ...item, parsed: parseCalendarDate(item.date) }))
+      .filter((item) => item.parsed !== null) as Array<{ label: string; date: string; parsed: Date }>;
+
+    rawEvents.sort((a, b) => a.parsed.getTime() - b.parsed.getTime());
+
+    const dedupByDate = new Map<string, { date: string; parsed: Date; labels: string[] }>();
+    for (const event of rawEvents) {
+      const key = event.date;
+      if (!dedupByDate.has(key)) {
+        dedupByDate.set(key, { date: event.date, parsed: event.parsed, labels: [event.label] });
+      } else {
+        dedupByDate.get(key)!.labels.push(event.label);
+      }
+    }
+    const mergedEvents = Array.from(dedupByDate.values()).sort((a, b) => a.parsed.getTime() - b.parsed.getTime());
+
+    const nextEvent = mergedEvents.find((event) => event.parsed.getTime() >= today.getTime()) || mergedEvents[0];
+    const daysLeft = nextEvent
+      ? Math.ceil((nextEvent.parsed.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
+      : null;
+
+    return {
+      company: row.company,
+      nextDate: nextEvent?.date || '—',
+      nextLabel: nextEvent ? nextEvent.labels.join(' + ') : '—',
+      daysLeft,
+    };
+  }).sort((a, b) => {
+    if (a.nextDate === '—' && b.nextDate === '—') return 0;
+    if (a.nextDate === '—') return 1;
+    if (b.nextDate === '—') return -1;
+    const ad = parseCalendarDate(a.nextDate)?.getTime() || Number.MAX_SAFE_INTEGER;
+    const bd = parseCalendarDate(b.nextDate)?.getTime() || Number.MAX_SAFE_INTEGER;
+    return ad - bd;
+  });
 
   if (loading) {
     return (
@@ -119,38 +242,25 @@ export default function CompetitorInvestmentsPage() {
     );
   }
 
-  const aiGrowthData = data.competitors.map((c) => ({
-    name: c.company,
-    growth: c.ai_growth_pct,
-    fill: COMPANY_COLORS[c.company] || '#64748B',
-  }));
-
-  const radarData = data.competitors.map((c) => ({
-    company: c.company,
-    aiGrowth: c.ai_growth_pct,
-    focusAreas: c.investment_focus.length * 25,
-    highlights: c.recent_highlights.length * 30,
-  }));
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 p-4">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-4">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 flex items-center gap-3">
-              <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-2 rounded-xl">
-                <Target className="h-6 w-6 text-white" />
+            <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-3">
+              <div className="bg-gradient-to-br from-indigo-500 to-purple-600 p-1.5 rounded-xl">
+                <Target className="h-5 w-5 text-white" />
               </div>
-              Competitor Investment Monitor
+              Competitor Investment Overview
             </h1>
-            <p className="text-slate-500 mt-1">
-              EMS Company Investment Plans, Guidance & AI Strategy
+            <p className="text-slate-500 mt-0.5 text-sm">
+              Peer investment themes, management tone, and recent strategic moves across key EMS competitors.
             </p>
           </div>
           <button
             onClick={fetchData}
-            className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm"
+            className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm"
           >
             <RefreshCw className="h-4 w-4" />
             Refresh
@@ -158,271 +268,258 @@ export default function CompetitorInvestmentsPage() {
         </div>
       </div>
 
-      {/* Hyperscaler Demand Banner */}
-      <Card className="border-0 shadow-xl bg-gradient-to-r from-blue-600 to-indigo-700 mb-8">
-        <CardContent className="p-6">
-          <div className="flex items-start gap-6">
-            <div className="bg-white/20 p-4 rounded-xl">
-              <DollarSign className="h-8 w-8 text-white" />
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-2">
-                <h3 className="text-xl font-bold text-white">Hyperscaler Demand Outlook</h3>
-                <Badge className="bg-green-400 text-green-900">{data.hyperscaler_demand.outlook}</Badge>
-              </div>
-              <div className="space-y-2 mb-4">
-                {data.hyperscaler_demand.drivers.map((driver, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-blue-100">
-                    <ChevronRight className="h-4 w-4" />
-                    <span>{driver}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-blue-200 text-sm">Primary Beneficiaries:</span>
-                {data.hyperscaler_demand.beneficiaries.map((company) => (
-                  <Badge
-                    key={company}
-                    className="text-white"
-                    style={{ backgroundColor: COMPANY_COLORS[company] || '#64748B' }}
-                  >
-                    {company}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* AI Growth Comparison */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <Card className="border-0 shadow-xl">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-green-600" />
-              AI Revenue Growth (YoY)
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={aiGrowthData} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
-                <XAxis type="number" unit="%" domain={[0, 80]} />
-                <YAxis type="category" dataKey="name" width={80} />
-                <Tooltip
-                  formatter={(value) => [`${value}%`, 'AI Growth']}
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
-                />
-                <Bar dataKey="growth" radius={[0, 8, 8, 0]}>
-                  {aiGrowthData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.fill} />
-                  ))}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-            <ChartDescription
-              description="Year-over-year AI/Data Center revenue growth rates for each EMS company. Celestica leads with 68% growth driven by HPS segment expansion."
-              source="Company Earnings Reports"
-            />
-          </CardContent>
-        </Card>
-
-        <Card className="border-0 shadow-xl">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Cpu className="h-5 w-5 text-purple-600" />
-              Investment Profile Comparison
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
-              <RadarChart data={radarData}>
-                <PolarGrid stroke="#E2E8F0" />
-                <PolarAngleAxis dataKey="company" tick={{ fill: '#64748B', fontSize: 12 }} />
-                <PolarRadiusAxis angle={30} domain={[0, 100]} />
-                {data.competitors.map((c) => (
-                  <Radar
-                    key={c.company}
-                    name={c.company}
-                    dataKey="aiGrowth"
-                    stroke={COMPANY_COLORS[c.company]}
-                    fill={COMPANY_COLORS[c.company]}
-                    fillOpacity={0.2}
-                  />
-                ))}
-                <Legend />
-                <Tooltip />
-              </RadarChart>
-            </ResponsiveContainer>
-            <ChartDescription
-              description="Radar visualization comparing AI growth rates, investment focus areas, and recent activity across EMS competitors."
-              source="Company Analysis"
-            />
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Company Detail Cards */}
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold text-slate-900 mb-4 flex items-center gap-2">
-          <Building2 className="h-5 w-5 text-blue-500" />
-          Company Investment Profiles
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-          {data.competitors.map((company) => (
-            <button
-              key={company.company}
-              onClick={() => setSelectedCompany(company)}
-              className={`text-left p-4 rounded-xl border-2 transition-all ${
-                selectedCompany?.company === company.company
-                  ? 'border-indigo-500 bg-indigo-50 shadow-lg'
-                  : 'border-slate-200 bg-white hover:border-slate-300'
-              }`}
-            >
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold mb-2"
-                style={{ backgroundColor: COMPANY_COLORS[company.company] }}
-              >
-                {company.company.charAt(0)}
-              </div>
-              <p className="font-semibold text-slate-900">{company.company}</p>
-              <div className="mt-2">
-                <p className="text-lg font-bold text-green-600">+{company.ai_growth_pct}%</p>
-                <p className="text-xs text-slate-500">AI Growth</p>
-              </div>
-            </button>
-          ))}
-        </div>
-
-        {/* Selected Company Details */}
-        {selectedCompany && (
-          <Card className="border-0 shadow-xl">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3">
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold"
-                  style={{ backgroundColor: COMPANY_COLORS[selectedCompany.company] }}
-                >
-                  {selectedCompany.company.charAt(0)}
-                </div>
-                {selectedCompany.company} - Investment Strategy
-                <Badge className={`ml-auto ${getOutlookStyle(selectedCompany.guidance_outlook)}`}>
-                  {selectedCompany.guidance_outlook.split('-')[0].trim()}
-                </Badge>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {/* Guidance Outlook */}
-                <div>
-                  <h4 className="font-semibold text-slate-700 mb-3 flex items-center gap-2">
-                    <Lightbulb className="h-4 w-4 text-amber-500" />
-                    Guidance Outlook
-                  </h4>
-                  <div className="p-4 bg-slate-50 rounded-xl">
-                    <p className="text-slate-700">{selectedCompany.guidance_outlook}</p>
-                  </div>
-                </div>
-
-                {/* Investment Focus */}
-                <div>
-                  <h4 className="font-semibold text-slate-700 mb-3 flex items-center gap-2">
-                    <Target className="h-4 w-4 text-indigo-500" />
-                    Investment Focus Areas
-                  </h4>
-                  <div className="space-y-2">
-                    {selectedCompany.investment_focus.map((focus, idx) => (
-                      <div key={idx} className="flex items-center gap-2 p-2 bg-indigo-50 rounded-lg">
-                        <div className="w-2 h-2 rounded-full bg-indigo-500"></div>
-                        <span className="text-slate-700">{focus}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Recent Highlights */}
-                <div>
-                  <h4 className="font-semibold text-slate-700 mb-3 flex items-center gap-2">
-                    <ArrowUpRight className="h-4 w-4 text-green-500" />
-                    Recent Highlights
-                  </h4>
-                  <div className="space-y-2">
-                    {selectedCompany.recent_highlights.map((highlight, idx) => (
-                      <div key={idx} className="p-3 bg-green-50 rounded-lg">
-                        <p className="text-sm text-slate-700">{highlight}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-      </div>
-
-      {/* Investment Comparison Table */}
       <Card className="border-0 shadow-xl">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Building2 className="h-5 w-5 text-slate-600" />
-            Investment Comparison Matrix
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-slate-200">
-                  <th className="text-left py-3 px-4 font-semibold text-slate-600">Company</th>
-                  <th className="text-left py-3 px-4 font-semibold text-slate-600">AI Growth</th>
-                  <th className="text-left py-3 px-4 font-semibold text-slate-600">Focus Areas</th>
-                  <th className="text-left py-3 px-4 font-semibold text-slate-600">Outlook</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.competitors.map((company) => (
-                  <tr key={company.company} className="border-b border-slate-100 hover:bg-slate-50">
-                    <td className="py-3 px-4">
-                      <div className="flex items-center gap-2">
-                        <div
-                          className="w-6 h-6 rounded flex items-center justify-center text-white text-xs font-bold"
-                          style={{ backgroundColor: COMPANY_COLORS[company.company] }}
-                        >
-                          {company.company.charAt(0)}
+        <CardContent className="p-4 lg:p-5">
+          <div className="grid grid-cols-1 gap-4 xl:grid-cols-[1.45fr_1fr] xl:h-[calc(100vh-165px)]">
+            <section className="min-h-0 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-900/50">
+              <h2 className="mb-3 flex items-center gap-2 text-base font-semibold text-slate-900 dark:text-slate-100">
+                <Cpu className="h-4 w-4 text-purple-600" />
+                Competitive Snapshot
+              </h2>
+              <p className="mb-2 text-[11px] text-slate-500 dark:text-slate-300">
+                Growth metric: {data.growth_definition || 'Composite'}
+                {data.growth_period ? ` · period ${data.growth_period}` : ''}
+                {data.as_of ? ` · as of ${data.as_of}` : ''}
+              </p>
+              <div className="grid grid-cols-[1.4fr_0.7fr_0.7fr_1fr] gap-2 border-b border-slate-200 pb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:text-slate-300">
+                <span>Company</span>
+                <span>Growth</span>
+                <span>Focus</span>
+                <span>Outlook</span>
+              </div>
+              <div className="mt-2 space-y-2">
+                {data.competitors.map((company) => {
+                  const isSelected = selectedCompany?.company === company.company;
+                  return (
+                    <button
+                      key={company.company}
+                      type="button"
+                      onClick={() => setSelectedCompany(company)}
+                      className={`grid w-full grid-cols-[1.4fr_0.7fr_0.7fr_1fr] items-center gap-2 rounded-xl border px-3 py-2 text-left transition ${
+                        isSelected
+                          ? 'border-indigo-500 bg-indigo-50 shadow-lg dark:bg-indigo-950/40'
+                          : 'border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900/60 dark:hover:border-slate-600 dark:hover:bg-slate-900'
+                      }`}
+                    >
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <div
+                            className="h-7 w-7 rounded-lg flex items-center justify-center text-xs font-bold text-white"
+                            style={{ backgroundColor: COMPANY_COLORS[company.company] }}
+                          >
+                            {company.company.charAt(0)}
+                          </div>
+                          <p className="truncate font-semibold text-slate-900 dark:text-slate-100">{company.company}</p>
                         </div>
-                        <span className="font-medium">{company.company}</span>
                       </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <Badge className="bg-green-100 text-green-700">+{company.ai_growth_pct}%</Badge>
-                    </td>
-                    <td className="py-3 px-4">
-                      <div className="flex flex-wrap gap-1">
-                        {company.investment_focus.slice(0, 2).map((focus, idx) => (
-                          <span key={idx} className="text-xs px-2 py-1 bg-slate-100 rounded-full text-slate-600">
-                            {focus}
-                          </span>
-                        ))}
-                        {company.investment_focus.length > 2 && (
-                          <span className="text-xs text-slate-400">+{company.investment_focus.length - 2}</span>
-                        )}
+                      <div>
+                        <p className="font-semibold text-slate-900 dark:text-slate-100">+{company.ai_growth_pct}%</p>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-300">Composite</p>
                       </div>
-                    </td>
-                    <td className="py-3 px-4">
-                      <Badge className={getOutlookStyle(company.guidance_outlook)}>
-                        {company.guidance_outlook.split('-')[0].trim()}
-                      </Badge>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      <p className="font-semibold text-slate-900 dark:text-slate-100">{company.investment_focus.length}</p>
+                      <div>
+                        <Badge className={getOutlookStyle(company.guidance_outlook)}>
+                          {company.guidance_outlook.split('-')[0].trim()}
+                        </Badge>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="mt-3 rounded-xl border border-slate-200 bg-white px-2.5 py-4 dark:border-slate-700 dark:bg-slate-900">
+                <h4 className="mb-1.5 flex items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-700 dark:text-slate-200">
+                  <Cpu className="h-4 w-4 text-purple-500" />
+                  Sentiment Signals
+                </h4>
+                <div className="grid grid-cols-1 gap-1.5 lg:grid-cols-[1.1fr_1fr]">
+                  <div className="rounded-md border border-slate-200 px-2 py-3 dark:border-slate-700">
+                    <ResponsiveContainer width="100%" height={130}>
+                      <BarChart
+                        data={sentimentChartData}
+                        barCategoryGap="4%"
+                        margin={{ top: 2, right: 4, left: -14, bottom: -4 }}
+                      >
+                        <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                        <XAxis dataKey="company" tick={{ fontSize: 9 }} />
+                        <YAxis domain={[0, 100]} tick={{ fontSize: 8 }} width={20} />
+                        <Tooltip />
+                        <Bar dataKey="sentiment" barSize={16} radius={[3, 3, 0, 0]}>
+                          <LabelList
+                            dataKey="sentiment"
+                            position="top"
+                            offset={4}
+                            className="fill-slate-500 dark:fill-slate-300 text-[9px] font-medium"
+                          />
+                          {sentimentChartData.map((entry) => (
+                            <Cell key={`sentiment-cell-${entry.company}`} fill={COMPANY_COLORS[entry.company] || '#3B82F6'} />
+                          ))}
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  <div className="rounded-md border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <div className="grid grid-cols-[1.15fr_0.6fr_0.8fr_1fr] gap-1 bg-slate-50 px-1.5 py-1 text-[9px] font-medium uppercase text-slate-500 dark:bg-slate-800 dark:text-slate-300">
+                      <span>Company</span>
+                      <span>Docs</span>
+                      <span>Sent.</span>
+                      <span>AI/DC Mentions</span>
+                    </div>
+                    <div className="divide-y divide-slate-200 dark:divide-slate-700">
+                      {sentiment.map((row) => (
+                        <div key={row.company} className="grid grid-cols-[1.15fr_0.6fr_0.8fr_1fr] gap-1 px-1.5 py-1.5 text-[10px] text-slate-700 dark:text-slate-200">
+                          <span className="truncate font-medium">{row.company}</span>
+                          <span>{row.documents_analyzed}</span>
+                          <span>{Math.round((row.sentiment_score || 0) * 100)}%</span>
+                          <span>{row.ai_mentions}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <p className="mt-2 text-[11px] leading-relaxed text-slate-500 dark:text-slate-400">
+                  Sentiment reflects overall tone in analyzed documents; AI/DC mentions indicate how often data-center and AI infrastructure topics appear in company coverage.
+                </p>
+              </div>
+            </section>
+
+            {selectedCompany && (
+              <section className="min-h-0 rounded-2xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-900/50">
+                <h2 className="mb-3 flex items-center gap-2 text-base font-semibold text-slate-900 dark:text-slate-100">
+                  <Building2 className="h-4 w-4 text-blue-600" />
+                  {selectedCompany.company} Strategy Detail
+                </h2>
+
+                <div className="space-y-3">
+                  <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900">
+                    <h4 className="mb-1 flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                      <Lightbulb className="h-4 w-4 text-amber-500" />
+                      Guidance Outlook
+                    </h4>
+                    <p className="text-sm text-slate-700 dark:text-slate-200">{selectedCompany.guidance_outlook}</p>
+                  </div>
+
+                  <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900">
+                    <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                      <Target className="h-4 w-4 text-indigo-500" />
+                      Focus Areas
+                    </h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {selectedCompany.investment_focus.map((focus, idx) => (
+                        <span key={idx} className="rounded-full bg-indigo-50 px-2.5 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-200">
+                          {focus}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="min-h-0 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900">
+                    <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                      <ArrowUpRight className="h-4 w-4 text-green-500" />
+                      Recent Highlights
+                    </h4>
+                    <ul className="space-y-1.5 text-sm text-slate-700 dark:text-slate-200">
+                      {selectedCompany.recent_highlights.map((highlight, idx) => (
+                        <li key={idx} className="rounded-lg bg-green-50 px-2.5 py-2 dark:bg-emerald-900/35 dark:text-emerald-100">
+                          • {highlight}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="min-h-0 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900">
+                    <div className="mb-2 flex items-center justify-between">
+                      <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+                        <CalendarDays className="h-4 w-4 text-indigo-500" />
+                        Earnings Calendar
+                      </h4>
+                      <span className="rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-200">
+                        2026 (Projected)
+                      </span>
+                    </div>
+                    <div className="mb-2 inline-flex rounded-lg border border-slate-200 bg-slate-50 p-1 dark:border-slate-700 dark:bg-slate-800">
+                      <button
+                        type="button"
+                        onClick={() => setEarningsView('next')}
+                        className={`rounded-md px-2 py-1 text-[11px] font-semibold transition ${
+                          earningsView === 'next'
+                            ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-slate-100'
+                            : 'text-slate-500 dark:text-slate-300'
+                        }`}
+                      >
+                        Next Releases
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setEarningsView('full')}
+                        className={`rounded-md px-2 py-1 text-[11px] font-semibold transition ${
+                          earningsView === 'full'
+                            ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-slate-100'
+                            : 'text-slate-500 dark:text-slate-300'
+                        }`}
+                      >
+                        Full Schedule
+                      </button>
+                    </div>
+
+                    {earningsView === 'next' ? (
+                      <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div className="grid grid-cols-[1.05fr_0.95fr_0.9fr_0.7fr] gap-1 bg-slate-50 px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:bg-slate-800 dark:text-slate-300">
+                          <span>Company</span>
+                          <span>Next Date</span>
+                          <span>Next Event</span>
+                          <span>Days</span>
+                        </div>
+                        <div className="divide-y divide-slate-200 dark:divide-slate-700">
+                          {nextReleaseRows.map((row) => (
+                            <div
+                              key={row.company}
+                              className="grid grid-cols-[1.05fr_0.95fr_0.9fr_0.7fr] gap-1 px-2 py-1.5 text-[11px] text-slate-700 dark:text-slate-200"
+                            >
+                              <span className="font-semibold">{row.company}</span>
+                              <span>{row.nextDate}</span>
+                              <span className="font-medium">{row.nextLabel}</span>
+                              <span>{row.daysLeft === null ? '—' : row.daysLeft <= 0 ? 'Today' : `${row.daysLeft}d`}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+                        <div className="grid grid-cols-[1.15fr_0.8fr_0.8fr_0.8fr_0.8fr_0.8fr] gap-1 bg-slate-50 px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:bg-slate-800 dark:text-slate-300">
+                          <span>Company</span>
+                          <span>Q1</span>
+                          <span>Q2</span>
+                          <span>Q3</span>
+                          <span>Q4</span>
+                          <span>FY</span>
+                        </div>
+                        <div className="divide-y divide-slate-200 dark:divide-slate-700">
+                          {ESTIMATED_EARNINGS_2026.map((row) => (
+                            <div
+                              key={row.company}
+                              className="grid grid-cols-[1.15fr_0.8fr_0.8fr_0.8fr_0.8fr_0.8fr] gap-1 px-2 py-1.5 text-[11px] text-slate-700 dark:text-slate-200"
+                            >
+                              <span className="font-semibold">{row.company}</span>
+                              <span>{row.q1}</span>
+                              <span>{row.q2}</span>
+                              <span>{row.q3}</span>
+                              <span>{row.q4}</span>
+                              <span className="font-medium">{row.fy}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    <p className="mt-2 text-[10px] text-slate-500 dark:text-slate-300">
+                      Projected from the historical quarter-end pattern you provided.
+                    </p>
+                  </div>
+                </div>
+              </section>
+            )}
           </div>
-          <ChartDescription
-            description="Summary of EMS competitor investment strategies derived from earnings calls, guidance, and public disclosures. Focus areas indicate primary technology investment directions."
-            source="Company Earnings Calls & SEC Filings"
-          />
         </CardContent>
       </Card>
     </div>

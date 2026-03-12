@@ -283,6 +283,7 @@ def get_combined_facilities(company: str) -> dict:
                 "lat": hq["lat"],
                 "lng": hq["lng"],
                 "type": "Headquarters",
+                "website": hq.get("website"),
                 "source": "known",
                 "confidence": 1.0,
             })
@@ -295,6 +296,7 @@ def get_combined_facilities(company: str) -> dict:
                 "lat": f["lat"],
                 "lng": f["lng"],
                 "type": f["type"],
+                "website": f.get("website"),
                 "source": "known",
                 "confidence": 1.0,
             })

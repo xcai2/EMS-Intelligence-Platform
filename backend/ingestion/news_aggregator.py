@@ -146,8 +146,8 @@ class NewsAggregator:
         try:
             query = f'{company} news latest'
             results = await search_web(query, count=count)
-            
-            for result in results.get('results', []):
+
+            for result in results:
                 category = self._categorize_article(
                     result.get('title', ''), 
                     result.get('snippet', '')
@@ -202,8 +202,8 @@ class NewsAggregator:
         try:
             query = "EMS electronics manufacturing services industry news"
             results = await search_web(query, count=10)
-            
-            for result in results.get('results', []):
+
+            for result in results:
                 all_news.append({
                     **result,
                     "category": self._categorize_article(

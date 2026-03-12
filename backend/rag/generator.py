@@ -143,9 +143,11 @@ COT_SYSTEM_PROMPT = BASE_SYSTEM_PROMPT + """
 Answer directly and concisely based on the provided context. Do NOT explain your methodology or analysis process.
 
 Rules:
+- Use ONLY facts present in "Retrieved Documents" and/or "Web Search Results".
+- Never use outside knowledge or assumptions to fill missing facts.
 - Give the answer immediately without describing steps you will take
 - Use bullet points or tables for multi-company comparisons
-- If data is not found in the context, say so in one sentence — do not elaborate on how you would find it
+- If data is not found in the context, say exactly: "Not found in provided sources."
 - Do NOT hallucinate or make up numbers
 - Do NOT show your reasoning process"""
 

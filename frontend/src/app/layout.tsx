@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <div className="flex h-screen">
           <Sidebar />
-          <main className="flex-1 overflow-auto bg-slate-50">
+          <main className="flex-1 overflow-auto bg-background text-foreground transition-colors">
             {children}
           </main>
         </div>

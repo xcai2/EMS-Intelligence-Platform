@@ -20,21 +20,32 @@ async def search_web(
     Returns:
         List of web search results
     """
+    results, _error = await search_web_with_diagnostics(query, count)
+    return results
+
+
+async def search_web_with_diagnostics(
+    query: str,
+    count: int = WEB_SEARCH_RESULTS,
+) -> tuple[list[dict], str | None]:
+    """
+    Search web and return diagnostics for debugging UX/API behavior.
+    Returns: (results, error_message)
+    """
     if not BRAVE_API_KEY:
-        print("Warning: BRAVE_API_KEY not set, skipping web search")
-        return []
-    
+        return [], "BRAVE_API_KEY not set"
+
     headers = {
         "Accept": "application/json",
         "X-Subscription-Token": BRAVE_API_KEY,
     }
-    
+
     params = {
         "q": query,
         "count": count,
         "safesearch": "moderate",
     }
-    
+
     try:
         async with httpx.AsyncClient() as client:
             response = await client.get(
@@ -45,10 +56,10 @@ async def search_web(
             )
             response.raise_for_status()
             data = response.json()
-        
+
         results = []
         web_results = data.get("web", {}).get("results", [])
-        
+
         for result in web_results[:count]:
             results.append({
                 "title": result.get("title", ""),
@@ -56,12 +67,15 @@ async def search_web(
                 "description": result.get("description", ""),
                 "published": result.get("age", ""),
             })
-        
-        return results
-        
+
+        return results, None
+
+    except httpx.HTTPStatusError as e:
+        return [], f"Brave API HTTP {e.response.status_code}"
+    except httpx.RequestError as e:
+        return [], f"Network request error: {e}"
     except Exception as e:
-        print(f"Web search error: {e}")
-        return []
+        return [], f"Web search error: {e}"
 
 
 def search_web_sync(query: str, count: int = WEB_SEARCH_RESULTS) -> list[dict]:
