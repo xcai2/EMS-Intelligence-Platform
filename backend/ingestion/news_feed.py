@@ -3,28 +3,35 @@ News feed integration for competitive intelligence.
 Aggregates news from multiple sources for tracked companies.
 """
 import asyncio
+import json
+import logging
 import re
 import xml.etree.ElementTree as ET
-from datetime import datetime
+from datetime import datetime, timezone
+from email.utils import parsedate_to_datetime
+from pathlib import Path
 from typing import Optional
 from urllib.parse import quote_plus, urlparse, urljoin
 
 import httpx
 
 from backend.core.config import COMPANIES
-from backend.rag.web_search import search_web
+from backend.rag.web_search import search_web, search_web_with_diagnostics
 
 
 AI_TERMS = [
     "ai",
     "artificial intelligence",
     "data center",
-    "gpu",
     "nvidia",
     "hyperscaler",
     "cloud",
     "llm",
     "semiconductor",
+    "liquid cooling",
+    "immersion cooling",
+    "thermal management",
+    "cooling",
 ]
 
 BLOCKED_OR_PAYWALL_DOMAINS = {
@@ -36,6 +43,10 @@ BLOCKED_OR_PAYWALL_DOMAINS = {
     "fool.com",
 }
 
+EXCLUDED_NOISE_TERMS = [
+    "fiba",
+]
+
 OFFICIAL_COMPANY_SOURCES = {
     "FLEX": {
         "name": "Flex",
@@ -43,20 +54,26 @@ OFFICIAL_COMPANY_SOURCES = {
         "base_url": "https://flex.com",
         "news_url": "https://flex.com/newsroom",
         "rss_url": None,
+        "public_news_url": "https://public.com/stocks/flex/news",
+        "aliases": ["Flex Ltd", "Flextronics", "NASDAQ:FLEX"],
     },
     "JBL": {
         "name": "Jabil",
         "domain": "jabil.com",
         "base_url": "https://www.jabil.com",
-        "news_url": "https://jabil.com/blog.html",
+        "news_url": "https://www.jabil.com/about-us/news.html",
         "rss_url": None,
+        "public_news_url": None,
+        "aliases": ["Jabil Inc", "NYSE:JBL"],
     },
     "BHE": {
         "name": "Benchmark",
         "domain": "bench.com",
         "base_url": "https://www.bench.com",
-        "news_url": "https://www.bench.com/setting-the-benchmark",
+        "news_url": "https://www.bench.com/newsroom",
         "rss_url": None,
+        "public_news_url": None,
+        "aliases": ["Benchmark Electronics", "NYSE:BHE"],
     },
     "SANM": {
         "name": "Sanmina",
@@ -64,13 +81,17 @@ OFFICIAL_COMPANY_SOURCES = {
         "base_url": "https://www.sanmina.com",
         "news_url": "https://www.sanmina.com/media-center/press-releases/",
         "rss_url": None,
+        "public_news_url": None,
+        "aliases": ["Sanmina Corporation", "NASDAQ:SANM"],
     },
     "CLS": {
         "name": "Celestica",
         "domain": "celestica.com",
         "base_url": "https://www.celestica.com",
-        "news_url": "https://www.celestica.com",
+        "news_url": "https://www.celestica.com/about-us/news-events",
         "rss_url": None,
+        "public_news_url": None,
+        "aliases": ["Celestica Inc", "NYSE:CLS", "TSX:CLS"],
     },
 }
 
@@ -152,6 +173,9 @@ FALLBACK_INDUSTRY_NEWS = [
     },
 ]
 
+logger = logging.getLogger(__name__)
+CACHE_FILE = Path("data/news_runtime_cache.json")
+
 
 class NewsFeed:
     """
@@ -161,10 +185,11 @@ class NewsFeed:
     # News categories for filtering (all lowercase for case-insensitive matching)
     CATEGORIES = {
         "earnings": ["earnings", "quarterly", "revenue", "profit", "results", "guidance", "eps", "beat", "miss", "forecast", "outlook", "fiscal"],
-        "ai": ["artificial intelligence", "ai", "machine learning", "data center", "gpu", "nvidia", "hyperscale", "cloud computing", "generative", "llm", "semiconductor", "chip"],
+        "ai": ["artificial intelligence", "ai", "machine learning", "data center", "nvidia", "hyperscale", "cloud computing", "generative", "llm", "semiconductor", "chip"],
         "capex": ["capital expenditure", "capex", "investment", "expansion", "factory", "facility", "million", "billion", "spending", "infrastructure"],
         "strategy": ["acquisition", "merger", "partnership", "restructuring", "strategy", "deal", "agreement", "acquire", "divest"],
         "operations": ["manufacturing", "supply chain", "production", "capacity", "logistics", "assembly", "plant"],
+        "cooling": ["liquid cooling", "immersion cooling", "thermal", "thermal management", "cooling", "heat exchanger", "cold plate"],
     }
     
     def __init__(self):
@@ -172,41 +197,91 @@ class NewsFeed:
         self._cache_ttl = 3600  # 1 hour cache
         # Runtime cache: persists until backend process restarts.
         self._runtime_cache: dict[str, dict] = {}
+        self._load_runtime_cache()
+
+    def _load_runtime_cache(self) -> None:
+        try:
+            if not CACHE_FILE.exists():
+                return
+            loaded = json.loads(CACHE_FILE.read_text(encoding="utf-8"))
+            if isinstance(loaded, dict):
+                self._runtime_cache = loaded
+                logger.info("Loaded news runtime cache with %d keys", len(self._runtime_cache))
+        except Exception as e:
+            logger.warning("Failed to load news runtime cache: %s", e)
+
+    def _persist_runtime_cache(self) -> None:
+        try:
+            CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+            temp_file = CACHE_FILE.with_suffix(".tmp")
+            temp_file.write_text(json.dumps(self._runtime_cache, ensure_ascii=False), encoding="utf-8")
+            temp_file.replace(CACHE_FILE)
+        except Exception as e:
+            logger.warning("Failed to persist news runtime cache: %s", e)
+
+    async def _fetch_google_news_rss_with_diagnostics(self, query: str, limit: int = 8) -> tuple[list[dict], str | None]:
+        """Fetch Google News RSS results and return diagnostics."""
+        rss_urls = [
+            f"https://news.google.com/rss/search?q={quote_plus(query)}&hl=en-US&gl=US&ceid=US:en",
+            f"https://news.google.com/rss/search?q={quote_plus(query)}&hl=en&gl=US&ceid=US:en",
+            f"https://news.google.com/rss/search?q={quote_plus(query)}",
+        ]
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+            "Accept": "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
+            "Accept-Language": "en-US,en;q=0.9",
+        }
+        last_error: str | None = None
+
+        for rss_url in rss_urls:
+            for _ in range(2):
+                try:
+                    async with httpx.AsyncClient(timeout=12.0, follow_redirects=True, headers=headers) as client:
+                        response = await client.get(rss_url)
+                        if response.status_code != 200:
+                            last_error = f"Google News RSS HTTP {response.status_code}"
+                            continue
+
+                    root = ET.fromstring(response.text)
+                    items = []
+                    for item in root.findall(".//item"):
+                        title = (item.findtext("title", "") or "").replace(" - Google News", "").strip()
+                        link = (item.findtext("link", "") or "").strip()
+                        raw_description = item.findtext("description", "") or ""
+                        description = self._clean_html(raw_description)
+                        image_url = self._extract_first_image_url(raw_description)
+                        if not title or not link:
+                            continue
+                        items.append(
+                            {
+                                "title": title,
+                                "url": link,
+                                "description": description[:260],
+                                "image_url": image_url,
+                                "source": "Google News",
+                                "published": item.findtext("pubDate", "") or "",
+                            }
+                        )
+                        if len(items) >= limit:
+                            break
+                    if items:
+                        return items, None
+                    last_error = "Google News RSS returned empty feed"
+                except httpx.RequestError as e:
+                    last_error = f"Google News RSS request error: {e}"
+                except ET.ParseError as e:
+                    last_error = f"Google News RSS parse error: {e}"
+                except Exception as e:
+                    last_error = f"Google News RSS error: {e}"
+
+        return [], last_error or "Google News RSS unknown error"
 
     async def _fetch_google_news_rss(self, query: str, limit: int = 8) -> list[dict]:
         """Fetch Google News RSS results (free, no API key)."""
-        rss_url = f"https://news.google.com/rss/search?q={quote_plus(query)}&hl=en-US&gl=US&ceid=US:en"
-        try:
-            async with httpx.AsyncClient(timeout=12.0) as client:
-                response = await client.get(rss_url)
-                if response.status_code != 200:
-                    return []
-
-            root = ET.fromstring(response.text)
-            items = []
-            for item in root.findall(".//item"):
-                title = (item.findtext("title", "") or "").replace(" - Google News", "").strip()
-                link = (item.findtext("link", "") or "").strip()
-                raw_description = item.findtext("description", "") or ""
-                description = self._clean_html(raw_description)
-                image_url = self._extract_first_image_url(raw_description)
-                if not title or not link:
-                    continue
-                items.append(
-                    {
-                        "title": title,
-                        "url": link,
-                        "description": description[:260],
-                        "image_url": image_url,
-                        "source": "Google News",
-                        "published": item.findtext("pubDate", "") or "",
-                    }
-                )
-                if len(items) >= limit:
-                    break
-            return items
-        except Exception:
-            return []
+        items, error = await self._fetch_google_news_rss_with_diagnostics(query, limit)
+        if error:
+            logger.warning("Google RSS fetch failed for query '%s': %s", query, error)
+        return items
 
     async def _fetch_official_company_news(self, ticker: str, company_name: str, limit: int = 8) -> list[dict]:
         """
@@ -370,6 +445,60 @@ class NewsFeed:
         except Exception:
             return []
 
+    async def _fetch_public_news_links(
+        self,
+        board_url: str,
+        ticker: str,
+        company_name: str,
+        limit: int = 10,
+    ) -> list[dict]:
+        """
+        Fetch outbound links from a Public.com stock news board.
+        We only keep title/url/summary and do not fetch article content.
+        """
+        try:
+            async with httpx.AsyncClient(timeout=12.0, follow_redirects=True) as client:
+                response = await client.get(board_url)
+                if response.status_code != 200:
+                    return []
+                html = response.text
+        except Exception:
+            return []
+
+        aliases = [a.lower() for a in self._get_company_aliases(ticker, company_name)]
+        links = re.findall(r'<a[^>]+href=["\']([^"\']+)["\'][^>]*>(.*?)</a>', html, flags=re.IGNORECASE | re.DOTALL)
+        results: list[dict] = []
+
+        for href, inner_html in links:
+            url = href.strip()
+            if not url.startswith("http"):
+                continue
+
+            domain = (urlparse(url).netloc or "").lower().replace("www.", "")
+            if domain.endswith("public.com"):
+                continue
+
+            title = self._clean_html(inner_html)
+            if len(title) < 20 or len(title) > 220:
+                continue
+
+            title_lower = title.lower()
+            if not any(alias in title_lower for alias in aliases):
+                continue
+
+            results.append(
+                {
+                    "title": title,
+                    "url": url,
+                    "description": f"Curated from Public.com {ticker} news board",
+                    "source": "Public News",
+                }
+            )
+            if len(results) >= limit:
+                break
+
+        return self._dedupe_items(results)[:limit]
+
     async def _scan_company_news_links(self, page_url: str, company_name: str, limit: int = 8) -> list[dict]:
         try:
             async with httpx.AsyncClient(timeout=12.0, follow_redirects=True) as client:
@@ -475,10 +604,97 @@ class NewsFeed:
         content_lower = content.lower()
         return any(term in content_lower for term in AI_TERMS)
 
+    def _get_company_aliases(self, ticker: str, company_name: str) -> list[str]:
+        source = OFFICIAL_COMPANY_SOURCES.get(ticker, {})
+        aliases = source.get("aliases") or []
+        base = [company_name, company_name.split()[0], ticker]
+        merged = [x.strip() for x in [*base, *aliases] if x and x.strip()]
+        deduped: list[str] = []
+        seen = set()
+        for term in merged:
+            key = term.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            deduped.append(term)
+        return deduped
+
+    def _build_company_news_queries(self, ticker: str, company_name: str) -> list[str]:
+        aliases = self._get_company_aliases(ticker, company_name)
+        primary = aliases[0]
+        short_name = company_name.split()[0]
+        quoted_aliases = [f'"{a}"' if " " in a else a for a in aliases[:3]]
+        alias_or = " OR ".join(quoted_aliases)
+        return [
+            # First pull broad company-linked news, then classify downstream.
+            f"({alias_or}) news",
+            f'{primary} ("press release" OR announcement OR earnings OR guidance OR partnership OR expansion)',
+            f'"{short_name}" (manufacturing OR supply chain OR data center OR ai OR "liquid cooling" OR "immersion cooling")',
+        ]
+
+    def _is_company_related_item(self, item: dict, ticker: str, company_name: str) -> bool:
+        content = f"{item.get('title', '')} {item.get('description', '')}".lower()
+        aliases = self._get_company_aliases(ticker, company_name)
+        if any(alias.lower() in content for alias in aliases):
+            return True
+
+        source = OFFICIAL_COMPANY_SOURCES.get(ticker, {})
+        domain = (source.get("domain") or "").lower()
+        if not domain:
+            return False
+        try:
+            item_domain = (urlparse(item.get("url", "")).netloc or "").lower().replace("www.", "")
+            if item_domain.endswith(domain):
+                return True
+        except Exception:
+            pass
+
+        source_text = (item.get("source") or "").lower()
+        return company_name.split()[0].lower() in source_text
+
+    def _parse_published_dt(self, published: str) -> Optional[datetime]:
+        value = (published or "").strip()
+        if not value:
+            return None
+
+        # Handle ISO-8601 formats first.
+        iso_candidate = value.replace("Z", "+00:00")
+        try:
+            parsed = datetime.fromisoformat(iso_candidate)
+            if parsed.tzinfo is None:
+                parsed = parsed.replace(tzinfo=timezone.utc)
+            return parsed.astimezone(timezone.utc)
+        except ValueError:
+            pass
+
+        # Handle RFC2822 formats like "Fri, 06 Mar 2026 10:00:00 GMT".
+        try:
+            parsed = parsedate_to_datetime(value)
+            if parsed is None:
+                return None
+            if parsed.tzinfo is None:
+                parsed = parsed.replace(tzinfo=timezone.utc)
+            return parsed.astimezone(timezone.utc)
+        except (TypeError, ValueError):
+            return None
+
+    def _sort_items_by_recency_and_relevance(self, items: list[dict]) -> list[dict]:
+        def sort_key(item: dict) -> tuple[int, float, float]:
+            published_dt = self._parse_published_dt(item.get("published", ""))
+            has_date = 1 if published_dt else 0
+            published_epoch = published_dt.timestamp() if published_dt else 0.0
+            relevance = float(item.get("relevance_score", 0.0) or 0.0)
+            return (has_date, published_epoch, relevance)
+
+        return sorted(items, key=sort_key, reverse=True)
+
     def _normalize_result(self, result: dict, company_name: str = "") -> Optional[dict]:
         title = (result.get("title") or "").strip()
         url = (result.get("url") or "").strip()
         if not title or not url:
+            return None
+        noise_content = f"{title} {result.get('description', '')} {url} {result.get('source', '')}".lower()
+        if any(term in noise_content for term in EXCLUDED_NOISE_TERMS):
             return None
         if not self._is_likely_accessible(url):
             return None
@@ -546,10 +762,8 @@ class NewsFeed:
         if not force_refresh and cache_key in self._runtime_cache:
             return self._runtime_cache[cache_key]
 
-        search_terms = [company_name, "AI", "data center", "earnings", "manufacturing"]
-        if category and category in self.CATEGORIES:
-            search_terms.extend(self.CATEGORIES[category][:2])
-        query = " ".join(search_terms) + " news"
+        query = f"{company_name} news"
+        company_queries = self._build_company_news_queries(ticker, company_name)
 
         news_items: list[dict] = []
 
@@ -564,18 +778,51 @@ class NewsFeed:
             if normalized:
                 news_items.append(normalized)
 
-        # Source 1: Brave search (if key exists)
-        search_results = await search_web(query, count=max(count * 2, 8))
+        # Source 0.5: Public.com stock news board (outbound link aggregator)
+        source_cfg = OFFICIAL_COMPANY_SOURCES.get(ticker, {})
+        public_news_url = source_cfg.get("public_news_url")
+        public_results: list[dict] = []
+        if public_news_url:
+            public_results = await self._fetch_public_news_links(
+                public_news_url,
+                ticker,
+                company_name,
+                limit=max(count * 2, 10),
+            )
+            for result in public_results:
+                normalized = self._normalize_result(result, company_name)
+                if normalized:
+                    news_items.append(normalized)
+
+        # Source 1: Brave search (if key exists), fan out across multiple queries
+        brave_tasks = [
+            search_web_with_diagnostics(q, count=max(count * 2, 10))
+            for q in [query, *company_queries]
+        ]
+        brave_responses = await asyncio.gather(*brave_tasks)
+        search_results: list[dict] = []
+        brave_errors = []
+        for results, error in brave_responses:
+            search_results.extend(results)
+            if error:
+                brave_errors.append(error)
         for result in search_results:
             normalized = self._normalize_result(result, company_name)
             if normalized:
                 news_items.append(normalized)
 
-        # Source 2: Google News RSS (free)
-        rss_results = await self._fetch_google_news_rss(
-            f"{company_name} OR {short_name} (AI OR data center OR earnings OR manufacturing)",
-            limit=max(count * 2, 10),
-        )
+        # Source 2: Google News RSS (free), fan out across focused queries
+        rss_tasks = [
+            self._fetch_google_news_rss_with_diagnostics(q, limit=max(count * 2, 12))
+            for q in company_queries
+        ]
+        rss_responses = await asyncio.gather(*rss_tasks)
+        rss_results: list[dict] = []
+        rss_errors = []
+        for results, error in rss_responses:
+            rss_results.extend(results)
+            if error:
+                rss_errors.append(error)
         for result in rss_results:
             normalized = self._normalize_result(result, company_name)
             if normalized:
@@ -591,8 +838,7 @@ class NewsFeed:
         # Keep only tracked-company relevant content
         filtered_items = []
         for item in self._dedupe_items(news_items):
-            content = f"{item['title']} {item.get('description', '')}"
-            if short_name.lower() in content.lower() or ticker.lower() in content.lower():
+            if self._is_company_related_item(item, ticker, company_name):
                 filtered_items.append(item)
 
         # Category filter (if requested)
@@ -601,7 +847,7 @@ class NewsFeed:
             if strict:
                 filtered_items = strict
 
-        filtered_items.sort(key=lambda x: x.get("relevance_score", 0), reverse=True)
+        filtered_items = self._sort_items_by_recency_and_relevance(filtered_items)
         
         result = {
             "ticker": ticker,
@@ -610,8 +856,21 @@ class NewsFeed:
             "news": filtered_items[:count],
             "total_found": len(filtered_items),
             "timestamp": datetime.now().isoformat(),
+            "diagnostics": {
+                "source_counts": {
+                    "official": len(official_results),
+                    "public_board": len(public_results),
+                    "brave": len(search_results),
+                    "google_rss": len(rss_results),
+                },
+                "errors": {
+                    "brave": brave_errors or None,
+                    "google_rss": rss_errors or None,
+                },
+            },
         }
         self._runtime_cache[cache_key] = result
+        self._persist_runtime_cache()
         return result
     
     async def get_industry_news(self, count: int = 15, force_refresh: bool = False) -> dict:
@@ -627,6 +886,8 @@ class NewsFeed:
             "electronics manufacturing data center demand",
             "Flex Jabil Celestica Benchmark Sanmina AI news",
             "NVIDIA hyperscaler manufacturing partners news",
+            "liquid cooling data center manufacturing news",
+            "immersion cooling AI server supply chain news",
         ]
 
         merged_items: list[dict] = []
@@ -658,6 +919,7 @@ class NewsFeed:
             "timestamp": datetime.now().isoformat(),
         }
         self._runtime_cache[cache_key] = result
+        self._persist_runtime_cache()
         return result
     
     async def get_competitor_comparison_news(self, force_refresh: bool = False) -> dict:
@@ -714,6 +976,7 @@ class NewsFeed:
             "timestamp": datetime.now().isoformat(),
         }
         self._runtime_cache[cache_key] = result
+        self._persist_runtime_cache()
         return result
     
     async def get_all_companies_news(self, count_per_company: int = 3, force_refresh: bool = False) -> dict:
@@ -742,6 +1005,7 @@ class NewsFeed:
             "timestamp": datetime.now().isoformat(),
         }
         self._runtime_cache[cache_key] = result
+        self._persist_runtime_cache()
         return result
     
     def _extract_source(self, url: str) -> str:
@@ -791,8 +1055,10 @@ class NewsFeed:
             if any(term in content_lower for term in ['q1', 'q2', 'q3', 'q4', 'quarter', 'fiscal', 'fy2', 'fy2025', 'fy2024', 'eps', 'beat', 'miss']):
                 categories.append('earnings')
             # Check for AI/tech content
-            if any(term in content_lower for term in ['nvidia', 'gpu', 'hyperscale', 'cloud', 'generative', 'llm', 'chip', 'semiconductor']):
+            if any(term in content_lower for term in ['nvidia', 'hyperscale', 'cloud', 'generative', 'llm', 'chip', 'semiconductor']):
                 categories.append('ai')
+            if any(term in content_lower for term in ['liquid cooling', 'immersion cooling', 'thermal management', 'heat exchanger', 'cold plate']):
+                categories.append('cooling')
             # Check for investment content
             if any(term in content_lower for term in ['million', 'billion', 'invest', 'expand', 'new facility', 'build']):
                 categories.append('capex')

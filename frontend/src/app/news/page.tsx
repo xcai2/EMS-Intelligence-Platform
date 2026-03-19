@@ -57,7 +57,8 @@ const CATEGORY_TINTS: Record<string, string> = {
   general: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-500/15 dark:text-slate-300 dark:border-slate-400/20',
 };
 
-const AI_TERMS = ['ai', 'artificial intelligence', 'gpu', 'llm', 'data center', 'hyperscaler', 'nvidia', 'semiconductor'];
+const AI_TERMS = ['ai', 'artificial intelligence', 'llm', 'data center', 'nvidia', 'semiconductor', 'liquid cooling', 'immersion cooling', 'thermal management', 'cooling'];
+const PRIORITY_TECH_TERMS = ['ai', 'artificial intelligence', 'data center'];
 
 const FALLBACK_FEED: UnifiedNewsItem[] = [
   {
@@ -68,7 +69,7 @@ const FALLBACK_FEED: UnifiedNewsItem[] = [
     categories: ['ai', 'operations'],
     company: 'FLEX',
     categoryLabel: 'AI',
-    timestampLabel: 'Fallback feed',
+    timestampLabel: 'Source feed',
   },
   {
     title: 'Jabil highlights cloud and AI platform momentum',
@@ -78,7 +79,7 @@ const FALLBACK_FEED: UnifiedNewsItem[] = [
     categories: ['ai', 'strategy'],
     company: 'JBL',
     categoryLabel: 'AI',
-    timestampLabel: 'Fallback feed',
+    timestampLabel: 'Source feed',
   },
   {
     title: 'Industry watch: EMS capacity planning follows AI workload growth',
@@ -87,7 +88,7 @@ const FALLBACK_FEED: UnifiedNewsItem[] = [
     source: 'EE Times',
     categories: ['ai', 'capex'],
     categoryLabel: 'AI',
-    timestampLabel: 'Fallback feed',
+    timestampLabel: 'Source feed',
   },
 ];
 
@@ -121,6 +122,50 @@ function formatPublishedLabel(raw?: string) {
     return parsed.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' });
   }
   return value;
+}
+
+function getPublishedTimestamp(raw?: string) {
+  const value = (raw || '').trim();
+  if (!value) return 0;
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return 0;
+  return parsed.getTime();
+}
+
+function getPublishedDateKey(raw?: string) {
+  const ts = getPublishedTimestamp(raw);
+  if (!ts) return '';
+  const d = new Date(ts);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function hasPublishedTime(raw?: string) {
+  const value = (raw || '').trim();
+  if (!value) return false;
+  return /t\d{1,2}:\d{2}/i.test(value) || /\b\d{1,2}:\d{2}(:\d{2})?\b/.test(value);
+}
+
+function getPriorityScore(item: UnifiedNewsItem) {
+  const content = `${item.title} ${item.description} ${(item.categories || []).join(' ')}`.toLowerCase();
+  let score = 0;
+
+  // Priority 1: tracked company news
+  if (item.company) {
+    score += 1000;
+    // Flex gets the highest weight among tracked companies
+    if (item.company === 'FLEX') score += 300;
+  }
+
+  // Priority 2: AI / Data Center intent
+  if (PRIORITY_TECH_TERMS.some((term) => content.includes(term))) score += 200;
+
+  // Secondary relevance signal from backend
+  score += Math.round((item.relevance_score || 0) * 100);
+
+  return score;
 }
 
 function toUnifiedItem(item: NewsItem, company?: CompanyTicker): UnifiedNewsItem {
@@ -177,7 +222,7 @@ export default function NewsPage() {
     try {
       const forceParam = forceRefresh ? '&force_refresh=true' : '';
       const [allNewsRes, industryRes, comparativeRes] = await Promise.allSettled([
-        fetch(`${API_URL}/api/news/all?count_per_company=8${forceParam}`),
+        fetch(`${API_URL}/api/news/all?count_per_company=24${forceParam}`),
         fetch(`${API_URL}/api/news/industry?count=20${forceParam}`),
         fetch(`${API_URL}/api/news/comparative${forceRefresh ? '?force_refresh=true' : ''}`),
       ]);
@@ -240,14 +285,20 @@ export default function NewsPage() {
   const unifiedIndustryNews = useMemo(() => industryNews.map((item) => toUnifiedItem(item)), [industryNews]);
   const unifiedComparativeNews = useMemo(() => comparativeNews.map((item) => toUnifiedItem(item)), [comparativeNews]);
 
-  const fullFilteredFeed = useMemo(() => {
-    let feed = [...allCompanyNews, ...unifiedIndustryNews, ...unifiedComparativeNews].filter(isTrackedOrAIRelated);
+  const baseFilteredFeed = useMemo(() => {
+    const hasKeyword = Boolean(keyword.trim());
+    let feed = [...allCompanyNews, ...unifiedIndustryNews, ...unifiedComparativeNews];
+
+    // When no keyword is provided, keep desk scoped to tracked companies + core themes.
+    if (!hasKeyword) {
+      feed = feed.filter(isTrackedOrAIRelated);
+    }
 
     if (selectedCompany !== 'ALL') {
       feed = feed.filter((item) => item.company === selectedCompany);
     }
 
-    if (keyword.trim()) {
+    if (hasKeyword) {
       const terms = keyword
         .split(',')
         .map((term) => term.trim().toLowerCase())
@@ -266,12 +317,52 @@ export default function NewsPage() {
     return feed;
   }, [allCompanyNews, unifiedIndustryNews, unifiedComparativeNews, selectedCompany, keyword]);
 
-  const filteredFeed = fullFilteredFeed.length > 0 ? fullFilteredFeed : FALLBACK_FEED;
+  const prioritizedFeed = useMemo(() => {
+    return [...baseFilteredFeed].sort((a, b) => {
+      const priorityDelta = getPriorityScore(b) - getPriorityScore(a);
+      if (priorityDelta !== 0) return priorityDelta;
+
+      const timeDelta = getPublishedTimestamp(b.published) - getPublishedTimestamp(a.published);
+      if (timeDelta !== 0) return timeDelta;
+
+      return (b.relevance_score || 0) - (a.relevance_score || 0);
+    });
+  }, [baseFilteredFeed]);
+
+  const timeSortedFeed = useMemo(() => {
+    return [...baseFilteredFeed].sort((a, b) => {
+      const dateA = getPublishedDateKey(a.published);
+      const dateB = getPublishedDateKey(b.published);
+      if (dateA !== dateB) return dateB.localeCompare(dateA);
+
+      const aHasTime = hasPublishedTime(a.published);
+      const bHasTime = hasPublishedTime(b.published);
+      if (aHasTime && bHasTime) {
+        const timeDelta = getPublishedTimestamp(b.published) - getPublishedTimestamp(a.published);
+        if (timeDelta !== 0) return timeDelta;
+      }
+
+      return (b.relevance_score || 0) - (a.relevance_score || 0);
+    });
+  }, [baseFilteredFeed]);
+
+  const shouldUseFallback = selectedCompany === 'ALL' && !keyword.trim() && prioritizedFeed.length === 0;
+  const filteredFeed = shouldUseFallback ? FALLBACK_FEED : prioritizedFeed;
+  const fastFeedSource = shouldUseFallback ? FALLBACK_FEED : timeSortedFeed;
+  const fastFeed = useMemo(() => {
+    if (shouldUseFallback) return fastFeedSource;
+    const now = Date.now();
+    const twoDaysMs = 2 * 24 * 60 * 60 * 1000;
+    return fastFeedSource.filter((item) => {
+      const ts = getPublishedTimestamp(item.published);
+      if (!ts) return false;
+      return now - ts <= twoDaysMs && now >= ts;
+    });
+  }, [fastFeedSource, shouldUseFallback]);
 
   const leadStory = filteredFeed[0];
   const keyStories = filteredFeed.slice(1, 7);
   const hotRank = filteredFeed.slice(0, 10);
-  const fastFeed = filteredFeed.slice(0, 14);
 
   if (loading) {
     return (
@@ -313,16 +404,6 @@ export default function NewsPage() {
                 AI
               </button>
               <button
-                onClick={() => applyKeywordPreset('gpu')}
-                className={`rounded-md border px-2 py-1 transition ${
-                  keyword.trim().toLowerCase() === 'gpu'
-                    ? 'border-cyan-300 bg-cyan-50 text-cyan-700 dark:border-cyan-400/60 dark:bg-cyan-500/20 dark:text-cyan-200'
-                    : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 dark:border-slate-700 dark:bg-[#0b111d] dark:text-slate-400 dark:hover:border-slate-600'
-                }`}
-              >
-                GPU
-              </button>
-              <button
                 onClick={() => applyKeywordPreset('liquid cooling')}
                 className={`rounded-md border px-2 py-1 transition ${
                   keyword.trim().toLowerCase() === 'liquid cooling'
@@ -332,20 +413,9 @@ export default function NewsPage() {
               >
                 Liquid Cooling
               </button>
-              <button
-                onClick={() => applyKeywordPreset('hyperscaler')}
-                className={`rounded-md border px-2 py-1 transition ${
-                  keyword.trim().toLowerCase() === 'hyperscaler'
-                    ? 'border-cyan-300 bg-cyan-50 text-cyan-700 dark:border-cyan-400/60 dark:bg-cyan-500/20 dark:text-cyan-200'
-                    : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 dark:border-slate-700 dark:bg-[#0b111d] dark:text-slate-400 dark:hover:border-slate-600'
-                }`}
-              >
-                Hyperscaler
-              </button>
               <input
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                placeholder="ai, data center"
                 className="w-[220px] rounded-md border border-slate-300 bg-white px-2 py-1 text-xs text-slate-900 outline-none placeholder:text-slate-500 dark:border-slate-700 dark:bg-[#0b111d] dark:text-slate-100"
               />
             </div>
@@ -519,7 +589,7 @@ export default function NewsPage() {
               <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">Fast Feed</h2>
               <div className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-3 py-1 text-xs text-slate-600 dark:border-slate-700 dark:text-slate-400">
                 <Rss className="h-3.5 w-3.5 text-cyan-600 dark:text-cyan-300" />
-                {filteredFeed.length} items
+                {fastFeed.length} items
               </div>
             </div>
 

@@ -11,18 +11,22 @@ Features:
 
 from collections import Counter
 from datetime import datetime
+import json
+from pathlib import Path
 from typing import Optional
 
 from fastapi import APIRouter
 from backend.analytics.classifier import classify_company_investments
 from backend.analytics.sentiment import analyze_company_sentiment
 from backend.analytics.trends import analyze_company_trends
+from backend.core.database import get_all_collections_stats
 from backend.rag.retriever import search_documents
 
 router = APIRouter()
 
 
 TRACKED_COMPANIES = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+DYNAMIC_ANALYSIS_CACHE_FILE = Path("data/competitor_dynamic_cache.json")
 
 
 def _outlook_from_sentiment(score: float) -> str:
@@ -133,6 +137,70 @@ def _build_dynamic_competitor_analysis() -> dict:
     }
 
 
+def _compute_dynamic_data_fingerprint() -> str:
+    """
+    Build a lightweight fingerprint of indexed data state.
+    If collections/doc counts change, fingerprint changes.
+    """
+    stats = get_all_collections_stats()
+    payload = {
+        "mode": stats.get("mode"),
+        "total_documents": stats.get("total_documents", 0),
+        "companies": stats.get("companies", {}),
+    }
+    return json.dumps(payload, sort_keys=True, ensure_ascii=False)
+
+
+def _load_dynamic_analysis_cache() -> Optional[dict]:
+    try:
+        if not DYNAMIC_ANALYSIS_CACHE_FILE.exists():
+            return None
+        data = json.loads(DYNAMIC_ANALYSIS_CACHE_FILE.read_text(encoding="utf-8"))
+        if not isinstance(data, dict):
+            return None
+        return data
+    except Exception:
+        return None
+
+
+def _save_dynamic_analysis_cache(fingerprint: str, analysis: dict) -> None:
+    try:
+        DYNAMIC_ANALYSIS_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+        payload = {
+            "fingerprint": fingerprint,
+            "saved_at": datetime.utcnow().isoformat() + "Z",
+            "analysis": analysis,
+        }
+        tmp = DYNAMIC_ANALYSIS_CACHE_FILE.with_suffix(".tmp")
+        tmp.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
+        tmp.replace(DYNAMIC_ANALYSIS_CACHE_FILE)
+    except Exception:
+        # Non-fatal: endpoint should still work even if cache write fails.
+        pass
+
+
+def _get_dynamic_analysis_cached(force_refresh: bool = False) -> dict:
+    current_fingerprint = _compute_dynamic_data_fingerprint()
+    cached = _load_dynamic_analysis_cache()
+
+    if (
+        not force_refresh
+        and cached
+        and cached.get("fingerprint") == current_fingerprint
+        and isinstance(cached.get("analysis"), dict)
+    ):
+        analysis = dict(cached["analysis"])
+        analysis["cache_status"] = "hit"
+        analysis["cache_saved_at"] = cached.get("saved_at")
+        return analysis
+
+    analysis = _build_dynamic_competitor_analysis()
+    _save_dynamic_analysis_cache(current_fingerprint, analysis)
+    analysis = dict(analysis)
+    analysis["cache_status"] = "recomputed"
+    return analysis
+
+
 # ---------------------------------------------------------------------------
 # BIG 5 AI CAPEX DATA (Based on Futurum Research Feb 2026)
 # ---------------------------------------------------------------------------
@@ -148,7 +216,7 @@ BIG5_AI_CAPEX = {
             "capex_2026_billions": 200,
             "capex_2025_billions": 100,
             "yoy_growth_pct": 100,
-            "ai_focus_areas": ["AI compute", "Data centers", "Custom chips (Trainium)"],
+            "ai_focus_areas": ["AI (Compute)", "AI (Cloud Infrastructure)", "AI (Custom Chips)"],
             "key_metrics": {
                 "aws_revenue_billions": 142,
                 "aws_growth_pct": 24,
@@ -166,7 +234,7 @@ BIG5_AI_CAPEX = {
             "capex_2026_billions": 180,  # $175-185B midpoint
             "capex_2025_billions": 75,
             "yoy_growth_pct": 140,
-            "ai_focus_areas": ["TPU clusters", "Gemini infrastructure", "Cloud AI"],
+            "ai_focus_areas": ["AI (TPU Clusters)", "AI (Model Infrastructure)", "AI (Cloud Platforms)"],
             "key_metrics": {
                 "cloud_backlog_billions": 240,
                 "gemini_cost_reduction_pct": 78,
@@ -184,7 +252,7 @@ BIG5_AI_CAPEX = {
             "capex_2026_billions": 120,
             "capex_2025_billions": 80,
             "yoy_growth_pct": 50,
-            "ai_focus_areas": ["Azure AI", "OpenAI partnership", "Copilot infrastructure"],
+            "ai_focus_areas": ["AI (Azure Platform)", "AI (Model Partnerships)", "AI (Copilot Infrastructure)"],
             "key_metrics": {
                 "azure_backlog_billions": 80,
                 "quarterly_capex_billions": 37.5,
@@ -202,7 +270,7 @@ BIG5_AI_CAPEX = {
             "capex_2026_billions": 125,  # $115-135B midpoint
             "capex_2025_billions": 40,
             "yoy_growth_pct": 212,
-            "ai_focus_areas": ["Llama models", "AI recommendation", "Reality Labs"],
+            "ai_focus_areas": ["AI (Foundation Models)", "AI (Recommendation Systems)", "AI (Hardware Labs)"],
             "key_metrics": {
                 "ai_research_headcount": 25000,
             },
@@ -219,7 +287,7 @@ BIG5_AI_CAPEX = {
             "capex_2026_billions": 50,
             "capex_2025_billions": 21,
             "yoy_growth_pct": 136,
-            "ai_focus_areas": ["OCI AI", "Stargate project", "Cloud infrastructure"],
+            "ai_focus_areas": ["AI (OCI Platform)", "AI (Stargate Program)", "AI (Cloud Infrastructure)"],
             "key_metrics": {
                 "remaining_obligations_billions": 523,
             },
@@ -514,7 +582,7 @@ async def get_industry_news():
 
 
 @router.get("/competitor-investments")
-async def get_competitor_investments(mode: str = "hybrid"):
+async def get_competitor_investments(mode: str = "hybrid", force_refresh: bool = False):
     """Get competitor investment plans and guidance."""
     payload = {
         "as_of": EMS_AI_DYNAMICS.get("last_updated"),
@@ -544,7 +612,7 @@ async def get_competitor_investments(mode: str = "hybrid"):
     # Optional dynamic section built from indexed filings/transcripts in Chroma.
     if mode in {"hybrid", "dynamic"}:
         try:
-            payload["dynamic_analysis"] = _build_dynamic_competitor_analysis()
+            payload["dynamic_analysis"] = _get_dynamic_analysis_cached(force_refresh=force_refresh)
         except Exception as e:
             payload["dynamic_analysis"] = {
                 "mode": "dynamic_from_indexed_documents",

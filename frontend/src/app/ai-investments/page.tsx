@@ -60,6 +60,42 @@ interface Big5Data {
   stargate_project: StargateProject;
 }
 
+function formatAISubdomainLabel(area: string): string {
+  const raw = area.trim();
+  if (!raw) return "AI (General)";
+
+  // Normalize inputs like "AI compute", "cloud AI", "Compute (AI)" into "AI (Compute)".
+  const noLeadingAI = raw.replace(/^ai[\s/-]+/i, "");
+  const noTrailingAI = noLeadingAI.replace(/[\s/-]+ai$/i, "");
+
+  // Convert existing "X (AI)" to "AI (X)".
+  const aiParenMatch = noTrailingAI.match(/^(.*)\(ai\)\s*$/i);
+  if (aiParenMatch && aiParenMatch[1]?.trim()) {
+    const sub = aiParenMatch[1].trim();
+    const titledSub = sub
+      .split(" ")
+      .filter(Boolean)
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+    return `AI (${titledSub})`;
+  }
+
+  // Keep already-correct style.
+  const leadingStyleMatch = noTrailingAI.match(/^ai\s*\((.+)\)$/i);
+  if (leadingStyleMatch?.[1]) {
+    const sub = leadingStyleMatch[1].trim();
+    return `AI (${sub})`;
+  }
+
+  const titled = noTrailingAI
+    .split(" ")
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+
+  return `AI (${titled})`;
+}
+
 export default function AIInvestmentsPage() {
   const [data, setData] = useState<Big5Data | null>(null);
   const [loading, setLoading] = useState(true);
@@ -149,8 +185,174 @@ export default function AIInvestmentsPage() {
         </div>
       </div>
 
+      <div className="flex flex-col gap-5">
+      <Card className="order-1 border-0 shadow-xl dark:bg-slate-900 dark:text-slate-100">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-2">
+            <Building2 className="h-5 w-5 text-blue-500" />
+            Company Investment Subdomains & Stargate Project
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="pt-0">
+          <div className="grid grid-cols-1 xl:grid-cols-[1.35fr_1fr] gap-4">
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4">
+                {data.companies.map((company) => (
+                  <button
+                    key={company.ticker}
+                    onClick={() => setSelectedCompany(company)}
+                    className={`text-left p-3 rounded-xl border-2 transition-all ${
+                      selectedCompany?.ticker === company.ticker
+                        ? 'border-blue-500 bg-blue-50 shadow-lg dark:bg-blue-950/40'
+                        : 'border-slate-200 bg-white hover:border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-600'
+                    }`}
+                  >
+                    <div
+                      className="w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold mb-2"
+                      style={{ backgroundColor: company.color }}
+                    >
+                      {company.name.charAt(0)}
+                    </div>
+                    <p className="font-semibold text-slate-900 dark:text-slate-100">{company.name.split(' ')[0]}</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-300">{company.ticker}</p>
+                    <div className="mt-2">
+                      <p className="text-base font-bold" style={{ color: company.color }}>
+                        ${company.capex_2026_billions}B
+                      </p>
+                      <p className="text-xs text-green-600">+{company.yoy_growth_pct}% YoY</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {selectedCompany && (
+                <div className="rounded-xl border border-slate-200 p-3 bg-white dark:border-slate-700 dark:bg-slate-900">
+                  <h3 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold"
+                      style={{ backgroundColor: selectedCompany.color }}
+                    >
+                      {selectedCompany.name.charAt(0)}
+                    </div>
+                    {selectedCompany.name} - AI Investment Details
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <h4 className="mb-3 font-semibold text-slate-700 dark:text-slate-200">Key Metrics</h4>
+                      <div className="space-y-2">
+                        <div className="flex justify-between rounded-lg bg-slate-50 p-2 text-sm dark:bg-slate-800/80">
+                          <span className="text-slate-600 dark:text-slate-300">2026 CapEx</span>
+                          <span className="font-bold text-slate-900 dark:text-slate-100">${selectedCompany.capex_2026_billions}B</span>
+                        </div>
+                        <div className="flex justify-between rounded-lg bg-slate-50 p-2 text-sm dark:bg-slate-800/80">
+                          <span className="text-slate-600 dark:text-slate-300">2025 CapEx</span>
+                          <span className="font-bold text-slate-900 dark:text-slate-100">${selectedCompany.capex_2025_billions}B</span>
+                        </div>
+                        <div className="flex justify-between rounded-lg bg-green-50 p-2 text-sm dark:bg-emerald-900/35">
+                          <span className="text-slate-600 dark:text-slate-200">YoY Growth</span>
+                          <span className="font-bold text-green-600">+{selectedCompany.yoy_growth_pct}%</span>
+                        </div>
+                        {Object.entries(selectedCompany.key_metrics).map(([key, value]) => (
+                          <div key={key} className="flex justify-between rounded-lg bg-slate-50 p-2 text-sm dark:bg-slate-800/80">
+                            <span className="text-slate-600 dark:text-slate-300">{key.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}</span>
+                            <span className="font-bold text-slate-900 dark:text-slate-100">{typeof value === 'number' ? (value >= 1 ? `$${value}B` : `${value}%`) : value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="mb-3 font-semibold text-slate-700 dark:text-slate-200">AI Focus Subdomains</h4>
+                      <div className="space-y-2">
+                        {selectedCompany.ai_focus_areas.map((area, idx) => (
+                          <div key={idx} className="flex items-center gap-2 rounded-lg bg-purple-50 p-2 dark:bg-violet-900/35">
+                            <Cpu className="h-4 w-4 text-purple-600 dark:text-violet-300" />
+                            <span className="text-slate-700 dark:text-slate-100">{formatAISubdomainLabel(area)}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="mb-3 font-semibold text-slate-700 dark:text-slate-200">Recent Announcements</h4>
+                      <div className="space-y-2">
+                        {selectedCompany.recent_announcements.map((announcement, idx) => (
+                          <div key={idx} className="rounded-lg bg-blue-50 p-3 dark:bg-sky-900/30">
+                            <p className="text-sm text-slate-700 dark:text-slate-100">{announcement}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="rounded-xl border border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 p-4 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800">
+              <h3 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
+                <Globe className="h-5 w-5 text-blue-500 dark:text-blue-400" />
+                Stargate Project - $500B AI Infrastructure Initiative
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-3">
+                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Total Investment</p>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white">${data.stargate_project.total_investment_billions}B</p>
+                </div>
+                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Timeline</p>
+                  <p className="text-xl font-bold text-slate-900 dark:text-white">{data.stargate_project.timeline}</p>
+                </div>
+                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Initial Deployment</p>
+                  <p className="text-xl font-bold text-slate-900 dark:text-white">${data.stargate_project.initial_deployment_billions}B</p>
+                </div>
+                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
+                  <p className="text-sm text-slate-500 dark:text-slate-400">Planned Capacity</p>
+                  <p className="text-xl font-bold text-slate-900 dark:text-white">{data.stargate_project.planned_capacity_gw}GW</p>
+                </div>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <div>
+                  <p className="mb-2 text-sm text-slate-500 dark:text-slate-400">Partners</p>
+                  <div className="flex flex-wrap gap-2">
+                    {data.stargate_project.partners.map((partner) => (
+                      <Badge key={partner} className="bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300">
+                        {partner}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="mb-2 text-sm text-slate-500 dark:text-slate-400">Locations</p>
+                  <div className="flex flex-wrap gap-2">
+                    {data.stargate_project.locations.map((location) => (
+                      <Badge key={location} className="bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-300">
+                        {location}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 border-t border-slate-200 pt-4 dark:border-white/10">
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Source: Futurum Research - AI Capex 2026 Report
+                  <a
+                    href="https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="ml-2 inline-flex items-center gap-1 text-blue-400 hover:text-blue-300"
+                  >
+                    Read Full Report <ExternalLink className="h-3 w-3" />
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Top Analytics Row: KPI + Charts */}
-      <div className="grid grid-cols-1 xl:grid-cols-12 gap-4 mb-5">
+      <div className="order-2 grid grid-cols-1 xl:grid-cols-12 gap-4">
         <div className="xl:col-span-2 self-start">
           <div className="grid grid-cols-1 auto-rows-min content-start gap-2">
             <Card className="border-0 shadow-xl bg-gradient-to-br from-orange-500 to-red-600 text-white">
@@ -270,170 +472,7 @@ export default function AIInvestmentsPage() {
         </div>
       </div>
 
-      <Card className="border-0 shadow-xl dark:bg-slate-900 dark:text-slate-100">
-        <CardHeader className="pb-3">
-          <CardTitle className="flex items-center gap-2">
-            <Building2 className="h-5 w-5 text-blue-500" />
-            Company Details & Stargate Project
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="pt-0">
-          <div className="grid grid-cols-1 xl:grid-cols-[1.35fr_1fr] gap-4">
-            <div>
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4">
-                {data.companies.map((company) => (
-                  <button
-                    key={company.ticker}
-                    onClick={() => setSelectedCompany(company)}
-                    className={`text-left p-3 rounded-xl border-2 transition-all ${
-                      selectedCompany?.ticker === company.ticker
-                        ? 'border-blue-500 bg-blue-50 shadow-lg dark:bg-blue-950/40'
-                        : 'border-slate-200 bg-white hover:border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-600'
-                    }`}
-                  >
-                    <div
-                      className="w-9 h-9 rounded-lg flex items-center justify-center text-white font-bold mb-2"
-                      style={{ backgroundColor: company.color }}
-                    >
-                      {company.name.charAt(0)}
-                    </div>
-                    <p className="font-semibold text-slate-900 dark:text-slate-100">{company.name.split(' ')[0]}</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-300">{company.ticker}</p>
-                    <div className="mt-2">
-                      <p className="text-base font-bold" style={{ color: company.color }}>
-                        ${company.capex_2026_billions}B
-                      </p>
-                      <p className="text-xs text-green-600">+{company.yoy_growth_pct}% YoY</p>
-                    </div>
-                  </button>
-                ))}
-              </div>
-
-              {selectedCompany && (
-                <div className="rounded-xl border border-slate-200 p-3 bg-white dark:border-slate-700 dark:bg-slate-900">
-                  <h3 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-slate-100">
-                    <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold"
-                      style={{ backgroundColor: selectedCompany.color }}
-                    >
-                      {selectedCompany.name.charAt(0)}
-                    </div>
-                    {selectedCompany.name} - AI Investment Details
-                  </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div>
-                      <h4 className="mb-3 font-semibold text-slate-700 dark:text-slate-200">Key Metrics</h4>
-                      <div className="space-y-2">
-                        <div className="flex justify-between rounded-lg bg-slate-50 p-2 text-sm dark:bg-slate-800/80">
-                          <span className="text-slate-600 dark:text-slate-300">2026 CapEx</span>
-                          <span className="font-bold text-slate-900 dark:text-slate-100">${selectedCompany.capex_2026_billions}B</span>
-                        </div>
-                        <div className="flex justify-between rounded-lg bg-slate-50 p-2 text-sm dark:bg-slate-800/80">
-                          <span className="text-slate-600 dark:text-slate-300">2025 CapEx</span>
-                          <span className="font-bold text-slate-900 dark:text-slate-100">${selectedCompany.capex_2025_billions}B</span>
-                        </div>
-                        <div className="flex justify-between rounded-lg bg-green-50 p-2 text-sm dark:bg-emerald-900/35">
-                          <span className="text-slate-600 dark:text-slate-200">YoY Growth</span>
-                          <span className="font-bold text-green-600">+{selectedCompany.yoy_growth_pct}%</span>
-                        </div>
-                        {Object.entries(selectedCompany.key_metrics).map(([key, value]) => (
-                          <div key={key} className="flex justify-between rounded-lg bg-slate-50 p-2 text-sm dark:bg-slate-800/80">
-                            <span className="text-slate-600 dark:text-slate-300">{key.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}</span>
-                            <span className="font-bold text-slate-900 dark:text-slate-100">{typeof value === 'number' ? (value >= 1 ? `$${value}B` : `${value}%`) : value}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <h4 className="mb-3 font-semibold text-slate-700 dark:text-slate-200">AI Focus Areas</h4>
-                      <div className="space-y-2">
-                        {selectedCompany.ai_focus_areas.map((area, idx) => (
-                          <div key={idx} className="flex items-center gap-2 rounded-lg bg-purple-50 p-2 dark:bg-violet-900/35">
-                            <Cpu className="h-4 w-4 text-purple-600 dark:text-violet-300" />
-                            <span className="text-slate-700 dark:text-slate-100">{area}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <h4 className="mb-3 font-semibold text-slate-700 dark:text-slate-200">Recent Announcements</h4>
-                      <div className="space-y-2">
-                        {selectedCompany.recent_announcements.map((announcement, idx) => (
-                          <div key={idx} className="rounded-lg bg-blue-50 p-3 dark:bg-sky-900/30">
-                            <p className="text-sm text-slate-700 dark:text-slate-100">{announcement}</p>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="rounded-xl border border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 p-4 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800">
-              <h3 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
-                <Globe className="h-5 w-5 text-blue-500 dark:text-blue-400" />
-                Stargate Project - $500B AI Infrastructure Initiative
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-3">
-                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Total Investment</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white">${data.stargate_project.total_investment_billions}B</p>
-                </div>
-                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Timeline</p>
-                  <p className="text-xl font-bold text-slate-900 dark:text-white">{data.stargate_project.timeline}</p>
-                </div>
-                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Initial Deployment</p>
-                  <p className="text-xl font-bold text-slate-900 dark:text-white">${data.stargate_project.initial_deployment_billions}B</p>
-                </div>
-                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Planned Capacity</p>
-                  <p className="text-xl font-bold text-slate-900 dark:text-white">{data.stargate_project.planned_capacity_gw}GW</p>
-                </div>
-              </div>
-              <div className="mt-4 flex flex-wrap gap-3">
-                <div>
-                  <p className="mb-2 text-sm text-slate-500 dark:text-slate-400">Partners</p>
-                  <div className="flex flex-wrap gap-2">
-                    {data.stargate_project.partners.map((partner) => (
-                      <Badge key={partner} className="bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300">
-                        {partner}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <p className="mb-2 text-sm text-slate-500 dark:text-slate-400">Locations</p>
-                  <div className="flex flex-wrap gap-2">
-                    {data.stargate_project.locations.map((location) => (
-                      <Badge key={location} className="bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-300">
-                        {location}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 border-t border-slate-200 pt-4 dark:border-white/10">
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Source: Futurum Research - AI Capex 2026 Report
-                  <a
-                    href="https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ml-2 inline-flex items-center gap-1 text-blue-400 hover:text-blue-300"
-                  >
-                    Read Full Report <ExternalLink className="h-3 w-3" />
-                  </a>
-                </p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      </div>
     </div>
   );
 }

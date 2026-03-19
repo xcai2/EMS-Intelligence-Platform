@@ -143,11 +143,12 @@ export default function CompetitorInvestmentsPage() {
     fetchData();
   }, []);
 
-  const fetchData = async () => {
+  const fetchData = async (forceRefresh = false) => {
     try {
       setLoading(true);
+      const forceParam = forceRefresh ? '?force_refresh=true' : '';
       const [competitorRes, sentimentRes] = await Promise.all([
-        fetch(`${API_URL}/api/intelligence/competitor-investments`),
+        fetch(`${API_URL}/api/intelligence/competitor-investments${forceParam}`),
         fetch(`${API_URL}/api/sentiment/compare`),
       ]);
 
@@ -259,11 +260,11 @@ export default function CompetitorInvestmentsPage() {
             </p>
           </div>
           <button
-            onClick={fetchData}
+            onClick={() => fetchData(true)}
             className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm"
           >
             <RefreshCw className="h-4 w-4" />
-            Refresh
+            Re-analyze
           </button>
         </div>
       </div>
