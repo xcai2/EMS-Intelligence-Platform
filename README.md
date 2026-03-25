@@ -392,17 +392,24 @@ Flex-Practicum-Project-2026/
 │   ├── package.json
 │   └── .env.local                        # Frontend config (not in git)
 │
-├── Vector Database/
-│   └── build_chromadb.py                 # ChromaDB embedding pipeline
+├── scripts/
+│   ├── build_chromadb.py                 # ChromaDB embedding pipeline
+│   ├── pipeline_cli.py                   # CLI pipeline tool
+│   └── ...
+│
+├── tools/
+│   ├── analysis_tool/                    # Streamlit analysis prototype
+│   └── verify/                           # RAG evaluation tools
 │
 ├── chromadb_store/                       # Vector database (built locally, not in git)
-├── data/                                 # Downloaded data (SEC filings, news, etc.)
-│
-├── Flex/                                 # Flex SEC filings (HTML)
-├── Jabil/                                # Jabil SEC filings (PDF)
-├── Celestica/                            # Celestica filings (PDF)
-├── benchmark/                            # Benchmark filings (HTM)
-├── Sanmina/                              # Sanmina filings (PDF)
+├── data/
+│   ├── raw/                              # Company SEC filings & documents
+│   │   ├── Flex/                         # Flex filings (HTML)
+│   │   ├── Jabil/                        # Jabil filings (PDF)
+│   │   ├── Celestica/                    # Celestica filings (PDF)
+│   │   ├── Benchmark/                    # Benchmark filings (HTM)
+│   │   └── Sanmina/                      # Sanmina filings (PDF)
+│   └── sec_filings/                      # Auto-downloaded SEC filings
 │
 ├── SETUP.md                              # Detailed setup guide for teammates
 └── README.md                             # This file

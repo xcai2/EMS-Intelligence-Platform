@@ -2,8 +2,8 @@
 """
 Initialize or regenerate a minimal groundtruth.xlsx focused on Benchmark.
 
-This creates Verify/groundtruth.xlsx with the header expected by
-Verify/evaluate_rag.py and adds one row per Benchmark 10-K / 10-Q PDF.
+This creates tools/verify/groundtruth.xlsx with the header expected by
+tools/verify/evaluate_rag.py and adds one row per Benchmark 10-K / 10-Q PDF.
 
 Columns:
     filename, company, fiscal_year, quarter, expected_capex, page_num, notes
@@ -15,7 +15,7 @@ are filled.
 
 Usage:
     cd Flex-Practicum-Project-2026
-    python Verify/init_groundtruth_benchmark.py
+    python tools/verify/init_groundtruth_benchmark.py
 """
 
 from pathlib import Path
@@ -23,8 +23,8 @@ from pathlib import Path
 import openpyxl
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-VERIFY_DIR = PROJECT_ROOT / "Verify"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+VERIFY_DIR = PROJECT_ROOT / "tools" / "verify"
 GROUNDTRUTH_PATH = VERIFY_DIR / "groundtruth.xlsx"
 
 
@@ -84,7 +84,7 @@ def main() -> None:
     wb.save(GROUNDTRUTH_PATH)
     print(f"✅  Wrote Benchmark ground truth template to {GROUNDTRUTH_PATH}")
     print("    Please open it in Excel and fill 'expected_capex' (in millions)")
-    print("    before running: python Verify/evaluate_rag.py --company Benchmark")
+    print("    before running: python tools/verify/evaluate_rag.py --company Benchmark")
 
 
 if __name__ == "__main__":

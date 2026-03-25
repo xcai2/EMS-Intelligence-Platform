@@ -15,7 +15,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
-sys.path.insert(0, str(PROJECT_ROOT / "Vector Database"))
+sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
 import chromadb
 from sentence_transformers import SentenceTransformer
@@ -29,7 +29,7 @@ from build_chromadb import (
 )
 
 DB_PATH = str(PROJECT_ROOT / "chromadb_store")
-BENCHMARK_DIR = PROJECT_ROOT / "Benchmark"
+BENCHMARK_DIR = PROJECT_ROOT / "data" / "raw" / "Benchmark"
 COMPANY = "Benchmark"
 
 # Benchmark file sources: (subdir_path, filing_type or None for auto-detect)
@@ -101,7 +101,7 @@ def main():
     print(f"\n    Total files: {len(all_files)}")
 
     if not all_files:
-        print("\n❌  No files found. Check Benchmark/ directory structure.")
+        print("\n❌  No files found. Check data/raw/Benchmark/ directory structure.")
         return
 
     # 6. Process and index

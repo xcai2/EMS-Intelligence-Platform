@@ -3,7 +3,7 @@
 RAG system accuracy evaluation against ground truth CapEx values.
 
 Usage:
-    python Verify/evaluate_rag.py [--output results.csv]
+    python tools/verify/evaluate_rag.py [--output results.csv]
 
 Reads groundtruth.xlsx, queries the RAG backend for each entry,
 extracts the CapEx value, and reports accuracy.

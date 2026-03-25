@@ -230,12 +230,12 @@ The app uses a vector database (ChromaDB) to search through SEC filings. This da
 
 > **Note:** This step only needs to be done **once**. It takes about 15-30 minutes depending on your computer. You can skip it initially if you just want to explore the UI — the app will work but queries won't return document results.
 
-**Before running this**, make sure the company data folders (`Flex/`, `Jabil/`, `Celestica/`, `benchmark/`, `Sanmina/`) are present in the project root. They should already be there from cloning.
+**Before running this**, make sure the company data folders are present in `data/raw/` (`Flex/`, `Jabil/`, `Celestica/`, `Benchmark/`, `Sanmina/`). They should already be there from cloning.
 
 From the project root folder:
 
 ```bash
-python3 "Vector Database/build_chromadb.py"
+python3 scripts/build_chromadb.py
 ```
 
 You'll see output like:
@@ -467,15 +467,21 @@ Flex-Practicum-Project-2026/
 │
 ├── chromadb_store/             ← Vector database (built locally, not in git)
 │
-├── Vector Database/
-│   └── build_chromadb.py       ← Script to build ChromaDB from company docs
+├── data/
+│   ├── raw/                   ← Company SEC filings & documents
+│   │   ├── Flex/              ← Flex filings (HTML)
+│   │   ├── Jabil/             ← Jabil filings (PDF)
+│   │   ├── Celestica/         ← Celestica filings (PDF)
+│   │   ├── Benchmark/         ← Benchmark filings (HTM)
+│   │   └── Sanmina/           ← Sanmina filings (PDF)
+│   └── sec_filings/           ← Auto-downloaded SEC filings
 │
-├── Flex/                       ← Flex SEC filings (HTML)
-├── Jabil/                      ← Jabil SEC filings (PDF)
-├── Celestica/                  ← Celestica filings (PDF)
-├── benchmark/                  ← Benchmark filings (HTM)
-├── Sanmina/                    ← Sanmina filings (PDF)
-├── data/                       ← Downloaded data (SEC, news, etc.)
+├── scripts/                    ← CLI tools and build scripts
+│   └── build_chromadb.py      ← Script to build ChromaDB from company docs
+│
+├── tools/                      ← Standalone utilities
+│   ├── analysis_tool/         ← Streamlit analysis prototype
+│   └── verify/                ← RAG evaluation tools
 │
 ├── SETUP.md                    ← THIS FILE
 └── README.md                   ← Project overview and architecture

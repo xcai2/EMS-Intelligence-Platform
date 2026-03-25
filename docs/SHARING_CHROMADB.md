@@ -17,14 +17,14 @@ So: share the folder → teammates put it in the project root → they run the a
    - Uploading to shared storage and having teammates download it.
 
 2. **Where to put it**  
-   Teammates should place the unzipped `chromadb_store` folder at the **project root** (same level as `backend/`, `frontend/`, `Vector Database/`):
+   Teammates should place the unzipped `chromadb_store` folder at the **project root** (same level as `backend/`, `frontend/`, `scripts/`):
 
    ```
    Flex-Practicum-Project-2026/
    ├── chromadb_store/    ← put the shared folder here
    ├── backend/
    ├── frontend/
-   ├── Vector Database/
+   ├── scripts/
    └── ...
    ```
 
@@ -38,7 +38,7 @@ So: share the folder → teammates put it in the project root → they run the a
 - [ ] Copy `backend/.env.example` to `backend/.env` and set `OPENAI_API_KEY`.
 - [ ] Install backend deps: `pip install -r backend/requirements.txt`.
 - [ ] Start backend: `uvicorn backend.main:app --host 0.0.0.0 --port 8001` (or from `backend/` with `python -m uvicorn main:app ...`).
-- [ ] No need to run `Vector Database/build_chromadb.py` or `scripts/reindex_benchmark.py`.
+- [ ] No need to run `scripts/build_chromadb.py` or `scripts/reindex_benchmark.py`.
 
 ## If they add new documents later
 

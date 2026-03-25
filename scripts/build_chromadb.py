@@ -40,7 +40,7 @@ Key Features (RAG-Challenge-2 Style):
 
 Run from the project root:
     cd Flex-Practicum-Project-2026
-    python "Vector Database/build_chromadb.py"
+    python scripts/build_chromadb.py
 """
 
 import re
@@ -81,9 +81,10 @@ except ImportError:
 SCRIPT_DIR = Path(__file__).resolve().parent
 BASE = SCRIPT_DIR.parent                          # project root
 DB_PATH = str(BASE / "chromadb_store")
+RAW_DATA_DIR = BASE / "data" / "raw"              # company document files
 
 # Company → list of (subfolder, filing_type) pairs.
-# Paths are relative to BASE / company_folder.
+# Paths are relative to RAW_DATA_DIR / company_folder.
 SOURCES = {
     "Flex": [
         ("annual_10K",             "10-K"),
@@ -1309,7 +1310,7 @@ def discover_all_files():
     """
     results = []
     for company_folder, subdir_list in SOURCES.items():
-        company_path = BASE / company_folder
+        company_path = RAW_DATA_DIR / company_folder
         if not company_path.is_dir():
             print(f"  ⚠️  Skipping {company_folder}/ — not found")
             continue

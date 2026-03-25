@@ -101,27 +101,16 @@ if 'documents_loaded' not in st.session_state:
 COMPANIES = {
     "Flex": {"symbol": "FLEX", "color": "#3b82f6", "folder": "Flex"},
     "Jabil": {"symbol": "JBL", "color": "#10b981", "folder": "Jabil"},
-    "Celestica": {"symbol": "CLS", "color": "#8b5cf6", "folder": "Celestica/Celestica"},  # Nested folder
-    "Benchmark": {"symbol": "BHE", "color": "#f59e0b", "folder": "benchmark"},
+    "Celestica": {"symbol": "CLS", "color": "#8b5cf6", "folder": "Celestica/Celestica"},
+    "Benchmark": {"symbol": "BHE", "color": "#f59e0b", "folder": "Benchmark"},
     "Sanmina": {"symbol": "SANM", "color": "#ef4444", "folder": "Sanmina"}
 }
 
-# Data directory (parent folder with company data)
-# Try multiple possible locations
-_possible_paths = [
-    Path(__file__).parent.parent,  # Relative to script
-    Path("/Users/sricharan/Desktop/Flex Practicum/SCU Flex Practicum 2026"),  # Original location
-    Path.home() / "FlexPracticum" / "SCU Flex Practicum 2026",  # Copied location
-]
+# Data directory (raw company documents)
+_project_root = Path(__file__).parent.parent.parent
+_raw_data_dir = _project_root / "data" / "raw"
 
-DATA_DIR = None
-for p in _possible_paths:
-    if p.exists() and (p / "Flex").exists():
-        DATA_DIR = p
-        break
-
-if DATA_DIR is None:
-    DATA_DIR = Path("/Users/sricharan/Desktop/Flex Practicum/SCU Flex Practicum 2026")
+DATA_DIR = _raw_data_dir if _raw_data_dir.exists() else _project_root
 
 
 def main():

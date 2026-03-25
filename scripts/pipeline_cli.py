@@ -355,7 +355,7 @@ def stage_build_index(args):
     
     try:
         # Import the build script
-        sys.path.insert(0, str(PROJECT_ROOT / "Vector Database"))
+        sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
         from build_chromadb import build_db
         
         print(f"Data directory: {FILINGS_DIR}")
