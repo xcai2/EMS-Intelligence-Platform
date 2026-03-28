@@ -13,7 +13,7 @@ Last updated: 2026-03-10 (America/Los_Angeles)
 5. 区分三类数据：
    - 写死/预置常量（重点：`backend/api/routes/intelligence.py`）
    - 文档检索与分析结果（RAG/analytics/sentiment/company detail）
-   - 外部抓取/搜索（重点：`backend/ingestion/news_feed.py`、ingestion/earnings）
+   - 外部抓取/搜索（重点：`backend/news/service.py`、ingestion/earnings）
 6. 先输出“页面 -> 数据来源 -> 风险点”表，再开始改 UI。
 
 ## 2) Key File Map
@@ -55,7 +55,7 @@ Last updated: 2026-03-10 (America/Los_Angeles)
   - `backend/api/routes/reports.py`
   - `backend/api/routes/alerts.py`
   - `backend/api/routes/exports.py`
-  - `backend/ingestion/news_feed.py`
+  - `backend/news/service.py`
 
 - 数据与配置
   - `backend/core/config.py`

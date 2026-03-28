@@ -11,167 +11,20 @@ from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Optional
-from urllib.parse import quote_plus, urlparse, urljoin
+from urllib.parse import quote_plus, urlparse, urljoin, parse_qs, unquote
 
 import httpx
 
 from backend.core.config import COMPANIES
+from backend.news.filtering import AI_TERMS, BLOCKED_OR_PAYWALL_DOMAINS, EXCLUDED_NOISE_TERMS
+from backend.news.normalizer import SOURCE_DOMAIN_LABELS
+from backend.news.sources import (
+    FALLBACK_COMPANY_NEWS,
+    FALLBACK_INDUSTRY_NEWS,
+    OFFICIAL_COMPANY_SOURCES,
+    OFFICIAL_NEWS_KEYWORDS,
+)
 from backend.rag.web_search import search_web, search_web_with_diagnostics
-
-
-AI_TERMS = [
-    "ai",
-    "artificial intelligence",
-    "data center",
-    "nvidia",
-    "hyperscaler",
-    "cloud",
-    "llm",
-    "semiconductor",
-    "liquid cooling",
-    "immersion cooling",
-    "thermal management",
-    "cooling",
-]
-
-BLOCKED_OR_PAYWALL_DOMAINS = {
-    "wsj.com",
-    "ft.com",
-    "barrons.com",
-    "bloomberg.com",
-    "seekingalpha.com",
-    "fool.com",
-}
-
-EXCLUDED_NOISE_TERMS = [
-    "fiba",
-]
-
-OFFICIAL_COMPANY_SOURCES = {
-    "FLEX": {
-        "name": "Flex",
-        "domain": "flex.com",
-        "base_url": "https://flex.com",
-        "news_url": "https://flex.com/newsroom",
-        "rss_url": None,
-        "public_news_url": "https://public.com/stocks/flex/news",
-        "aliases": ["Flex Ltd", "Flextronics", "NASDAQ:FLEX"],
-    },
-    "JBL": {
-        "name": "Jabil",
-        "domain": "jabil.com",
-        "base_url": "https://www.jabil.com",
-        "news_url": "https://www.jabil.com/about-us/news.html",
-        "rss_url": None,
-        "public_news_url": None,
-        "aliases": ["Jabil Inc", "NYSE:JBL"],
-    },
-    "BHE": {
-        "name": "Benchmark",
-        "domain": "bench.com",
-        "base_url": "https://www.bench.com",
-        "news_url": "https://www.bench.com/newsroom",
-        "rss_url": None,
-        "public_news_url": None,
-        "aliases": ["Benchmark Electronics", "NYSE:BHE"],
-    },
-    "SANM": {
-        "name": "Sanmina",
-        "domain": "sanmina.com",
-        "base_url": "https://www.sanmina.com",
-        "news_url": "https://www.sanmina.com/media-center/press-releases/",
-        "rss_url": None,
-        "public_news_url": None,
-        "aliases": ["Sanmina Corporation", "NASDAQ:SANM"],
-    },
-    "CLS": {
-        "name": "Celestica",
-        "domain": "celestica.com",
-        "base_url": "https://www.celestica.com",
-        "news_url": "https://www.celestica.com/about-us/news-events",
-        "rss_url": None,
-        "public_news_url": None,
-        "aliases": ["Celestica Inc", "NYSE:CLS", "TSX:CLS"],
-    },
-}
-
-OFFICIAL_NEWS_KEYWORDS = [
-    "news",
-    "press",
-    "release",
-    "announcement",
-    "earnings",
-    "ai",
-    "data center",
-    "infrastructure",
-    "cloud",
-    "server",
-]
-
-FALLBACK_COMPANY_NEWS = {
-    "FLEX": [
-        {
-            "title": "Flex expands AI data-center manufacturing collaborations",
-            "url": "https://flex.com/newsroom",
-            "description": "Flex highlights accelerated demand for AI infrastructure programs and advanced manufacturing services.",
-            "source": "Flex Newsroom",
-            "categories": ["ai", "operations"],
-        },
-    ],
-    "JBL": [
-        {
-            "title": "Jabil outlines AI and cloud infrastructure momentum",
-            "url": "https://www.jabil.com/about-us/news.html",
-            "description": "Jabil updates investors on AI server demand trends and supply-chain execution for hyperscaler customers.",
-            "source": "Jabil Newsroom",
-            "categories": ["ai", "strategy"],
-        },
-    ],
-    "CLS": [
-        {
-            "title": "Celestica reports continued growth in CCS segment",
-            "url": "https://www.celestica.com/about-us/news-events",
-            "description": "Celestica points to sustained cloud and communications demand with AI-related infrastructure tailwinds.",
-            "source": "Celestica News",
-            "categories": ["earnings", "ai"],
-        },
-    ],
-    "BHE": [
-        {
-            "title": "Benchmark highlights high-reliability manufacturing programs",
-            "url": "https://www.bench.com/newsroom",
-            "description": "Benchmark discusses advanced engineering and manufacturing support for compute and industrial customers.",
-            "source": "Benchmark Newsroom",
-            "categories": ["operations", "strategy"],
-        },
-    ],
-    "SANM": [
-        {
-            "title": "Sanmina expands focus on complex cloud and networking platforms",
-            "url": "https://www.sanmina.com/about/news-events",
-            "description": "Sanmina emphasizes execution in compute-heavy and AI-adjacent infrastructure markets.",
-            "source": "Sanmina News",
-            "categories": ["ai", "operations"],
-        },
-    ],
-}
-
-FALLBACK_INDUSTRY_NEWS = [
-    {
-        "title": "AI server demand continues to reshape electronics manufacturing priorities",
-        "url": "https://www.eetimes.com/",
-        "description": "Industry coverage tracks how EMS providers are adapting capacity plans for AI hardware and data-center systems.",
-        "source": "EE Times",
-        "categories": ["ai", "capex"],
-    },
-    {
-        "title": "Hyperscaler build-outs keep supply-chain resilience in focus",
-        "url": "https://www.supplychaindive.com/",
-        "description": "Manufacturing and logistics teams are balancing lead-time pressure as AI infrastructure programs scale globally.",
-        "source": "Supply Chain Dive",
-        "categories": ["ai", "operations"],
-    },
-]
 
 logger = logging.getLogger(__name__)
 CACHE_FILE = Path("data/news_runtime_cache.json")
@@ -197,6 +50,7 @@ class NewsFeed:
         self._cache_ttl = 3600  # 1 hour cache
         # Runtime cache: persists until backend process restarts.
         self._runtime_cache: dict[str, dict] = {}
+        self._google_redirect_cache: dict[str, str] = {}
         self._load_runtime_cache()
 
     def _load_runtime_cache(self) -> None:
@@ -245,20 +99,33 @@ class NewsFeed:
                     root = ET.fromstring(response.text)
                     items = []
                     for item in root.findall(".//item"):
-                        title = (item.findtext("title", "") or "").replace(" - Google News", "").strip()
+                        raw_title = (item.findtext("title", "") or "").strip()
+                        title, title_source = self._extract_source_from_google_title(raw_title)
                         link = (item.findtext("link", "") or "").strip()
                         raw_description = item.findtext("description", "") or ""
                         description = self._clean_html(raw_description)
+                        desc_source = self._extract_source_from_google_description(raw_description)
+                        original_url = self._extract_first_external_url_from_html(raw_description) or link
+                        if self._is_google_news_domain(original_url):
+                            original_url = await self._resolve_google_news_redirect_url(original_url)
+                        source_from_url = self._extract_source(original_url)
+                        source = title_source or desc_source
+                        if not source and source_from_url != "Unknown":
+                            source = source_from_url
+                        if not source:
+                            source = "Google News"
                         image_url = self._extract_first_image_url(raw_description)
-                        if not title or not link:
+                        if not title or not original_url:
                             continue
                         items.append(
                             {
                                 "title": title,
-                                "url": link,
+                                "url": original_url,
                                 "description": description[:260],
                                 "image_url": image_url,
-                                "source": "Google News",
+                                "source": source,
+                                "original_source": source,
+                                "aggregator": "Google News",
                                 "published": item.findtext("pubDate", "") or "",
                             }
                         )
@@ -300,7 +167,11 @@ class NewsFeed:
 
         # 1) RSS (if available)
         rss_url = source.get("rss_url")
-        if rss_url:
+        if isinstance(rss_url, list):
+            for single_rss_url in rss_url:
+                if single_rss_url:
+                    collected.extend(await self._fetch_company_rss(source["name"], single_rss_url, limit=limit))
+        elif rss_url:
             collected.extend(await self._fetch_company_rss(source["name"], rss_url, limit=limit))
 
         # 1.5) Site-scoped Google News RSS (most reliable lightweight source)
@@ -311,19 +182,21 @@ class NewsFeed:
             )
             collected.extend(await self._fetch_google_news_rss(site_query, limit=limit))
 
-        # 2) HTML link scan (very lightweight fallback)
-        urls_to_scan = [source.get("news_url"), source.get("base_url")]
-        for scan_url in urls_to_scan:
-            if not scan_url:
-                continue
-            collected.extend(await self._scan_company_news_links(scan_url, company_name, limit=limit))
+        disable_html_scan = bool(source.get("disable_html_scan"))
+        if not disable_html_scan:
+            # 2) HTML link scan (very lightweight fallback)
+            urls_to_scan = [source.get("news_url"), source.get("base_url")]
+            for scan_url in urls_to_scan:
+                if not scan_url:
+                    continue
+                collected.extend(await self._scan_company_news_links(scan_url, company_name, limit=limit))
 
-        # 3) Always keep one official clickable entry if link extraction is empty
-        if source.get("news_url"):
-            seed_item = await self._build_seed_page_item(source["news_url"], company_name)
-            if seed_item:
-                # Keep one explicit official entry in the pool every time.
-                collected.append(seed_item)
+            # 3) Always keep one official clickable entry if link extraction is empty
+            if source.get("news_url"):
+                seed_item = await self._build_seed_page_item(source["news_url"], company_name)
+                if seed_item:
+                    # Keep one explicit official entry in the pool every time.
+                    collected.append(seed_item)
 
         return self._dedupe_items(collected)[:limit]
 
@@ -571,6 +444,7 @@ class NewsFeed:
             "url": page_url,
             "description": f"Official updates from {company_name}",
             "source": f"{company_name.split()[0]} Official",
+            "original_source": f"{company_name.split()[0]} Official",
             "relevance_score": 1.0,
         }
 
@@ -589,6 +463,167 @@ class NewsFeed:
         if src.startswith("http://") or src.startswith("https://"):
             return src
         return ""
+
+    def _extract_first_external_url_from_html(self, html: str) -> str:
+        if not html:
+            return ""
+        hrefs = re.findall(r'href=["\']([^"\']+)["\']', html, flags=re.IGNORECASE)
+        for href in hrefs:
+            href = (href or "").strip()
+            if self._is_likely_article_url(href):
+                return href
+        return ""
+
+    def _is_google_owned_domain(self, domain: str) -> bool:
+        normalized = (domain or "").lower().replace("www.", "")
+        return (
+            normalized.endswith("news.google.com")
+            or normalized.endswith("google.com")
+            or normalized.endswith("googleusercontent.com")
+            or normalized.endswith("ggpht.com")
+            or normalized.endswith("googleapis.com")
+            or normalized.endswith("gstatic.com")
+            or normalized.endswith("google-analytics.com")
+            or normalized.endswith("googletagmanager.com")
+            or normalized.endswith("doubleclick.net")
+        )
+
+    def _is_likely_article_url(self, url: str) -> bool:
+        try:
+            if not url.startswith(("http://", "https://")):
+                return False
+            parsed = urlparse(url)
+            domain = (parsed.netloc or "").lower().replace("www.", "")
+            if not domain:
+                return False
+            if self._is_google_owned_domain(domain):
+                return False
+            path = (parsed.path or "").lower()
+            if any(
+                path.endswith(ext)
+                for ext in [
+                    ".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".ico",
+                    ".js", ".css", ".map", ".xml", ".json", ".txt",
+                    ".woff", ".woff2", ".ttf", ".otf",
+                ]
+            ):
+                return False
+            if path in {"/css", "/css2"}:
+                return False
+            if any(token in path for token in ["/analytics", "/tracking", "/tag/"]):
+                return False
+            return True
+        except Exception:
+            return False
+
+    def _is_google_news_domain(self, url: str) -> bool:
+        try:
+            domain = (urlparse(url).netloc or "").lower().replace("www.", "")
+            return domain.endswith("news.google.com")
+        except Exception:
+            return False
+
+    async def _resolve_google_news_redirect_url(self, url: str) -> str:
+        if not url:
+            return url
+        cached = self._google_redirect_cache.get(url)
+        if cached:
+            return cached
+        resolved = url
+        try:
+            parsed = urlparse(url)
+            qs = parse_qs(parsed.query)
+            for key in ("url", "u"):
+                candidate = (qs.get(key) or [None])[0]
+                if not candidate:
+                    continue
+                candidate = unquote(candidate).strip()
+                if self._is_likely_article_url(candidate):
+                    resolved = candidate
+                    self._google_redirect_cache[url] = resolved
+                    return resolved
+        except Exception:
+            pass
+
+        try:
+            headers = {
+                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            }
+            async with httpx.AsyncClient(timeout=8.0, follow_redirects=True, headers=headers) as client:
+                response = await client.get(url)
+                final_url = str(response.url)
+                if self._is_likely_article_url(final_url):
+                    resolved = final_url
+                else:
+                    html_external = self._extract_first_external_url_from_html(response.text)
+                    if self._is_likely_article_url(html_external):
+                        resolved = html_external
+        except Exception:
+            pass
+
+        self._google_redirect_cache[url] = resolved
+        return resolved
+
+    def _extract_source_from_google_title(self, raw_title: str) -> tuple[str, str | None]:
+        title = (raw_title or "").strip()
+        if not title:
+            return "", None
+        if title.endswith(" - Google News"):
+            title = title[: -len(" - Google News")].strip()
+
+        base_title, source_candidate = self._extract_source_from_title_suffix(title)
+        if source_candidate:
+            return base_title, source_candidate
+        return title, None
+
+    def _extract_source_from_title_suffix(self, title: str) -> tuple[str, str | None]:
+        text = (title or "").strip()
+        if not text:
+            return "", None
+        parts = [part.strip() for part in re.split(r"\s+-\s+", text) if part.strip()]
+        if len(parts) < 2:
+            return text, None
+        candidate = parts[-1]
+        base = " - ".join(parts[:-1]).strip()
+        if len(base) < 8:
+            return text, None
+        if not (2 <= len(candidate) <= 70):
+            return text, None
+        if candidate.lower() == "google news":
+            return text, None
+        if re.search(r"\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\b", candidate.lower()):
+            return text, None
+        if re.search(r"\d{4}", candidate):
+            return text, None
+        if not re.search(r"[A-Za-z]", candidate):
+            return text, None
+        return base, candidate
+
+    def _extract_source_from_google_description(self, raw_description: str) -> str | None:
+        if not raw_description:
+            return None
+
+        # Common Google News RSS pattern: <font color="#6f6f6f">Publisher</font>
+        fonts = re.findall(r"<font[^>]*>([^<]+)</font>", raw_description, flags=re.IGNORECASE)
+        for text in reversed(fonts):
+            candidate = self._clean_html(text)
+            if not candidate:
+                continue
+            if candidate.lower() in {"google news"}:
+                continue
+            if 2 <= len(candidate) <= 60:
+                return candidate
+
+        cleaned = self._clean_html(raw_description)
+        if not cleaned:
+            return None
+        tail_match = re.search(r"(?:•|·|\||-)\s*([A-Za-z][A-Za-z0-9&.'\-\s]{1,50})$", cleaned)
+        if tail_match:
+            candidate = tail_match.group(1).strip()
+            if candidate and candidate.lower() != "google news":
+                return candidate
+        return None
 
     def _company_short_names(self) -> dict[str, str]:
         return {ticker: config["name"].split()[0] for ticker, config in COMPANIES.items()}
@@ -701,13 +736,32 @@ class NewsFeed:
         description = (result.get("description") or "").strip()
         categories = self._categorize_content(f"{title} {description}")
         backup_url = f"https://www.google.com/search?q={quote_plus(title)}"
+        raw_source = (result.get("source") or "").strip()
+        original_source = (result.get("original_source") or "").strip()
+        source_from_url = self._extract_source(url)
+        title_source = self._extract_source_from_title_suffix(title)[1]
+        desc_source = self._extract_source_from_google_description(result.get("description", "") or "")
+        if original_source:
+            resolved_source = original_source
+        elif raw_source and raw_source.lower() not in {"google news", "brave search"}:
+            resolved_source = raw_source
+        elif title_source:
+            resolved_source = title_source
+        elif desc_source:
+            resolved_source = desc_source
+        elif source_from_url and source_from_url != "Unknown":
+            resolved_source = source_from_url
+        else:
+            resolved_source = raw_source or "Unknown"
         return {
             "title": title,
             "url": url,
             "backup_url": backup_url,
             "description": description,
             "image_url": (result.get("image_url") or "").strip(),
-            "source": result.get("source") or self._extract_source(url),
+            "source": resolved_source,
+            "original_source": resolved_source,
+            "aggregator": result.get("aggregator") or None,
             "published": (
                 result.get("published")
                 or result.get("published_at")
@@ -807,6 +861,7 @@ class NewsFeed:
             if error:
                 brave_errors.append(error)
         for result in search_results:
+            result.setdefault("aggregator", "Brave Search")
             normalized = self._normalize_result(result, company_name)
             if normalized:
                 news_items.append(normalized)
@@ -893,6 +948,7 @@ class NewsFeed:
         merged_items: list[dict] = []
         for query in queries:
             for result in await search_web(query, count=5):
+                result.setdefault("aggregator", "Brave Search")
                 normalized = self._normalize_result(result)
                 if normalized:
                     merged_items.append(normalized)
@@ -934,15 +990,18 @@ class NewsFeed:
         query = " OR ".join(company_names) + " EMS comparison AI manufacturing"
 
         raw_results = await search_web(query, count=10)
+        for result in raw_results:
+            result.setdefault("aggregator", "Brave Search")
         raw_results.extend(await self._fetch_google_news_rss(query, limit=8))
 
         comparative_news = []
         for result in raw_results:
-            title = result.get("title", "")
-            description = result.get("description", "")
-            url = result.get("url", "")
-            if not title or not url:
+            normalized = self._normalize_result(result)
+            if not normalized:
                 continue
+            title = normalized.get("title", "")
+            description = normalized.get("description", "")
+            url = normalized.get("url", "")
             content = f"{title} {description}".lower()
             mentioned = [name for name in company_names if name.lower() in content]
             if len(mentioned) >= 2:
@@ -950,9 +1009,11 @@ class NewsFeed:
                     {
                         "title": title,
                         "url": url,
-                        "backup_url": f"https://www.google.com/search?q={quote_plus(title)}",
+                        "backup_url": normalized.get("backup_url") or f"https://www.google.com/search?q={quote_plus(title)}",
                         "description": description,
-                        "source": result.get("source") or self._extract_source(url),
+                        "source": normalized.get("source"),
+                        "original_source": normalized.get("original_source"),
+                        "aggregator": normalized.get("aggregator"),
                         "companies_mentioned": mentioned,
                     }
                 )
@@ -1010,24 +1071,8 @@ class NewsFeed:
     
     def _extract_source(self, url: str) -> str:
         """Extract source name from URL."""
-        domain_sources = {
-            "reuters.com": "Reuters",
-            "bloomberg.com": "Bloomberg",
-            "wsj.com": "Wall Street Journal",
-            "ft.com": "Financial Times",
-            "cnbc.com": "CNBC",
-            "yahoo.com": "Yahoo Finance",
-            "seekingalpha.com": "Seeking Alpha",
-            "fool.com": "Motley Fool",
-            "marketwatch.com": "MarketWatch",
-            "barrons.com": "Barron's",
-            "businesswire.com": "Business Wire",
-            "prnewswire.com": "PR Newswire",
-            "globenewswire.com": "GlobeNewswire",
-        }
-        
         url_lower = url.lower()
-        for domain, source in domain_sources.items():
+        for domain, source in SOURCE_DOMAIN_LABELS.items():
             if domain in url_lower:
                 return source
         
@@ -1094,47 +1139,3 @@ class NewsFeed:
         return min(score, 1.0)
 
 
-# API routes
-from fastapi import APIRouter, HTTPException
-
-router = APIRouter()
-_news_feed = NewsFeed()
-
-
-@router.get("/news/company/{ticker}")
-async def get_company_news(ticker: str, category: Optional[str] = None, count: int = 10, force_refresh: bool = False):
-    """Get news for a specific company."""
-    ticker_upper = ticker.upper()
-    if ticker_upper not in COMPANIES:
-        raise HTTPException(status_code=404, detail=f"Company {ticker} not found")
-    
-    return await _news_feed.get_company_news(ticker_upper, category, count, force_refresh=force_refresh)
-
-
-@router.get("/news/industry")
-async def get_industry_news(count: int = 15, force_refresh: bool = False):
-    """Get industry-wide EMS news."""
-    return await _news_feed.get_industry_news(count, force_refresh=force_refresh)
-
-
-@router.get("/news/comparative")
-async def get_comparative_news(force_refresh: bool = False):
-    """Get news comparing multiple companies."""
-    return await _news_feed.get_competitor_comparison_news(force_refresh=force_refresh)
-
-
-@router.get("/news/all")
-async def get_all_news(count_per_company: int = 3, force_refresh: bool = False):
-    """Get news for all tracked companies."""
-    return await _news_feed.get_all_companies_news(count_per_company, force_refresh=force_refresh)
-
-
-# Convenience functions
-async def get_company_news(ticker: str, category: Optional[str] = None) -> dict:
-    """Get news for a company."""
-    return await _news_feed.get_company_news(ticker, category)
-
-
-async def get_latest_industry_news() -> dict:
-    """Get latest industry news."""
-    return await _news_feed.get_industry_news()

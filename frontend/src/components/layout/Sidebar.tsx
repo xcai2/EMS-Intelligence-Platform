@@ -187,7 +187,7 @@ export function Sidebar() {
             <span className="text-white font-black text-[10px] tracking-[0.08em]">FLEX</span>
           </div>
           <div>
-            <h1 className="font-bold text-2xl leading-tight tracking-tight">FLEX Pulse</h1>
+            <h1 className="font-bold text-2xl leading-tight tracking-tight">FLEX Insight</h1>
             <div className="flex items-center gap-1.5 mt-1">
               <Sparkles className="h-3 w-3 text-purple-400" />
               <p className="text-xs font-medium bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">AI Powered</p>

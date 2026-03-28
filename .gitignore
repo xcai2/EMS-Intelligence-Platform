@@ -35,3 +35,7 @@ chromadb_store/
 *.log
 *.sqlite3
 .Rhistory
+
+# Runtime caches (do not commit)
+data/news_runtime_cache.json
+data/competitor_dynamic_cache.json

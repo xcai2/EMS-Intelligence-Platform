@@ -17,7 +17,7 @@ from backend.ingestion.job_scraper import (
     get_hiring_score,
     get_job_categories,
 )
-from backend.ingestion.news_aggregator import (
+from backend.news.aggregator import (
     get_company_news,
     get_industry_news,
     get_all_companies_news,
