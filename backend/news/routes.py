@@ -39,6 +39,24 @@ async def get_all_news(count_per_company: int = 3, force_refresh: bool = False):
     return await _news_feed.get_all_companies_news(count_per_company, force_refresh=force_refresh)
 
 
+@router.get("/news/flex-summary")
+async def get_flex_news_summary(
+    days: int = 3,
+    llm_mode: str = "combined",
+    max_items: int = 16,
+    force_refresh: bool = False,
+):
+    """Get a short Flex-angle summary from current news context."""
+    safe_days = max(1, min(days, 14))
+    safe_max_items = max(6, min(max_items, 30))
+    return await _news_feed.get_flex_news_summary(
+        days=safe_days,
+        llm_mode=llm_mode,
+        max_items=safe_max_items,
+        force_refresh=force_refresh,
+    )
+
+
 # Convenience functions
 async def get_company_news_service(ticker: str, category: Optional[str] = None) -> dict:
     """Get news for a company."""

@@ -1,0 +1,494 @@
+{
+  "source": {
+    "doc_type": "8k_only",
+    "suffix": ".html",
+    "file_name": "Flex_8-K_2025-11-13.html",
+    "relative_path": "Flex_8-K_2025-11-13.html",
+    "absolute_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/flex_8k_press_releases/Flex_8-K_2025-11-13.html",
+    "size_bytes": 42181,
+    "parsed_at": "2026-03-30T20:10:15.466743"
+  },
+  "classification": {
+    "doc_family": "regulatory_filing",
+    "doc_subtype": "8k_press_release",
+    "confidence": 0.9,
+    "signals_used": [
+      "8k_keyword",
+      "sec_current_report_pattern"
+    ]
+  },
+  "cover_metadata": {
+    "line_count": 63,
+    "raw_lines": [
+      "UNITED STATES",
+      "SECURITIES AND EXCHANGE COMMISSION",
+      "Washington, D.C. 20549",
+      "FORM",
+      "8-K",
+      "CURRENT REPORT",
+      "Pursuant to Section 13 or 15(d) of",
+      "the Securities Exchange Act of 1934",
+      "Date of Report (Date of earliest event reported):",
+      "November 10, 2025",
+      "FLEX LTD.",
+      "(Exact Name of Registrant as Specified in",
+      "Its Charter)",
+      "Singapore",
+      "0-23354",
+      "(State or other jurisdiction of",
+      "incorporation)",
+      "(Commission File Number)",
+      "(IRS Employer Identification No.)",
+      "12515-8 Research Blvd",
+      ",",
+      "Suite 300",
+      ",",
+      "Austin",
+      ",",
+      "Texas",
+      "78759",
+      "(Address of principal executive offices)",
+      "(Zip Code)",
+      "Registrant’s telephone number, including",
+      "area code:",
+      "(",
+      "512",
+      ")",
+      "425-7929",
+      "Not Applicable",
+      "(Former name or former address, if changed",
+      "since last report)",
+      "Check the appropriate box below if the Form 8-K filing",
+      "is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:",
+      "¨",
+      "Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)",
+      "¨",
+      "Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)",
+      "¨",
+      "Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))",
+      "¨",
+      "Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))",
+      "Securities registered pursuant to Section 12(b) of",
+      "the Act:",
+      "Title of each class",
+      "Trading Symbol(s)",
+      "Name of each exchange on which registered",
+      "Ordinary Shares, No Par Value",
+      "FLEX",
+      "The Nasdaq Stock Market LLC",
+      "Indicate by check mark whether the registrant is an emerging",
+      "growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this chapter) or Rule 12b-2 of",
+      "the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).",
+      "Emerging growth company",
+      "¨",
+      "If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act.",
+      "¨"
+    ],
+    "fields": {
+      "form_type": "8-K",
+      "registrant_name": "FLEX LTD.",
+      "date_of_report": "November 10, 2025",
+      "telephone": "",
+      "commission_file_number": ""
+    }
+  },
+  "usage_policy": {
+    "full_text_role": "inspection_full_text",
+    "full_text_core_role": "chunk_embedding_input",
+    "chunk_source_field": "full_text_core"
+  },
+  "full_text": "false\n0000866374\nUNITED STATES\nSECURITIES AND EXCHANGE COMMISSION\nWashington, D.C. 20549\nFORM\n8-K\nCURRENT REPORT\nPursuant to Section 13 or 15(d) of\nthe Securities Exchange Act of 1934\nDate of Report (Date of earliest event reported):\nNovember 10, 2025\nFLEX LTD.\n(Exact Name of Registrant as Specified in\nIts Charter)\nSingapore\n0-23354\n98-1773351\n(State or other jurisdiction of\nincorporation)\n(Commission File Number)\n(IRS Employer Identification No.)\n12515-8 Research Blvd\n,\nSuite 300\n,\nAustin\n,\nTexas\n78759\n(Address of principal executive offices)\n(Zip Code)\nRegistrant’s telephone number, including\narea code:\n(\n512\n)\n425-7929\nNot Applicable\n(Former name or former address, if changed\nsince last report)\nCheck the appropriate box below if the Form 8-K filing\nis intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:\n¨\nWritten communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n¨\nSoliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n¨\nPre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n¨\nPre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\nSecurities registered pursuant to Section 12(b) of\nthe Act:\nTitle of each class\nTrading Symbol(s)\nName of each exchange on which registered\nOrdinary Shares, No Par Value\nFLEX\nThe Nasdaq Stock Market LLC\nIndicate by check mark whether the registrant is an emerging\ngrowth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this chapter) or Rule 12b-2 of\nthe Securities Exchange Act of 1934 (§240.12b-2 of this chapter).\nEmerging growth company\n¨\nIf an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act.\n¨\nItem 1.01 Entry into a Material Definitive\nAgreement.\nOn November 13, 2025, Flex\nLtd. (the “Company”) completed its sale of $150,000,000 aggregate principal amount of its 5.250% Notes due 2032 (the “Additional\n2032 Notes”) and $600,000,000 aggregate principal amount of its 5.375% Notes due 2035 (the “2035 Notes” and, together\nwith the Additional 2032 Notes, the “Notes”). The Additional 2032 Notes constitute a further issuance of, and will be\nconsolidated and form a single series with, the $500,000,000 aggregate principal amount of 5.250% Notes due 2032 issued by the Company\non August 21, 2024 (the “Existing 2032 Notes” and, together with the Additional 2032 Notes, the “2032 Notes”).\nThe offer and sale of the Notes was registered pursuant to the Company’s shelf registration statement on Form S-3 (File No. 333-281573),\nfiled with the Securities and Exchange Commission (the “Commission”) on August 15, 2024. A prospectus supplement relating\nto the offer and sale of the Notes was filed with the Commission on November\n12\n, 2025.\nThe Additional 2032 Notes\nwere issued under an Indenture, dated as of June 6, 2019 (the “Base Indenture”) between the Company and U.S. Bank Trust Company,\nNational Association, as trustee (the “Trustee”), as successor in interest to U.S. Bank National Association, as supplemented\nby the Sixth Supplemental Indenture, dated as of August 21, 2024 between the Company and the Trustee (the “Sixth Supplemental Indenture”),\nas further supplemented by the Seventh Supplemental Indenture, dated as of November 13, 2025 between the Company and the Trustee (the\n“Seventh Supplemental Indenture” and, together with the Base Indenture and the Sixth Supplemental Indenture, the “2032\nReopening Indenture”). The 2035 Notes were issued under the Base Indenture, as supplemented by the Eighth Supplemental Indenture,\ndated as of November 13, 2025 between the Company and the Trustee (the “Eighth Supplemental Indenture” and, together with\nthe Base Indenture, the “2035 Notes Indenture;” and the 2035 Notes Indenture together with the 2032 Reopening Indenture are\nreferred to as the “Indentures”).\nInterest on the Additional\n2032 Notes is payable on January 15 and July 15 of each year, beginning on January 15, 2026. The Additonal 2032 Notes will mature\non January 15, 2032. Interest on the 2035 Notes is payable on May 13 and November 13 of each year, beginning on May 13, 2026. The\n2035 Notes will mature on November 13, 2035. The Company may, at its option, redeem some or all of the 2032 Notes at any time by paying\nthe applicable redemption prices set forth in the 2032 Reopening Indenture, and the Company may, at its option, redeem some or all of\nthe 2035 Notes at any time by paying the applicable redemption prices set forth in the 2035 Notes Indenture. In addition, holders of the\nNotes of either series may require the Company to repurchase their Notes upon the occurrence of a change of control repurchase event (as\ndefined in the applicable Indenture), unless the Company has previously exercised its right to redeem such Notes as described above. The\nNotes are senior unsecured obligations of the Company and rank equally with all of the Company’s other existing and future senior\nand unsecured indebtedness. The Indentures contain certain limited covenants restricting the Company’s ability to incur certain\nliens, enter into certain sale and leaseback transactions and merge or consolidate with any other entity or convey, transfer or lease\nall or substantially all of the Company’s properties and assets to another person, which, in each case, is subject to a number of\nsignificant limitations and exceptions. The Indentures contain certain other covenants, events of default and other customary provisions.\nFrom time to time in the ordinary course of business, the Trustee and\naffiliates of the Trustee have engaged in and may in the future engage in commercial banking, investment banking and other commercial\ntransactions and services with the Company and its subsidiaries for which they have received or will receive customary fees and commissions.\nFor example, an affiliate of the Trustee is a lender under the Company’s revolving credit facility, an affiliate of the Trustee\nis one of the underwriters for the offering and sale of the Notes, and the Trustee is the trustee under the indentures governing the Company’s\n3.750% Notes due 2026, 6.000% Notes due 2028, 4.875% Notes due 2029, 4.875% Notes due 2030 and the Existing 2032 Notes.\n2\nThe foregoing summary does\nnot purport to be complete and is qualified in its entirety by reference to the complete terms of the Base Indenture and the Sixth Supplemental\nIndenture, which are incorporated by reference as Exhibits 4.1 and 4.2 to this Current Report on Form 8-K, the Seventh Supplemental Indenture,\nwhich is filed as Exhibit 4.3 to this Current Report on Form 8-K, the Eighth Supplemental Indenture, which is filed as Exhibit 4.4 to\nthis Current Report on Form 8-K and the Notes, the forms of which are filed as Exhibits 4.5 and 4.6 to this Current Report on Form 8-K,\neach of which is incorporated herein by reference.\nItem 8.01 Other Events.\nOn November 10, 2025, the\nCompany entered into an underwriting agreement (the “Underwriting Agreement”) with BofA Securities, Inc., Citigroup Global\nMarkets Inc. and PNC Capital Markets LLC, as representatives of the several underwriters named in Schedule 1 thereto (collectively, the\n“Underwriters”), pursuant to which the Company agreed to sell and the Underwriters agreed to purchase, subject to and upon\nthe terms and conditions set forth therein, the Notes. The Underwriting Agreement includes customary representations, warranties and covenants\nby the Company. It also provides for customary indemnification by each of the Company and the respective Underwriters against certain\nliabilities arising out of or in connection with the sale of the Notes and for customary contribution provisions in respect of those liabilities.\nThe foregoing summary of the\nUnderwriting Agreement does not purport to be complete and is qualified in its entirety by reference to the complete terms of the Underwriting\nAgreement, a copy of which is filed as Exhibit 1.1 to this Current Report on Form 8-K and is incorporated herein by reference.\nItem 9.01 Financial Statements and Exhibits.\n(d) Exhibits\nExhibit No.\n1.1\nUnderwriting\n Agreement, dated as of November 10, 2025, by and among the Company and BofA Securities, Inc., Citigroup Global Markets Inc. and PNC\n Capital Markets LLC, as representatives of the underwriters named in Schedule 1 thereto\n4.1\nIndenture,\n dated as of June 6, 2019, by and between the Company and U.S. Bank Trust Company, National Association (as successor in interest\n to U.S. Bank National Association), as trustee (incorporated by reference to Exhibit 4.1 to the Registrant’s Current Report\n on Form 8-K filed with the Commission on June 6, 2019) (SEC File No. 000-23354)\n4.2\nSixth Supplemental Indenture, dated as of August 21, 2024, by and between the Company and U.S.\n Bank Trust Company, National Association, as trustee (incorporated by reference to Exhibit 4.2 to the Registrant’s Current\n Report on Form 8-K filed with the Commission on August 21, 2024) (SEC File No. 000-23354)\n4.3\nSeventh Supplemental Indenture, dated as of November 13, 2025, by and between the Company and\n U.S. Bank Trust Company, National Association, as trustee\n4.4\nEighth Supplemental Indenture, dated as of November 13, 2025, by and between the Company and U.S.\n Bank Trust Company, National Association, as trustee\n4.5\nForm of 5.250% Global Note due 2032 (included in Exhibit 4.3)\n4.6\nForm of 5.375%\n Global Note due 2035 (included in Exhibit 4.4)\n5.1\nOpinion of Allen &\n Gledhill LLP\n5.2\nOpinion of Venable LLP\n23.1\nConsent of Allen &\n Gledhill LLP (included in Exhibit 5.1)\n23.2\nConsent of Venable LLP\n (included in Exhibit 5.2)\n104\nCover Page Interactive\n Data File (formatted as Inline XBRL)\n3\nSIGNATURES\nPursuant to the requirements\nof the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto\nduly authorized.\nFlex Ltd.\nDate: November 13, 2025\nBy:\n/s/ Kevin Krumm\nName:\nKevin Krumm\nTitle:\nChief Financial Officer\n4",
+  "full_text_core": "On November 10, 2025, the\nCompany entered into an underwriting agreement (the “Underwriting Agreement”) with BofA Securities, Inc., Citigroup Global\nMarkets Inc. and PNC Capital Markets LLC, as representatives of the several underwriters named in Schedule 1 thereto (collectively, the\n“Underwriters”), pursuant to which the Company agreed to sell and the Underwriters agreed to purchase, subject to and upon\nthe terms and conditions set forth therein, the Notes. The Underwriting Agreement includes customary representations, warranties and covenants\nby the Company. It also provides for customary indemnification by each of the Company and the respective Underwriters against certain\nliabilities arising out of or in connection with the sale of the Notes and for customary contribution provisions in respect of those liabilities.\nThe foregoing summary of the\nUnderwriting Agreement does not purport to be complete and is qualified in its entirety by reference to the complete terms of the Underwriting\nAgreement, a copy of which is filed as Exhibit 1.1 to this Current Report on Form 8-K and is incorporated herein by reference.",
+  "pages": [],
+  "blocks": [
+    {
+      "block_id": "s1:h",
+      "type": "heading",
+      "section_id": "s1",
+      "page_num": 0,
+      "content": "Item 1.01 Entry into a Material Definitive",
+      "char_count": 42
+    },
+    {
+      "block_id": "s1:p",
+      "type": "paragraph",
+      "section_id": "s1",
+      "page_num": 0,
+      "content": "Agreement.\nOn November 13, 2025, Flex\nLtd. (the “Company”) completed its sale of $150,000,000 aggregate principal amount of its 5.250% Notes due 2032 (the “Additional\n2032 Notes”) and $600,000,000 aggregate principal amount of its 5.375% Notes due 2035 (the “2035 Notes” and, together\nwith the Additional 2032 Notes, the “Notes”). The Additional 2032 Notes constitute a further issuance of, and will be\nconsolidated and form a single series with, the $500,000,000 aggregate principal amount of 5.250% Notes due 2032 issued by the Company\non August 21, 2024 (the “Existing 2032 Notes” and, together with the Additional 2032 Notes, the “2032 Notes”).\nThe offer and sale of the Notes was registered pursuant to the Company’s shelf registration statement on Form S-3 (File No. 333-281573),\nfiled with the Securities and Exchange Commission (the “Commission”) on August 15, 2024. A prospectus supplement relating\nto the offer and sale of the Notes was filed with the Commission on November\n, 2025.\nThe Additional 2032 Notes\nwere issued under an Indenture, dated as of June 6, 2019 (the “Base Indenture”) between the Company and U.S. Bank Trust Company,\nNational Association, as trustee (the “Trustee”), as successor in interest to U.S. Bank National Association, as supplemented\nby the Sixth Supplemental Indenture, dated as of August 21, 2024 between the Company and the Trustee (the “Sixth Supplemental Indenture”),\nas further supplemented by the Seventh Supplemental Indenture, dated as of November 13, 2025 between the Company and the Trustee (the\n“Seventh Supplemental Indenture” and, together with the Base Indenture and the Sixth Supplemental Indenture, the “2032\nReopening Indenture”). The 2035 Notes were issued under the Base Indenture, as supplemented by the Eighth Supplemental Indenture,\ndated as of November 13, 2025 between the Company and the Trustee (the “Eighth Supplemental Indenture” and, together with\nthe Base Indenture, the “2035 Notes Indenture;” and the 2035 Notes Indenture together with the 2032 Reopening Indenture are\nreferred to as the “Indentures”).\nInterest on the Additional\n2032 Notes is payable on January 15 and July 15 of each year, beginning on January 15, 2026. The Additonal 2032 Notes will mature\non January 15, 2032. Interest on the 2035 Notes is payable on May 13 and November 13 of each year, beginning on May 13, 2026. The\n2035 Notes will mature on November 13, 2035. The Company may, at its option, redeem some or all of the 2032 Notes at any time by paying\nthe applicable redemption prices set forth in the 2032 Reopening Indenture, and the Company may, at its option, redeem some or all of\nthe 2035 Notes at any time by paying the applicable redemption prices set forth in the 2035 Notes Indenture. In addition, holders of the\nNotes of either series may require the Company to repurchase their Notes upon the occurrence of a change of control repurchase event (as\ndefined in the applicable Indenture), unless the Company has previously exercised its right to redeem such Notes as described above. The\nNotes are senior unsecured obligations of the Company and rank equally with all of the Company’s other existing and future senior\nand unsecured indebtedness. The Indentures contain certain limited covenants restricting the Company’s ability to incur certain\nliens, enter into certain sale and leaseback transactions and merge or consolidate with any other entity or convey, transfer or lease\nall or substantially all of the Company’s properties and assets to another person, which, in each case, is subject to a number of\nsignificant limitations and exceptions. The Indentures contain certain other covenants, events of default and other customary provisions.\nFrom time to time in the ordinary course of business, the Trustee and\naffiliates of the Trustee have engaged in and may in the future engage in commercial banking, investment banking and other commercial\ntransactions and services with the Company and its subsidiaries for which they have received or will receive customary fees and commissions.\nFor example, an affiliate of the Trustee is a lender under the Company’s revolving credit facility, an affiliate of the Trustee\nis one of the underwriters for the offering and sale of the Notes, and the Trustee is the trustee under the indentures governing the Company’s\n3.750% Notes due 2026, 6.000% Notes due 2028, 4.875% Notes due 2029, 4.875% Notes due 2030 and the Existing 2032 Notes.\nThe foregoing summary does\nnot purport to be complete and is qualified in its entirety by reference to the complete terms of the Base Indenture and the Sixth Supplemental\nwhich is filed as Exhibit 4.3 to this Current Report on Form 8-K, the Eighth Supplemental Indenture, which is filed as Exhibit 4.4 to\nthis Current Report on Form 8-K and the Notes, the forms of which are filed as Exhibits 4.5 and 4.6 to this Current Report on Form 8-K,\neach of which is incorporated herein by reference.",
+      "char_count": 4931,
+      "is_tail": false
+    },
+    {
+      "block_id": "s2:h",
+      "type": "heading",
+      "section_id": "s2",
+      "page_num": 0,
+      "content": "Item 8.01 Other Events.",
+      "char_count": 23
+    },
+    {
+      "block_id": "s2:p",
+      "type": "paragraph",
+      "section_id": "s2",
+      "page_num": 0,
+      "content": "On November 10, 2025, the\nCompany entered into an underwriting agreement (the “Underwriting Agreement”) with BofA Securities, Inc., Citigroup Global\nMarkets Inc. and PNC Capital Markets LLC, as representatives of the several underwriters named in Schedule 1 thereto (collectively, the\n“Underwriters”), pursuant to which the Company agreed to sell and the Underwriters agreed to purchase, subject to and upon\nthe terms and conditions set forth therein, the Notes. The Underwriting Agreement includes customary representations, warranties and covenants\nby the Company. It also provides for customary indemnification by each of the Company and the respective Underwriters against certain\nliabilities arising out of or in connection with the sale of the Notes and for customary contribution provisions in respect of those liabilities.\nThe foregoing summary of the\nUnderwriting Agreement does not purport to be complete and is qualified in its entirety by reference to the complete terms of the Underwriting\nAgreement, a copy of which is filed as Exhibit 1.1 to this Current Report on Form 8-K and is incorporated herein by reference.",
+      "char_count": 1129,
+      "is_tail": false
+    },
+    {
+      "block_id": "s3:h",
+      "type": "heading",
+      "section_id": "s3",
+      "page_num": 0,
+      "content": "Item 9.01 Financial Statements and Exhibits.",
+      "char_count": 44
+    },
+    {
+      "block_id": "s3:p",
+      "type": "paragraph",
+      "section_id": "s3",
+      "page_num": 0,
+      "content": "(d) Exhibits\nExhibit No.\nAgreement, dated as of November 10, 2025, by and among the Company and BofA Securities, Inc., Citigroup Global Markets Inc. and PNC\nCapital Markets LLC, as representatives of the underwriters named in Schedule 1 thereto\ndated as of June 6, 2019, by and between the Company and U.S. Bank Trust Company, National Association (as successor in interest\non Form 8-K filed with the Commission on June 6, 2019) (SEC File No. 000-23354)\nReport on Form 8-K filed with the Commission on August 21, 2024) (SEC File No. 000-23354)\nU.S. Bank Trust Company, National Association, as trustee\nBank Trust Company, National Association, as trustee\nGlobal Note due 2035 (included in Exhibit 4.4)\nGledhill LLP\nGledhill LLP (included in Exhibit 5.1)\n(included in Exhibit 5.2)\nData File (formatted as Inline XBRL)",
+      "char_count": 816,
+      "is_tail": true
+    },
+    {
+      "block_id": "s4:h",
+      "type": "heading",
+      "section_id": "s4",
+      "page_num": 0,
+      "content": "SIGNATURES",
+      "char_count": 10
+    },
+    {
+      "block_id": "s4:p",
+      "type": "paragraph",
+      "section_id": "s4",
+      "page_num": 0,
+      "content": "Pursuant to the requirements\nof the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto\nduly authorized.\nFlex Ltd.\nDate: November 13, 2025\nBy:\n/s/ Kevin Krumm\nName:\nKevin Krumm\nTitle:\nChief Financial Officer",
+      "char_count": 286,
+      "is_tail": true
+    },
+    {
+      "block_id": "legal:1",
+      "type": "legal_disclaimer",
+      "section_id": "",
+      "page_num": 0,
+      "content": "Indenture, which are incorporated by reference as Exhibits 4.1 and 4.2 to this Current Report on Form 8-K, the Seventh Supplemental Indenture,",
+      "char_count": 142
+    },
+    {
+      "block_id": "legal:2",
+      "type": "legal_disclaimer",
+      "section_id": "",
+      "page_num": 0,
+      "content": "to U.S. Bank National Association), as trustee (incorporated by reference to Exhibit 4.1 to the Registrant’s Current Report",
+      "char_count": 123
+    },
+    {
+      "block_id": "legal:3",
+      "type": "legal_disclaimer",
+      "section_id": "",
+      "page_num": 0,
+      "content": "Bank Trust Company, National Association, as trustee (incorporated by reference to Exhibit 4.2 to the Registrant’s Current",
+      "char_count": 122
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "s1",
+      "header": "Item 1.01 Entry into a Material Definitive",
+      "level": 1,
+      "item_code": "1.01",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "content": "Agreement.\nOn November 13, 2025, Flex\nLtd. (the “Company”) completed its sale of $150,000,000 aggregate principal amount of its 5.250% Notes due 2032 (the “Additional\n2032 Notes”) and $600,000,000 aggregate principal amount of its 5.375% Notes due 2035 (the “2035 Notes” and, together\nwith the Additional 2032 Notes, the “Notes”). The Additional 2032 Notes constitute a further issuance of, and will be\nconsolidated and form a single series with, the $500,000,000 aggregate principal amount of 5.250% Notes due 2032 issued by the Company\non August 21, 2024 (the “Existing 2032 Notes” and, together with the Additional 2032 Notes, the “2032 Notes”).\nThe offer and sale of the Notes was registered pursuant to the Company’s shelf registration statement on Form S-3 (File No. 333-281573),\nfiled with the Securities and Exchange Commission (the “Commission”) on August 15, 2024. A prospectus supplement relating\nto the offer and sale of the Notes was filed with the Commission on November\n, 2025.\nThe Additional 2032 Notes\nwere issued under an Indenture, dated as of June 6, 2019 (the “Base Indenture”) between the Company and U.S. Bank Trust Company,\nNational Association, as trustee (the “Trustee”), as successor in interest to U.S. Bank National Association, as supplemented\nby the Sixth Supplemental Indenture, dated as of August 21, 2024 between the Company and the Trustee (the “Sixth Supplemental Indenture”),\nas further supplemented by the Seventh Supplemental Indenture, dated as of November 13, 2025 between the Company and the Trustee (the\n“Seventh Supplemental Indenture” and, together with the Base Indenture and the Sixth Supplemental Indenture, the “2032\nReopening Indenture”). The 2035 Notes were issued under the Base Indenture, as supplemented by the Eighth Supplemental Indenture,\ndated as of November 13, 2025 between the Company and the Trustee (the “Eighth Supplemental Indenture” and, together with\nthe Base Indenture, the “2035 Notes Indenture;” and the 2035 Notes Indenture together with the 2032 Reopening Indenture are\nreferred to as the “Indentures”).\nInterest on the Additional\n2032 Notes is payable on January 15 and July 15 of each year, beginning on January 15, 2026. The Additonal 2032 Notes will mature\non January 15, 2032. Interest on the 2035 Notes is payable on May 13 and November 13 of each year, beginning on May 13, 2026. The\n2035 Notes will mature on November 13, 2035. The Company may, at its option, redeem some or all of the 2032 Notes at any time by paying\nthe applicable redemption prices set forth in the 2032 Reopening Indenture, and the Company may, at its option, redeem some or all of\nthe 2035 Notes at any time by paying the applicable redemption prices set forth in the 2035 Notes Indenture. In addition, holders of the\nNotes of either series may require the Company to repurchase their Notes upon the occurrence of a change of control repurchase event (as\ndefined in the applicable Indenture), unless the Company has previously exercised its right to redeem such Notes as described above. The\nNotes are senior unsecured obligations of the Company and rank equally with all of the Company’s other existing and future senior\nand unsecured indebtedness. The Indentures contain certain limited covenants restricting the Company’s ability to incur certain\nliens, enter into certain sale and leaseback transactions and merge or consolidate with any other entity or convey, transfer or lease\nall or substantially all of the Company’s properties and assets to another person, which, in each case, is subject to a number of\nsignificant limitations and exceptions. The Indentures contain certain other covenants, events of default and other customary provisions.\nFrom time to time in the ordinary course of business, the Trustee and\naffiliates of the Trustee have engaged in and may in the future engage in commercial banking, investment banking and other commercial\ntransactions and services with the Company and its subsidiaries for which they have received or will receive customary fees and commissions.\nFor example, an affiliate of the Trustee is a lender under the Company’s revolving credit facility, an affiliate of the Trustee\nis one of the underwriters for the offering and sale of the Notes, and the Trustee is the trustee under the indentures governing the Company’s\n3.750% Notes due 2026, 6.000% Notes due 2028, 4.875% Notes due 2029, 4.875% Notes due 2030 and the Existing 2032 Notes.\nThe foregoing summary does\nnot purport to be complete and is qualified in its entirety by reference to the complete terms of the Base Indenture and the Sixth Supplemental\nwhich is filed as Exhibit 4.3 to this Current Report on Form 8-K, the Eighth Supplemental Indenture, which is filed as Exhibit 4.4 to\nthis Current Report on Form 8-K and the Notes, the forms of which are filed as Exhibits 4.5 and 4.6 to this Current Report on Form 8-K,\neach of which is incorporated herein by reference.",
+      "char_count": 4931,
+      "has_legal_boilerplate": true,
+      "legal_boilerplate_lines": [
+        "Indenture, which are incorporated by reference as Exhibits 4.1 and 4.2 to this Current Report on Form 8-K, the Seventh Supplemental Indenture,"
+      ],
+      "signature_date": ""
+    },
+    {
+      "section_id": "s2",
+      "header": "Item 8.01 Other Events.",
+      "level": 1,
+      "item_code": "8.01",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "content": "On November 10, 2025, the\nCompany entered into an underwriting agreement (the “Underwriting Agreement”) with BofA Securities, Inc., Citigroup Global\nMarkets Inc. and PNC Capital Markets LLC, as representatives of the several underwriters named in Schedule 1 thereto (collectively, the\n“Underwriters”), pursuant to which the Company agreed to sell and the Underwriters agreed to purchase, subject to and upon\nthe terms and conditions set forth therein, the Notes. The Underwriting Agreement includes customary representations, warranties and covenants\nby the Company. It also provides for customary indemnification by each of the Company and the respective Underwriters against certain\nliabilities arising out of or in connection with the sale of the Notes and for customary contribution provisions in respect of those liabilities.\nThe foregoing summary of the\nUnderwriting Agreement does not purport to be complete and is qualified in its entirety by reference to the complete terms of the Underwriting\nAgreement, a copy of which is filed as Exhibit 1.1 to this Current Report on Form 8-K and is incorporated herein by reference.",
+      "char_count": 1129,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": [],
+      "signature_date": ""
+    },
+    {
+      "section_id": "s3",
+      "header": "Item 9.01 Financial Statements and Exhibits.",
+      "level": 1,
+      "item_code": "9.01",
+      "section_type": "tail",
+      "is_tail": true,
+      "content": "(d) Exhibits\nExhibit No.\nAgreement, dated as of November 10, 2025, by and among the Company and BofA Securities, Inc., Citigroup Global Markets Inc. and PNC\nCapital Markets LLC, as representatives of the underwriters named in Schedule 1 thereto\ndated as of June 6, 2019, by and between the Company and U.S. Bank Trust Company, National Association (as successor in interest\non Form 8-K filed with the Commission on June 6, 2019) (SEC File No. 000-23354)\nReport on Form 8-K filed with the Commission on August 21, 2024) (SEC File No. 000-23354)\nU.S. Bank Trust Company, National Association, as trustee\nBank Trust Company, National Association, as trustee\nGlobal Note due 2035 (included in Exhibit 4.4)\nGledhill LLP\nGledhill LLP (included in Exhibit 5.1)\n(included in Exhibit 5.2)\nData File (formatted as Inline XBRL)",
+      "char_count": 816,
+      "has_legal_boilerplate": true,
+      "legal_boilerplate_lines": [
+        "to U.S. Bank National Association), as trustee (incorporated by reference to Exhibit 4.1 to the Registrant’s Current Report",
+        "Bank Trust Company, National Association, as trustee (incorporated by reference to Exhibit 4.2 to the Registrant’s Current"
+      ],
+      "signature_date": ""
+    },
+    {
+      "section_id": "s4",
+      "header": "SIGNATURES",
+      "level": 1,
+      "item_code": "",
+      "section_type": "tail",
+      "is_tail": true,
+      "content": "Pursuant to the requirements\nof the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto\nduly authorized.\nFlex Ltd.\nDate: November 13, 2025\nBy:\n/s/ Kevin Krumm\nName:\nKevin Krumm\nTitle:\nChief Financial Officer",
+      "char_count": 286,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": [],
+      "signature_date": "November 13, 2025"
+    }
+  ],
+  "exhibits": [
+    {
+      "exhibit_id": "1.1",
+      "title": "Underwriting",
+      "line": "1.1",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "exhibit_id": "4.1",
+      "title": "Indenture,",
+      "line": "4.1",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "exhibit_id": "4.2",
+      "title": "Sixth Supplemental Indenture, dated as of August 21, 2024, by and between the Company and U.S.",
+      "line": "4.2",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "exhibit_id": "4.3",
+      "title": "Seventh Supplemental Indenture, dated as of November 13, 2025, by and between the Company and",
+      "line": "4.3",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "exhibit_id": "4.4",
+      "title": "Eighth Supplemental Indenture, dated as of November 13, 2025, by and between the Company and U.S.",
+      "line": "4.4",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "exhibit_id": "4.5",
+      "title": "Form of 5.250% Global Note due 2032 (included in Exhibit 4.3)",
+      "line": "4.5",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "exhibit_id": "4.6",
+      "title": "Form of 5.375%",
+      "line": "4.6",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "exhibit_id": "5.1",
+      "title": "Opinion of Allen &",
+      "line": "5.1",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "exhibit_id": "5.2",
+      "title": "Opinion of Venable LLP",
+      "line": "5.2",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "exhibit_id": "23.1",
+      "title": "Consent of Allen &",
+      "line": "23.1",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "exhibit_id": "23.2",
+      "title": "Consent of Venable LLP",
+      "line": "23.2",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "exhibit_id": "104",
+      "title": "Cover Page Interactive",
+      "line": "104",
+      "section_header": "Item 9.01 Financial Statements and Exhibits."
+    }
+  ],
+  "tables": [
+    {
+      "table_id": "table:exhibits",
+      "table_type": "exhibit_index",
+      "header": [
+        "exhibit_id",
+        "title",
+        "section_header"
+      ],
+      "rows": [
+        [
+          "1.1",
+          "Underwriting",
+          "Item 9.01 Financial Statements and Exhibits."
+        ],
+        [
+          "4.1",
+          "Indenture,",
+          "Item 9.01 Financial Statements and Exhibits."
+        ],
+        [
+          "4.2",
+          "Sixth Supplemental Indenture, dated as of August 21, 2024, by and between the Company and U.S.",
+          "Item 9.01 Financial Statements and Exhibits."
+        ],
+        [
+          "4.3",
+          "Seventh Supplemental Indenture, dated as of November 13, 2025, by and between the Company and",
+          "Item 9.01 Financial Statements and Exhibits."
+        ],
+        [
+          "4.4",
+          "Eighth Supplemental Indenture, dated as of November 13, 2025, by and between the Company and U.S.",
+          "Item 9.01 Financial Statements and Exhibits."
+        ],
+        [
+          "4.5",
+          "Form of 5.250% Global Note due 2032 (included in Exhibit 4.3)",
+          "Item 9.01 Financial Statements and Exhibits."
+        ],
+        [
+          "4.6",
+          "Form of 5.375%",
+          "Item 9.01 Financial Statements and Exhibits."
+        ],
+        [
+          "5.1",
+          "Opinion of Allen &",
+          "Item 9.01 Financial Statements and Exhibits."
+        ],
+        [
+          "5.2",
+          "Opinion of Venable LLP",
+          "Item 9.01 Financial Statements and Exhibits."
+        ],
+        [
+          "23.1",
+          "Consent of Allen &",
+          "Item 9.01 Financial Statements and Exhibits."
+        ],
+        [
+          "23.2",
+          "Consent of Venable LLP",
+          "Item 9.01 Financial Statements and Exhibits."
+        ],
+        [
+          "104",
+          "Cover Page Interactive",
+          "Item 9.01 Financial Statements and Exhibits."
+        ]
+      ],
+      "row_count": 12
+    }
+  ],
+  "reading_order": [
+    {
+      "order": 1,
+      "type": "heading",
+      "ref": "s1:h",
+      "page_num": 0,
+      "preview": "Item 1.01 Entry into a Material Definitive"
+    },
+    {
+      "order": 2,
+      "type": "paragraph",
+      "ref": "s1:p",
+      "page_num": 0,
+      "preview": "Agreement.\nOn November 13, 2025, Flex\nLtd. (the “Company”) completed its sale of $150,000,000 aggregate principal amount"
+    },
+    {
+      "order": 3,
+      "type": "heading",
+      "ref": "s2:h",
+      "page_num": 0,
+      "preview": "Item 8.01 Other Events."
+    },
+    {
+      "order": 4,
+      "type": "paragraph",
+      "ref": "s2:p",
+      "page_num": 0,
+      "preview": "On November 10, 2025, the\nCompany entered into an underwriting agreement (the “Underwriting Agreement”) with BofA Securi"
+    },
+    {
+      "order": 5,
+      "type": "heading",
+      "ref": "s3:h",
+      "page_num": 0,
+      "preview": "Item 9.01 Financial Statements and Exhibits."
+    },
+    {
+      "order": 6,
+      "type": "paragraph",
+      "ref": "s3:p",
+      "page_num": 0,
+      "preview": "(d) Exhibits\nExhibit No.\nAgreement, dated as of November 10, 2025, by and among the Company and BofA Securities, Inc., C"
+    },
+    {
+      "order": 7,
+      "type": "heading",
+      "ref": "s4:h",
+      "page_num": 0,
+      "preview": "SIGNATURES"
+    },
+    {
+      "order": 8,
+      "type": "paragraph",
+      "ref": "s4:p",
+      "page_num": 0,
+      "preview": "Pursuant to the requirements\nof the Securities Exchange Act of 1934, the registrant has duly caused this report to be si"
+    },
+    {
+      "order": 9,
+      "type": "legal_disclaimer",
+      "ref": "legal:1",
+      "page_num": 0,
+      "preview": "Indenture, which are incorporated by reference as Exhibits 4.1 and 4.2 to this Current Report on Form 8-K, the Seventh S"
+    },
+    {
+      "order": 10,
+      "type": "legal_disclaimer",
+      "ref": "legal:2",
+      "page_num": 0,
+      "preview": "to U.S. Bank National Association), as trustee (incorporated by reference to Exhibit 4.1 to the Registrant’s Current Rep"
+    },
+    {
+      "order": 11,
+      "type": "legal_disclaimer",
+      "ref": "legal:3",
+      "page_num": 0,
+      "preview": "Bank Trust Company, National Association, as trustee (incorporated by reference to Exhibit 4.2 to the Registrant’s Curre"
+    }
+  ],
+  "quality": {
+    "total_pages": 0,
+    "pages_with_text": 0,
+    "pages_with_text_ratio": 0,
+    "table_count": 1,
+    "section_count": 4,
+    "block_count": 11,
+    "text_char_count": 10233,
+    "text_word_count": 1631,
+    "warnings": []
+  }
+}

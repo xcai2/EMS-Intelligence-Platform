@@ -1,0 +1,242 @@
+{
+  "source": {
+    "doc_type": "8k_only",
+    "suffix": ".html",
+    "file_name": "Flex_8-K_2024-08-09.html",
+    "relative_path": "Flex_8-K_2024-08-09.html",
+    "absolute_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/flex_8k_press_releases/Flex_8-K_2024-08-09.html",
+    "size_bytes": 61459,
+    "parsed_at": "2026-03-30T20:10:15.346175"
+  },
+  "classification": {
+    "doc_family": "regulatory_filing",
+    "doc_subtype": "8k_press_release",
+    "confidence": 0.9,
+    "signals_used": [
+      "8k_keyword",
+      "sec_current_report_pattern"
+    ]
+  },
+  "cover_metadata": {
+    "line_count": 51,
+    "raw_lines": [
+      "UNITED STATES",
+      "SECURITIES AND EXCHANGE COMMISSION",
+      "Washington, D.C. 20549",
+      "FORM",
+      "8-K",
+      "CURRENT REPORT",
+      "Pursuant to Section 13 or 15(d) of",
+      "the Securities Exchange Act of 1934",
+      "Date of Report (Date of earliest event reported):",
+      "August 8, 2024",
+      "FLEX LTD.",
+      "(Exact Name of Registrant as Specified in Its Charter)",
+      "Singapore",
+      "0-23354",
+      "Not Applicable",
+      "(State or other jurisdiction of incorporation)",
+      "(Commission File Number)",
+      "(IRS Employer Identification No.)",
+      "2 Changi South Lane",
+      ",",
+      "Singapore",
+      "(Address of principal executive offices)",
+      "(Zip Code)",
+      "Registrant’s telephone number, including area code:",
+      "(",
+      "65",
+      ")",
+      "6876-9899",
+      "Not Applicable",
+      "(Former name or former address, if changed since last report)",
+      "Check the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:",
+      "☐",
+      "Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)",
+      "☐",
+      "Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)",
+      "☐",
+      "Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))",
+      "☐",
+      "Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))",
+      "Securities registered pursuant to Section 12(b) of the Act:",
+      "Title of each class",
+      "Trading Symbol(s)",
+      "Name of each exchange on which registered",
+      "Ordinary Shares, No Par Value",
+      "FLEX",
+      "The Nasdaq Stock Market LLC",
+      "Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).",
+      "Emerging growth company",
+      "☐",
+      "If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act.",
+      "☐"
+    ],
+    "fields": {
+      "form_type": "8-K",
+      "registrant_name": "FLEX LTD.",
+      "date_of_report": "August 8, 2024",
+      "telephone": "",
+      "commission_file_number": ""
+    }
+  },
+  "usage_policy": {
+    "full_text_role": "inspection_full_text",
+    "full_text_core_role": "chunk_embedding_input",
+    "chunk_source_field": "full_text_core"
+  },
+  "full_text": "0000866374\nfalse\n00-0000000\nSG\nUNITED STATES\nSECURITIES AND EXCHANGE COMMISSION\nWashington, D.C. 20549\nFORM\n8-K\nCURRENT REPORT\nPursuant to Section 13 or 15(d) of\nthe Securities Exchange Act of 1934\nDate of Report (Date of earliest event reported):\nAugust 8, 2024\nFLEX LTD.\n(Exact Name of Registrant as Specified in Its Charter)\nSingapore\n0-23354\nNot Applicable\n(State or other jurisdiction of incorporation)\n(Commission File Number)\n(IRS Employer Identification No.)\n2 Changi South Lane\n,\nSingapore\n486123\n(Address of principal executive offices)\n(Zip Code)\nRegistrant’s telephone number, including area code:\n(\n65\n)\n6876-9899\nNot Applicable\n(Former name or former address, if changed since last report)\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:\n☐\nWritten communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n☐\nSoliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n☐\nPre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n☐\nPre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\nSecurities registered pursuant to Section 12(b) of the Act:\nTitle of each class\nTrading Symbol(s)\nName of each exchange on which registered\nOrdinary Shares, No Par Value\nFLEX\nThe Nasdaq Stock Market LLC\nIndicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).\nEmerging growth company\n☐\nIf an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act.\n☐\nItem 5.07 Submission of Matters to a Vote of Security Holders.\nOn August 8, 2024, Flex Ltd. (the “Company”) held its 2024 Annual General Meeting. There were 398,803,737 Ordinary Shares entitled to be voted and 367,911,599 Ordinary Shares were voted in person or by proxy at the Annual General Meeting.\nAt the Annual General Meeting:\n(1) The shareholders re-elected the nine (9) nominees for director.\n(2) The shareholders re-appointed Deloitte & Touche LLP as the Company’s independent auditors for the 2025 fiscal year and authorized the Company’s Board of Directors, upon the recommendation of the Audit Committee of the Board of Directors, to fix their remuneration.\n(3) The shareholders approved, on a non-binding, advisory basis, the compensation of the Company’s named executive officers.\n(4) The shareholders approved a general authorization for the Company’s Board of Directors to allot and issue Ordinary Shares.\n(5) The shareholders approved the renewal of the Company’s Share Purchase Mandate permitting the Company to purchase or otherwise acquire up to 20% of its own issued and outstanding Ordinary Shares as of the date of the Annual General Meeting.\nThe Company’s Inspector of Elections certified the following vote tabulations from the Annual General Meeting:\nBoard of Directors:\nBroker\nNominee\nFor\nAgainst\nAbstain\nNon-Votes\nRevathi Advaithi\n348,417,415\n892,472\n73,318\n18,528,394\nJohn D. Harris II\n346,053,136\n3,269,974\n60,095\n18,528,394\nMichael E. Hurlston\n312,734,965\n36,586,680\n61,560\n18,528,394\nErin L. McSweeney\n343,247,898\n6,076,735\n58,572\n18,528,394\nCharles K. Stevens, III\n339,577,771\n9,743,718\n61,716\n18,528,394\nMaryrose T. Sylvester\n346,542,896\n2,783,866\n56,443\n18,528,394\nLay Koon Tan\n339,625,087\n9,697,621\n60,497\n18,528,394\nPatrick J. Ward\n348,452,062\n867,988\n63,155\n18,528,394\nWilliam D. Watkins\n338,409,577\n10,915,986\n57,642\n18,528,394\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nRe-appointment of Deloitte & Touche LLP\n347,687,406\n19,905,528\n318,665\n—\nas the Company's independent auditors for the\n2024 fiscal year and to authorize the Board of\nDirectors, upon the recommendation of the\nAudit Committee of the Board of Directors, to\nfix their remuneration\n2\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nNon-binding, advisory resolution relating to\n335,630,252\n8,871,438\n4,881,515\n18,528,394\nthe compensation of the Company's named\nexecutive officers\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nGeneral authorization for the Board of\n310,137,276\n38,898,505\n347,424\n18,528,394\nDirectors to allot and issue Ordinary Shares\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nRenewal of the Share Purchase Mandate\n338,608,115\n8,992,210\n1,782,880\n18,528,394\nrelating to acquisitions by the Company of\nup to 20% of its issued and outstanding\nOrdinary Shares as of the date of the Annual\nGeneral Meeting\nItem 8.01 Other Events.\nThe Company announced that it has received shareholder approval to purchase up to 20% of the Company’s issued and outstanding Ordinary Shares, and the Company’s Board of Directors has authorized management to continue its share repurchase plan for the Company’s issued Ordinary Shares in an aggregate amount not to exceed $1.7 billion. Share repurchases, if any, will be made in the open market and in compliance with SEC Rule 10b-18. The timing and actual number of shares repurchased will depend on a variety of factors including price, market conditions and applicable legal requirements. The share repurchase program does not obligate the Company to repurchase any specific number of shares and may be suspended or terminated at any time without prior notice.\n3\nSIGNATURES\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nFLEX LTD.\nDate: August 9, 2024\nBy:\n/s/ Scott Offer\nName:\nTitle:\nScott Offer\nExecutive Vice President and\nGeneral Counsel\n4",
+  "full_text_core": "The Company announced that it has received shareholder approval to purchase up to 20% of the Company’s issued and outstanding Ordinary Shares, and the Company’s Board of Directors has authorized management to continue its share repurchase plan for the Company’s issued Ordinary Shares in an aggregate amount not to exceed $1.7 billion. Share repurchases, if any, will be made in the open market and in compliance with SEC Rule 10b-18. The timing and actual number of shares repurchased will depend on a variety of factors including price, market conditions and applicable legal requirements. The share repurchase program does not obligate the Company to repurchase any specific number of shares and may be suspended or terminated at any time without prior notice.",
+  "pages": [],
+  "blocks": [
+    {
+      "block_id": "s1:h",
+      "type": "heading",
+      "section_id": "s1",
+      "page_num": 0,
+      "content": "Item 5.07 Submission of Matters to a Vote of Security Holders.",
+      "char_count": 62
+    },
+    {
+      "block_id": "s1:p",
+      "type": "paragraph",
+      "section_id": "s1",
+      "page_num": 0,
+      "content": "On August 8, 2024, Flex Ltd. (the “Company”) held its 2024 Annual General Meeting. There were 398,803,737 Ordinary Shares entitled to be voted and 367,911,599 Ordinary Shares were voted in person or by proxy at the Annual General Meeting.\nAt the Annual General Meeting:\n(1) The shareholders re-elected the nine (9) nominees for director.\n(2) The shareholders re-appointed Deloitte & Touche LLP as the Company’s independent auditors for the 2025 fiscal year and authorized the Company’s Board of Directors, upon the recommendation of the Audit Committee of the Board of Directors, to fix their remuneration.\n(3) The shareholders approved, on a non-binding, advisory basis, the compensation of the Company’s named executive officers.\n(4) The shareholders approved a general authorization for the Company’s Board of Directors to allot and issue Ordinary Shares.\n(5) The shareholders approved the renewal of the Company’s Share Purchase Mandate permitting the Company to purchase or otherwise acquire up to 20% of its own issued and outstanding Ordinary Shares as of the date of the Annual General Meeting.\nThe Company’s Inspector of Elections certified the following vote tabulations from the Annual General Meeting:\nBoard of Directors:\nBroker\nNominee\nFor\nAgainst\nAbstain\nNon-Votes\nRevathi Advaithi\n348,417,415\n892,472\n73,318\n18,528,394\nJohn D. Harris II\n346,053,136\n3,269,974\n60,095\n18,528,394\nMichael E. Hurlston\n312,734,965\n36,586,680\n61,560\n18,528,394\nErin L. McSweeney\n343,247,898\n6,076,735\n58,572\n18,528,394\nCharles K. Stevens, III\n339,577,771\n9,743,718\n61,716\n18,528,394\nMaryrose T. Sylvester\n346,542,896\n2,783,866\n56,443\n18,528,394\nLay Koon Tan\n339,625,087\n9,697,621\n60,497\n18,528,394\nPatrick J. Ward\n348,452,062\n867,988\n63,155\n18,528,394\nWilliam D. Watkins\n338,409,577\n10,915,986\n57,642\n18,528,394\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nRe-appointment of Deloitte & Touche LLP\n347,687,406\n19,905,528\n318,665\n—\nas the Company's independent auditors for the\n2024 fiscal year and to authorize the Board of\nDirectors, upon the recommendation of the\nAudit Committee of the Board of Directors, to\nfix their remuneration\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nNon-binding, advisory resolution relating to\n335,630,252\n8,871,438\n4,881,515\n18,528,394\nthe compensation of the Company's named\nexecutive officers\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nGeneral authorization for the Board of\n310,137,276\n38,898,505\n347,424\n18,528,394\nDirectors to allot and issue Ordinary Shares\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nRenewal of the Share Purchase Mandate\n338,608,115\n8,992,210\n1,782,880\n18,528,394\nrelating to acquisitions by the Company of\nup to 20% of its issued and outstanding\nOrdinary Shares as of the date of the Annual\nGeneral Meeting",
+      "char_count": 2726,
+      "is_tail": false
+    },
+    {
+      "block_id": "s2:h",
+      "type": "heading",
+      "section_id": "s2",
+      "page_num": 0,
+      "content": "Item 8.01 Other Events.",
+      "char_count": 23
+    },
+    {
+      "block_id": "s2:p",
+      "type": "paragraph",
+      "section_id": "s2",
+      "page_num": 0,
+      "content": "The Company announced that it has received shareholder approval to purchase up to 20% of the Company’s issued and outstanding Ordinary Shares, and the Company’s Board of Directors has authorized management to continue its share repurchase plan for the Company’s issued Ordinary Shares in an aggregate amount not to exceed $1.7 billion. Share repurchases, if any, will be made in the open market and in compliance with SEC Rule 10b-18. The timing and actual number of shares repurchased will depend on a variety of factors including price, market conditions and applicable legal requirements. The share repurchase program does not obligate the Company to repurchase any specific number of shares and may be suspended or terminated at any time without prior notice.",
+      "char_count": 763,
+      "is_tail": false
+    },
+    {
+      "block_id": "s3:h",
+      "type": "heading",
+      "section_id": "s3",
+      "page_num": 0,
+      "content": "SIGNATURES",
+      "char_count": 10
+    },
+    {
+      "block_id": "s3:p",
+      "type": "paragraph",
+      "section_id": "s3",
+      "page_num": 0,
+      "content": "Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nFLEX LTD.\nDate: August 9, 2024\nBy:\n/s/ Scott Offer\nName:\nTitle:\nScott Offer\nExecutive Vice President and\nGeneral Counsel",
+      "char_count": 304,
+      "is_tail": true
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "s1",
+      "header": "Item 5.07 Submission of Matters to a Vote of Security Holders.",
+      "level": 1,
+      "item_code": "5.07",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "content": "On August 8, 2024, Flex Ltd. (the “Company”) held its 2024 Annual General Meeting. There were 398,803,737 Ordinary Shares entitled to be voted and 367,911,599 Ordinary Shares were voted in person or by proxy at the Annual General Meeting.\nAt the Annual General Meeting:\n(1) The shareholders re-elected the nine (9) nominees for director.\n(2) The shareholders re-appointed Deloitte & Touche LLP as the Company’s independent auditors for the 2025 fiscal year and authorized the Company’s Board of Directors, upon the recommendation of the Audit Committee of the Board of Directors, to fix their remuneration.\n(3) The shareholders approved, on a non-binding, advisory basis, the compensation of the Company’s named executive officers.\n(4) The shareholders approved a general authorization for the Company’s Board of Directors to allot and issue Ordinary Shares.\n(5) The shareholders approved the renewal of the Company’s Share Purchase Mandate permitting the Company to purchase or otherwise acquire up to 20% of its own issued and outstanding Ordinary Shares as of the date of the Annual General Meeting.\nThe Company’s Inspector of Elections certified the following vote tabulations from the Annual General Meeting:\nBoard of Directors:\nBroker\nNominee\nFor\nAgainst\nAbstain\nNon-Votes\nRevathi Advaithi\n348,417,415\n892,472\n73,318\n18,528,394\nJohn D. Harris II\n346,053,136\n3,269,974\n60,095\n18,528,394\nMichael E. Hurlston\n312,734,965\n36,586,680\n61,560\n18,528,394\nErin L. McSweeney\n343,247,898\n6,076,735\n58,572\n18,528,394\nCharles K. Stevens, III\n339,577,771\n9,743,718\n61,716\n18,528,394\nMaryrose T. Sylvester\n346,542,896\n2,783,866\n56,443\n18,528,394\nLay Koon Tan\n339,625,087\n9,697,621\n60,497\n18,528,394\nPatrick J. Ward\n348,452,062\n867,988\n63,155\n18,528,394\nWilliam D. Watkins\n338,409,577\n10,915,986\n57,642\n18,528,394\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nRe-appointment of Deloitte & Touche LLP\n347,687,406\n19,905,528\n318,665\n—\nas the Company's independent auditors for the\n2024 fiscal year and to authorize the Board of\nDirectors, upon the recommendation of the\nAudit Committee of the Board of Directors, to\nfix their remuneration\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nNon-binding, advisory resolution relating to\n335,630,252\n8,871,438\n4,881,515\n18,528,394\nthe compensation of the Company's named\nexecutive officers\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nGeneral authorization for the Board of\n310,137,276\n38,898,505\n347,424\n18,528,394\nDirectors to allot and issue Ordinary Shares\nBroker\nFor\nAgainst\nAbstain\nNon-Votes\nRenewal of the Share Purchase Mandate\n338,608,115\n8,992,210\n1,782,880\n18,528,394\nrelating to acquisitions by the Company of\nup to 20% of its issued and outstanding\nOrdinary Shares as of the date of the Annual\nGeneral Meeting",
+      "char_count": 2726,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": [],
+      "signature_date": ""
+    },
+    {
+      "section_id": "s2",
+      "header": "Item 8.01 Other Events.",
+      "level": 1,
+      "item_code": "8.01",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "content": "The Company announced that it has received shareholder approval to purchase up to 20% of the Company’s issued and outstanding Ordinary Shares, and the Company’s Board of Directors has authorized management to continue its share repurchase plan for the Company’s issued Ordinary Shares in an aggregate amount not to exceed $1.7 billion. Share repurchases, if any, will be made in the open market and in compliance with SEC Rule 10b-18. The timing and actual number of shares repurchased will depend on a variety of factors including price, market conditions and applicable legal requirements. The share repurchase program does not obligate the Company to repurchase any specific number of shares and may be suspended or terminated at any time without prior notice.",
+      "char_count": 763,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": [],
+      "signature_date": ""
+    },
+    {
+      "section_id": "s3",
+      "header": "SIGNATURES",
+      "level": 1,
+      "item_code": "",
+      "section_type": "tail",
+      "is_tail": true,
+      "content": "Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nFLEX LTD.\nDate: August 9, 2024\nBy:\n/s/ Scott Offer\nName:\nTitle:\nScott Offer\nExecutive Vice President and\nGeneral Counsel",
+      "char_count": 304,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": [],
+      "signature_date": "August 9, 2024"
+    }
+  ],
+  "exhibits": [],
+  "tables": [],
+  "reading_order": [
+    {
+      "order": 1,
+      "type": "heading",
+      "ref": "s1:h",
+      "page_num": 0,
+      "preview": "Item 5.07 Submission of Matters to a Vote of Security Holders."
+    },
+    {
+      "order": 2,
+      "type": "paragraph",
+      "ref": "s1:p",
+      "page_num": 0,
+      "preview": "On August 8, 2024, Flex Ltd. (the “Company”) held its 2024 Annual General Meeting. There were 398,803,737 Ordinary Share"
+    },
+    {
+      "order": 3,
+      "type": "heading",
+      "ref": "s2:h",
+      "page_num": 0,
+      "preview": "Item 8.01 Other Events."
+    },
+    {
+      "order": 4,
+      "type": "paragraph",
+      "ref": "s2:p",
+      "page_num": 0,
+      "preview": "The Company announced that it has received shareholder approval to purchase up to 20% of the Company’s issued and outsta"
+    },
+    {
+      "order": 5,
+      "type": "heading",
+      "ref": "s3:h",
+      "page_num": 0,
+      "preview": "SIGNATURES"
+    },
+    {
+      "order": 6,
+      "type": "paragraph",
+      "ref": "s3:p",
+      "page_num": 0,
+      "preview": "Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be si"
+    }
+  ],
+  "quality": {
+    "total_pages": 0,
+    "pages_with_text": 0,
+    "pages_with_text_ratio": 0,
+    "table_count": 0,
+    "section_count": 3,
+    "block_count": 6,
+    "text_char_count": 5883,
+    "text_word_count": 889,
+    "warnings": []
+  }
+}

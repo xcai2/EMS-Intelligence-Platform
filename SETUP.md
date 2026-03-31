@@ -571,5 +571,13 @@ Flex-Practicum-Project-2026/
 │  API Docs: http://localhost:8001/docs            │
 │  Health: http://localhost:8001/api/health        │
 └──────────────────────────────────────────────────┘
+
+
+
+python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8001
 ```
+
+
+
+
 

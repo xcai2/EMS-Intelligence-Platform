@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   RefreshCw,
   Flame,
@@ -8,6 +8,7 @@ import {
   ExternalLink,
   Rss,
   Globe2,
+  Sparkles,
 } from 'lucide-react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
@@ -198,6 +199,8 @@ interface UnifiedNewsItem extends NewsItem {
   categoryLabel: string;
   timestampLabel: string;
 }
+
+type SummaryMode = 'combined' | 'anthropic' | 'openai';
 
 function getCategoryKey(categories?: string[]) {
   return categories?.[0] || 'general';
@@ -391,6 +394,21 @@ function isTopNewsEligible(item: UnifiedNewsItem) {
   return !TOP_NEWS_EXCLUDED_TERMS.some((term) => content.includes(term));
 }
 
+function formatSummaryForDisplay(raw: string) {
+  if (!raw) return '';
+  let text = raw.replace(/\r\n/g, '\n');
+  text = text.replace(/^#{1,6}\s*/gm, '');
+  text = text.replace(/^[-*_]{3,}\s*$/gm, '');
+  text = text.replace(/\*\*(.*?)\*\*/g, '$1');
+  text = text.replace(/\*(.*?)\*/g, '$1');
+  text = text.replace(/`([^`]+)`/g, '$1');
+  text = text.replace(/^[ \t]*[-+*]\s+/gm, '• ');
+  text = text.replace(/^[ \t]*\d+\.\s+/gm, '• ');
+  text = text.replace(/[ \t]+\n/g, '\n');
+  text = text.replace(/\n{3,}/g, '\n\n');
+  return text.trim();
+}
+
 export default function NewsPage() {
   const [selectedCompany, setSelectedCompany] = useState<string>('ALL');
   const [keyword, setKeyword] = useState('');
@@ -405,6 +423,11 @@ export default function NewsPage() {
   const [comparativeNews, setComparativeNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [summaryMode, setSummaryMode] = useState<SummaryMode>('combined');
+  const [flexSummary, setFlexSummary] = useState('');
+  const [summaryProviders, setSummaryProviders] = useState<string[]>([]);
+  const [summaryItemsUsed, setSummaryItemsUsed] = useState(0);
+  const [summaryLoading, setSummaryLoading] = useState(false);
 
   const fetchAllNews = async (showLoader = false, forceRefresh = false) => {
     if (showLoader) setLoading(true);
@@ -444,13 +467,46 @@ export default function NewsPage() {
     }
   };
 
+  const fetchFlexSummary = useCallback(async (forceRefresh = false, mode: SummaryMode = 'combined') => {
+    setSummaryLoading(true);
+    try {
+      const params = new URLSearchParams({
+        days: '3',
+        llm_mode: mode,
+        max_items: '16',
+        force_refresh: forceRefresh ? 'true' : 'false',
+      });
+      const res = await fetch(`${API_URL}/api/news/flex-summary?${params.toString()}`);
+      if (!res.ok) throw new Error(`Summary API error: ${res.status}`);
+      const data = await res.json();
+      setFlexSummary((data?.summary || '').trim());
+      setSummaryProviders(Array.isArray(data?.providers_used) ? data.providers_used : []);
+      setSummaryItemsUsed(Number(data?.items_used || 0));
+    } catch (err) {
+      console.error('Failed to fetch Flex summary:', err);
+      setFlexSummary('Summary is unavailable right now. Please try refresh.');
+      setSummaryProviders([]);
+      setSummaryItemsUsed(0);
+    } finally {
+      setSummaryLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
     fetchAllNews(true);
-  }, []);
+    fetchFlexSummary(false, 'combined');
+  }, [fetchFlexSummary]);
+
+  useEffect(() => {
+    fetchFlexSummary(false, summaryMode);
+  }, [summaryMode, fetchFlexSummary]);
 
   const refreshNews = async () => {
     setRefreshing(true);
-    await fetchAllNews(false, true);
+    await Promise.all([
+      fetchAllNews(false, true),
+      fetchFlexSummary(true, summaryMode),
+    ]);
     setRefreshing(false);
   };
 
@@ -566,6 +622,7 @@ export default function NewsPage() {
   const leadStory = topNewsFeed.find(isLeadSourceAllowed) || topNewsFeed[0];
   const hotRank = topNewsFeed.slice(0, 10);
   const trendingTopFive = hotRank.slice(0, 5);
+  const displaySummary = useMemo(() => formatSummaryForDisplay(flexSummary), [flexSummary]);
 
   if (loading) {
     return (
@@ -659,27 +716,78 @@ export default function NewsPage() {
           ))}
         </div>
 
-        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-[#0b1220]">
-          <div className="mb-2 text-xs uppercase tracking-wide text-slate-600 dark:text-slate-500">Official Company Entrances</div>
-          <div className="flex flex-wrap gap-2">
-            {COMPANY_TICKERS.map((ticker) => (
-              <a
-                key={ticker}
-                href={COMPANY_WEBSITES[ticker]}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700 transition hover:border-slate-400 dark:border-slate-700 dark:bg-[#0a101c] dark:text-slate-200 dark:hover:border-slate-600 dark:hover:text-white"
-              >
-                <span
-                  className="inline-flex items-center justify-center rounded px-2 py-1 text-[11px] font-semibold leading-none text-white"
-                  style={{ backgroundColor: COMPANY_COLORS[ticker] }}
+        <div className="mb-4 grid gap-4 xl:grid-cols-[1.35fr_1fr]">
+          <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-[#0b1220]">
+            <div className="mb-2 text-xs uppercase tracking-wide text-slate-600 dark:text-slate-500">Official Company Entrances</div>
+            <div className="flex flex-wrap gap-2">
+              {COMPANY_TICKERS.map((ticker) => (
+                <a
+                  key={ticker}
+                  href={COMPANY_WEBSITES[ticker]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm text-slate-700 transition hover:border-slate-400 dark:border-slate-700 dark:bg-[#0a101c] dark:text-slate-200 dark:hover:border-slate-600 dark:hover:text-white"
                 >
-                  {COMPANY_BADGE_LABELS[ticker]}
-                </span>
-                <span className="whitespace-nowrap">{COMPANY_NAMES[ticker]}</span>
-                <ExternalLink className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
-              </a>
-            ))}
+                  <span
+                    className="inline-flex items-center justify-center rounded px-2 py-1 text-[11px] font-semibold leading-none text-white"
+                    style={{ backgroundColor: COMPANY_COLORS[ticker] }}
+                  >
+                    {COMPANY_BADGE_LABELS[ticker]}
+                  </span>
+                  <span className="whitespace-nowrap">{COMPANY_NAMES[ticker]}</span>
+                  <ExternalLink className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-800 dark:bg-[#0b1220]">
+            <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-wide text-slate-600 dark:text-slate-500">
+                <Sparkles className="h-3.5 w-3.5 text-cyan-600 dark:text-cyan-300" />
+                Flex Angle Summary
+              </div>
+              <button
+                onClick={() => fetchFlexSummary(true, summaryMode)}
+                disabled={summaryLoading}
+                className="inline-flex items-center gap-1 rounded-md border border-slate-300 bg-white px-2 py-1 text-[11px] text-slate-700 hover:border-slate-400 disabled:opacity-50 dark:border-slate-700 dark:bg-[#0b111d] dark:text-slate-300"
+              >
+                <RefreshCw className={`h-3 w-3 ${summaryLoading ? 'animate-spin' : ''}`} />
+                Refresh Summary
+              </button>
+            </div>
+
+            <div className="mb-2 flex flex-wrap gap-1.5">
+              {(['combined', 'anthropic', 'openai'] as SummaryMode[]).map((m) => (
+                <button
+                  key={m}
+                  onClick={() => setSummaryMode(m)}
+                  className={`rounded-md border px-2 py-1 text-[11px] transition ${
+                    summaryMode === m
+                      ? 'border-cyan-300 bg-cyan-50 text-cyan-700 dark:border-cyan-400/60 dark:bg-cyan-500/20 dark:text-cyan-200'
+                      : 'border-slate-300 bg-white text-slate-700 hover:border-slate-400 dark:border-slate-700 dark:bg-[#0b111d] dark:text-slate-400'
+                  }`}
+                >
+                  {m === 'combined' ? 'Combined' : m === 'anthropic' ? 'Anthropic' : 'OpenAI'}
+                </button>
+              ))}
+            </div>
+
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-2.5 dark:border-slate-700 dark:bg-[#0a101c]">
+              {summaryLoading ? (
+                <p className="text-sm text-slate-600 dark:text-slate-300">Generating Flex-focused summary...</p>
+              ) : (
+                <div className="max-h-[220px] overflow-y-auto pr-2 xl:[&::-webkit-scrollbar]:w-1.5 xl:[&::-webkit-scrollbar-thumb]:rounded-full xl:[&::-webkit-scrollbar-thumb]:bg-slate-400/70 dark:xl:[&::-webkit-scrollbar-thumb]:bg-slate-600 xl:[&::-webkit-scrollbar-track]:bg-transparent">
+                  <p className="whitespace-pre-line text-[13px] leading-5 text-slate-700 dark:text-slate-200">
+                    {displaySummary || 'No summary yet. Click refresh to generate from current cached news.'}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <div className="mt-2 text-[11px] text-slate-500 dark:text-slate-400">
+              Providers: {summaryProviders.length > 0 ? summaryProviders.join(', ') : 'none'} · Items used: {summaryItemsUsed}
+            </div>
           </div>
         </div>
 

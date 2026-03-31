@@ -1,0 +1,198 @@
+{
+  "source": {
+    "doc_type": "8k_only",
+    "suffix": ".html",
+    "file_name": "Flex_8-K_2022-03-25.html",
+    "relative_path": "Flex_8-K_2022-03-25.html",
+    "absolute_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/flex_8k_press_releases/Flex_8-K_2022-03-25.html",
+    "size_bytes": 35481,
+    "parsed_at": "2026-03-30T20:10:15.475553"
+  },
+  "classification": {
+    "doc_family": "regulatory_filing",
+    "doc_subtype": "8k_press_release",
+    "confidence": 0.9,
+    "signals_used": [
+      "8k_keyword",
+      "sec_current_report_pattern"
+    ]
+  },
+  "cover_metadata": {
+    "line_count": 51,
+    "raw_lines": [
+      "UNITED STATES",
+      "SECURITIES AND EXCHANGE COMMISSION",
+      "Washington, D.C. 20549",
+      "FORM",
+      "8-K",
+      "CURRENT REPORT",
+      "Pursuant to Section 13 or 15(d) of",
+      "the Securities Exchange Act of 1934",
+      "Date of Report (Date of earliest event reported):",
+      "March 24, 2022",
+      "FLEX LTD.",
+      "(Exact Name of Registrant as Specified in Its Charter)",
+      "Singapore",
+      "0-23354",
+      "Not Applicable",
+      "(State or other jurisdiction of incorporation)",
+      "(Commission File Number)",
+      "(IRS Employer Identification No.)",
+      "2 Changi South Lane",
+      ",",
+      "Singapore",
+      "(Address of principal executive offices)",
+      "(Zip Code)",
+      "Registrant’s telephone number, including area code:",
+      "(",
+      "65",
+      ")",
+      "6876-9899",
+      "Not Applicable",
+      "(Former name or former address, if changed since last report)",
+      "Check the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:",
+      "☐",
+      "Written communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)",
+      "☐",
+      "Soliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)",
+      "☐",
+      "Pre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))",
+      "☐",
+      "Pre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))",
+      "Securities registered pursuant to Section 12(b) of the Act:",
+      "Title of each class",
+      "Trading Symbol(s)",
+      "Name of each exchange on which registered",
+      "Ordinary Shares, No Par Value",
+      "FLEX",
+      "The Nasdaq Stock Market LLC",
+      "Indicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).",
+      "Emerging growth company",
+      "☐",
+      "If an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act.",
+      "☐"
+    ],
+    "fields": {
+      "form_type": "8-K",
+      "registrant_name": "FLEX LTD.",
+      "date_of_report": "March 24, 2022",
+      "telephone": "",
+      "commission_file_number": ""
+    }
+  },
+  "usage_policy": {
+    "full_text_role": "inspection_full_text",
+    "full_text_core_role": "chunk_embedding_input",
+    "chunk_source_field": "full_text_core"
+  },
+  "full_text": "0000866374\nfalse\n00-0000000\nSG\nUNITED STATES\nSECURITIES AND EXCHANGE COMMISSION\nWashington, D.C. 20549\nFORM\n8-K\nCURRENT REPORT\nPursuant to Section 13 or 15(d) of\nthe Securities Exchange Act of 1934\nDate of Report (Date of earliest event reported):\nMarch 24, 2022\nFLEX LTD.\n(Exact Name of Registrant as Specified in Its Charter)\nSingapore\n0-23354\nNot Applicable\n(State or other jurisdiction of incorporation)\n(Commission File Number)\n(IRS Employer Identification No.)\n2 Changi South Lane\n,\nSingapore\n486123\n(Address of principal executive offices)\n(Zip Code)\nRegistrant’s telephone number, including area code:\n(\n65\n)\n6876-9899\nNot Applicable\n(Former name or former address, if changed since last report)\nCheck the appropriate box below if the Form 8-K filing is intended to simultaneously satisfy the filing obligation of the registrant under any of the following provisions:\n☐\nWritten communications pursuant to Rule 425 under the Securities Act (17 CFR 230.425)\n☐\nSoliciting material pursuant to Rule 14a-12 under the Exchange Act (17 CFR 240.14a-12)\n☐\nPre-commencement communications pursuant to Rule 14d-2(b) under the Exchange Act (17 CFR 240.14d-2(b))\n☐\nPre-commencement communications pursuant to Rule 13e-4(c) under the Exchange Act (17 CFR 240.13e-4(c))\nSecurities registered pursuant to Section 12(b) of the Act:\nTitle of each class\nTrading Symbol(s)\nName of each exchange on which registered\nOrdinary Shares, No Par Value\nFLEX\nThe Nasdaq Stock Market LLC\nIndicate by check mark whether the registrant is an emerging growth company as defined in Rule 405 of the Securities Act of 1933 (§230.405 of this chapter) or Rule 12b-2 of the Securities Exchange Act of 1934 (§240.12b-2 of this chapter).\nEmerging growth company\n☐\nIf an emerging growth company, indicate by check mark if the registrant has elected not to use the extended transition period for complying with any new or revised financial accounting standards provided pursuant to Section 13(a) of the Exchange Act.\n☐\nItem 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.\n(b) Flex Ltd. (the “Company”) announced that, on March 24, 2022, Francois Barbier, President, Global Operations and Components, advised the Company of his intent to retire from his current position with the Company, effective March 31, 2022 (the “Transition Date”).\nIn connection with the Company’s succession planning, the Company further announced that Kwang Hooi Tan has been promoted to President, Global Operations and Components, effective April 1, 2022. Mr. Tan has been with the Company for more than twenty years and most recently responsible for the Company’s Worldwide Manufacturing Operations and previously for leading the Company’s Asia Operations region. Mr. Tan has led a variety of critical initiatives for the Company over the years, including working through challenging customer situations, driving productivity and efficiency programs, and navigating complex government negotiations. During his tenure as the Asia operations leader, the region drove significant P&L improvements and cemented itself as an integral part of the Flex ecosystem.\nThe Company requested and Mr. Barbier has agreed to work through September 30, 2022 (the “Transition Period”) to support a smooth transition. In connection with Mr. Barbier’s retirement and his agreeing to provide transition services through the Transition Period, the Company entered into an Executive Transition Agreement, effective April 1, 2022 (the “Executive Transition Agreement”). Pursuant to the Executive Transition Agreement, Mr. Barbier will no longer be an executive officer effective as of the Transition Date but will remain an employee of the Company and will provide services related to the transition of his duties through the Transition Period.\nPursuant to the Executive Transition Agreement and subject to Mr. Barbier’s compliance with its terms, Mr. Barbier will receive his base salary payable pursuant to the Company's standard payroll schedule during the Transition Period. Mr. Barbier will also be eligible for a prorated bonus payment based on actual performance under the Company’s fiscal year 2023 incentive bonus plan during the Transition Period. In addition, Mr. Barbier’s outstanding equity awards will continue to vest during the Transition Period in accordance with their terms. The Executive Transition Agreement provides that Mr. Barbier will be subject to perpetual confidentiality and non-disparagement covenants and includes a general release and a customary cooperation provision. Mr. Barbier will not be eligible for separation payments under the terms of the Company’s Executive Severance Plan based on his retirement from the Company.\nDue to Mr. Barbier’s retirement eligibility and independent of the terms of the Executive Transition Agreement, upon his planned retirement on March 31, 2022, he will be eligible for a bonus payment based on actual performance under the Company’s fiscal year 2022 incentive bonus plan pursuant to the Company’s bonus policy. Mr. Barbier’s PSU awards will be prorated through his service end date and paid out based on performance at the end of the original performance periods. His fiscal year 2021 and 2022 RSU awards will continue vesting in accordance with the terms of the awards. All other RSU awards that remain unvested upon the conclusion of his employment at the expiration of the Transition Period will be forfeited.\nA copy of the Executive Transition Agreement will be filed as an exhibit to the Company’s Form 10-K for the fiscal year ended March 31, 2022.\n2\nSIGNATURES\nPursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nFLEX LTD.\nDate: March 25, 2022\nBy:\n/s/ Paul R. Lundstrom\nName:\nTitle:\nPaul R. Lundstrom\nChief Financial Officer\n3",
+  "full_text_core": "(b) Flex Ltd. (the “Company”) announced that, on March 24, 2022, Francois Barbier, President, Global Operations and Components, advised the Company of his intent to retire from his current position with the Company, effective March 31, 2022 (the “Transition Date”).\nIn connection with the Company’s succession planning, the Company further announced that Kwang Hooi Tan has been promoted to President, Global Operations and Components, effective April 1, 2022. Mr. Tan has been with the Company for more than twenty years and most recently responsible for the Company’s Worldwide Manufacturing Operations and previously for leading the Company’s Asia Operations region. Mr. Tan has led a variety of critical initiatives for the Company over the years, including working through challenging customer situations, driving productivity and efficiency programs, and navigating complex government negotiations. During his tenure as the Asia operations leader, the region drove significant P&L improvements and cemented itself as an integral part of the Flex ecosystem.\nThe Company requested and Mr. Barbier has agreed to work through September 30, 2022 (the “Transition Period”) to support a smooth transition. In connection with Mr. Barbier’s retirement and his agreeing to provide transition services through the Transition Period, the Company entered into an Executive Transition Agreement, effective April 1, 2022 (the “Executive Transition Agreement”). Pursuant to the Executive Transition Agreement, Mr. Barbier will no longer be an executive officer effective as of the Transition Date but will remain an employee of the Company and will provide services related to the transition of his duties through the Transition Period.\nPursuant to the Executive Transition Agreement and subject to Mr. Barbier’s compliance with its terms, Mr. Barbier will receive his base salary payable pursuant to the Company's standard payroll schedule during the Transition Period. Mr. Barbier will also be eligible for a prorated bonus payment based on actual performance under the Company’s fiscal year 2023 incentive bonus plan during the Transition Period. In addition, Mr. Barbier’s outstanding equity awards will continue to vest during the Transition Period in accordance with their terms. The Executive Transition Agreement provides that Mr. Barbier will be subject to perpetual confidentiality and non-disparagement covenants and includes a general release and a customary cooperation provision. Mr. Barbier will not be eligible for separation payments under the terms of the Company’s Executive Severance Plan based on his retirement from the Company.\nDue to Mr. Barbier’s retirement eligibility and independent of the terms of the Executive Transition Agreement, upon his planned retirement on March 31, 2022, he will be eligible for a bonus payment based on actual performance under the Company’s fiscal year 2022 incentive bonus plan pursuant to the Company’s bonus policy. Mr. Barbier’s PSU awards will be prorated through his service end date and paid out based on performance at the end of the original performance periods. His fiscal year 2021 and 2022 RSU awards will continue vesting in accordance with the terms of the awards. All other RSU awards that remain unvested upon the conclusion of his employment at the expiration of the Transition Period will be forfeited.\nA copy of the Executive Transition Agreement will be filed as an exhibit to the Company’s Form 10-K for the fiscal year ended March 31, 2022.",
+  "pages": [],
+  "blocks": [
+    {
+      "block_id": "s1:h",
+      "type": "heading",
+      "section_id": "s1",
+      "page_num": 0,
+      "content": "Item 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.",
+      "char_count": 156
+    },
+    {
+      "block_id": "s1:p",
+      "type": "paragraph",
+      "section_id": "s1",
+      "page_num": 0,
+      "content": "(b) Flex Ltd. (the “Company”) announced that, on March 24, 2022, Francois Barbier, President, Global Operations and Components, advised the Company of his intent to retire from his current position with the Company, effective March 31, 2022 (the “Transition Date”).\nIn connection with the Company’s succession planning, the Company further announced that Kwang Hooi Tan has been promoted to President, Global Operations and Components, effective April 1, 2022. Mr. Tan has been with the Company for more than twenty years and most recently responsible for the Company’s Worldwide Manufacturing Operations and previously for leading the Company’s Asia Operations region. Mr. Tan has led a variety of critical initiatives for the Company over the years, including working through challenging customer situations, driving productivity and efficiency programs, and navigating complex government negotiations. During his tenure as the Asia operations leader, the region drove significant P&L improvements and cemented itself as an integral part of the Flex ecosystem.\nThe Company requested and Mr. Barbier has agreed to work through September 30, 2022 (the “Transition Period”) to support a smooth transition. In connection with Mr. Barbier’s retirement and his agreeing to provide transition services through the Transition Period, the Company entered into an Executive Transition Agreement, effective April 1, 2022 (the “Executive Transition Agreement”). Pursuant to the Executive Transition Agreement, Mr. Barbier will no longer be an executive officer effective as of the Transition Date but will remain an employee of the Company and will provide services related to the transition of his duties through the Transition Period.\nPursuant to the Executive Transition Agreement and subject to Mr. Barbier’s compliance with its terms, Mr. Barbier will receive his base salary payable pursuant to the Company's standard payroll schedule during the Transition Period. Mr. Barbier will also be eligible for a prorated bonus payment based on actual performance under the Company’s fiscal year 2023 incentive bonus plan during the Transition Period. In addition, Mr. Barbier’s outstanding equity awards will continue to vest during the Transition Period in accordance with their terms. The Executive Transition Agreement provides that Mr. Barbier will be subject to perpetual confidentiality and non-disparagement covenants and includes a general release and a customary cooperation provision. Mr. Barbier will not be eligible for separation payments under the terms of the Company’s Executive Severance Plan based on his retirement from the Company.\nDue to Mr. Barbier’s retirement eligibility and independent of the terms of the Executive Transition Agreement, upon his planned retirement on March 31, 2022, he will be eligible for a bonus payment based on actual performance under the Company’s fiscal year 2022 incentive bonus plan pursuant to the Company’s bonus policy. Mr. Barbier’s PSU awards will be prorated through his service end date and paid out based on performance at the end of the original performance periods. His fiscal year 2021 and 2022 RSU awards will continue vesting in accordance with the terms of the awards. All other RSU awards that remain unvested upon the conclusion of his employment at the expiration of the Transition Period will be forfeited.\nA copy of the Executive Transition Agreement will be filed as an exhibit to the Company’s Form 10-K for the fiscal year ended March 31, 2022.",
+      "char_count": 3509,
+      "is_tail": false
+    },
+    {
+      "block_id": "s2:h",
+      "type": "heading",
+      "section_id": "s2",
+      "page_num": 0,
+      "content": "SIGNATURES",
+      "char_count": 10
+    },
+    {
+      "block_id": "s2:p",
+      "type": "paragraph",
+      "section_id": "s2",
+      "page_num": 0,
+      "content": "Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nFLEX LTD.\nDate: March 25, 2022\nBy:\n/s/ Paul R. Lundstrom\nName:\nTitle:\nPaul R. Lundstrom\nChief Financial Officer",
+      "char_count": 295,
+      "is_tail": true
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "s1",
+      "header": "Item 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.",
+      "level": 1,
+      "item_code": "5.02",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "content": "(b) Flex Ltd. (the “Company”) announced that, on March 24, 2022, Francois Barbier, President, Global Operations and Components, advised the Company of his intent to retire from his current position with the Company, effective March 31, 2022 (the “Transition Date”).\nIn connection with the Company’s succession planning, the Company further announced that Kwang Hooi Tan has been promoted to President, Global Operations and Components, effective April 1, 2022. Mr. Tan has been with the Company for more than twenty years and most recently responsible for the Company’s Worldwide Manufacturing Operations and previously for leading the Company’s Asia Operations region. Mr. Tan has led a variety of critical initiatives for the Company over the years, including working through challenging customer situations, driving productivity and efficiency programs, and navigating complex government negotiations. During his tenure as the Asia operations leader, the region drove significant P&L improvements and cemented itself as an integral part of the Flex ecosystem.\nThe Company requested and Mr. Barbier has agreed to work through September 30, 2022 (the “Transition Period”) to support a smooth transition. In connection with Mr. Barbier’s retirement and his agreeing to provide transition services through the Transition Period, the Company entered into an Executive Transition Agreement, effective April 1, 2022 (the “Executive Transition Agreement”). Pursuant to the Executive Transition Agreement, Mr. Barbier will no longer be an executive officer effective as of the Transition Date but will remain an employee of the Company and will provide services related to the transition of his duties through the Transition Period.\nPursuant to the Executive Transition Agreement and subject to Mr. Barbier’s compliance with its terms, Mr. Barbier will receive his base salary payable pursuant to the Company's standard payroll schedule during the Transition Period. Mr. Barbier will also be eligible for a prorated bonus payment based on actual performance under the Company’s fiscal year 2023 incentive bonus plan during the Transition Period. In addition, Mr. Barbier’s outstanding equity awards will continue to vest during the Transition Period in accordance with their terms. The Executive Transition Agreement provides that Mr. Barbier will be subject to perpetual confidentiality and non-disparagement covenants and includes a general release and a customary cooperation provision. Mr. Barbier will not be eligible for separation payments under the terms of the Company’s Executive Severance Plan based on his retirement from the Company.\nDue to Mr. Barbier’s retirement eligibility and independent of the terms of the Executive Transition Agreement, upon his planned retirement on March 31, 2022, he will be eligible for a bonus payment based on actual performance under the Company’s fiscal year 2022 incentive bonus plan pursuant to the Company’s bonus policy. Mr. Barbier’s PSU awards will be prorated through his service end date and paid out based on performance at the end of the original performance periods. His fiscal year 2021 and 2022 RSU awards will continue vesting in accordance with the terms of the awards. All other RSU awards that remain unvested upon the conclusion of his employment at the expiration of the Transition Period will be forfeited.\nA copy of the Executive Transition Agreement will be filed as an exhibit to the Company’s Form 10-K for the fiscal year ended March 31, 2022.",
+      "char_count": 3509,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": [],
+      "signature_date": ""
+    },
+    {
+      "section_id": "s2",
+      "header": "SIGNATURES",
+      "level": 1,
+      "item_code": "",
+      "section_type": "tail",
+      "is_tail": true,
+      "content": "Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be signed on its behalf by the undersigned hereunto duly authorized.\nFLEX LTD.\nDate: March 25, 2022\nBy:\n/s/ Paul R. Lundstrom\nName:\nTitle:\nPaul R. Lundstrom\nChief Financial Officer",
+      "char_count": 295,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": [],
+      "signature_date": "March 25, 2022"
+    }
+  ],
+  "exhibits": [],
+  "tables": [],
+  "reading_order": [
+    {
+      "order": 1,
+      "type": "heading",
+      "ref": "s1:h",
+      "page_num": 0,
+      "preview": "Item 5.02 Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensato"
+    },
+    {
+      "order": 2,
+      "type": "paragraph",
+      "ref": "s1:p",
+      "page_num": 0,
+      "preview": "(b) Flex Ltd. (the “Company”) announced that, on March 24, 2022, Francois Barbier, President, Global Operations and Comp"
+    },
+    {
+      "order": 3,
+      "type": "heading",
+      "ref": "s2:h",
+      "page_num": 0,
+      "preview": "SIGNATURES"
+    },
+    {
+      "order": 4,
+      "type": "paragraph",
+      "ref": "s2:p",
+      "page_num": 0,
+      "preview": "Pursuant to the requirements of the Securities Exchange Act of 1934, the registrant has duly caused this report to be si"
+    }
+  ],
+  "quality": {
+    "total_pages": 0,
+    "pages_with_text": 0,
+    "pages_with_text_ratio": 0,
+    "table_count": 0,
+    "section_count": 2,
+    "block_count": 4,
+    "text_char_count": 5961,
+    "text_word_count": 912,
+    "warnings": []
+  }
+}

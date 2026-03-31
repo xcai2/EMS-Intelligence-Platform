@@ -7,7 +7,7 @@ import json
 import logging
 import re
 import xml.etree.ElementTree as ET
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Optional
@@ -15,7 +15,8 @@ from urllib.parse import quote_plus, urlparse, urljoin, parse_qs, unquote
 
 import httpx
 
-from backend.core.config import COMPANIES
+from backend.core.config import COMPANIES, OPENAI_API_KEY, LLM_MODEL, ANTHROPIC_API_KEY, ANTHROPIC_MODEL
+from backend.core.llm_client import llm_complete
 from backend.news.filtering import AI_TERMS, BLOCKED_OR_PAYWALL_DOMAINS, EXCLUDED_NOISE_TERMS
 from backend.news.normalizer import SOURCE_DOMAIN_LABELS
 from backend.news.sources import (
@@ -1068,6 +1069,242 @@ class NewsFeed:
         self._runtime_cache[cache_key] = result
         self._persist_runtime_cache()
         return result
+
+    async def get_flex_news_summary(
+        self,
+        days: int = 3,
+        llm_mode: str = "combined",
+        max_items: int = 16,
+        force_refresh: bool = False,
+    ) -> dict:
+        """
+        Generate a short Flex-angle summary from current fetched/cached news.
+
+        llm_mode:
+        - "anthropic": use direct Anthropic client
+        - "openai": use direct OpenAI client
+        - "combined": produce both when available, then synthesize
+        """
+        mode = (llm_mode or "combined").strip().lower()
+        if mode not in {"anthropic", "openai", "combined"}:
+            mode = "combined"
+
+        cache_key = f"summary:flex:{days}:{mode}:{max_items}"
+        if not force_refresh and cache_key in self._runtime_cache:
+            return self._runtime_cache[cache_key]
+
+        flex_data = await self.get_company_news("FLEX", count=24, force_refresh=force_refresh)
+        industry_data = await self.get_industry_news(count=16, force_refresh=force_refresh)
+        comparative_data = await self.get_competitor_comparison_news(force_refresh=force_refresh)
+
+        flex_news = self._filter_recent_news(flex_data.get("news", []), days)
+        industry_news = self._filter_recent_news(industry_data.get("news", []), days)
+        comparative_news = comparative_data.get("comparative_news", []) or []
+
+        selected_items = self._select_summary_items(
+            flex_news=flex_news,
+            industry_news=industry_news,
+            comparative_news=comparative_news,
+            max_items=max_items,
+        )
+        context = self._build_summary_context(selected_items)
+
+        if not context.strip():
+            result = {
+                "summary": "No recent news context is available to summarize right now.",
+                "llm_mode": mode,
+                "providers_used": [],
+                "items_used": 0,
+                "window_days": days,
+                "timestamp": datetime.now().isoformat(),
+            }
+            self._runtime_cache[cache_key] = result
+            self._persist_runtime_cache()
+            return result
+
+        providers_used: list[str] = []
+        anthropic_text = ""
+        openai_text = ""
+
+        if mode in {"anthropic", "combined"}:
+            anthropic_text = self._summarize_with_anthropic(context)
+            if anthropic_text:
+                providers_used.append("anthropic")
+
+        if mode in {"openai", "combined"}:
+            openai_text = self._summarize_with_openai(context)
+            if openai_text:
+                providers_used.append("openai")
+
+        if mode == "anthropic":
+            summary = anthropic_text or "Anthropic summary is unavailable. Check ANTHROPIC_API_KEY."
+        elif mode == "openai":
+            summary = openai_text or "OpenAI summary is unavailable. Check OPENAI_API_KEY."
+        else:
+            summary = self._synthesize_combined_summary(anthropic_text, openai_text, context)
+
+        result = {
+            "summary": summary,
+            "llm_mode": mode,
+            "providers_used": providers_used,
+            "items_used": len(selected_items),
+            "window_days": days,
+            "timestamp": datetime.now().isoformat(),
+        }
+        self._runtime_cache[cache_key] = result
+        self._persist_runtime_cache()
+        return result
+
+    def _filter_recent_news(self, items: list[dict], days: int) -> list[dict]:
+        if not items:
+            return []
+        now = datetime.now(timezone.utc)
+        cutoff = now - timedelta(days=max(1, int(days)))
+
+        recent = []
+        undated = []
+        for item in items:
+            parsed = self._parse_published_dt(item.get("published", ""))
+            if parsed is None:
+                undated.append(item)
+                continue
+            if parsed >= cutoff:
+                recent.append(item)
+
+        if recent:
+            return recent
+        return undated[: max(4, min(10, len(undated)))]
+
+    def _select_summary_items(
+        self,
+        flex_news: list[dict],
+        industry_news: list[dict],
+        comparative_news: list[dict],
+        max_items: int = 16,
+    ) -> list[dict]:
+        picks = []
+        for item in flex_news[: max_items]:
+            picks.append({"bucket": "flex", **item})
+
+        room = max(0, max_items - len(picks))
+        if room > 0:
+            for item in industry_news[: min(room, max(4, room // 2 or 1))]:
+                picks.append({"bucket": "industry", **item})
+
+        room = max(0, max_items - len(picks))
+        if room > 0:
+            for item in comparative_news[:room]:
+                picks.append({"bucket": "comparative", **item})
+        return picks[:max_items]
+
+    def _build_summary_context(self, items: list[dict]) -> str:
+        lines = []
+        for i, item in enumerate(items, 1):
+            title = (item.get("title") or "").strip()
+            desc = (item.get("description") or "").strip()
+            source = (item.get("source") or "Unknown").strip()
+            published = (item.get("published") or "").strip()
+            bucket = (item.get("bucket") or "general").strip()
+            if not title:
+                continue
+            line = f"{i}. [{bucket}] {title} | source={source}"
+            if published:
+                line += f" | published={published}"
+            if desc:
+                line += f"\n   {desc[:260]}"
+            lines.append(line)
+        return "\n".join(lines)
+
+    def _summary_system_prompt(self) -> str:
+        return (
+            "You are an equity research assistant for Flex (FLEX). "
+            "Write a concise, executive-ready summary from FLEX's perspective using only provided news context. "
+            "Do not fabricate facts. If signal confidence is low, say it briefly.\n\n"
+            "Output format:\n"
+            "1) 3 bullet key takeaways\n"
+            "2) 3 bullet implications for Flex (opportunity/risk)\n"
+            "3) One-line watchlist for next 7 days"
+        )
+
+    def _summarize_with_anthropic(self, context: str) -> str:
+        if not ANTHROPIC_API_KEY:
+            return ""
+        try:
+            import anthropic
+
+            client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
+            model = ANTHROPIC_MODEL if "claude" in ANTHROPIC_MODEL else "claude-sonnet-4-6"
+            resp = client.messages.create(
+                model=model,
+                max_tokens=500,
+                system=self._summary_system_prompt(),
+                messages=[{"role": "user", "content": f"News context:\n{context}"}],
+            )
+            if resp.content and getattr(resp.content[0], "text", ""):
+                return resp.content[0].text.strip()
+            return ""
+        except Exception:
+            return ""
+
+    def _summarize_with_openai(self, context: str) -> str:
+        if not OPENAI_API_KEY:
+            return ""
+        try:
+            from openai import OpenAI
+
+            client = OpenAI(api_key=OPENAI_API_KEY)
+            model = LLM_MODEL if LLM_MODEL.startswith("gpt-") else "gpt-4o"
+            resp = client.chat.completions.create(
+                model=model,
+                max_tokens=500,
+                messages=[
+                    {"role": "system", "content": self._summary_system_prompt()},
+                    {"role": "user", "content": f"News context:\n{context}"},
+                ],
+            )
+            return (resp.choices[0].message.content or "").strip()
+        except Exception:
+            return ""
+
+    def _synthesize_combined_summary(self, anthropic_text: str, openai_text: str, context: str) -> str:
+        if anthropic_text and openai_text:
+            try:
+                synthesis_prompt = (
+                    "Merge the two candidate summaries below into one concise final summary for FLEX. "
+                    "Keep only overlapping/high-confidence points and remove speculation.\n\n"
+                    f"[Anthropic]\n{anthropic_text}\n\n[OpenAI]\n{openai_text}"
+                )
+                merged = llm_complete(
+                    messages=[{"role": "user", "content": synthesis_prompt}],
+                    system=self._summary_system_prompt(),
+                    model_key="fast",
+                    max_tokens=450,
+                    stream=False,
+                )
+                if isinstance(merged, str) and merged.strip():
+                    return merged.strip()
+            except Exception:
+                pass
+            return anthropic_text
+        if anthropic_text:
+            return anthropic_text
+        if openai_text:
+            return openai_text
+
+        fallback = (
+            "Key Takeaways:\n"
+            "- No LLM provider is currently available for summary generation.\n"
+            "- News ingestion appears available, but summary synthesis could not run.\n"
+            "- Please verify OpenAI/Enterprise credentials and provider settings.\n\n"
+            "Implications for Flex:\n"
+            "- Keep monitoring hyperscaler demand and peer execution signals.\n"
+            "- Prioritize margin and capacity commentary from official updates.\n"
+            "- Re-run summary once provider connectivity is restored.\n\n"
+            "Watchlist (7d): FLEX press releases, peer guidance changes, AI infrastructure demand headlines."
+        )
+        if context.strip():
+            return fallback
+        return "Summary unavailable due to missing context and provider."
     
     def _extract_source(self, url: str) -> str:
         """Extract source name from URL."""
@@ -1137,5 +1374,3 @@ class NewsFeed:
             score += 0.2
         
         return min(score, 1.0)
-
-

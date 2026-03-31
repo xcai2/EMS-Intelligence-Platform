@@ -5,7 +5,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
-from backend.api.routes import chat, companies, analysis
+from backend.api.routes import companies, analysis
+from backend.aichat.routes import router as aichat_router
 from backend.api.routes import ingestion, sentiment, earnings, analytics, geographic, financials, alerts, company_detail, exports, advanced_data
 from backend.api.routes import reports as reports_router
 from backend.api.routes import dashboard as dashboard_router
@@ -71,7 +72,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(chat.router, prefix="/api", tags=["Chat"])
+app.include_router(aichat_router, prefix="/api", tags=["Chat"])
 app.include_router(companies.router, prefix="/api", tags=["Companies"])
 app.include_router(analysis.router, prefix="/api", tags=["Analysis"])
 app.include_router(ingestion.router, prefix="/api", tags=["Ingestion"])

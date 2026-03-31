@@ -8,14 +8,14 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from fastapi import APIRouter, Request, HTTPException
+from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from backend.rag.retriever import search_documents, search_cross_company
-from backend.rag.generator import generate_response_streaming, SYSTEM_PROMPT
+from backend.rag.generator import generate_response_streaming
 from backend.rag.assembled_retriever import get_assembled_retriever
-from backend.rag.memory import (
+from backend.aichat.memory import (
     add_message,
     get_conversation_history,
     clear_session,
@@ -24,7 +24,7 @@ from backend.rag.memory import (
     cleanup_expired_sessions,
 )
 from backend.rag.web_search import search_web, format_web_results_for_context
-from backend.core.config import COMPANIES, COMPANY_NAME_TO_TICKER
+from backend.core.config import COMPANIES
 from backend.core.config import OPENAI_API_KEY, ANTHROPIC_API_KEY, LLM_MODEL, ANTHROPIC_MODEL
 from backend.core.config import DATA_DIR
 from backend.core.llm_client import llm_complete
@@ -155,18 +155,6 @@ def _has_sufficient_document_evidence(query: str, docs: list[dict], min_docs: in
         has_overlap = True
 
     return has_similarity and has_overlap
-
-
-def _no_evidence_message(doc_count: int, web_count: int, fallback_allowed: bool) -> str:
-    """Standardized no-evidence response for transparent hybrid behavior."""
-    fallback_text = "enabled" if fallback_allowed else "disabled"
-    return (
-        "No answer generated due to insufficient evidence.\n"
-        f"- Filing search hits: {doc_count}\n"
-        f"- Web search hits: {web_count}\n"
-        f"- General AI fallback: {fallback_text}\n"
-        "Reason: strict grounding is on, so the assistant will not answer without source evidence."
-    )
 
 
 def _compose_hybrid_three_part_response(

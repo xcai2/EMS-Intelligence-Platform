@@ -7,13 +7,13 @@ Now supports AssembledRetriever for pluggable retrieval strategies:
 - "web" - Web search only
 - "hybrid" - Classic RAG + web search
 """
-from typing import Optional, Literal
+from typing import Optional
 
 from backend.rag.retriever import search_documents
-from backend.rag.generator import generate_response, generate_response_streaming
+from backend.rag.generator import generate_response
 from backend.rag.web_search import search_web
-from backend.rag.memory import add_message, get_conversation_history
-from backend.rag.assembled_retriever import AssembledRetriever, get_assembled_retriever
+from backend.aichat.memory import add_message, get_conversation_history
+from backend.rag.assembled_retriever import get_assembled_retriever
 
 
 def _format_docs(docs: list[dict]) -> str:
