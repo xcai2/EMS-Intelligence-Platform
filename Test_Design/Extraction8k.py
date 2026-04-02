@@ -30,7 +30,7 @@ _LEGAL_RE = [
 ]
 _EXHIBIT_RE = re.compile(r"^\s*(?:exhibit\s+)?(\d{1,3}(?:\.\d+)?)\b\s*[:\-\s]*(.*)$", re.IGNORECASE)
 _PAGE_NUM_RE = re.compile(r"^\s*\d{1,3}\s*$")
-_PHONE_RE = re.compile(r"\(?\d{3}\)?[\s\-.]\d{3}[\s\-.]\d{4}")
+_PHONE_RE = re.compile(r"\+?\d[\d\s().-]{6,}\d")
 _DATE_RE = re.compile(
     r"([A-Za-z]+\s+\d{1,2},\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{2,4})"
 )
@@ -89,6 +89,39 @@ def _parse_pdf_text(filepath: Path) -> tuple[list[dict[str, Any]], str, list[str
     return pages, _clean_text("\n\n".join(texts)), warnings
 
 
+def _parse_docling_text(filepath: Path) -> tuple[str, list[str]]:
+    warnings: list[str] = []
+    try:
+        from docling.document_converter import DocumentConverter  # type: ignore
+    except Exception:
+        warnings.append("docling_not_installed")
+        return "", warnings
+
+    try:
+        converter = DocumentConverter()
+        result = converter.convert(str(filepath))
+        doc = getattr(result, "document", None)
+        if doc is None:
+            warnings.append("docling_no_document")
+            return "", warnings
+
+        # Prefer markdown output for better structure retention.
+        if hasattr(doc, "export_to_markdown"):
+            text = doc.export_to_markdown() or ""
+        elif hasattr(doc, "export_to_text"):
+            text = doc.export_to_text() or ""
+        else:
+            text = str(doc) or ""
+
+        text = _clean_text(text)
+        if not text:
+            warnings.append("docling_empty_text")
+        return text, warnings
+    except Exception as e:
+        warnings.append(f"docling_error:{e}")
+        return "", warnings
+
+
 def _parse_html_text(filepath: Path) -> tuple[str, list[str]]:
     warnings: list[str] = []
     raw = _read_text_file(filepath)
@@ -103,6 +136,10 @@ def _parse_html_text(filepath: Path) -> tuple[str, list[str]]:
         t.decompose()
     for t in soup.find_all(True):
         n = (t.name or "").lower()
+        # Drop hidden Inline XBRL payload blocks from human-readable text.
+        if n in {"ix:header", "ix:hidden"}:
+            t.decompose()
+            continue
         # Keep inline XBRL text payload by unwrapping ix:* tags.
         if n.startswith("ix:"):
             try:
@@ -120,10 +157,17 @@ def _parse_html_text(filepath: Path) -> tuple[str, list[str]]:
 
 def _parse_source_text(filepath: Path, suffix: str) -> tuple[list[dict[str, Any]], str, list[str]]:
     if suffix == ".pdf":
-        return _parse_pdf_text(filepath)
+        docling_text, docling_warnings = _parse_docling_text(filepath)
+        if docling_text:
+            return [], docling_text, docling_warnings + ["parser:docling"]
+        pages, text, warnings = _parse_pdf_text(filepath)
+        return pages, text, docling_warnings + warnings + ["parser:pypdf"]
     if suffix in {".html", ".htm"}:
+        docling_text, docling_warnings = _parse_docling_text(filepath)
+        if docling_text:
+            return [], docling_text, docling_warnings + ["parser:docling"]
         text, warnings = _parse_html_text(filepath)
-        return [], text, warnings
+        return [], text, docling_warnings + warnings + ["parser:bs4"]
     if suffix in {".txt", ".md"}:
         return [], _clean_text(_read_text_file(filepath)), []
     return [], "", [f"unsupported_file_type:{suffix}"]
@@ -172,7 +216,8 @@ def _extract_cover_metadata(lines: list[str]) -> dict[str, Any]:
         low = s.lower()
         if low in {"true", "false"}:
             return True
-        if re.fullmatch(r"\d{6,}", s):
+        # Keep plausible postal codes (often 4-7 digits), drop long technical ids.
+        if re.fullmatch(r"\d{8,}", s):
             return True
         if re.fullmatch(r"\d{2}-\d{7,}", s):
             return True
@@ -184,10 +229,21 @@ def _extract_cover_metadata(lines: list[str]) -> dict[str, Any]:
 
     fields = {
         "form_type": "",
+        "registrant_name_raw": "",
+        "registrant_name_normalized": "",
         "registrant_name": "",
+        "date_of_report_raw": "",
+        "date_of_report_normalized": "",
         "date_of_report": "",
+        "telephone_raw": "",
         "telephone": "",
+        "commission_file_number_raw": "",
+        "commission_file_number_normalized": "",
         "commission_file_number": "",
+        "address_line_raw": "",
+        "city_raw": "",
+        "postal_code_raw": "",
+        "address_display": "",
     }
 
     def _norm_value(v: str) -> str:
@@ -202,27 +258,47 @@ def _extract_cover_metadata(lines: list[str]) -> dict[str, Any]:
             fields["form_type"] = "8-K"
 
         if "commission file number" in low:
-            m = re.search(r"\b(\d{3,}\s*-\s*\d{2,})\b", line)
-            if not m and i + 1 < len(clean_cover_lines):
-                m = re.search(r"\b(\d{3,}\s*-\s*\d{2,})\b", clean_cover_lines[i + 1])
+            m = re.search(r"\b(\d{1,3}\s*-\s*\d{2,7})\b", line)
+            if not m:
+                lo = max(0, i - 6)
+                hi = min(len(clean_cover_lines), i + 4)
+                for cand in clean_cover_lines[lo:hi]:
+                    mm = re.search(r"\b(\d{1,3}\s*-\s*\d{2,7})\b", cand)
+                    if mm:
+                        m = mm
+                        break
             if m:
-                fields["commission_file_number"] = re.sub(r"\s+", "", m.group(1))
+                fields["commission_file_number_raw"] = re.sub(r"\s+", "", m.group(1))
 
         if "telephone number" in low:
             m = _PHONE_RE.search(line)
-            if not m and i > 0:
-                m = _PHONE_RE.search(clean_cover_lines[i - 1])
-            if not m and i + 1 < len(clean_cover_lines):
-                m = _PHONE_RE.search(clean_cover_lines[i + 1])
-            if m:
-                fields["telephone"] = m.group(0)
+            parsed_phone = ""
+            if not m:
+                window = " ".join(clean_cover_lines[max(0, i - 2): min(len(clean_cover_lines), i + 6)])
+                area_match = re.search(r"\(\s*(\d{1,4})\s*\)\s*([0-9][0-9\s.-]{5,})", window)
+                if area_match:
+                    area = area_match.group(1).strip()
+                    local = re.sub(r"\s+", " ", area_match.group(2)).strip()
+                    parsed_phone = f"({area}) {local}"
+                m = _PHONE_RE.search(window)
+            if parsed_phone:
+                fields["telephone_raw"] = parsed_phone
+            elif m:
+                digits = re.sub(r"\D", "", m.group(0))
+                if len(digits) >= 8:
+                    if len(digits) == 10:
+                        fields["telephone_raw"] = f"({digits[:3]}) {digits[3:6]}-{digits[6:]}"
+                    elif len(digits) == 9:
+                        fields["telephone_raw"] = f"({digits[:2]}) {digits[2:6]}-{digits[6:]}"
+                    else:
+                        fields["telephone_raw"] = m.group(0).strip()
 
         if "date of report" in low:
             m = _DATE_RE.search(line)
             if not m and i + 1 < len(clean_cover_lines):
                 m = _DATE_RE.search(clean_cover_lines[i + 1])
             if m:
-                fields["date_of_report"] = m.group(1)
+                fields["date_of_report_raw"] = m.group(1)
 
         if "exact name of registrant" in low:
             candidates: list[str] = []
@@ -244,10 +320,10 @@ def _extract_cover_metadata(lines: list[str]) -> dict[str, Any]:
                     continue
                 if _PAGE_NUM_RE.match(c):
                     continue
-                fields["registrant_name"] = _norm_value(c)
+                fields["registrant_name_raw"] = _norm_value(c)
                 break
 
-    if not fields["registrant_name"]:
+    if not fields["registrant_name_raw"]:
         cover_blob = "\n".join(clean_cover_lines)
         m = re.search(
             r"\b([A-Z][A-Za-z0-9&.,' ]{1,80}?(?:Ltd\.?|Inc\.?|Corporation|Corp\.?|PLC|LLC|Limited))\b",
@@ -256,7 +332,53 @@ def _extract_cover_metadata(lines: list[str]) -> dict[str, Any]:
         if m:
             candidate = m.group(1).strip()
             if "date of report" not in candidate.lower():
-                fields["registrant_name"] = _norm_value(candidate)
+                fields["registrant_name_raw"] = _norm_value(candidate)
+
+    # Best-effort cover address extraction while keeping raw field boundaries.
+    for i, line in enumerate(clean_cover_lines):
+        if "address of principal executive offices" not in line.lower():
+            continue
+        block = clean_cover_lines[max(0, i - 5): i]
+        tokens = [t.strip() for t in block if t.strip() and not t.strip().startswith("(")]
+        merged: list[str] = []
+        for t in tokens:
+            if t == "," and merged:
+                merged[-1] = f"{merged[-1]},"
+            else:
+                merged.append(t)
+
+        postal = ""
+        for k in range(len(merged) - 1, -1, -1):
+            if re.fullmatch(r"\d{4,10}(?:-\d{3,6})?", merged[k]):
+                postal = merged.pop(k)
+                break
+
+        city = ""
+        for k in range(len(merged) - 1, -1, -1):
+            cand = merged[k].rstrip(",").strip()
+            if cand and not re.search(r"\d", cand):
+                city = cand
+                merged.pop(k)
+                break
+
+        address_line = " ".join(merged).replace(" ,", ",").strip(" ,")
+        fields["address_line_raw"] = address_line
+        fields["city_raw"] = city
+        fields["postal_code_raw"] = postal
+        display_parts = [p for p in [address_line, city, postal] if p]
+        fields["address_display"] = " ".join(display_parts[:1]) if len(display_parts) == 1 else (
+            f"{display_parts[0]}, {' '.join(display_parts[1:])}" if display_parts else ""
+        )
+        break
+
+    # Raw and normalized are separated; normalized is optional and never overwrites raw.
+    fields["registrant_name_normalized"] = fields["registrant_name_raw"]
+    fields["date_of_report_normalized"] = fields["date_of_report_raw"]
+    fields["commission_file_number_normalized"] = fields["commission_file_number_raw"]
+    fields["registrant_name"] = fields["registrant_name_raw"]
+    fields["date_of_report"] = fields["date_of_report_raw"]
+    fields["telephone"] = fields["telephone_raw"]
+    fields["commission_file_number"] = fields["commission_file_number_raw"]
 
     for k in list(fields.keys()):
         fields[k] = _norm_value(fields[k])
@@ -351,6 +473,15 @@ def _extract_signature_date(lines: list[str]) -> str:
     return ""
 
 
+def _parse_date_value(value: str) -> datetime | None:
+    for fmt in ("%B %d, %Y", "%Y-%m-%d", "%m/%d/%Y", "%m/%d/%y"):
+        try:
+            return datetime.strptime(value.strip(), fmt)
+        except Exception:
+            continue
+    return None
+
+
 def _infer_date_from_filename(file_name: str) -> str:
     m = re.search(r"(\d{4}-\d{2}-\d{2})", file_name)
     return m.group(1) if m else ""
@@ -374,7 +505,8 @@ def _build_sections_from_items(lines: list[str]) -> tuple[list[dict[str, Any]], 
             headings.append({"start": i, "body_start": i + 1, "header": "SIGNATURES", "item_code": ""})
 
     if not headings:
-        content = _clean_text("\n".join(lines))
+        content_raw = "\n".join(lines).strip()
+        content_clean = _clean_text(content_raw)
         return [
             {
                 "section_id": "s1",
@@ -383,8 +515,10 @@ def _build_sections_from_items(lines: list[str]) -> tuple[list[dict[str, Any]], 
                 "item_code": "",
                 "section_type": "filing_item",
                 "is_tail": False,
-                "content": content,
-                "char_count": len(content),
+                "content": content_raw,
+                "content_raw": content_raw,
+                "content_cleaned_for_embedding": content_clean,
+                "char_count": len(content_raw),
                 "has_legal_boilerplate": False,
             }
         ], [], []
@@ -396,6 +530,7 @@ def _build_sections_from_items(lines: list[str]) -> tuple[list[dict[str, Any]], 
     for idx, hd in enumerate(headings, start=1):
         end = headings[idx]["start"] if idx < len(headings) else len(lines)
         body = lines[hd["body_start"]: end]
+        section_exhibit_ids: list[str] = []
 
         kept: list[str] = []
         legal: list[str] = []
@@ -417,7 +552,10 @@ def _build_sections_from_items(lines: list[str]) -> tuple[list[dict[str, Any]], 
                             "section_header": hd["header"],
                         }
                     )
+                    section_exhibit_ids.append(ex_id)
+                    kept.append(line)
                     if re.match(r"^\s*\d{1,3}(?:\.\d+)?\s*$", line) and nxt.strip():
+                        kept.append(nxt.strip())
                         j += 2
                     else:
                         j += 1
@@ -442,8 +580,9 @@ def _build_sections_from_items(lines: list[str]) -> tuple[list[dict[str, Any]], 
         is_tail = hd["item_code"] == "9.01" or hd["header"].upper() == "SIGNATURES"
         section_type = "tail" if is_tail else "filing_item"
 
-        content = _clean_text("\n".join(kept))
-        signature_date = _extract_signature_date(kept) if hd["header"].upper() == "SIGNATURES" else ""
+        content_raw = "\n".join(kept).strip()
+        content_clean = _clean_text(content_raw)
+        signature_date_raw = _extract_signature_date(kept) if hd["header"].upper() == "SIGNATURES" else ""
         sections.append(
             {
                 "section_id": f"s{idx}",
@@ -452,11 +591,15 @@ def _build_sections_from_items(lines: list[str]) -> tuple[list[dict[str, Any]], 
                 "item_code": hd["item_code"],
                 "section_type": section_type,
                 "is_tail": is_tail,
-                "content": content,
-                "char_count": len(content),
+                "content": content_raw,
+                "content_raw": content_raw,
+                "content_cleaned_for_embedding": content_clean,
+                "char_count": len(content_raw),
                 "has_legal_boilerplate": bool(legal),
                 "legal_boilerplate_lines": legal,
-                "signature_date": signature_date,
+                "signature_date_raw": signature_date_raw,
+                "signature_date_normalized": signature_date_raw,
+                "signature_date": signature_date_raw,
             }
         )
 
@@ -469,7 +612,7 @@ def _build_full_text_core(sections: list[dict[str, Any]]) -> str:
     # Primary: only preferred event Items.
     for s in sections:
         if s.get("item_code") in PREFERRED_CORE_ITEMS and not s.get("is_tail"):
-            c = str(s.get("content", "")).strip()
+            c = str(s.get("content_cleaned_for_embedding", "") or s.get("content", "")).strip()
             if c:
                 core.append(c)
 
@@ -480,7 +623,7 @@ def _build_full_text_core(sections: list[dict[str, Any]]) -> str:
                 continue
             if s.get("item_code") == "9.01":
                 continue
-            c = str(s.get("content", "")).strip()
+            c = str(s.get("content_cleaned_for_embedding", "") or s.get("content", "")).strip()
             if c:
                 core.append(c)
 
@@ -579,18 +722,32 @@ def parse_document(filepath: Path, rel_path: Path) -> dict[str, Any]:
 
     lines = _split_nonempty_lines(full_text)
     cover_metadata = _extract_cover_metadata(lines)
-    if not cover_metadata["fields"].get("registrant_name"):
+    if not cover_metadata["fields"].get("registrant_name_normalized"):
         inferred_name = _infer_registrant_name(filepath.name, full_text)
         if inferred_name:
-            cover_metadata["fields"]["registrant_name"] = inferred_name
-    if not cover_metadata["fields"].get("date_of_report"):
+            cover_metadata["fields"]["registrant_name_normalized"] = inferred_name
+    if not cover_metadata["fields"].get("date_of_report_normalized"):
         inferred = _infer_date_from_filename(filepath.name)
         if inferred:
-            cover_metadata["fields"]["date_of_report"] = inferred
+            cover_metadata["fields"]["date_of_report_normalized"] = inferred
 
     first_item = _find_first_item_index(lines)
     body_lines = lines[first_item:] if first_item < len(lines) else []
     sections, exhibits, legal_lines = _build_sections_from_items(body_lines)
+    report_date_raw = str(cover_metadata["fields"].get("date_of_report_raw", "")).strip()
+    report_date_norm = str(cover_metadata["fields"].get("date_of_report_normalized", "")).strip()
+    report_date = _parse_date_value(report_date_raw or report_date_norm)
+    for section in sections:
+        if section.get("header", "").upper() != "SIGNATURES":
+            continue
+        sig_raw = str(section.get("signature_date_raw", "")).strip()
+        sig_date = _parse_date_value(sig_raw) if sig_raw else None
+        section["signature_date"] = sig_raw
+        section["signature_date_normalized"] = sig_raw
+        if report_date and sig_date and abs((report_date - sig_date).days) > 45:
+            if report_date_raw:
+                section["signature_date_normalized"] = report_date_raw
+            warnings.append("signature_date_differs_from_report_date")
     blocks, reading_order = _build_blocks_and_reading_order(sections, legal_lines)
 
     full_text_core = _build_full_text_core(sections)
@@ -627,6 +784,7 @@ def parse_document(filepath: Path, rel_path: Path) -> dict[str, Any]:
             "chunk_source_field": "full_text_core",
         },
         "full_text": full_text,
+        "chunk_text": full_text_core,
         "full_text_core": full_text_core,
         "pages": pages,
         "blocks": blocks,
