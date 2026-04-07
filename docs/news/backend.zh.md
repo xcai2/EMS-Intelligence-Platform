@@ -103,7 +103,10 @@
 
 ### 主 News service（`backend/news/service.py`）
 - 运行时内存缓存
-- 持久化文件：`data/news_runtime_cache.json`
+- 持久化文件：
+  `data/news_cache/company_news.json`
+  `data/news_cache/industry_news.json`
+  `data/news_cache/comparative_news.json`
 - 普通请求：命中缓存直接返回
 - `force_refresh=true`：跳过缓存并重抓
 - 重启后端：会加载持久化缓存文件

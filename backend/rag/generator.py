@@ -96,6 +96,23 @@ class ComparisonAnswer(BaseModel):
     )
 
 
+class TablePayloadSchema(BaseModel):
+    """Structured table data for frontend rendering."""
+    title: str = Field(description="Short table title including units, e.g. 'Annual CapEx (USD Millions)'")
+    columns: list[str] = Field(description="Column headers; first column is typically the entity/company name")
+    rows: list[list[str]] = Field(
+        description="Table rows. Each row is a list of strings matching columns length. Use 'N/A' for missing data."
+    )
+
+
+class TableOutput(BaseModel):
+    """Structured output for table-intent queries."""
+    narrative_text: str = Field(
+        description="One sentence introducing the table (do not repeat the title). Empty string if none needed."
+    )
+    table_payload: TablePayloadSchema
+
+
 # ---------------------------------------------------------------------------
 # SYSTEM PROMPTS (Query-Type Specific)
 # ---------------------------------------------------------------------------
@@ -209,6 +226,30 @@ CRITICAL - HANDLING MISSING DATA:
 
 # Legacy prompt for backward compatibility
 SYSTEM_PROMPT = COT_SYSTEM_PROMPT
+
+
+TABLE_SYSTEM_PROMPT = BASE_SYSTEM_PROMPT + """
+
+=== Table Output Instructions ===
+
+You MUST respond with a JSON object matching this exact schema:
+{
+  "narrative_text": "<one intro sentence or empty string>",
+  "table_payload": {
+    "title": "<short descriptive title with units>",
+    "columns": ["<col1>", "<col2>", ...],
+    "rows": [["<val1>", "<val2>", ...], ...]
+  }
+}
+
+STRICT RULES:
+1. All cell values must be strings. Numbers: "468", "1,030" (use comma separators for thousands).
+2. If the title says USD Millions, do NOT add "$" or "M" inside cells — just the number string.
+3. Missing data: use exactly "N/A" — never "unknown", "not available", "not found", "missing".
+4. Footnotes like "145*" are allowed as cell strings.
+5. ONLY use data verified from the Retrieved Documents / Web Results. Never fabricate numbers.
+6. If almost all cells would be N/A, set table_payload rows to [] and explain in narrative_text.
+7. Do NOT include markdown fences or extra keys — output pure JSON only."""
 
 
 # ---------------------------------------------------------------------------
@@ -541,19 +582,52 @@ def generate_comparison_answer(
 ) -> dict:
     """
     Full comparison pipeline with query rephrasing.
-    
+
     1. Splits comparison question into per-company sub-questions
     2. Retrieves and answers each sub-question
     3. Merges answers into comparative response
-    
+
     Args:
         query: Original comparison question
         companies: List of companies to compare
         retriever_func: Function(query, company) -> context string
-    
+
     Returns:
         Complete comparison result
     """
     from backend.rag.advanced_prompts import answer_comparison_query
-    
+
     return answer_comparison_query(query, companies, retriever_func)
+
+
+def generate_table_response(query: str, context: str, web_context: str = "") -> "dict | None":
+    """
+    Generate a structured table response using llm_structured.
+
+    Returns a dict with keys: narrative_text, table_payload (title, columns, rows).
+    Returns None if structured output fails — caller should fall back to generate_response().
+    """
+    if not _active_api_key():
+        return None
+
+    user_prompt = _build_prompt(query, context, web_context)
+    try:
+        parsed: TableOutput = llm_structured(
+            messages=[{"role": "user", "content": user_prompt}],
+            system=TABLE_SYSTEM_PROMPT,
+            model_key="main",
+            schema=TableOutput,
+            max_tokens=2000,
+        )
+        if parsed is None:
+            return None
+        return {
+            "narrative_text": parsed.narrative_text,
+            "table_payload": {
+                "title": parsed.table_payload.title,
+                "columns": parsed.table_payload.columns,
+                "rows": parsed.table_payload.rows,
+            },
+        }
+    except Exception:
+        return None

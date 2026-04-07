@@ -1,0 +1,2506 @@
+{
+  "source": {
+    "doc_type": "earnings_presentation",
+    "suffix": ".pdf",
+    "file_name": "flex_fy22q1_presentation.pdf",
+    "relative_path": "flex_fy22q1_presentation.pdf",
+    "absolute_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/Earnings Presentation/flex_fy22q1_presentation.pdf",
+    "size_bytes": 533774,
+    "parsed_at": "2026-04-06T17:41:08.883817"
+  },
+  "document": {
+    "company": "flex",
+    "fiscal_year": "FY22",
+    "fiscal_quarter": "Q1",
+    "period_label": "FY22Q1",
+    "total_slides": 21
+  },
+  "usage_policy": {
+    "full_text_role": "inspection_full_text",
+    "full_text_core_role": "chunk_embedding_input",
+    "chunk_source_field": "chunks[].text",
+    "chunk_filter_fields": [
+      "company",
+      "fiscal_year",
+      "fiscal_quarter",
+      "period_label",
+      "slide_type",
+      "metric_flags"
+    ]
+  },
+  "full_text": "<!-- image -->\n\n## Results for Q1 Fiscal 2022\n\nEarnings Announcement: July 29 th , 2021 (Quarter Ended July 2 nd , 2021)\n\n0\n\n## Risks and Non-GAAP Disclosures\n\nThis presentation contains forward-looking statements within the meaning of U.S. securities laws, including statements related to future expected revenues and earnings per share, and our consideration of alternatives relating to our Nextracker business. These forward-looking statements involve risks and uncertainties that could cause the actual results to differ materially from those anticipated by these forward-looking statements. Readers are cautioned not to place undue reliance on these forward-looking statements. These risks include: the effects of the COVID-19 pandemic on our business, results of operations and financial condition; that we many not achieve our future revenues and earnings; the effects that the current macroeconomic environment could have on our business and demand for our products; uncertainties and risks relating to our ability to successfully complete a transaction for our Nextracker business, including the potential initial public offering of our Nextracker business, including the possibility that we may not be able to consummate the transaction on the expected timeline or at all, or that we will achieve the anticipated benefits of the transaction; the effects that current credit and market conditions could have on the liquidity and financial condition of our customers and suppliers, including any impact on their ability to meet their contractual obligations to us; the challenges of effectively managing our operations, including our ability to control costs and manage changes in our operations; litigation and regulatory investigations and proceedings; our compliance with legal and regulatory requirements; the possibility that benefits of the Company's restructuring actions may not materialize as expected; that the expected revenue and margins from recently launched programs may not be realized; our dependence on industries that continually produce technologically advanced products with short product life cycles; the short-term nature of our customers' commitments and rapid changes in demand may cause supply chain and other issues which adversely affect our operating results; our dependence on a small number of customers; the impact of component shortages and logistical constraints, including their impact on our revenues; our industry is extremely competitive; we may be exposed to financially troubled customers or suppliers; geopolitical risk, including the termination and renegotiation of international trade agreements and trade policies, including the impact of tariffs and related regulatory actions; the success of certain of our activities depends on our ability to protect our intellectual property rights and we may be exposed to claims of infringement or breach of license agreements; a breach of our IT or physical security systems, or violation of data privacy laws, may cause us to incur significant legal and financial exposure; we may be exposed to product liability and product warranty liability; and that recently proposed changes or future changes in tax laws in certain jurisdictions where we operate could materially impact our tax expense. In addition, the COVID-19 pandemic increases the likelihood and potential severity of many of the foregoing risks.\n\nThis presentation does not constitute an offer to sell or the solicitation of an offer to buy any securities. Any securities to be offered in any offering may not be sold nor may offers to buy be accepted prior to the time a registration statement becomes effective. Additional information concerning these, and other risks is described under 'Risk Factors' and 'Management's Discussion and Analysis of Financial Condition and Results of Operations' in our annual report on Form 10-K for the fiscal year ended March 31, 2021. The forward-looking statements in this presentation are based on current expectations and Flex assumes no obligation to update these forward-looking statements. Our share repurchase program does not obligate the Company to repurchase a specific number of shares and may be suspended or terminated at any time without prior notice.\n\nPlease refer to the appendix section of this presentation for reconciliation of the Non-GAAP financial measures to the most directly comparable GAAP measures. If this presentation references historical non-GAAP financial measures, these measures are located on the 'Investor Relations' section of our website, www.flex.com along with the required reconciliation to the most comparable GAAP financial measures.\n\nThe figures presented in this presentation have been rounded. This may lead to individual values not adding up to the totals presented.\n\nThe following business segment acronyms will be used throughout this presentation:\n\nAutomotive: autonomous, connectivity, electrification and smart technologies.\n\nFlex Reliability Solutions\n\nHealth Solutions: medical devices, medical equipment, and drug delivery.\n\nIndustrial: capital equipment, industrial devices, renewable including our Nextracker business, grid edge and power systems.\n\n1\n\nFlex Agility Solutions\n\nCEC: data infrastructure, edge infrastructure and communications infrastructure.\n\nLifestyle: appliances, consumer packaging, floorcare, micro mobility and audio.\n\nConsumer Devices: mobile and high velocity consumer devices.\n\n<!-- image -->\n\n<!-- image -->\n\n## Revathi Advaithi, CEO Business Update\n\n<!-- image -->\n\n## Q1 FY2022 Financial Summary\n\nAnother quarter of solid execution against robust demand, and despite global supply chain challenges\n\n<!-- image -->\n\n3\n\nQ4\n\nQ1\n\n<!-- image -->\n\n<!-- image -->\n\nF20\n\nF21\n\n<!-- image -->\n\n<!-- image -->\n\n<!-- image -->\n\n4\n\n- Adj Operating Margins up 120bp since June quarter of Calendar 2019 (pre-COVID)\n- Continue to gain share through expansions at current customers as well as new customer wins across the enterprise\n- Demand remains very strong on continued global recovery\n- Executing through supply chain and logistical constraints\n- Margins benefiting from focused efforts on improving mix, and programs that drive operating and productivity efficiencies\n\n<!-- image -->\n\n<!-- image -->\n\n## Q1 2022 Financial Results\n\nPaul Lundstrom, CFO\n\n<!-- image -->\n\n## Q1 FY2022 Income Statement Summary\n\nStrong execution across the enterprise resulting in year over year growth and margin expansion\n\n($M, except per share amounts)\n\n| | Prior Yr June 26, 2020 | Current Qtr July 2, 2021 |\n|---------------------------------|--------------------------|----------------------------|\n| Net sales | $5,153 | $6,342 |\n| Adjusted operating income | 163 | 290 |\n| Adjusted net income | 116 | 230 |\n| Adjusted EPS | $0.23 | $0.46 |\n| GAAP income before income taxes | $67 | $233 |\n| GAAP net income | $52 | $206 |\n| GAAP EPS | $0.10 | $0.41 |\n\n6\n\n<!-- image -->\n\n## Q1 FY2022 Quarterly Financial Highlights\n\nOperating at a higher level through better execution, mix shift and new wins\n\n<!-- image -->\n\n7\n\n<!-- image -->\n\n<!-- image -->\n\n<!-- image -->\n\n## Q1 FY2022 Segment Performance\n\n| | Revenue | Revenue | Adj. Operating Income & Margin | Adj. Operating Income & Margin | Adj. Operating Income & Margin | Adj. Operating Income & Margin | |\n|------------------------------|-----------|-----------|----------------------------------|----------------------------------|----------------------------------|----------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| | ($B) | Y/Y | ($M) | Y/Y | Margin % | Y/Y | |\n| Flex Reliability Solutions** | $2.9 | 29.8% | $170 | 47.8% | 5.8% | 70 bps | Health Solutions: Strong chronic care, improved elective, critical returning to pre-COVID levels. Continued new wins. Automotive: Demand strong, continued wins in ADAS and EV Industrial: Strong Industrial demand, share gains from superior SCM execution. Expanding footprint in EV charging. Nextracker affected by higher freight |\n| Flex Agility Solutions | $3.4 | 17.8% | $137 | 90.9% | 4.0% | 150 bps | CEC: Demand intact with ongoing 5G rollouts, optical, Enterprise IT and Cloud. Lifestyle: Continued robust demand for high-end durable goods and new business ramps Consumer Devices: Good demand with improvements in developing markets, but COVID disruptions remain a factor |\n| Corporate Services & Other* | -- | -- | ($17) | -- | -- | -- | -- |\n| Total | $6.3 | 23.1% | $290 | 78% | 4.6% | 140 bps | |\n\n8\n\n<!-- image -->\n\n## Cash Flow Highlights\n\nSustained strong cash flow generation\n\n3-Months Ended\n\n| | (July 2, 2021) |\n|---------------------------------------------------------|------------------|\n| GAAP net income | $206 |\n| Depreciation, amortization and other impairment charges | 118 |\n| Change in working capital and other, net | 10 |\n| Operating Cash Flow | 334 |\n| Net Capex | (115) |\n| Adjusted Free Cash Flow | 219 |\n| Payments for share repurchases | (162) |\n| Debt proceeds, net | (1) |\n\n9\n\nNet Capital Expenditures * ($M)\n\n<!-- image -->\n\n<!-- image -->\n\n## Q2 FY2022 Update - Sept 2022\n\nDemand is strong; managing through component constraints\n\n## Flex Reliability Solutions Segment\n\nRevenue up low to high single digits % Y/Y\n\nOperational Benefits\n\n<!-- image -->\n\n<!-- image -->\n\n- Demand indicators remain very strong thru 2H\n- Chronic care and elective demand strength will continue\n- Wins in ADAS and EV should start to ramp in Q3-Q4 for late FY22 / FY23 revenue\n\n10\n\n- Critical care continuing to normalize to preCOVID levels\n- Multiple new product wins ramping\n- Solid core foundation and strong execution driving diversified growth\n- Renewables demand outlook very strong, logistics challenges should bottom in Q2\n\n<!-- image -->\n\n## Flex Agility Solutions Segment\n\nRevenue up low to high single digits % Y/Y\n\n## Lifestyle\n\n<!-- image -->\n\n- Demand remains strong, with return to work providing new upgrade cycles\n- Winning new customer logos and continuing to expand with our base customers.\n- Consistent demand across all end markets\n- Comm infrastructure buildout continues to align with 5g rollout\n- Cloud outlook remains strong\n- Improved demand in mobile and devices end markets\n- Regional COVID resurgence remains an elevated risk\n\n<!-- image -->\n\n<!-- image -->\n\n## Q2 FY2022 Guidance - Sep 2022\n\n| | Guidance |\n|---------------------------------|------------------------|\n| Revenue | $6.1 - $6.5 Billion |\n| Adjusted Operating Income | $250 - $290 million |\n| Adjusted Earnings Per Share | $0.37 - $0.43 |\n| GAAP Income Before Income Taxes | $175 - $210 million |\n| GAAP Earnings Per Share | $0.29 - $0.35 |\n| Interest & Other Expense | ~$40 million |\n| Adjusted Income Tax Rate | High end of 10% to 15% |\n| WASO | ~ 499 million shares |\n\n11\n\n## Segment Revenue Outlook (Y/Y)\n\nFlex Reliability Solutions\n\nFlex Agility Solutions\n\nUp low to high single digits\n\nUp low to high single digits\n\n<!-- image -->\n\n## FY2022 Guidance Updated\n\n## Prior Guidance\n\n| Revenue | $25 - $26 billion |\n|-----------------------------|---------------------|\n| Adjusted Operating Margin 1 | 4.4% to 4.6% |\n| Adjusted Earnings Per Share | $1.60 - $1.75 |\n| GAAP Earnings Per Share 2 | $1.30 - $1.45 |\n\n12\n\n## Updated Guidance\n\n| $25.5 - $26.5 billion |\n|-------------------------|\n| 4.5% to 4.7% |\n| $1.70 - $1.85 |\n| $1.42 - $1.57 |\n\n<!-- image -->\n\n<!-- image -->\n\n## Moving forward\n\n<!-- image -->\n\n13\n\n- Continue to drive new business, customer expansions and renewals towards higher value business\n- Expertly managing global component and logistical constraints\n- More consistent earnings, higher margin level, strong cash flow is the new norm for Flex\n- Solid capital allocation strategy to fund growth and drive efficiency, and return cash to shareholders\n\n<!-- image -->\n\n## Thank you.\n\nFor more information, please visit investors.flex.com\n\n14\n\n<!-- image -->\n\n## Appendix: Reconciliation of GAAP to Non-GAAP Measures\n\n| | Quarter- ended July 02, 2021 | Quarter- ended March 31, 2021 | Quarter- ended June 26, 2020 | Quarter- ended March 31, 2020 | Quarter- ended June 28, 2019 |\n|------------------------------------------------------------------|--------------------------------|---------------------------------|--------------------------------|---------------------------------|--------------------------------|\n| ($ in Millions)** | | | | | |\n| GAAP income before income taxes | $233 | $260 | $67 | $45 | $64 |\n| Intangible amortization | 15 | 15 | 15 | 15 | 17 |\n| Stock-based compensation expense | 20 | 18 | 13 | 18 | 15 |\n| Customer related asset impairments (recoveries), legal and other | - | (30) | 27 | 9 | 2 |\n| Restructuring charges | - | 26 | 10 | 17 | 56 |\n| Interest and other, net | 22 | 22 | 31 | 103 | 53 |\n| Non-GAAP operating income | $290 | $310 | $163 | $207 | $208 |\n| Non-GAAP operating margin* | 4.6% | 4.9% | 3.2% | 3.8% | 3.4% |\n\n15\n\n<!-- image -->\n\n## Appendix: Reconciliation of GAAP to Non-GAAP Measures\n\n| ($ in Millions, except for EPS)* | Quarter- ended July 02, 2021 | Quarter- ended March 31, 2021 | Quarter- ended June 26, 2020 | Quarter- ended March 31, 2020 |\n|------------------------------------------------------------------|--------------------------------|---------------------------------|--------------------------------|---------------------------------|\n| GAAP net income | $206 | $240 | $52 | $48 |\n| Intangible amortization | 15 | 15 | 15 | 15 |\n| Stock-based compensation expense | 20 | 18 | 13 | 18 |\n| Restructuring charges | - | 26 | 10 | 17 |\n| Customer related asset impairments (recoveries), legal and other | - | (30) | 27 | 9 |\n| Interest and other, net | (3) | 1 | 1 | 66 |\n| Adjustments for taxes | (8) | (21) | (3) | (31) |\n| Non-GAAP net income | $230 | $248 | $116 | $143 |\n| Diluted earnings per share: | | | | |\n| GAAP | $0.41 | $0.47 | $0.10 | $0.10 |\n| NON-GAAP | $0.46 | $0.49 | $0.23 | $0.28 |\n| Diluted shares used in computing per share amounts | 499 | 507 | 502 | 506 |\n\n16\n\n<!-- image -->\n\n## Appendix: Reconciliation of GAAP to Non-GAAP Measures\n\n| | Quarter-ended | | Quarter-ended | |\n|----------------------------------|-----------------|--------------|-----------------|--------------|\n| | July 02, 2021 | | June 26, 2020 | |\n| ($ in Millions) | % of revenue | % of revenue | % of revenue | % of revenue |\n| GAAP gross profit | $471 | 7.4% | $304 | 5.9% |\n| Stock-based compensation expense | 5 | | 4 | |\n| Restructuring charges | - | | 10 | |\n| Non-GAAP gross profit | $476 | 7.5% | $318 | 6.2% |\n| GAAP SG&A expenses | $201 | 3.2% | $191 | 3.7% |\n| Stock-based compensation expense | (15) | | (9) | |\n| Legal and other | - | | (27) | |\n| Non-GAAP SG&A expenses | $186 | 2.9% | $155 | 3.0% |\n\nFor more details on the GAAP to Non-GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.\n\n17\n\n<!-- image -->\n\n## Appendix: Reconciliation of GAAP to Non-GAAP Measures\n\n| | Quarter- ended July 02, 2021 | | Quarter- Ended July 02, 2021 |\n|----------------------------|--------------------------------|-------------------------------------|--------------------------------|\n| ($ in Millions) | | ($ in Millions) | |\n| Segment income: | | Reconciliation of segment income to | |\n| Flex Agility Solutions | $137 | income before income taxes | |\n| Flex Reliability Solutions | 170 | Total segment income | $290 |\n| | | Intangible amortization | 15 |\n| Corporate and Other* | (17) | Stock-based compensation expense | 20 |\n| Total segment income: | $290 | Interest and other, net | 22 |\n| | | Income before income taxes | $233 |\n| Operating margin**: | | | |\n| Flex Agility Solutions | 4.0% | | |\n| Flex Reliability Solutions | 5.8% | | |\n\n*Corporate and Other: corporate service costs that are not included in the assessment of the performance of each of the identified reporting segments.\n\n**We calculate our segment operating margin as current quarter segment operating income divided by current quarter revenue.\n\nFor more details on the GAAP to Non-GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.\n\n18\n\n<!-- image -->\n\n## Appendix: Reconciliation of GAAP to Non-GAAP Measures\n\n| | Quarter- ended | Quarter- ended | Quarter- ended | Quarter- ended | Quarter- ended | Quarter- ended |\n|-----------------------------------------------------|------------------|------------------|-------------------|-------------------|------------------|------------------|\n| ($ in Millions)* | July 02, 2021 | March 31, 2021 | December 31, 2020 | September 25,2020 | June 26, 2020 | March 31, 2020 |\n| Net cash provided by (used in) operating activities | $334 | $161 | $348 | $265 | ($629) | $166 |\n| Reduction in ABS levels and other | - | 5 | 6 | 132 | 657 | 51 |\n| Net capital expenditures | (115) | (31) | (65) | (69) | (102) | (83) |\n| Adjusted free cash flow | $219 | $135 | $289 | $326 | ($74) | $134 |\n\nAdjusted free cash flow is calculated as operating cash flow for the quarter less net capital expenditures. In fiscal year 2021, we proactively and strategically reduced the outstanding balance of our ABS programs which is fully paid and wind down as year end of FY21. Proceeds from our debt issuance replaced the funding from the ABS programs for working capital purposes. We reduced the balance on this short-term financing products throughout FY21 which had the accounting effect of reducing our cash flow from operations and was excluded from our adjusted free cash flow calculation. Adjusted free cash flow prior to FY21 also included the collection of the deferred purchase price receivables which the Company repurchased as part of the ABS program amended in FY20. Adjusted free cash flow is a non-GAAP financial measure and may not be defined and calculated by other companies in the same manner.\n\n*Amounts may not sum due to rounding.\n\n19\n\n<!-- image -->\n\n## Appendix: Reconciliation of GAAP to Non-GAAP Measures - Nextracker\n\n| | Quarter - ended | Quarter - ended |\n|------------------------------------------------------|-------------------|-------------------|\n| Revenue (billions) | $0.3 | $0.3 |\n| Net income (% of Revenue) | 5% | 9% |\n| Intangible amortization and stock-based compensation | 1% | 1% |\n| Depreciation | 0% | 0% |\n| Interest, net | 0% | 0% |\n| Adjustments for taxes | 2% | 3% |\n| Adjusted EBITDA (% of Revenue) | 8% | 13% |\n\n20\n\n<!-- image -->",
+  "full_text_core": "[FINANCIAL_SUMMARY — Slide 4] 3Q1 FY2022 Financial Summary\n3Q1 FY2022 Financial Summary\n1632903.2%4.6%5,484\n5,1536,266 6,342\nQ4 Q1Revenue\n($M)\n$0.28\n$0.23$0.49\n$0.46\nF20 F21Adj. Earnings\nPer Share: $0.34\nMar-20 Mar-21 Jun-20 Jun-21 Mar-20 Mar-21 Jun-20 Jun-21 Mar-20 Mar-21 Jun-20 Jun-21 Mar-20 Mar-21 Jun-20 Jun-21Another quarter of solid execution against robust demand, and despite global supply chain\nchallenges\n134 135\nMar-19 Mar-20Adj. Free Cash Flow\n(74)219\n2073103.8%4.9%Adj. Operating\nIncome\n($M) Adj. Operating Margin\n\n[GENERAL — Slide 5] 4Q1 FY2022\n4Q1 FY2022\nHighlights\n•Adj Operating Margins up 120bp since June quarter of Calendar 2019 (pre-COVID)\n•Continue to gain share through expansions at current customers as well as new customer wins across the enterprise\n•Demand remains very strong on continued global recovery\n•Executing through supply chain and logistical constraints\n•Margins benefiting from focused efforts on improving mix, and programs that drive operating and productivity efficiencies\n\n[FINANCIAL_SUMMARY — Slide 7] 6Q1 FY2022 Income Statement Summary\n6Q1 FY2022 Income Statement Summary\n($M, except per share amounts)\nPrior Yr Current Qtr\nJune 26 , 2020 July 2 , 2021\nNet sales: $5,153; $6,342\nAdjusted operating income 163 290\nAdjusted net income 116 230\nAdjusted EPS: $0.23; $0.46\nGAAP income before income taxes: $67; $233\nGAAP net income: $52; $206\nGAAP EPS: $0.10; $0.41\n\n[FINANCIAL_SUMMARY — Slide 8] 71632903.2%4.6%Adj. Operating Income\n71632903.2%4.6%Adj. Operating Income\n($M)\nAdj. Operating Margin\nJun-20 Jun-21Q1 FY2022 Quarterly Financial Highlights\n3184766.2%7.5%Adj. Gross Profit\nAdj.Gross Margin\nJun-21Operating at a higher level through better execution, mix shift and new wins\n1551863.0%2.9%Adj. SG&A\n% of Revenue\nJun-21 Jun-20 Jun-20\n\n[FINANCIAL_SUMMARY — Slide 9] 8Revenue Adj. Operating Income & Margin\n8Revenue Adj. Operating Income & Margin\n($B) Y/Y ($M) Y/Y Margin % Y/Y\nFlex\nReliability Solutions**$2.9 29.8% $170 47.8% 5.8% 70 bpsHealth Solutions: Strong chronic care, improved elective, critical\nreturning to pre -COVID levels. Continued new wins.\nAutomotive: Demand strong, continued wins in ADAS and EV\nIndustrial: Strong Industrial demand, share gains from superior SCM\nexecution. Expanding footprint in EV charging. Nextracker affected by\nhigher freight\nFlex Agility\nSolutions$3.4 17.8% $137 90.9% 4.0% 150 bpsCEC: Demand intact with o ngoing 5G rollouts, optical, Enterprise IT and\nCloud.\nLifestyle: Continued robust demand for high-end durable goods and\nnew business ramps\nConsumer Devices: Good demand with improvements in developing\nmarkets, but COVID disruptions remain a factor\nCorporate\nServices & Other*-- -- ($17) -- -- -- --\nTotal: $6.3; 23.1%; $290; 78%; 4.6%\n* Corporate Services and Other: centralized administrative costs that are not included in the assessment of the performance o f each of the identified segments\n** Includes Nextracker Revenue of $0.3 billion in Q1 for both Fiscal 22 and Fiscal 21, and Adj EBITDA margin of 8% and 13% fo r Q1 Fiscal 22 and Q1 Fiscal 21, respectively\n\n[FINANCIAL_SUMMARY — Slide 10] 9Cash Flow Highlights\n9Cash Flow Highlights\n*Net Capital Expenditures is calculated as purchases of property and equipment minus proceeds from the disposition of property and equipment.Adjusted Free Cash Flow ($M) (74)326 135 219 Jun-20 Sep-20 Dec-20 Mar-21 Jun-213-Months Ended ($M) (July 2, 2021) GAAP net income $206 Depreciation, amortization and other impairment charges118 Change in working capital and other, net 10 Operating Cash Flow 334 Net Capex (115) Adjusted Free Cash Flow 219 Payments for share repurchases (162) Debt proceeds, net (1) Net change in cash and cash equivalents $56102 69 65 31 115 Jun-20 Sep-20 Dec-20 Mar-21 Jun-21Net Capital Expenditures*($M)Sustained strong cash flow generation\n\n[FINANCIAL_SUMMARY — Slide 11] 10Q2 FY2022 Update –Sept 2022\n10Q2 FY2022 Update –Sept 2022\nFlex Reliability Solutions Segment\nRevenue up low to high single digits % Y/YFlex Agility Solutions Segment\nRevenue up low to high single digits % Y/YDemand is strong; managing through component constraints\nOperational Benefits\nAutomotive Health SolutionsCommunications,\nEnterprise & CloudConsumer Devices Lifestyle Industrial\n•Demand remains strong, with return to work providing new upgrade cycles\n•Winning new customer logos and continuing to expand with our base customers.•Consistent demand across all end markets\n•Comm infrastructure buildout continues to align with 5g rollout\n•Cloud outlook remains strong•Improved demand in mobile and devices end markets\n•Regional COVID resurgence remains an elevated risk•Demand indicators remain very strong thru 2H\n•Wins in ADAS and EV should start to ramp in Q3 -Q4 for late FY22 / FY23 revenue•Chronic care and elective demand strength will continue\n•Critical care continuing to normalize to pre-COVID levels\n•Multiple new product wins ramping•Solid core foundation and strong execution driving diversified growth\n•Renewables demand outlook very strong, logistics challenges should bottom in Q2\n\n[FINANCIAL_SUMMARY — Slide 12] 11Guidance\n11Guidance\nRevenue $6.1 -$6.5 Billion\nAdjusted Operating Income $250 -$290 million\nAdjusted Earnings Per Share $0.37 -$0.43\nGAAP Income Before Income Taxes $175 –$210 million\nGAAP Earnings Per Share $0.29 –$0.35\nInterest & Other Expense ~$40 million\nAdjusted Income Tax Rate High end of 10% to 15%\nWASO ~ 499 million sharesQ2 FY2022 Guidance –Sep 2022\nSegment Revenue Outlook (Y/Y)\nUp low to high\nsingle digitsFlex Reliability\nSolutions\nFlex Agility\nSolutionsUp low to high\nsingle digits\nGuidance for adjusted operating income excludes approximately $25 million for stock-based compensation, $15 million intangible a mortization expense, and approximately $40\nmillion for interest and other expenses from GAAP income before income taxes. Guidance for GAAP earnings per share includes a pproximately $0.03 for net intangible\namortization and $0.05 for stock-based compensation expense not included in adjusted earnings per share.\n\n[FINANCIAL_SUMMARY — Slide 13] 12Revenue $25 -$26 billion\n12Revenue $25 -$26 billion\nAdjusted Operating Margin1 4.4% to 4.6%\nAdjusted Earnings Per Share $1.60 -$1.75\nGAAP Earnings Per Share2 $1.30 –$1.45FY2022 Guidance –Updated\n1. Adjusted operating margin does not include the below impacts when comparing to GAAP income before tax as a % of revenue: 0 .6%interest and other, 0.4% stock-based\ncompensation and 0.2% intangible amortization.\n2. Guidance for GAAP earnings per share includes $0.19 for stock-based compensation and $0.09 for net intangible amortization no t included in the adjusted earnings per share\nguidance$25.5 -$26.5 billion\n4.5% to 4.7%\n$1.70 -$1.85\n$1.42 –$1.57Prior Guidance Updated Guidance\n\n[GENERAL — Slide 14] 13Moving\n13Moving\nforward\n•Continue to drive new business, customer expansions and renewals towards higher value business\n•Expertly managing global component and logistical constraints\n•More consistent earnings, higher margin level, strong cash flow is the new norm for Flex\n•Solid capital allocation strategy to fund growth and drive efficiency, and return cash to shareholders\n\n[FINANCIAL_SUMMARY — Slide 16] 15Quarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-ended\n15Quarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-ended\nJuly 02, 2021 March 31, 2021 June 26, 2020 March 31, 2020 June 28, 2019\n($ in Millions )**\nGAAP income before income taxes: $233; $260; $67; $45; $64\nIntangible amortization 15 15 15 15 17\nStock-based compensation expense 20 18 13 18 15\nCustomer related asset impairments (recoveries), legal and\nother- (30) 27 9 2\nRestructuring charges - 26 10 17 56\nInterest and other, net 22 22 31 103 53\nNon-GAAP operating income $290 $310 $163 $207 $208\nNon-GAAP operating margin* 4.6% 4.9% 3.2% 3.8% 3.4%\nFor more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\n*We calculate our Non- GAAP operating margin as current quarter Non- GAAP operating income divided by current quarter revenue.\n**Amounts may not sum due to rounding.\n\n[FINANCIAL_SUMMARY — Slide 17] 16For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary fina\n16For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\nQuarter-endedQuarter-endedQuarter-endedQuarter-ended\n($ in Millions, except for EPS)* July 02, 2021 March 31, 2021 June 26, 2020 March 31, 2020\nGAAP net income: $206; $240; $52; $48\nIntangible amortization 15 15 15 15\nStock-based compensation expense 20 18 13 18\nRestructuring charges - 26 10 17\nCustomer related asset impairments (recoveries), legal and other - (30) 27 9\nInterest and other, net (3) 1 1 66\nAdjustments for taxes (8) (21) (3) (31)\nNon-GAAP net income $230 $248 $116 $143\nDiluted earnings per share:\nGAAP: $0.41; $0.47; $0.10; $0.10\nNON -GAAP $0.46 $0.49 $0.23 $0.28\nDiluted shares used in computing per share amounts 499 507 502 506\n*Amounts may not sum due to rounding.\n\n[FINANCIAL_SUMMARY — Slide 18] 17Quarter-ended Quarter-ended\n17Quarter-ended Quarter-ended\nJuly 02, 2021 June 26, 2020\n($ in Millions) % of revenue % of revenue\nGAAP gross profit: $471; 7.4%; $304; 5.9%\nStock-based compensation expense 5 4\nRestructuring charges - 10\nNon-GAAP gross profit $476 7.5% $318 6.2%\nGAAP SG&A expenses: $201; 3.2%; $191; 3.7%\nStock-based compensation expense (15) (9)\nLegal and other - (27)\nNon-GAAP SG&A expenses $186 2.9% $155 3.0%\nFor more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\n\n[FINANCIAL_SUMMARY — Slide 19] 18For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary fina\n18For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\nQuarter-ended\nJuly 02, 2021\n($ in Millions )\nSegment income:\nFlex Agility Solutions $137\nFlex Reliability Solutions 170\nCorporate and Other* (17)\nTotal segment income: $290\nOperating margin**:\nFlex Agility Solutions 4.0%\nFlex Reliability Solutions 5.8%Quarter-Ended\nReconciliation of segment income to\nincome before income taxes\nTotal segment income $290\nIntangible amortization 15\nStock-based compensation expense 20\nInterest and other, net 22\nIncome before income taxes $233\n*Corporate and Other: corporate service costs that are not included in the assessment of the performance of each of the ident ified reporting segments.\n**We calculate our segment operating margin as current quarter segment operating income divided by current quarter revenue.\n\n[FINANCIAL_SUMMARY — Slide 20] 19For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary fina\n19For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\nQuarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-ended\n($ in Millions)* July 02 , 2021 March 31, 2021 December 31 , 2020 September 25 ,2020 June 26, 2020 March 31, 2020\nNet cash provided by (used in) operating activities: $334; $161; $348; $265; $629; $166\nReduction in ABS levels and other - 5 6 132 657 51\nNet capital expenditures (115) (31) (65) (69) (102) (83)\nAdjusted free cash flow: $219; $135; $289; $326; $74; $134\nAdjusted free cash flow is calculated as operating cash flow for the quarter less net capital expenditures. In fiscal year 20 21,we proactively and strategically reduced the outstanding balance of our ABS programs which is fully paid and wind down as year end\nof FY21. Proceeds from our debt issuance replaced the funding from the ABS programs for working capital purposes. We reduced the balance on this short-term financing products throughout FY21 which had the accounting effect of reducing our cash flow\nfrom operations and was excluded from our adjusted free cash flow calculation. Adjusted free cash flow prior to FY21 also included the collection of the deferred purchase price receivables which the Company repurchased as part of the ABS program amended\nin FY20. Adjusted free cash flow is a non- GAAP financial measure and may not be defined and calculated by other companies in the same manner.\n*Amounts may not sum due to rounding.\n\n[FINANCIAL_SUMMARY — Slide 21] 20Appendix: Reconciliation of GAAP to Non-GAAP\n20Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures -Nextracker\nQuarter-endedQuarter-ended\nJuly 02, 2021 June 26, 2020\nRevenue (billions): $0.3; $0.3\nNet income (% of Revenue) 5% 9%\nIntangible amortization and stock-based compensation 1% 1%\nDepreciation: 0%; 0%\nInterest, net: 0%; 0%\nAdjustments for taxes: 2%; 3%\nAdjusted EBITDA (% of Revenue) 8% 13%",
+  "slides": [
+    {
+      "slide_id": "slide_001",
+      "page_num": 1,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "title_slide",
+      "title": "Results for Q1",
+      "text": "Results for Q1\nFiscal 2022\nEarnings Announcement: July 29th, 2021\n(Quarter Ended July 2nd, 2021)",
+      "char_count": 96,
+      "word_count": 15,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [],
+        "flags": {
+          "revenue": false,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": []
+    },
+    {
+      "slide_id": "slide_002",
+      "page_num": 2,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "disclaimer",
+      "title": "1Risks and Non-GAAP Disclosures",
+      "text": "1Risks and Non-GAAP Disclosures\nThis presentation contains forward-looking statements within the meaning of U.S. securities laws, including statements related t o future expected revenues and earnings per share, and our consideration of alternatives\nrelating to our Nextracker business. These forward-looking statements involve risks and uncertainties that could cause the actual results to differ materially from those anticipated by these forward-looking statements.\nReaders are cautioned not to place undue reliance on these forward-looking statements. These risks include: the effects of the COVID -19 pandemic on our business, results of operations and financial condition; that\nwe many not achieve our future revenues and earnings; the effects that the current macroeconomic environment could have on ou r business and demand for our products; uncertainties and risks relating to our\nability to successfully complete a transaction for our Nextracker business, including the potential initial public offering o f our Nextracker business, including the possibility that we may not be able to consummate the\ntransaction on the expected timeline or at all, or that we will achieve the anticipated benefits of the transaction; the effects that current credit and market conditions could have on the liquidity and financial\ncondition of our customers and suppliers, including any impact on their ability to meet their contractual obligations to us; thechallenges of effectively managing our operations, including our ability to control costs\nand manage changes in our operations; litigation and regulatory investigations and proceedings; our compliance with legal and regulatory requirements; the possibility that benefits of the Company’s restructuring\nactions may not materialize as expected; that the expected revenue and margins from recently launched programs may not be realiz ed; our dependence on industries that continually produce technologically\nadvanced products with short product life cycles; the short-term nature of our customers’ commitments and rapid changes in deman d may cause supply chain and other issues which adversely affect our operating\nresults; our dependence on a small number of customers; the impact of component shortages and logistical constraints, includi ng their impact on our revenues; our industry is extremely competitive; we may be\nexposed to financially troubled customers or suppliers; geopolitical risk, including the termination and renegotiation of int ernational trade agreements and trade policies, including the impact of tariffs and related\nregulatory actions; the success of certain of our activities depends on our ability to protect our intellectual property righ ts and we may be exposed to claims of infringement or breach of license agreements; a breach\nof our IT or physical security systems, or violation of data privacy laws, may cause us to incur significant legal and financ ialexposure; we may be exposed to product liability and product warranty liability; and that\nrecently proposed changes or future changes in tax laws in certain jurisdictions where we operate could materially impact our tax expense. In addition, the COVID -19 pandemic increases the likelihood and potential\nseverity of many of the foregoing risks.\nThis presentation does not constitute an offer to sell or the solicitation of an offer to buy any securities. Any securities to be offered in any offering may not be sold nor may offers to buy be accepted prior to the time a\nregistration statement becomes effective. Additional information concerning these, and other risks is described under “Risk Factors” and “Management’s Discussion and Analysis of Financial Condition and Results of\nOperations” in our annual report on Form 10 -K for the fiscal year ended March 31, 2021. The forward-looking statements in this p resentation are based on current expectations and Flex assumes no obligation to update\nthese forward-looking statements. Our share repurchase program does not obligate the Company to repurchase a specific number of shares and may be suspended or terminated at any time without prior notice.\nPlease refer to the appendix section of this presentation for reconciliation of the Non -GAAP financial measures to the most directly comparable GAAP measures. If this presentation references historical non -GAAP\nfinancial measures, these measures are located on the “Investor Relations” section of our website, www.flex.com along with the required reconciliation to the most comparable GAAP financial measures.\nThe figures presented in this presentation have been rounded. This may lead to individual values not adding up to the totals pre sented.\nThe following business segment acronyms will be used throughout this presentation:\nAutomotive: autonomous, connectivity, electrification and\nsmart technologies.\nHealth Solutions: medical devices, medical equipment, and\ndrug delivery.\nIndustrial: capital equipment, industrial devices, renewable\nincluding our Nextracker business, grid edge and power\nsystems.CEC: data infrastructure, edge infrastructure and\ncommunications infrastructure.\nLifestyle: appliances, consumer packaging, floorcare, micro\nmobility and audio.Consumer Devices: mobile and high velocity consumer\ndevices.Flex Reliability\nSolutionsFlex Agility\nSolutions",
+      "char_count": 5318,
+      "word_count": 771,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "revenue",
+          "earnings per share",
+          "segment",
+          "agility",
+          "reliability",
+          "share repurchase"
+        ],
+        "flags": {
+          "revenue": true,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": true,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": true,
+          "agility": true,
+          "reliability": true,
+          "return_on": false,
+          "share_repurchase": true
+        }
+      },
+      "structured_metrics": []
+    },
+    {
+      "slide_id": "slide_003",
+      "page_num": 3,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "general",
+      "title": "2Revathi Advaithi, CEOBusiness Update",
+      "text": "2Revathi Advaithi, CEOBusiness Update",
+      "char_count": 37,
+      "word_count": 4,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [],
+        "flags": {
+          "revenue": false,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": []
+    },
+    {
+      "slide_id": "slide_004",
+      "page_num": 4,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "3Q1 FY2022 Financial Summary",
+      "text": "3Q1 FY2022 Financial Summary\n1632903.2%4.6%5,484\n5,1536,266 6,342\nQ4 Q1Revenue\n($M)\n$0.28\n$0.23$0.49\n$0.46\nF20 F21Adj. Earnings\nPer Share: $0.34\nMar-20 Mar-21 Jun-20 Jun-21 Mar-20 Mar-21 Jun-20 Jun-21 Mar-20 Mar-21 Jun-20 Jun-21 Mar-20 Mar-21 Jun-20 Jun-21Another quarter of solid execution against robust demand, and despite global supply chain\nchallenges\n134 135\nMar-19 Mar-20Adj. Free Cash Flow\n(74)219\n2073103.8%4.9%Adj. Operating\nIncome\n($M) Adj. Operating Margin",
+      "char_count": 468,
+      "word_count": 63,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "revenue",
+          "operating margin",
+          "free cash flow",
+          "cash"
+        ],
+        "flags": {
+          "revenue": true,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": true,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": true,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": true,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": [
+        {
+          "label": "Adj. Earnings Per Share",
+          "value": "$0.34",
+          "period": "F20"
+        }
+      ]
+    },
+    {
+      "slide_id": "slide_005",
+      "page_num": 5,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "general",
+      "title": "4Q1 FY2022",
+      "text": "4Q1 FY2022\nHighlights\n•Adj Operating Margins up 120bp since June quarter of Calendar 2019 (pre-COVID)\n•Continue to gain share through expansions at current customers as well as new customer wins across the enterprise\n•Demand remains very strong on continued global recovery\n•Executing through supply chain and logistical constraints\n•Margins benefiting from focused efforts on improving mix, and programs that drive operating and productivity efficiencies",
+      "char_count": 455,
+      "word_count": 64,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "operating margin"
+        ],
+        "flags": {
+          "revenue": false,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": true,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": []
+    },
+    {
+      "slide_id": "slide_006",
+      "page_num": 6,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "general",
+      "title": "5Paul Lundstrom, CFOQ1 2022",
+      "text": "5Paul Lundstrom, CFOQ1 2022\nFinancial Results",
+      "char_count": 45,
+      "word_count": 6,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [],
+        "flags": {
+          "revenue": false,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": []
+    },
+    {
+      "slide_id": "slide_007",
+      "page_num": 7,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "6Q1 FY2022 Income Statement Summary",
+      "text": "6Q1 FY2022 Income Statement Summary\n($M, except per share amounts)\nPrior Yr Current Qtr\nJune 26 , 2020 July 2 , 2021\nNet sales: $5,153; $6,342\nAdjusted operating income 163 290\nAdjusted net income 116 230\nAdjusted EPS: $0.23; $0.46\nGAAP income before income taxes: $67; $233\nGAAP net income: $52; $206\nGAAP EPS: $0.10; $0.41",
+      "char_count": 324,
+      "word_count": 56,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "operating income",
+          "net income",
+          "adjusted eps"
+        ],
+        "flags": {
+          "revenue": false,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": true,
+          "operating_margin": false,
+          "net_income": true,
+          "diluted_eps": false,
+          "adjusted_eps": true,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": [
+        {
+          "label": "Net sales",
+          "value": "$5,153",
+          "period": "FY2022"
+        },
+        {
+          "label": "Adjusted EPS",
+          "value": "$0.23",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP income before income taxes",
+          "value": "$67",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP net income",
+          "value": "$52",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP EPS",
+          "value": "$0.10",
+          "period": "FY2022"
+        },
+        {
+          "label": "Adjusted operating income",
+          "value": "6,342",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP income before income",
+          "value": "0.46",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP net",
+          "value": "233",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP",
+          "value": "206",
+          "period": "FY2022"
+        }
+      ]
+    },
+    {
+      "slide_id": "slide_008",
+      "page_num": 8,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "71632903.2%4.6%Adj. Operating Income",
+      "text": "71632903.2%4.6%Adj. Operating Income\n($M)\nAdj. Operating Margin\nJun-20 Jun-21Q1 FY2022 Quarterly Financial Highlights\n3184766.2%7.5%Adj. Gross Profit\nAdj.Gross Margin\nJun-21Operating at a higher level through better execution, mix shift and new wins\n1551863.0%2.9%Adj. SG&A\n% of Revenue\nJun-21 Jun-20 Jun-20",
+      "char_count": 307,
+      "word_count": 39,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "revenue",
+          "gross profit",
+          "gross margin",
+          "operating income",
+          "operating margin"
+        ],
+        "flags": {
+          "revenue": true,
+          "net_revenue": false,
+          "gross_profit": true,
+          "gross_margin": true,
+          "operating_income": true,
+          "operating_margin": true,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": []
+    },
+    {
+      "slide_id": "slide_009",
+      "page_num": 9,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "8Revenue Adj. Operating Income & Margin",
+      "text": "8Revenue Adj. Operating Income & Margin\n($B) Y/Y ($M) Y/Y Margin % Y/Y\nFlex\nReliability Solutions**$2.9 29.8% $170 47.8% 5.8% 70 bpsHealth Solutions: Strong chronic care, improved elective, critical\nreturning to pre -COVID levels. Continued new wins.\nAutomotive: Demand strong, continued wins in ADAS and EV\nIndustrial: Strong Industrial demand, share gains from superior SCM\nexecution. Expanding footprint in EV charging. Nextracker affected by\nhigher freight\nFlex Agility\nSolutions$3.4 17.8% $137 90.9% 4.0% 150 bpsCEC: Demand intact with o ngoing 5G rollouts, optical, Enterprise IT and\nCloud.\nLifestyle: Continued robust demand for high-end durable goods and\nnew business ramps\nConsumer Devices: Good demand with improvements in developing\nmarkets, but COVID disruptions remain a factor\nCorporate\nServices & Other*-- -- ($17) -- -- -- --\nTotal: $6.3; 23.1%; $290; 78%; 4.6%\n* Corporate Services and Other: centralized administrative costs that are not included in the assessment of the performance o f each of the identified segments\n** Includes Nextracker Revenue of $0.3 billion in Q1 for both Fiscal 22 and Fiscal 21, and Adj EBITDA margin of 8% and 13% fo r Q1 Fiscal 22 and Q1 Fiscal 21, respectively",
+      "char_count": 1209,
+      "word_count": 189,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "revenue",
+          "operating income",
+          "segment",
+          "agility",
+          "reliability"
+        ],
+        "flags": {
+          "revenue": true,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": true,
+          "operating_margin": false,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": true,
+          "agility": true,
+          "reliability": true,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": [
+        {
+          "label": "Total",
+          "value": "$6.3",
+          "period": ""
+        },
+        {
+          "label": "billion in",
+          "value": "0.3",
+          "period": ""
+        },
+        {
+          "label": "fo r",
+          "value": "13%",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "slide_id": "slide_010",
+      "page_num": 10,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "9Cash Flow Highlights",
+      "text": "9Cash Flow Highlights\n*Net Capital Expenditures is calculated as purchases of property and equipment minus proceeds from the disposition of property and equipment.Adjusted Free Cash Flow ($M) (74)326 135 219 Jun-20 Sep-20 Dec-20 Mar-21 Jun-213-Months Ended ($M) (July 2, 2021) GAAP net income $206 Depreciation, amortization and other impairment charges118 Change in working capital and other, net 10 Operating Cash Flow 334 Net Capex (115) Adjusted Free Cash Flow 219 Payments for share repurchases (162) Debt proceeds, net (1) Net change in cash and cash equivalents $56102 69 65 31 115 Jun-20 Sep-20 Dec-20 Mar-21 Jun-21Net Capital Expenditures*($M)Sustained strong cash flow generation",
+      "char_count": 689,
+      "word_count": 102,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "net income",
+          "free cash flow",
+          "capex",
+          "capital expenditure",
+          "cash",
+          "debt",
+          "working capital",
+          "share repurchase"
+        ],
+        "flags": {
+          "revenue": false,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": true,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": true,
+          "fcf": false,
+          "capex": true,
+          "capital_expenditure": true,
+          "guidance": false,
+          "outlook": false,
+          "cash": true,
+          "debt": true,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": true,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": true
+        }
+      },
+      "structured_metrics": []
+    },
+    {
+      "slide_id": "slide_011",
+      "page_num": 11,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "10Q2 FY2022 Update –Sept 2022",
+      "text": "10Q2 FY2022 Update –Sept 2022\nFlex Reliability Solutions Segment\nRevenue up low to high single digits % Y/YFlex Agility Solutions Segment\nRevenue up low to high single digits % Y/YDemand is strong; managing through component constraints\nOperational Benefits\nAutomotive Health SolutionsCommunications,\nEnterprise & CloudConsumer Devices Lifestyle Industrial\n•Demand remains strong, with return to work providing new upgrade cycles\n•Winning new customer logos and continuing to expand with our base customers.•Consistent demand across all end markets\n•Comm infrastructure buildout continues to align with 5g rollout\n•Cloud outlook remains strong•Improved demand in mobile and devices end markets\n•Regional COVID resurgence remains an elevated risk•Demand indicators remain very strong thru 2H\n•Wins in ADAS and EV should start to ramp in Q3 -Q4 for late FY22 / FY23 revenue•Chronic care and elective demand strength will continue\n•Critical care continuing to normalize to pre-COVID levels\n•Multiple new product wins ramping•Solid core foundation and strong execution driving diversified growth\n•Renewables demand outlook very strong, logistics challenges should bottom in Q2",
+      "char_count": 1172,
+      "word_count": 165,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "revenue",
+          "outlook",
+          "segment",
+          "agility",
+          "reliability"
+        ],
+        "flags": {
+          "revenue": true,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": true,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": true,
+          "agility": true,
+          "reliability": true,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": []
+    },
+    {
+      "slide_id": "slide_012",
+      "page_num": 12,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "11Guidance",
+      "text": "11Guidance\nRevenue $6.1 -$6.5 Billion\nAdjusted Operating Income $250 -$290 million\nAdjusted Earnings Per Share $0.37 -$0.43\nGAAP Income Before Income Taxes $175 –$210 million\nGAAP Earnings Per Share $0.29 –$0.35\nInterest & Other Expense ~$40 million\nAdjusted Income Tax Rate High end of 10% to 15%\nWASO ~ 499 million sharesQ2 FY2022 Guidance –Sep 2022\nSegment Revenue Outlook (Y/Y)\nUp low to high\nsingle digitsFlex Reliability\nSolutions\nFlex Agility\nSolutionsUp low to high\nsingle digits\nGuidance for adjusted operating income excludes approximately $25 million for stock-based compensation, $15 million intangible a mortization expense, and approximately $40\nmillion for interest and other expenses from GAAP income before income taxes. Guidance for GAAP earnings per share includes a pproximately $0.03 for net intangible\namortization and $0.05 for stock-based compensation expense not included in adjusted earnings per share.",
+      "char_count": 928,
+      "word_count": 136,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "revenue",
+          "operating income",
+          "earnings per share",
+          "guidance",
+          "outlook",
+          "segment",
+          "agility",
+          "reliability"
+        ],
+        "flags": {
+          "revenue": true,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": true,
+          "operating_margin": false,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": true,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": true,
+          "outlook": true,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": true,
+          "agility": true,
+          "reliability": true,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": [
+        {
+          "label": "Billion Adjusted Operating",
+          "value": "6.1",
+          "period": "FY2022"
+        },
+        {
+          "label": "million Adjusted Earnings Per",
+          "value": "250",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP Income Before Income Taxes",
+          "value": "0.37",
+          "period": "FY2022"
+        },
+        {
+          "label": "million GAAP Earnings Per",
+          "value": "175",
+          "period": "FY2022"
+        },
+        {
+          "label": "Interest",
+          "value": "0.29",
+          "period": "FY2022"
+        },
+        {
+          "label": "million Adjusted Income Tax",
+          "value": "40",
+          "period": "FY2022"
+        },
+        {
+          "label": "million for",
+          "value": "25",
+          "period": "FY2022"
+        },
+        {
+          "label": "million intangible a mortization",
+          "value": "15",
+          "period": "FY2022"
+        },
+        {
+          "label": "million for interest and other expenses from GAAP",
+          "value": "40",
+          "period": "FY2022"
+        },
+        {
+          "label": "for net intangible amortization and",
+          "value": "0.03",
+          "period": "FY2022"
+        },
+        {
+          "label": "WASO",
+          "value": "15%",
+          "period": "FY2022"
+        }
+      ]
+    },
+    {
+      "slide_id": "slide_013",
+      "page_num": 13,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "12Revenue $25 -$26 billion",
+      "text": "12Revenue $25 -$26 billion\nAdjusted Operating Margin1 4.4% to 4.6%\nAdjusted Earnings Per Share $1.60 -$1.75\nGAAP Earnings Per Share2 $1.30 –$1.45FY2022 Guidance –Updated\n1. Adjusted operating margin does not include the below impacts when comparing to GAAP income before tax as a % of revenue: 0 .6%interest and other, 0.4% stock-based\ncompensation and 0.2% intangible amortization.\n2. Guidance for GAAP earnings per share includes $0.19 for stock-based compensation and $0.09 for net intangible amortization no t included in the adjusted earnings per share\nguidance$25.5 -$26.5 billion\n4.5% to 4.7%\n$1.70 -$1.85\n$1.42 –$1.57Prior Guidance Updated Guidance",
+      "char_count": 656,
+      "word_count": 97,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "revenue",
+          "operating margin",
+          "earnings per share",
+          "guidance"
+        ],
+        "flags": {
+          "revenue": true,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": true,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": true,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": true,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": [
+        {
+          "label": "billion Adjusted Operating",
+          "value": "25",
+          "period": ""
+        },
+        {
+          "label": "GAAP Earnings Per",
+          "value": "1.60",
+          "period": ""
+        },
+        {
+          "label": "for net intangible amortization no t included in the",
+          "value": "0.09",
+          "period": ""
+        },
+        {
+          "label": "billion",
+          "value": "25.5",
+          "period": ""
+        },
+        {
+          "label": "Adjusted Earnings Per Share",
+          "value": "4.6%",
+          "period": ""
+        },
+        {
+          "label": "intangible",
+          "value": "0.2%",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "slide_id": "slide_014",
+      "page_num": 14,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "general",
+      "title": "13Moving",
+      "text": "13Moving\nforward\n•Continue to drive new business, customer expansions and renewals towards higher value business\n•Expertly managing global component and logistical constraints\n•More consistent earnings, higher margin level, strong cash flow is the new norm for Flex\n•Solid capital allocation strategy to fund growth and drive efficiency, and return cash to shareholders",
+      "char_count": 369,
+      "word_count": 52,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "cash"
+        ],
+        "flags": {
+          "revenue": false,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": true,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": []
+    },
+    {
+      "slide_id": "slide_015",
+      "page_num": 15,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "general",
+      "title": "14Thank you.",
+      "text": "14Thank you.\nFor more information, please\nvisit investors.flex.com",
+      "char_count": 66,
+      "word_count": 8,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [],
+        "flags": {
+          "revenue": false,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": []
+    },
+    {
+      "slide_id": "slide_016",
+      "page_num": 16,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "15Quarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-ended",
+      "text": "15Quarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-ended\nJuly 02, 2021 March 31, 2021 June 26, 2020 March 31, 2020 June 28, 2019\n($ in Millions )**\nGAAP income before income taxes: $233; $260; $67; $45; $64\nIntangible amortization 15 15 15 15 17\nStock-based compensation expense 20 18 13 18 15\nCustomer related asset impairments (recoveries), legal and\nother- (30) 27 9 2\nRestructuring charges - 26 10 17 56\nInterest and other, net 22 22 31 103 53\nNon-GAAP operating income $290 $310 $163 $207 $208\nNon-GAAP operating margin* 4.6% 4.9% 3.2% 3.8% 3.4%\nFor more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\n*We calculate our Non- GAAP operating margin as current quarter Non- GAAP operating income divided by current quarter revenue.\n**Amounts may not sum due to rounding.",
+      "char_count": 1012,
+      "word_count": 157,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "revenue",
+          "operating income",
+          "operating margin"
+        ],
+        "flags": {
+          "revenue": true,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": true,
+          "operating_margin": true,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": [
+        {
+          "label": "GAAP income before income taxes",
+          "value": "$233",
+          "period": ""
+        },
+        {
+          "label": "Intangible amortization",
+          "value": "64",
+          "period": ""
+        },
+        {
+          "label": "For more details on the GAAP to",
+          "value": "3.4%",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "slide_id": "slide_017",
+      "page_num": 17,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "16For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary fina",
+      "text": "16For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\nQuarter-endedQuarter-endedQuarter-endedQuarter-ended\n($ in Millions, except for EPS)* July 02, 2021 March 31, 2021 June 26, 2020 March 31, 2020\nGAAP net income: $206; $240; $52; $48\nIntangible amortization 15 15 15 15\nStock-based compensation expense 20 18 13 18\nRestructuring charges - 26 10 17\nCustomer related asset impairments (recoveries), legal and other - (30) 27 9\nInterest and other, net (3) 1 1 66\nAdjustments for taxes (8) (21) (3) (31)\nNon-GAAP net income $230 $248 $116 $143\nDiluted earnings per share:\nGAAP: $0.41; $0.47; $0.10; $0.10\nNON -GAAP $0.46 $0.49 $0.23 $0.28\nDiluted shares used in computing per share amounts 499 507 502 506\n*Amounts may not sum due to rounding.",
+      "char_count": 974,
+      "word_count": 155,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "net income",
+          "earnings per share"
+        ],
+        "flags": {
+          "revenue": false,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": true,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": true,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": [
+        {
+          "label": "GAAP net income",
+          "value": "$206",
+          "period": ""
+        },
+        {
+          "label": "GAAP",
+          "value": "$0.41",
+          "period": ""
+        },
+        {
+          "label": "Intangible amortization",
+          "value": "48",
+          "period": ""
+        },
+        {
+          "label": "Diluted earnings per",
+          "value": "143",
+          "period": ""
+        },
+        {
+          "label": "NON",
+          "value": "0.10",
+          "period": ""
+        },
+        {
+          "label": "Diluted shares used in computing per share",
+          "value": "0.28",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "slide_id": "slide_018",
+      "page_num": 18,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "17Quarter-ended Quarter-ended",
+      "text": "17Quarter-ended Quarter-ended\nJuly 02, 2021 June 26, 2020\n($ in Millions) % of revenue % of revenue\nGAAP gross profit: $471; 7.4%; $304; 5.9%\nStock-based compensation expense 5 4\nRestructuring charges - 10\nNon-GAAP gross profit $476 7.5% $318 6.2%\nGAAP SG&A expenses: $201; 3.2%; $191; 3.7%\nStock-based compensation expense (15) (9)\nLegal and other - (27)\nNon-GAAP SG&A expenses $186 2.9% $155 3.0%\nFor more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures",
+      "char_count": 683,
+      "word_count": 106,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "revenue",
+          "gross profit"
+        ],
+        "flags": {
+          "revenue": true,
+          "net_revenue": false,
+          "gross_profit": true,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": [
+        {
+          "label": "of revenue GAAP gross profit",
+          "value": "$471",
+          "period": ""
+        },
+        {
+          "label": "GAAP SG&A expenses",
+          "value": "$201",
+          "period": ""
+        },
+        {
+          "label": "GAAP",
+          "value": "6.2%",
+          "period": ""
+        },
+        {
+          "label": "For more details on the GAAP to",
+          "value": "3.0%",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "slide_id": "slide_019",
+      "page_num": 19,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "18For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary fina",
+      "text": "18For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\nQuarter-ended\nJuly 02, 2021\n($ in Millions )\nSegment income:\nFlex Agility Solutions $137\nFlex Reliability Solutions 170\nCorporate and Other* (17)\nTotal segment income: $290\nOperating margin**:\nFlex Agility Solutions 4.0%\nFlex Reliability Solutions 5.8%Quarter-Ended\nReconciliation of segment income to\nincome before income taxes\nTotal segment income $290\nIntangible amortization 15\nStock-based compensation expense 20\nInterest and other, net 22\nIncome before income taxes $233\n*Corporate and Other: corporate service costs that are not included in the assessment of the performance of each of the ident ified reporting segments.\n**We calculate our segment operating margin as current quarter segment operating income divided by current quarter revenue.",
+      "char_count": 1039,
+      "word_count": 149,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "revenue",
+          "operating income",
+          "operating margin",
+          "segment",
+          "agility",
+          "reliability"
+        ],
+        "flags": {
+          "revenue": true,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": true,
+          "operating_margin": true,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": true,
+          "agility": true,
+          "reliability": true,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": [
+        {
+          "label": "Total segment income",
+          "value": "$290",
+          "period": ""
+        },
+        {
+          "label": "Flex Reliability Solutions",
+          "value": "137",
+          "period": ""
+        },
+        {
+          "label": "Operating",
+          "value": "290",
+          "period": ""
+        },
+        {
+          "label": "Intangible amortization",
+          "value": "290",
+          "period": ""
+        },
+        {
+          "label": "Flex Reliability Solutions",
+          "value": "4.0%",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "slide_id": "slide_020",
+      "page_num": 20,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "19For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary fina",
+      "text": "19For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\nQuarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-ended\n($ in Millions)* July 02 , 2021 March 31, 2021 December 31 , 2020 September 25 ,2020 June 26, 2020 March 31, 2020\nNet cash provided by (used in) operating activities: $334; $161; $348; $265; $629; $166\nReduction in ABS levels and other - 5 6 132 657 51\nNet capital expenditures (115) (31) (65) (69) (102) (83)\nAdjusted free cash flow: $219; $135; $289; $326; $74; $134\nAdjusted free cash flow is calculated as operating cash flow for the quarter less net capital expenditures. In fiscal year 20 21,we proactively and strategically reduced the outstanding balance of our ABS programs which is fully paid and wind down as year end\nof FY21. Proceeds from our debt issuance replaced the funding from the ABS programs for working capital purposes. We reduced the balance on this short-term financing products throughout FY21 which had the accounting effect of reducing our cash flow\nfrom operations and was excluded from our adjusted free cash flow calculation. Adjusted free cash flow prior to FY21 also included the collection of the deferred purchase price receivables which the Company repurchased as part of the ABS program amended\nin FY20. Adjusted free cash flow is a non- GAAP financial measure and may not be defined and calculated by other companies in the same manner.\n*Amounts may not sum due to rounding.",
+      "char_count": 1678,
+      "word_count": 266,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "free cash flow",
+          "capital expenditure",
+          "cash",
+          "debt",
+          "working capital"
+        ],
+        "flags": {
+          "revenue": false,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": false,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": true,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": true,
+          "guidance": false,
+          "outlook": false,
+          "cash": true,
+          "debt": true,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": true,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": [
+        {
+          "label": "ash provided by (used in) operating activities",
+          "value": "$334",
+          "period": "FY21"
+        },
+        {
+          "label": "Adjusted free cash flow",
+          "value": "$219",
+          "period": "FY21"
+        },
+        {
+          "label": "Reduction in ABS levels and other",
+          "value": "166",
+          "period": "FY21"
+        },
+        {
+          "label": "Adjusted free cash flow is calculated as",
+          "value": "134",
+          "period": "FY21"
+        }
+      ]
+    },
+    {
+      "slide_id": "slide_021",
+      "page_num": 21,
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "slide_type": "financial_summary",
+      "title": "20Appendix: Reconciliation of GAAP to Non-GAAP",
+      "text": "20Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures -Nextracker\nQuarter-endedQuarter-ended\nJuly 02, 2021 June 26, 2020\nRevenue (billions): $0.3; $0.3\nNet income (% of Revenue) 5% 9%\nIntangible amortization and stock-based compensation 1% 1%\nDepreciation: 0%; 0%\nInterest, net: 0%; 0%\nAdjustments for taxes: 2%; 3%\nAdjusted EBITDA (% of Revenue) 8% 13%",
+      "char_count": 355,
+      "word_count": 52,
+      "has_numbers": true,
+      "key_metrics": {
+        "keywords": [
+          "revenue",
+          "net income"
+        ],
+        "flags": {
+          "revenue": true,
+          "net_revenue": false,
+          "gross_profit": false,
+          "gross_margin": false,
+          "operating_income": false,
+          "operating_margin": false,
+          "net_income": true,
+          "diluted_eps": false,
+          "adjusted_eps": false,
+          "earnings_per_share": false,
+          "free_cash_flow": false,
+          "fcf": false,
+          "capex": false,
+          "capital_expenditure": false,
+          "guidance": false,
+          "outlook": false,
+          "cash": false,
+          "debt": false,
+          "net_debt": false,
+          "inventory": false,
+          "working_capital": false,
+          "segment": false,
+          "agility": false,
+          "reliability": false,
+          "return_on": false,
+          "share_repurchase": false
+        }
+      },
+      "structured_metrics": [
+        {
+          "label": "Revenue (billions)",
+          "value": "$0.3",
+          "period": ""
+        },
+        {
+          "label": "Net income",
+          "value": "0.3",
+          "period": ""
+        },
+        {
+          "label": "Intangible amortization and",
+          "value": "9%",
+          "period": ""
+        },
+        {
+          "label": "Adjustments for",
+          "value": "0%",
+          "period": ""
+        },
+        {
+          "label": "Adjusted EBITDA",
+          "value": "3%",
+          "period": ""
+        }
+      ]
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "FY22Q1_slide_004",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 4,
+      "slide_type": "financial_summary",
+      "slide_title": "3Q1 FY2022 Financial Summary",
+      "text": "3Q1 FY2022 Financial Summary\n1632903.2%4.6%5,484\n5,1536,266 6,342\nQ4 Q1Revenue\n($M)\n$0.28\n$0.23$0.49\n$0.46\nF20 F21Adj. Earnings\nPer Share: $0.34\nMar-20 Mar-21 Jun-20 Jun-21 Mar-20 Mar-21 Jun-20 Jun-21 Mar-20 Mar-21 Jun-20 Jun-21 Mar-20 Mar-21 Jun-20 Jun-21Another quarter of solid execution against robust demand, and despite global supply chain\nchallenges\n134 135\nMar-19 Mar-20Adj. Free Cash Flow\n(74)219\n2073103.8%4.9%Adj. Operating\nIncome\n($M) Adj. Operating Margin",
+      "word_count": 63,
+      "char_count": 468,
+      "metric_keywords": [
+        "revenue",
+        "operating margin",
+        "free cash flow",
+        "cash"
+      ],
+      "metric_flags": {
+        "revenue": true,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": false,
+        "operating_margin": true,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": true,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": false,
+        "cash": true,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": [
+        {
+          "label": "Adj. Earnings Per Share",
+          "value": "$0.34",
+          "period": "F20"
+        }
+      ]
+    },
+    {
+      "chunk_id": "FY22Q1_slide_005",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 5,
+      "slide_type": "general",
+      "slide_title": "4Q1 FY2022",
+      "text": "4Q1 FY2022\nHighlights\n•Adj Operating Margins up 120bp since June quarter of Calendar 2019 (pre-COVID)\n•Continue to gain share through expansions at current customers as well as new customer wins across the enterprise\n•Demand remains very strong on continued global recovery\n•Executing through supply chain and logistical constraints\n•Margins benefiting from focused efforts on improving mix, and programs that drive operating and productivity efficiencies",
+      "word_count": 64,
+      "char_count": 455,
+      "metric_keywords": [
+        "operating margin"
+      ],
+      "metric_flags": {
+        "revenue": false,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": false,
+        "operating_margin": true,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": false,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": []
+    },
+    {
+      "chunk_id": "FY22Q1_slide_007",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 7,
+      "slide_type": "financial_summary",
+      "slide_title": "6Q1 FY2022 Income Statement Summary",
+      "text": "6Q1 FY2022 Income Statement Summary\n($M, except per share amounts)\nPrior Yr Current Qtr\nJune 26 , 2020 July 2 , 2021\nNet sales: $5,153; $6,342\nAdjusted operating income 163 290\nAdjusted net income 116 230\nAdjusted EPS: $0.23; $0.46\nGAAP income before income taxes: $67; $233\nGAAP net income: $52; $206\nGAAP EPS: $0.10; $0.41",
+      "word_count": 56,
+      "char_count": 324,
+      "metric_keywords": [
+        "operating income",
+        "net income",
+        "adjusted eps"
+      ],
+      "metric_flags": {
+        "revenue": false,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": true,
+        "operating_margin": false,
+        "net_income": true,
+        "diluted_eps": false,
+        "adjusted_eps": true,
+        "earnings_per_share": false,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": false,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": [
+        {
+          "label": "Net sales",
+          "value": "$5,153",
+          "period": "FY2022"
+        },
+        {
+          "label": "Adjusted EPS",
+          "value": "$0.23",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP income before income taxes",
+          "value": "$67",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP net income",
+          "value": "$52",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP EPS",
+          "value": "$0.10",
+          "period": "FY2022"
+        },
+        {
+          "label": "Adjusted operating income",
+          "value": "6,342",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP income before income",
+          "value": "0.46",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP net",
+          "value": "233",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP",
+          "value": "206",
+          "period": "FY2022"
+        }
+      ]
+    },
+    {
+      "chunk_id": "FY22Q1_slide_008",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 8,
+      "slide_type": "financial_summary",
+      "slide_title": "71632903.2%4.6%Adj. Operating Income",
+      "text": "71632903.2%4.6%Adj. Operating Income\n($M)\nAdj. Operating Margin\nJun-20 Jun-21Q1 FY2022 Quarterly Financial Highlights\n3184766.2%7.5%Adj. Gross Profit\nAdj.Gross Margin\nJun-21Operating at a higher level through better execution, mix shift and new wins\n1551863.0%2.9%Adj. SG&A\n% of Revenue\nJun-21 Jun-20 Jun-20",
+      "word_count": 39,
+      "char_count": 307,
+      "metric_keywords": [
+        "revenue",
+        "gross profit",
+        "gross margin",
+        "operating income",
+        "operating margin"
+      ],
+      "metric_flags": {
+        "revenue": true,
+        "net_revenue": false,
+        "gross_profit": true,
+        "gross_margin": true,
+        "operating_income": true,
+        "operating_margin": true,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": false,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": []
+    },
+    {
+      "chunk_id": "FY22Q1_slide_009",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 9,
+      "slide_type": "financial_summary",
+      "slide_title": "8Revenue Adj. Operating Income & Margin",
+      "text": "8Revenue Adj. Operating Income & Margin\n($B) Y/Y ($M) Y/Y Margin % Y/Y\nFlex\nReliability Solutions**$2.9 29.8% $170 47.8% 5.8% 70 bpsHealth Solutions: Strong chronic care, improved elective, critical\nreturning to pre -COVID levels. Continued new wins.\nAutomotive: Demand strong, continued wins in ADAS and EV\nIndustrial: Strong Industrial demand, share gains from superior SCM\nexecution. Expanding footprint in EV charging. Nextracker affected by\nhigher freight\nFlex Agility\nSolutions$3.4 17.8% $137 90.9% 4.0% 150 bpsCEC: Demand intact with o ngoing 5G rollouts, optical, Enterprise IT and\nCloud.\nLifestyle: Continued robust demand for high-end durable goods and\nnew business ramps\nConsumer Devices: Good demand with improvements in developing\nmarkets, but COVID disruptions remain a factor\nCorporate\nServices & Other*-- -- ($17) -- -- -- --\nTotal: $6.3; 23.1%; $290; 78%; 4.6%\n* Corporate Services and Other: centralized administrative costs that are not included in the assessment of the performance o f each of the identified segments\n** Includes Nextracker Revenue of $0.3 billion in Q1 for both Fiscal 22 and Fiscal 21, and Adj EBITDA margin of 8% and 13% fo r Q1 Fiscal 22 and Q1 Fiscal 21, respectively",
+      "word_count": 189,
+      "char_count": 1209,
+      "metric_keywords": [
+        "revenue",
+        "operating income",
+        "segment",
+        "agility",
+        "reliability"
+      ],
+      "metric_flags": {
+        "revenue": true,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": true,
+        "operating_margin": false,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": false,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": true,
+        "agility": true,
+        "reliability": true,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": [
+        {
+          "label": "Total",
+          "value": "$6.3",
+          "period": ""
+        },
+        {
+          "label": "billion in",
+          "value": "0.3",
+          "period": ""
+        },
+        {
+          "label": "fo r",
+          "value": "13%",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "chunk_id": "FY22Q1_slide_010",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 10,
+      "slide_type": "financial_summary",
+      "slide_title": "9Cash Flow Highlights",
+      "text": "9Cash Flow Highlights\n*Net Capital Expenditures is calculated as purchases of property and equipment minus proceeds from the disposition of property and equipment.Adjusted Free Cash Flow ($M) (74)326 135 219 Jun-20 Sep-20 Dec-20 Mar-21 Jun-213-Months Ended ($M) (July 2, 2021) GAAP net income $206 Depreciation, amortization and other impairment charges118 Change in working capital and other, net 10 Operating Cash Flow 334 Net Capex (115) Adjusted Free Cash Flow 219 Payments for share repurchases (162) Debt proceeds, net (1) Net change in cash and cash equivalents $56102 69 65 31 115 Jun-20 Sep-20 Dec-20 Mar-21 Jun-21Net Capital Expenditures*($M)Sustained strong cash flow generation",
+      "word_count": 102,
+      "char_count": 689,
+      "metric_keywords": [
+        "net income",
+        "free cash flow",
+        "capex",
+        "capital expenditure",
+        "cash",
+        "debt",
+        "working capital",
+        "share repurchase"
+      ],
+      "metric_flags": {
+        "revenue": false,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": false,
+        "operating_margin": false,
+        "net_income": true,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": true,
+        "fcf": false,
+        "capex": true,
+        "capital_expenditure": true,
+        "guidance": false,
+        "outlook": false,
+        "cash": true,
+        "debt": true,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": true,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": true
+      },
+      "structured_metrics": []
+    },
+    {
+      "chunk_id": "FY22Q1_slide_011",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 11,
+      "slide_type": "financial_summary",
+      "slide_title": "10Q2 FY2022 Update –Sept 2022",
+      "text": "10Q2 FY2022 Update –Sept 2022\nFlex Reliability Solutions Segment\nRevenue up low to high single digits % Y/YFlex Agility Solutions Segment\nRevenue up low to high single digits % Y/YDemand is strong; managing through component constraints\nOperational Benefits\nAutomotive Health SolutionsCommunications,\nEnterprise & CloudConsumer Devices Lifestyle Industrial\n•Demand remains strong, with return to work providing new upgrade cycles\n•Winning new customer logos and continuing to expand with our base customers.•Consistent demand across all end markets\n•Comm infrastructure buildout continues to align with 5g rollout\n•Cloud outlook remains strong•Improved demand in mobile and devices end markets\n•Regional COVID resurgence remains an elevated risk•Demand indicators remain very strong thru 2H\n•Wins in ADAS and EV should start to ramp in Q3 -Q4 for late FY22 / FY23 revenue•Chronic care and elective demand strength will continue\n•Critical care continuing to normalize to pre-COVID levels\n•Multiple new product wins ramping•Solid core foundation and strong execution driving diversified growth\n•Renewables demand outlook very strong, logistics challenges should bottom in Q2",
+      "word_count": 165,
+      "char_count": 1172,
+      "metric_keywords": [
+        "revenue",
+        "outlook",
+        "segment",
+        "agility",
+        "reliability"
+      ],
+      "metric_flags": {
+        "revenue": true,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": false,
+        "operating_margin": false,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": true,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": true,
+        "agility": true,
+        "reliability": true,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": []
+    },
+    {
+      "chunk_id": "FY22Q1_slide_012",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 12,
+      "slide_type": "financial_summary",
+      "slide_title": "11Guidance",
+      "text": "11Guidance\nRevenue $6.1 -$6.5 Billion\nAdjusted Operating Income $250 -$290 million\nAdjusted Earnings Per Share $0.37 -$0.43\nGAAP Income Before Income Taxes $175 –$210 million\nGAAP Earnings Per Share $0.29 –$0.35\nInterest & Other Expense ~$40 million\nAdjusted Income Tax Rate High end of 10% to 15%\nWASO ~ 499 million sharesQ2 FY2022 Guidance –Sep 2022\nSegment Revenue Outlook (Y/Y)\nUp low to high\nsingle digitsFlex Reliability\nSolutions\nFlex Agility\nSolutionsUp low to high\nsingle digits\nGuidance for adjusted operating income excludes approximately $25 million for stock-based compensation, $15 million intangible a mortization expense, and approximately $40\nmillion for interest and other expenses from GAAP income before income taxes. Guidance for GAAP earnings per share includes a pproximately $0.03 for net intangible\namortization and $0.05 for stock-based compensation expense not included in adjusted earnings per share.",
+      "word_count": 136,
+      "char_count": 928,
+      "metric_keywords": [
+        "revenue",
+        "operating income",
+        "earnings per share",
+        "guidance",
+        "outlook",
+        "segment",
+        "agility",
+        "reliability"
+      ],
+      "metric_flags": {
+        "revenue": true,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": true,
+        "operating_margin": false,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": true,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": true,
+        "outlook": true,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": true,
+        "agility": true,
+        "reliability": true,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": [
+        {
+          "label": "Billion Adjusted Operating",
+          "value": "6.1",
+          "period": "FY2022"
+        },
+        {
+          "label": "million Adjusted Earnings Per",
+          "value": "250",
+          "period": "FY2022"
+        },
+        {
+          "label": "GAAP Income Before Income Taxes",
+          "value": "0.37",
+          "period": "FY2022"
+        },
+        {
+          "label": "million GAAP Earnings Per",
+          "value": "175",
+          "period": "FY2022"
+        },
+        {
+          "label": "Interest",
+          "value": "0.29",
+          "period": "FY2022"
+        },
+        {
+          "label": "million Adjusted Income Tax",
+          "value": "40",
+          "period": "FY2022"
+        },
+        {
+          "label": "million for",
+          "value": "25",
+          "period": "FY2022"
+        },
+        {
+          "label": "million intangible a mortization",
+          "value": "15",
+          "period": "FY2022"
+        },
+        {
+          "label": "million for interest and other expenses from GAAP",
+          "value": "40",
+          "period": "FY2022"
+        },
+        {
+          "label": "for net intangible amortization and",
+          "value": "0.03",
+          "period": "FY2022"
+        },
+        {
+          "label": "WASO",
+          "value": "15%",
+          "period": "FY2022"
+        }
+      ]
+    },
+    {
+      "chunk_id": "FY22Q1_slide_013",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 13,
+      "slide_type": "financial_summary",
+      "slide_title": "12Revenue $25 -$26 billion",
+      "text": "12Revenue $25 -$26 billion\nAdjusted Operating Margin1 4.4% to 4.6%\nAdjusted Earnings Per Share $1.60 -$1.75\nGAAP Earnings Per Share2 $1.30 –$1.45FY2022 Guidance –Updated\n1. Adjusted operating margin does not include the below impacts when comparing to GAAP income before tax as a % of revenue: 0 .6%interest and other, 0.4% stock-based\ncompensation and 0.2% intangible amortization.\n2. Guidance for GAAP earnings per share includes $0.19 for stock-based compensation and $0.09 for net intangible amortization no t included in the adjusted earnings per share\nguidance$25.5 -$26.5 billion\n4.5% to 4.7%\n$1.70 -$1.85\n$1.42 –$1.57Prior Guidance Updated Guidance",
+      "word_count": 97,
+      "char_count": 656,
+      "metric_keywords": [
+        "revenue",
+        "operating margin",
+        "earnings per share",
+        "guidance"
+      ],
+      "metric_flags": {
+        "revenue": true,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": false,
+        "operating_margin": true,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": true,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": true,
+        "outlook": false,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": [
+        {
+          "label": "billion Adjusted Operating",
+          "value": "25",
+          "period": ""
+        },
+        {
+          "label": "GAAP Earnings Per",
+          "value": "1.60",
+          "period": ""
+        },
+        {
+          "label": "for net intangible amortization no t included in the",
+          "value": "0.09",
+          "period": ""
+        },
+        {
+          "label": "billion",
+          "value": "25.5",
+          "period": ""
+        },
+        {
+          "label": "Adjusted Earnings Per Share",
+          "value": "4.6%",
+          "period": ""
+        },
+        {
+          "label": "intangible",
+          "value": "0.2%",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "chunk_id": "FY22Q1_slide_014",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 14,
+      "slide_type": "general",
+      "slide_title": "13Moving",
+      "text": "13Moving\nforward\n•Continue to drive new business, customer expansions and renewals towards higher value business\n•Expertly managing global component and logistical constraints\n•More consistent earnings, higher margin level, strong cash flow is the new norm for Flex\n•Solid capital allocation strategy to fund growth and drive efficiency, and return cash to shareholders",
+      "word_count": 52,
+      "char_count": 369,
+      "metric_keywords": [
+        "cash"
+      ],
+      "metric_flags": {
+        "revenue": false,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": false,
+        "operating_margin": false,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": false,
+        "cash": true,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": []
+    },
+    {
+      "chunk_id": "FY22Q1_slide_016",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 16,
+      "slide_type": "financial_summary",
+      "slide_title": "15Quarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-ended",
+      "text": "15Quarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-ended\nJuly 02, 2021 March 31, 2021 June 26, 2020 March 31, 2020 June 28, 2019\n($ in Millions )**\nGAAP income before income taxes: $233; $260; $67; $45; $64\nIntangible amortization 15 15 15 15 17\nStock-based compensation expense 20 18 13 18 15\nCustomer related asset impairments (recoveries), legal and\nother- (30) 27 9 2\nRestructuring charges - 26 10 17 56\nInterest and other, net 22 22 31 103 53\nNon-GAAP operating income $290 $310 $163 $207 $208\nNon-GAAP operating margin* 4.6% 4.9% 3.2% 3.8% 3.4%\nFor more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\n*We calculate our Non- GAAP operating margin as current quarter Non- GAAP operating income divided by current quarter revenue.\n**Amounts may not sum due to rounding.",
+      "word_count": 157,
+      "char_count": 1012,
+      "metric_keywords": [
+        "revenue",
+        "operating income",
+        "operating margin"
+      ],
+      "metric_flags": {
+        "revenue": true,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": true,
+        "operating_margin": true,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": false,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": [
+        {
+          "label": "GAAP income before income taxes",
+          "value": "$233",
+          "period": ""
+        },
+        {
+          "label": "Intangible amortization",
+          "value": "64",
+          "period": ""
+        },
+        {
+          "label": "For more details on the GAAP to",
+          "value": "3.4%",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "chunk_id": "FY22Q1_slide_017",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 17,
+      "slide_type": "financial_summary",
+      "slide_title": "16For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary fina",
+      "text": "16For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\nQuarter-endedQuarter-endedQuarter-endedQuarter-ended\n($ in Millions, except for EPS)* July 02, 2021 March 31, 2021 June 26, 2020 March 31, 2020\nGAAP net income: $206; $240; $52; $48\nIntangible amortization 15 15 15 15\nStock-based compensation expense 20 18 13 18\nRestructuring charges - 26 10 17\nCustomer related asset impairments (recoveries), legal and other - (30) 27 9\nInterest and other, net (3) 1 1 66\nAdjustments for taxes (8) (21) (3) (31)\nNon-GAAP net income $230 $248 $116 $143\nDiluted earnings per share:\nGAAP: $0.41; $0.47; $0.10; $0.10\nNON -GAAP $0.46 $0.49 $0.23 $0.28\nDiluted shares used in computing per share amounts 499 507 502 506\n*Amounts may not sum due to rounding.",
+      "word_count": 155,
+      "char_count": 974,
+      "metric_keywords": [
+        "net income",
+        "earnings per share"
+      ],
+      "metric_flags": {
+        "revenue": false,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": false,
+        "operating_margin": false,
+        "net_income": true,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": true,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": false,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": [
+        {
+          "label": "GAAP net income",
+          "value": "$206",
+          "period": ""
+        },
+        {
+          "label": "GAAP",
+          "value": "$0.41",
+          "period": ""
+        },
+        {
+          "label": "Intangible amortization",
+          "value": "48",
+          "period": ""
+        },
+        {
+          "label": "Diluted earnings per",
+          "value": "143",
+          "period": ""
+        },
+        {
+          "label": "NON",
+          "value": "0.10",
+          "period": ""
+        },
+        {
+          "label": "Diluted shares used in computing per share",
+          "value": "0.28",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "chunk_id": "FY22Q1_slide_018",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 18,
+      "slide_type": "financial_summary",
+      "slide_title": "17Quarter-ended Quarter-ended",
+      "text": "17Quarter-ended Quarter-ended\nJuly 02, 2021 June 26, 2020\n($ in Millions) % of revenue % of revenue\nGAAP gross profit: $471; 7.4%; $304; 5.9%\nStock-based compensation expense 5 4\nRestructuring charges - 10\nNon-GAAP gross profit $476 7.5% $318 6.2%\nGAAP SG&A expenses: $201; 3.2%; $191; 3.7%\nStock-based compensation expense (15) (9)\nLegal and other - (27)\nNon-GAAP SG&A expenses $186 2.9% $155 3.0%\nFor more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures",
+      "word_count": 106,
+      "char_count": 683,
+      "metric_keywords": [
+        "revenue",
+        "gross profit"
+      ],
+      "metric_flags": {
+        "revenue": true,
+        "net_revenue": false,
+        "gross_profit": true,
+        "gross_margin": false,
+        "operating_income": false,
+        "operating_margin": false,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": false,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": [
+        {
+          "label": "of revenue GAAP gross profit",
+          "value": "$471",
+          "period": ""
+        },
+        {
+          "label": "GAAP SG&A expenses",
+          "value": "$201",
+          "period": ""
+        },
+        {
+          "label": "GAAP",
+          "value": "6.2%",
+          "period": ""
+        },
+        {
+          "label": "For more details on the GAAP to",
+          "value": "3.0%",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "chunk_id": "FY22Q1_slide_019",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 19,
+      "slide_type": "financial_summary",
+      "slide_title": "18For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary fina",
+      "text": "18For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\nQuarter-ended\nJuly 02, 2021\n($ in Millions )\nSegment income:\nFlex Agility Solutions $137\nFlex Reliability Solutions 170\nCorporate and Other* (17)\nTotal segment income: $290\nOperating margin**:\nFlex Agility Solutions 4.0%\nFlex Reliability Solutions 5.8%Quarter-Ended\nReconciliation of segment income to\nincome before income taxes\nTotal segment income $290\nIntangible amortization 15\nStock-based compensation expense 20\nInterest and other, net 22\nIncome before income taxes $233\n*Corporate and Other: corporate service costs that are not included in the assessment of the performance of each of the ident ified reporting segments.\n**We calculate our segment operating margin as current quarter segment operating income divided by current quarter revenue.",
+      "word_count": 149,
+      "char_count": 1039,
+      "metric_keywords": [
+        "revenue",
+        "operating income",
+        "operating margin",
+        "segment",
+        "agility",
+        "reliability"
+      ],
+      "metric_flags": {
+        "revenue": true,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": true,
+        "operating_margin": true,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": false,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": true,
+        "agility": true,
+        "reliability": true,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": [
+        {
+          "label": "Total segment income",
+          "value": "$290",
+          "period": ""
+        },
+        {
+          "label": "Flex Reliability Solutions",
+          "value": "137",
+          "period": ""
+        },
+        {
+          "label": "Operating",
+          "value": "290",
+          "period": ""
+        },
+        {
+          "label": "Intangible amortization",
+          "value": "290",
+          "period": ""
+        },
+        {
+          "label": "Flex Reliability Solutions",
+          "value": "4.0%",
+          "period": ""
+        }
+      ]
+    },
+    {
+      "chunk_id": "FY22Q1_slide_020",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 20,
+      "slide_type": "financial_summary",
+      "slide_title": "19For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary fina",
+      "text": "19For more details on the GAAP to Non -GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures\nQuarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-endedQuarter-ended\n($ in Millions)* July 02 , 2021 March 31, 2021 December 31 , 2020 September 25 ,2020 June 26, 2020 March 31, 2020\nNet cash provided by (used in) operating activities: $334; $161; $348; $265; $629; $166\nReduction in ABS levels and other - 5 6 132 657 51\nNet capital expenditures (115) (31) (65) (69) (102) (83)\nAdjusted free cash flow: $219; $135; $289; $326; $74; $134\nAdjusted free cash flow is calculated as operating cash flow for the quarter less net capital expenditures. In fiscal year 20 21,we proactively and strategically reduced the outstanding balance of our ABS programs which is fully paid and wind down as year end\nof FY21. Proceeds from our debt issuance replaced the funding from the ABS programs for working capital purposes. We reduced the balance on this short-term financing products throughout FY21 which had the accounting effect of reducing our cash flow\nfrom operations and was excluded from our adjusted free cash flow calculation. Adjusted free cash flow prior to FY21 also included the collection of the deferred purchase price receivables which the Company repurchased as part of the ABS program amended\nin FY20. Adjusted free cash flow is a non- GAAP financial measure and may not be defined and calculated by other companies in the same manner.\n*Amounts may not sum due to rounding.",
+      "word_count": 266,
+      "char_count": 1678,
+      "metric_keywords": [
+        "free cash flow",
+        "capital expenditure",
+        "cash",
+        "debt",
+        "working capital"
+      ],
+      "metric_flags": {
+        "revenue": false,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": false,
+        "operating_margin": false,
+        "net_income": false,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": true,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": true,
+        "guidance": false,
+        "outlook": false,
+        "cash": true,
+        "debt": true,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": true,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": [
+        {
+          "label": "ash provided by (used in) operating activities",
+          "value": "$334",
+          "period": "FY21"
+        },
+        {
+          "label": "Adjusted free cash flow",
+          "value": "$219",
+          "period": "FY21"
+        },
+        {
+          "label": "Reduction in ABS levels and other",
+          "value": "166",
+          "period": "FY21"
+        },
+        {
+          "label": "Adjusted free cash flow is calculated as",
+          "value": "134",
+          "period": "FY21"
+        }
+      ]
+    },
+    {
+      "chunk_id": "FY22Q1_slide_021",
+      "company": "flex",
+      "fiscal_year": "FY22",
+      "fiscal_quarter": "Q1",
+      "period_label": "FY22Q1",
+      "doc_type": "earnings_presentation",
+      "page_num": 21,
+      "slide_type": "financial_summary",
+      "slide_title": "20Appendix: Reconciliation of GAAP to Non-GAAP",
+      "text": "20Appendix: Reconciliation of GAAP to Non-GAAP\nMeasures -Nextracker\nQuarter-endedQuarter-ended\nJuly 02, 2021 June 26, 2020\nRevenue (billions): $0.3; $0.3\nNet income (% of Revenue) 5% 9%\nIntangible amortization and stock-based compensation 1% 1%\nDepreciation: 0%; 0%\nInterest, net: 0%; 0%\nAdjustments for taxes: 2%; 3%\nAdjusted EBITDA (% of Revenue) 8% 13%",
+      "word_count": 52,
+      "char_count": 355,
+      "metric_keywords": [
+        "revenue",
+        "net income"
+      ],
+      "metric_flags": {
+        "revenue": true,
+        "net_revenue": false,
+        "gross_profit": false,
+        "gross_margin": false,
+        "operating_income": false,
+        "operating_margin": false,
+        "net_income": true,
+        "diluted_eps": false,
+        "adjusted_eps": false,
+        "earnings_per_share": false,
+        "free_cash_flow": false,
+        "fcf": false,
+        "capex": false,
+        "capital_expenditure": false,
+        "guidance": false,
+        "outlook": false,
+        "cash": false,
+        "debt": false,
+        "net_debt": false,
+        "inventory": false,
+        "working_capital": false,
+        "segment": false,
+        "agility": false,
+        "reliability": false,
+        "return_on": false,
+        "share_repurchase": false
+      },
+      "structured_metrics": [
+        {
+          "label": "Revenue (billions)",
+          "value": "$0.3",
+          "period": ""
+        },
+        {
+          "label": "Net income",
+          "value": "0.3",
+          "period": ""
+        },
+        {
+          "label": "Intangible amortization and",
+          "value": "9%",
+          "period": ""
+        },
+        {
+          "label": "Adjustments for",
+          "value": "0%",
+          "period": ""
+        },
+        {
+          "label": "Adjusted EBITDA",
+          "value": "3%",
+          "period": ""
+        }
+      ]
+    }
+  ],
+  "quality": {
+    "total_slides": 21,
+    "slides_with_text": 21,
+    "slides_with_text_ratio": 1.0,
+    "slide_type_counts": {
+      "title_slide": 1,
+      "disclaimer": 1,
+      "general": 5,
+      "financial_summary": 14
+    },
+    "metrics_found": [
+      "adjusted eps",
+      "agility",
+      "capex",
+      "capital expenditure",
+      "cash",
+      "debt",
+      "earnings per share",
+      "free cash flow",
+      "gross margin",
+      "gross profit",
+      "guidance",
+      "net income",
+      "operating income",
+      "operating margin",
+      "outlook",
+      "reliability",
+      "revenue",
+      "segment",
+      "share repurchase",
+      "working capital"
+    ],
+    "total_structured_metric_values": 57,
+    "chunk_count": 16,
+    "full_text_char_count": 18815,
+    "full_text_word_count": 3023,
+    "warnings": [
+      "parser:docling_full_text_used"
+    ]
+  }
+}

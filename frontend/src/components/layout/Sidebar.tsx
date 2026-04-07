@@ -58,7 +58,7 @@ const navGroups: NavGroup[] = [
     label: 'Competitive Intelligence',
     items: [
       { href: '/competitor-investments', label: 'Competitors', icon: GitCompare, badge: 'NEW' },
-      { href: '/ai-investments', label: 'Big Five CapEx', icon: TrendingUp, badge: 'NEW' },
+      { href: '/ai-investments', label: 'Hyperscaler', icon: TrendingUp, badge: 'NEW' },
       { href: '/map', label: 'Facilities Map', icon: Globe, badge: 'NEW' },
     ],
   },
@@ -158,165 +158,185 @@ export function Sidebar() {
       };
 
   return (
-    <>
-      <aside
-        className={cn(
-          'relative h-screen flex flex-col transition-all duration-300 shadow-2xl',
-          theme.asideBg,
-          theme.asideText,
-          isCollapsed ? 'w-0 overflow-hidden' : 'w-72'
-        )}
-      >
-      {!isCollapsed && (
-        <button
-          type="button"
-          onClick={() => setIsCollapsed(true)}
-          className={cn(
-            'absolute right-3 top-3 z-20 inline-flex h-9 w-9 items-center justify-center rounded-md border transition-colors',
-            theme.collapseBtn
-          )}
-          aria-label="Collapse sidebar"
-        >
-          <PanelLeftClose className="h-4 w-4" />
-        </button>
+    <aside
+      className={cn(
+        'relative h-screen shrink-0 overflow-hidden flex flex-col transition-[width] duration-300 shadow-2xl',
+        theme.asideBg,
+        theme.asideText,
+        isCollapsed ? 'w-16' : 'w-72'
       )}
+    >
+      {isCollapsed ? (
+        <div className="flex h-full flex-col items-center justify-between py-3">
+          <div className="flex flex-col items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setIsCollapsed(false)}
+              className={cn(
+                'inline-flex h-10 w-10 items-center justify-center rounded-xl border transition-colors',
+                theme.expandBtn
+              )}
+              aria-label="Expand sidebar"
+              title="Expand sidebar"
+            >
+              <PanelLeftOpen className="h-4 w-4" />
+            </button>
 
-      <div className={cn('p-6 border-b transition-opacity', theme.headerBorder, isCollapsed ? 'opacity-0' : 'opacity-100')}>
-        <Link href="/" className="flex items-center gap-4 group">
-          <div className="bg-gradient-to-br from-blue-600 to-cyan-500 rounded-xl h-12 w-12 flex items-center justify-center shadow-lg shadow-blue-500/25 group-hover:shadow-blue-500/40 transition-shadow">
-            <span className="text-white font-black text-[10px] tracking-[0.08em]">FLEX</span>
+            <Link
+              href="/"
+              className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 shadow-lg shadow-blue-500/25"
+              title="Go to home"
+            >
+              <span className="text-[9px] font-black tracking-[0.08em] text-white">FLEX</span>
+            </Link>
           </div>
-          <div>
-            <h1 className="font-bold text-2xl leading-tight tracking-tight">FLEX Insight</h1>
-            <div className="flex items-center gap-1.5 mt-1">
-              <Sparkles className="h-3 w-3 text-purple-400" />
-              <p className="text-xs font-medium bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">AI Powered</p>
-            </div>
-          </div>
-        </Link>
-      </div>
 
-      <nav className={cn('flex-1 p-4 overflow-y-auto transition-opacity', isCollapsed ? 'opacity-0' : 'opacity-100')}>
-        <div className="mb-4 px-4 flex items-center justify-between">
-          <p className={cn('text-xs font-semibold uppercase tracking-wider', theme.navTitle)}>Navigation</p>
           <button
             type="button"
             onClick={toggleTheme}
-            className={cn('inline-flex h-7 w-7 items-center justify-center rounded-md border text-sm', theme.themeToggleBtn)}
+            className={cn('inline-flex h-10 w-10 items-center justify-center rounded-xl border text-sm', theme.themeToggleBtn)}
             aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
           >
             {isDark ? '🌞' : '🌛'}
           </button>
         </div>
-        <div className="space-y-3">
-          {navGroups.map((group) => {
-            const isDirectItem =
-              group.items.length === 1 && group.label.trim().toLowerCase() === group.items[0].label.trim().toLowerCase();
-            const hasActiveItem = group.items.some(
-              (item) => pathname === item.href || pathname.startsWith(item.href + '/')
-            );
-            const isOpen = openGroups[group.id] ?? hasActiveItem;
+      ) : (
+        <>
+          <button
+            type="button"
+            onClick={() => setIsCollapsed(true)}
+            className={cn(
+              'absolute right-3 top-3 z-20 inline-flex h-9 w-9 items-center justify-center rounded-md border transition-colors',
+              theme.collapseBtn
+            )}
+            aria-label="Collapse sidebar"
+          >
+            <PanelLeftClose className="h-4 w-4" />
+          </button>
 
-            if (isDirectItem) {
-              const item = group.items[0];
-              const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
-              const Icon = item.icon;
+          <div className={cn('border-b p-6', theme.headerBorder)}>
+            <Link href="/" className="group flex items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 shadow-lg shadow-blue-500/25 transition-shadow group-hover:shadow-blue-500/40">
+                <span className="text-[10px] font-black tracking-[0.08em] text-white">FLEX</span>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold leading-tight tracking-tight">FLEX Insight</h1>
+                <div className="mt-1 flex items-center gap-1.5">
+                  <Sparkles className="h-3 w-3 text-purple-400" />
+                  <p className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-xs font-medium text-transparent">AI Powered</p>
+                </div>
+              </div>
+            </Link>
+          </div>
 
-              return (
-                <div key={group.id} className={cn('rounded-2xl border', theme.groupCard)}>
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      'flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 group relative',
-                      isActive ? theme.itemActive : theme.itemInactiveDirect
-                    )}
-                  >
-                    <Icon className={cn('h-5 w-5 transition-transform group-hover:scale-110', isActive && 'drop-shadow-lg')} />
-                    <span className="font-semibold tracking-wide">{item.label}</span>
-                    {item.badge && (
-                      <span
+          <nav className="flex-1 overflow-y-auto p-4">
+            <div className="mb-4 flex items-center justify-between px-4">
+              <p className={cn('text-xs font-semibold uppercase tracking-wider', theme.navTitle)}>Navigation</p>
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className={cn('inline-flex h-7 w-7 items-center justify-center rounded-md border text-sm', theme.themeToggleBtn)}
+                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              >
+                {isDark ? '🌞' : '🌛'}
+              </button>
+            </div>
+            <div className="space-y-3">
+              {navGroups.map((group) => {
+                const isDirectItem =
+                  group.items.length === 1 && group.label.trim().toLowerCase() === group.items[0].label.trim().toLowerCase();
+                const hasActiveItem = group.items.some(
+                  (item) => pathname === item.href || pathname.startsWith(item.href + '/')
+                );
+                const isOpen = openGroups[group.id] ?? hasActiveItem;
+
+                if (isDirectItem) {
+                  const item = group.items[0];
+                  const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+                  const Icon = item.icon;
+
+                  return (
+                    <div key={group.id} className={cn('rounded-2xl border', theme.groupCard)}>
+                      <Link
+                        href={item.href}
                         className={cn(
-                          'ml-auto text-xs px-2 py-0.5 rounded-full font-semibold',
-                          isActive ? theme.badgeActive : theme.badgeInactive
+                          'group relative flex items-center gap-3 rounded-2xl px-4 py-3 transition-all duration-200',
+                          isActive ? theme.itemActive : theme.itemInactiveDirect
                         )}
                       >
-                        {item.badge}
-                      </span>
-                    )}
-                  </Link>
-                </div>
-              );
-            }
-
-            return (
-              <div key={group.id} className={cn('rounded-2xl border', theme.groupCard)}>
-                <button
-                  type="button"
-                  onClick={() => toggleGroup(group.id)}
-                  className={cn(
-                    'flex w-full items-center justify-between px-4 py-3 text-left transition-colors rounded-xl border',
-                    hasActiveItem ? theme.groupHeaderActive : theme.groupHeaderInactive
-                  )}
-                >
-                  <span className="text-sm font-semibold tracking-wide">{group.label}</span>
-                  {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
-                </button>
-
-                {isOpen && (
-                  <ul className="px-2 pb-2 space-y-1.5">
-                    {group.items.map((item) => {
-                      const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
-                      const Icon = item.icon;
-
-                      return (
-                        <li key={item.href}>
-                          <Link
-                            href={item.href}
+                        <Icon className={cn('h-5 w-5 transition-transform group-hover:scale-110', isActive && 'drop-shadow-lg')} />
+                        <span className="font-semibold tracking-wide">{item.label}</span>
+                        {item.badge && (
+                          <span
                             className={cn(
-                              'flex items-center gap-3 px-3 py-3 rounded-xl transition-all duration-200 group relative',
-                              isActive ? theme.itemActive : theme.itemInactiveNested
+                              'ml-auto rounded-full px-2 py-0.5 text-xs font-semibold',
+                              isActive ? theme.badgeActive : theme.badgeInactive
                             )}
                           >
-                            <Icon className={cn('h-5 w-5 transition-transform group-hover:scale-110', isActive && 'drop-shadow-lg')} />
-                            <span className="font-medium">{item.label}</span>
-                            {item.badge && (
-                              <span
+                            {item.badge}
+                          </span>
+                        )}
+                      </Link>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div key={group.id} className={cn('rounded-2xl border', theme.groupCard)}>
+                    <button
+                      type="button"
+                      onClick={() => toggleGroup(group.id)}
+                      className={cn(
+                        'flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left transition-colors',
+                        hasActiveItem ? theme.groupHeaderActive : theme.groupHeaderInactive
+                      )}
+                    >
+                      <span className="text-sm font-semibold tracking-wide">{group.label}</span>
+                      {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+                    </button>
+
+                    {isOpen && (
+                      <ul className="space-y-1.5 px-2 pb-2">
+                        {group.items.map((item) => {
+                          const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+                          const Icon = item.icon;
+
+                          return (
+                            <li key={item.href}>
+                              <Link
+                                href={item.href}
                                 className={cn(
-                                  'ml-auto text-xs px-2 py-0.5 rounded-full font-semibold',
-                                  isActive ? theme.badgeActive : theme.badgeInactive
+                                  'group relative flex items-center gap-3 rounded-xl px-3 py-3 transition-all duration-200',
+                                  isActive ? theme.itemActive : theme.itemInactiveNested
                                 )}
                               >
-                                {item.badge}
-                              </span>
-                            )}
-                          </Link>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </nav>
-
-      </aside>
-
-      {isCollapsed && (
-        <button
-          type="button"
-          onClick={() => setIsCollapsed(false)}
-          className={cn(
-            'fixed left-2 top-2 z-30 inline-flex h-9 w-9 items-center justify-center rounded-md border transition-colors',
-            theme.expandBtn
-          )}
-          aria-label="Expand sidebar"
-        >
-          <PanelLeftOpen className="h-4 w-4" />
-        </button>
+                                <Icon className={cn('h-5 w-5 transition-transform group-hover:scale-110', isActive && 'drop-shadow-lg')} />
+                                <span className="font-medium">{item.label}</span>
+                                {item.badge && (
+                                  <span
+                                    className={cn(
+                                      'ml-auto rounded-full px-2 py-0.5 text-xs font-semibold',
+                                      isActive ? theme.badgeActive : theme.badgeInactive
+                                    )}
+                                  >
+                                    {item.badge}
+                                  </span>
+                                )}
+                              </Link>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </nav>
+        </>
       )}
-    </>
+    </aside>
   );
 }

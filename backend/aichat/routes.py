@@ -110,6 +110,19 @@ def _fallback_enabled(request: ChatRequest) -> bool:
     return request.mode == "hybrid" and request.fallback_to_general_llm and provider in {"openai", "claude"}
 
 
+_TABLE_PATTERNS = re.compile(
+    r"\b(in\s+(?:a\s+)?table(?:\s+format)?|show.*?table|table.*?format|"
+    r"compare.*?table|not\s+paragraph|year.over.year\s+change|"
+    r"numbers?\s+in\s+a\s+table|tabular\s+form)\b",
+    re.IGNORECASE | re.DOTALL,
+)
+
+
+def is_table_query(query: str) -> bool:
+    """Return True when the user explicitly asks for a table layout."""
+    return bool(_TABLE_PATTERNS.search(query))
+
+
 def _extract_query_terms(query: str) -> list[str]:
     """Extract meaningful query terms for lightweight evidence checks."""
     terms = re.findall(r"[a-zA-Z][a-zA-Z0-9&/-]{2,}", (query or "").lower())
@@ -456,18 +469,6 @@ def _detect_metrics(query: str) -> list[str]:
     return found
 
 
-def _detect_year(query: str) -> Optional[str]:
-    """Detect fiscal year references."""
-    match = re.search(r'\b(20[1-3]\d)\b', query)
-    if match:
-        return match.group(1)
-    fy = re.search(r'\bFY\s*(\d{2,4})\b', query, re.IGNORECASE)
-    if fy:
-        y = fy.group(1)
-        return f"20{y}" if len(y) == 2 else y
-    return None
-
-
 def _is_comparison_query(query: str, companies: list[str]) -> bool:
     """Check if the query is asking for a comparison."""
     q_lower = query.lower()
@@ -510,13 +511,12 @@ async def _stream_response(request: ChatRequest):
     company_scope = _parse_company_scope(request.company_filter)
     effective_companies = company_scope if company_scope else companies
     metrics = _detect_metrics(query)
-    year = _detect_year(query)
     is_comparison = _is_comparison_query(query, effective_companies)
 
     yield _sse_event("step", {
         "icon": "🔍",
         "label": "Query Analysis",
-        "detail": f"Companies: {effective_companies or 'auto'} | Metrics: {metrics or 'general'} | Year: {year or 'any'}",
+        "detail": f"Companies: {effective_companies or 'auto'} | Metrics: {metrics or 'general'}",
     })
 
     # Step 2: Determine routing
@@ -893,6 +893,20 @@ async def chat(request: ChatRequest):
         response_text = _truncate_hybrid_ai_section_only(response_text, request.max_response_words)
     else:
         response_text = _truncate_by_max_words(response_text, request.max_response_words)
+
+    # --- Structured table payload (for table-intent queries) ---
+    table_payload_out = None
+    narrative_text_out = None
+
+    if is_table_query(query) and (context or web_context):
+        from backend.rag.generator import generate_table_response
+        table_result = generate_table_response(query, context, web_context)
+        if table_result:
+            table_payload_out = table_result["table_payload"]
+            narrative_text_out = table_result["narrative_text"]
+            # Replace response_text with the short narrative so markdown table is not shown
+            response_text = narrative_text_out or response_text
+
     add_message(session_id, "assistant", response_text)
 
     response_dict = {
@@ -916,13 +930,15 @@ async def chat(request: ChatRequest):
             "strict_grounding": request.strict_grounding,
             "fallback_enabled": _fallback_enabled(request),
         },
+        "table_payload": table_payload_out,
+        "narrative_text": narrative_text_out,
     }
-    
+
     # Include assembled mode metadata
     if query_analysis:
         response_dict["query_analysis"] = query_analysis
         response_dict["strategy_used"] = strategy_used
-    
+
     return response_dict
 
 

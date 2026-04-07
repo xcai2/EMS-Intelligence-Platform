@@ -1,0 +1,1189 @@
+{
+  "run_stamp": "2026-04-06_19-36-42",
+  "generated_at": "2026-04-06T19:36:42.635173",
+  "total_files": 7,
+  "pass": 5,
+  "partial": 2,
+  "fail": 0,
+  "results": [
+    {
+      "file": "Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/02.-Flex_EP_FY22Q4.pdf.parsed.json",
+      "file_name": "02.-Flex_EP_FY22Q4.pdf.parsed.json",
+      "doc_type_raw": "earnings_presentation",
+      "doc_type": "ep",
+      "verdict": "PASS",
+      "total_score": 90.1,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "issues": [],
+          "has_sections": false,
+          "has_blocks": false,
+          "has_top_chunks": true
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 12,
+          "contribution": 12.0,
+          "note": "该文档类型无预设的必需 Item。"
+        },
+        "content_volume": {
+          "score": 0.7405,
+          "weight": 10,
+          "contribution": 7.41,
+          "total_words": 1481,
+          "min_expected": 2000,
+          "max_expected": 50000,
+          "issues": [
+            "总词数 1,481 低于最低阈值 2,000 — 可能提取失败或内容为空"
+          ]
+        },
+        "source_alignment": {
+          "score": 0.9292,
+          "weight": 15,
+          "contribution": 13.94,
+          "parsed_word_count": 1512,
+          "reference_word_count": 2989,
+          "coverage_ratio": 0.5059,
+          "shared_word_ratio": 0.8911,
+          "issues": [],
+          "examples": [
+            "'Fourth Quarter and Full Year Highlights RevenueAdj. Operating IncomeAdj. Net IncomeAdj. Earnings Per Share FOURTH QUARTER $6.9B $295M $244M $0.52•Record adjuste...'"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/Earnings Presentation/02.-Flex_EP_FY22Q4.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "anchor_coverage": {
+          "score": 0.6667,
+          "weight": 10,
+          "contribution": 6.67,
+          "covered_units": 10,
+          "eligible_units": 15,
+          "ratio": 0.6667,
+          "issues": [
+            "仅 10/15 个 chunk 能在原文中找到锚点。"
+          ],
+          "examples": [
+            "chunk#3: 'record adjusted eps q4 fy22 financial summary 6 720 6'",
+            "chunk#4: '677 593 f21 f22adj free cash flow m 1 031'",
+            "chunk#6: 'revenueaadj operating margin b y/y growth y/y growth reliability 10.6'",
+            "chunk#7: 'cash flow overview adjusted free cash flow m 135 219'",
+            "chunk#12: '505 5028.1 7.3 q4f21 q4f22adj gross profit m adj.gross margin'"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/Earnings Presentation/02.-Flex_EP_FY22Q4.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "numeric_consistency": {
+          "score": 0.9574,
+          "weight": 8,
+          "contribution": 7.66,
+          "total_numeric_mentions": 305,
+          "matched_numeric_mentions": 292,
+          "ratio": 0.9574,
+          "issues": [],
+          "examples": [
+            "0.0",
+            "2984.6%",
+            "4.5",
+            "2954.9",
+            "11694.3",
+            "5028.1%",
+            "2073.1",
+            "7883.0%"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/Earnings Presentation/02.-Flex_EP_FY22Q4.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "heading_consistency": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "matched_headings": 0,
+          "total_headings": 0,
+          "ratio": 1.0,
+          "issues": [
+            "无可比较的 parsed 标题。"
+          ],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/Earnings Presentation/02.-Flex_EP_FY22Q4.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "hf_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "contaminated_lines": 0,
+          "full_line_hits": 0,
+          "inline_hits": 0,
+          "total_lines": 254,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "toc_lines": 0,
+          "full_line_hits": 0,
+          "inline_hits": 0,
+          "total_lines": 254,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 0.7333,
+          "weight": 6,
+          "contribution": 4.4,
+          "expected_overlap_truncation": 6,
+          "broken_sentence_truncation": 1,
+          "total_chunks": 15,
+          "ratio": 0.0667,
+          "note": "已区分 chunk overlap 导致的预期截断与无法自然拼接的坏句截断。",
+          "examples": [
+            "'...ion of our website which includes press releases and summary financials of\\nthe respective periods.20'"
+          ]
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "high_overlap_pairs": 0,
+          "med_overlap_pairs": 4,
+          "total_pairs": 14,
+          "high_ratio": 0.0,
+          "examples": []
+        },
+        "header_hierarchy": {
+          "score": 0.5,
+          "weight": 2,
+          "contribution": 1.0,
+          "note": "未找到 sections 数组。"
+        },
+        "table_extraction": {
+          "score": 1.0,
+          "weight": 2,
+          "contribution": 2.0,
+          "note": "该文档类型不要求表格提取。"
+        }
+      }
+    },
+    {
+      "file": "Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/2025_Flex_10K.parsed.json",
+      "file_name": "2025_Flex_10K.parsed.json",
+      "doc_type_raw": "10-K",
+      "doc_type": "10k",
+      "verdict": "PASS",
+      "total_score": 89.3,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": false,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 12,
+          "contribution": 12.0,
+          "expected": [
+            "1",
+            "1A",
+            "7",
+            "8"
+          ],
+          "found": [
+            "1",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "1A",
+            "1B",
+            "1C",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "7A",
+            "8",
+            "9",
+            "9A",
+            "9B",
+            "9C"
+          ],
+          "missing": []
+        },
+        "content_volume": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "total_words": 60971,
+          "min_expected": 30000,
+          "max_expected": 300000,
+          "issues": []
+        },
+        "source_alignment": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "parsed_word_count": 67664,
+          "reference_word_count": 62062,
+          "coverage_ratio": 1.0903,
+          "shared_word_ratio": 1.0,
+          "issues": [],
+          "examples": [
+            "'OVERVIEW Flex is the advanced, end-to-end manufacturing partner of choice that helps a diverse customer base design, build, deliver and manage innovative produc...'"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/annual_10K/2025_Flex_10K.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "anchor_coverage": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "covered_units": 92,
+          "eligible_units": 92,
+          "ratio": 1.0,
+          "issues": [],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/annual_10K/2025_Flex_10K.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "numeric_consistency": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "total_numeric_mentions": 3667,
+          "matched_numeric_mentions": 3667,
+          "ratio": 1.0,
+          "issues": [],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/annual_10K/2025_Flex_10K.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "heading_consistency": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "matched_headings": 29,
+          "total_headings": 29,
+          "ratio": 1.0,
+          "issues": [],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/annual_10K/2025_Flex_10K.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "hf_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "contaminated_lines": 0,
+          "full_line_hits": 0,
+          "inline_hits": 0,
+          "total_lines": 96,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "toc_contamination": {
+          "score": 0.0,
+          "weight": 6,
+          "contribution": 0.0,
+          "toc_lines": 118,
+          "full_line_hits": 0,
+          "inline_hits": 118,
+          "total_lines": 96,
+          "ratio": 1.2292,
+          "examples": [
+            "[inline] '...rdinary shares of Flex held by each Table of Contents shareholder of Flex (the \"Distribut...'",
+            "[inline] \"...to managing our business increases Table of Contents customers' competitiveness by lever...\"",
+            "[inline] '...services, we provide manufacturing, Table of Contents customization, procurement, global...'",
+            "[inline] '...gy on delivering value to customers Table of Contents through a comprehensive suite of pr...'",
+            "[inline] '...p, engage and retain strong talent. Table of Contents Our purpose, vision, mission and va...'",
+            "[inline] '...ding among other aspects, receiving Table of Contents periodic updates regarding, and ove...'",
+            "[inline] '...of information currently available. Table of Contents Compliance with laws and regulation...'",
+            "[inline] 'Table of Contents Our business, financial condition,...'"
+          ]
+        },
+        "truncation": {
+          "score": 0.6667,
+          "weight": 6,
+          "contribution": 4.0,
+          "expected_overlap_truncation": 6,
+          "broken_sentence_truncation": 8,
+          "total_chunks": 96,
+          "ratio": 0.0833,
+          "note": "已区分 chunk overlap 导致的预期截断与无法自然拼接的坏句截断。",
+          "examples": [
+            "'...in material impairments of our goodwill. Refer to note 2 to the consolidated financial statements in || next: Income Taxes Our deferred income tax assets represent tempor'",
+            "'...Financial Statements and Supplementary Data\" for recent accounting pronouncements. Table of Contents || next: INTEREST RATE RISK A portion of our exposure to market risk '",
+            "'... on our financial position, results of operations and cash flows in the near-term. Table of Contents || next: REPORT OF INDEPENDENT REGISTERED PUBLIC ACCOUNTING FIRM To t'",
+            "\"...lders in connection with the Company's 2025 Annual General Meeting of Shareholders. Such information || next: Information with respect to this item may be found in the Co\"",
+            "\"...lders in connection with the Company's 2025 Annual General Meeting of Shareholders. Such information || next: RELATED SHAREHOLDER MATTERS Information with respect to this\"",
+            "\"...lders in connection with the Company's 2025 Annual General Meeting of Shareholders. Such information || next: INDEPENDENCE Information with respect to this item may be fo\""
+          ]
+        },
+        "duplication": {
+          "score": 0.7368,
+          "weight": 5,
+          "contribution": 3.68,
+          "high_overlap_pairs": 5,
+          "med_overlap_pairs": 64,
+          "total_pairs": 95,
+          "high_ratio": 0.0526,
+          "examples": [
+            {
+              "chunk_indices": [
+                83,
+                84
+              ],
+              "jaccard": 0.508,
+              "preview_a": "(a) Evaluation of Disclosure Controls and Procedures The Company's management, with the participatio",
+              "preview_b": "over financial reporting that occurred during the fourth quarter ended March 31, 2025 that materiall"
+            },
+            {
+              "chunk_indices": [
+                87,
+                88
+              ],
+              "jaccard": 1.0,
+              "preview_a": "Information with respect to this item may be found in the Company's definitive proxy statement to be",
+              "preview_b": "Information with respect to this item may be found in the Company's definitive proxy statement to be"
+            },
+            {
+              "chunk_indices": [
+                88,
+                89
+              ],
+              "jaccard": 0.893,
+              "preview_a": "Information with respect to this item may be found in the Company's definitive proxy statement to be",
+              "preview_b": "RELATED SHAREHOLDER MATTERS Information with respect to this item may be found in the Company's defi"
+            },
+            {
+              "chunk_indices": [
+                89,
+                90
+              ],
+              "jaccard": 0.862,
+              "preview_a": "RELATED SHAREHOLDER MATTERS Information with respect to this item may be found in the Company's defi",
+              "preview_b": "INDEPENDENCE Information with respect to this item may be found in the Company's definitive proxy st"
+            }
+          ]
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 2,
+          "contribution": 2.0,
+          "sections_with_headers": 29,
+          "total_sections": 29,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 0.3,
+          "weight": 2,
+          "contribution": 0.6,
+          "total_tables": 0,
+          "quality_warnings": [
+            "parser:pypdf",
+            "pypdf_not_installed",
+            "parser:pdfplumber",
+            "no_structured_tables_extracted"
+          ],
+          "issues": [
+            "未提取到结构化表格 — 财务报表可能缺乏表格结构",
+            "quality.warnings 含 'no_structured_tables_extracted'"
+          ]
+        }
+      }
+    },
+    {
+      "file": "Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/2025_Q2_Flex_10Q.parsed.json",
+      "file_name": "2025_Q2_Flex_10Q.parsed.json",
+      "doc_type_raw": "10-Q",
+      "doc_type": "10q",
+      "verdict": "PARTIAL",
+      "total_score": 64.3,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": false,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 0.0,
+          "weight": 12,
+          "contribution": 0.0,
+          "expected": [
+            "1",
+            "1A",
+            "2"
+          ],
+          "found": [],
+          "missing": [
+            "1",
+            "1A",
+            "2"
+          ]
+        },
+        "content_volume": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "total_words": 23805,
+          "min_expected": 8000,
+          "max_expected": 100000,
+          "issues": []
+        },
+        "source_alignment": {
+          "score": 0.9941,
+          "weight": 15,
+          "contribution": 14.91,
+          "parsed_word_count": 18932,
+          "reference_word_count": 18895,
+          "coverage_ratio": 1.002,
+          "shared_word_ratio": 0.9909,
+          "issues": [],
+          "examples": [
+            "'## UNITED STATES SECURITIES AND EXCHANGE COMMISSION Washington, D.C. 20549 Form 10-Q (Mark One) ## ☒ QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SEC...'"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/quarterly_10Q/2025_Q2_Flex_10Q.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "anchor_coverage": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "covered_units": 25,
+          "eligible_units": 25,
+          "ratio": 1.0,
+          "issues": [],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/quarterly_10Q/2025_Q2_Flex_10Q.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "numeric_consistency": {
+          "score": 0.976,
+          "weight": 8,
+          "contribution": 7.81,
+          "total_numeric_mentions": 2083,
+          "matched_numeric_mentions": 2033,
+          "ratio": 0.976,
+          "issues": [],
+          "examples": [
+            "5%",
+            "100.0%",
+            "16%",
+            "9%",
+            "48%",
+            "31%",
+            "21%",
+            "25%"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/quarterly_10Q/2025_Q2_Flex_10Q.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "heading_consistency": {
+          "score": 0.0,
+          "weight": 6,
+          "contribution": 0.0,
+          "matched_headings": 0,
+          "total_headings": 1,
+          "ratio": 0.0,
+          "issues": [
+            "仅 0/1 个标题能在原文中回溯到。"
+          ],
+          "examples": [
+            "Full Document"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/quarterly_10Q/2025_Q2_Flex_10Q.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "hf_contamination": {
+          "score": 0.0,
+          "weight": 10,
+          "contribution": 0.0,
+          "contaminated_lines": 3,
+          "full_line_hits": 0,
+          "inline_hits": 3,
+          "total_lines": 25,
+          "ratio": 0.12,
+          "examples": [
+            "[inline] '...SECURITIES AND EXCHANGE COMMISSION Washington, D.C. 20549 Form 10-Q (Mark One) ## ☒ QUARTERLY REPORT PU...'",
+            "[inline] '...E COMMISSION Washington, D.C. 20549 Form 10-Q (Mark One) ## ☒ QUARTERLY REPORT PURSUANT TO...'",
+            "[inline] '....C. 20549 Form 10-Q (Mark One) ## ☒ QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHA...'"
+          ]
+        },
+        "toc_contamination": {
+          "score": 0.0,
+          "weight": 6,
+          "contribution": 0.0,
+          "toc_lines": 14,
+          "full_line_hits": 0,
+          "inline_hits": 14,
+          "total_lines": 25,
+          "ratio": 0.56,
+          "examples": [
+            "[inline] '...reporting period. Estimates are ## Table of Contents used in accounting for, among other...'",
+            "[inline] \"...rrants' for further information. ## Table of Contents ## Disaggregation of Revenue The fo...\"",
+            "[inline] '...itions of the underlying awards. ## Table of Contents As of September 26, 2025, approxima...'",
+            "[inline] '...remaining 70% due upon maturity. ## Table of Contents The weighted-average interest rate...'",
+            "[inline] '...hich also impacts the same line. ## Table of Contents The following table presents the fa...'",
+            "[inline] '...ue of the assets or liabilities. ## Table of Contents The Company has accrued for conting...'",
+            "[inline] '...quisitions | - | - | (5) | (5) | ## Table of Contents ## Other financial instruments The...'",
+            "[inline] '...ggregate purchase price | $ 35 | ## Table of Contents - (1) Intangible assets are compris...'"
+          ]
+        },
+        "truncation": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "expected_overlap_truncation": 1,
+          "broken_sentence_truncation": 0,
+          "total_chunks": 25,
+          "ratio": 0.0,
+          "note": "已区分 chunk overlap 导致的预期截断与无法自然拼接的坏句截断。",
+          "examples": []
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "high_overlap_pairs": 0,
+          "med_overlap_pairs": 4,
+          "total_pairs": 24,
+          "high_ratio": 0.0,
+          "examples": []
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 2,
+          "contribution": 2.0,
+          "sections_with_headers": 1,
+          "total_sections": 1,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 0.3,
+          "weight": 2,
+          "contribution": 0.6,
+          "total_tables": 0,
+          "quality_warnings": [
+            "parser:docling",
+            "missing_expected_items:1,2,3,4",
+            "no_structured_tables_extracted"
+          ],
+          "issues": [
+            "未提取到结构化表格 — 财务报表可能缺乏表格结构",
+            "quality.warnings 含 'no_structured_tables_extracted'"
+          ]
+        }
+      }
+    },
+    {
+      "file": "Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/FLEX_PR_26Q1.pdf.parsed.json",
+      "file_name": "FLEX_PR_26Q1.pdf.parsed.json",
+      "doc_type_raw": "press_release_only",
+      "doc_type": "press_release",
+      "verdict": "PASS",
+      "total_score": 98.6,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": true,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 12,
+          "contribution": 12.0,
+          "note": "该文档类型无预设的必需 Item。"
+        },
+        "content_volume": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "total_words": 3451,
+          "min_expected": 100,
+          "max_expected": 15000,
+          "issues": []
+        },
+        "source_alignment": {
+          "score": 0.9926,
+          "weight": 15,
+          "contribution": 14.89,
+          "parsed_word_count": 2956,
+          "reference_word_count": 3066,
+          "coverage_ratio": 0.9641,
+          "shared_word_ratio": 0.9886,
+          "issues": [],
+          "examples": [
+            "'Overview  <!-- image -->  FLEX REPORTS FIRST QUARTER FISCAL 2026 RESULTS  Austin, Texas, July 24, 2025 Flex (NASDAQ: FLEX) today announced results for its first...'"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/Press Releases/FLEX_PR_26Q1.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "anchor_coverage": {
+          "score": 0.9524,
+          "weight": 10,
+          "contribution": 9.52,
+          "covered_units": 20,
+          "eligible_units": 21,
+          "ratio": 0.9524,
+          "issues": [],
+          "examples": [
+            "chunk#18: 'investors amp analysts michelle simmons senior vice president global investor'"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/Press Releases/FLEX_PR_26Q1.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "numeric_consistency": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "total_numeric_mentions": 216,
+          "matched_numeric_mentions": 216,
+          "ratio": 1.0,
+          "issues": [],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/Press Releases/FLEX_PR_26Q1.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "heading_consistency": {
+          "score": 0.8571,
+          "weight": 6,
+          "contribution": 5.14,
+          "matched_headings": 12,
+          "total_headings": 14,
+          "ratio": 0.8571,
+          "issues": [],
+          "examples": [
+            "Overview",
+            "Notes and Disclosures"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/Press Releases/FLEX_PR_26Q1.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "hf_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "contaminated_lines": 0,
+          "full_line_hits": 0,
+          "inline_hits": 0,
+          "total_lines": 175,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "toc_lines": 0,
+          "full_line_hits": 0,
+          "inline_hits": 0,
+          "total_lines": 175,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "expected_overlap_truncation": 13,
+          "broken_sentence_truncation": 0,
+          "total_chunks": 37,
+          "ratio": 0.0,
+          "note": "已区分 chunk overlap 导致的预期截断与无法自然拼接的坏句截断。",
+          "examples": []
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "high_overlap_pairs": 0,
+          "med_overlap_pairs": 0,
+          "total_pairs": 36,
+          "high_ratio": 0.0,
+          "examples": []
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 2,
+          "contribution": 2.0,
+          "sections_with_headers": 17,
+          "total_sections": 17,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 1.0,
+          "weight": 2,
+          "contribution": 2.0,
+          "note": "该文档类型不要求表格提取。"
+        }
+      }
+    },
+    {
+      "file": "Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/Flex_8-K_2022-01-26.html.parsed.json",
+      "file_name": "Flex_8-K_2022-01-26.html.parsed.json",
+      "doc_type_raw": "8k_only",
+      "doc_type": "8k",
+      "verdict": "PASS",
+      "total_score": 90.0,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": true,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 12,
+          "contribution": 12.0,
+          "note": "该文档类型无预设的必需 Item。"
+        },
+        "content_volume": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "total_words": 511,
+          "min_expected": 100,
+          "max_expected": 50000,
+          "issues": []
+        },
+        "source_alignment": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "parsed_word_count": 206,
+          "reference_word_count": 519,
+          "coverage_ratio": 0.3969,
+          "shared_word_ratio": 1.0,
+          "issues": [],
+          "examples": [
+            "'Item 2.02 Results of Operations and Financial Condition.  On January 26, 2022, Flex Ltd. (the “Company”) issued a press release announcing financial results for...'"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/flex_8k_press_releases/Flex_8-K_2022-01-26.html",
+          "resolved_via": "absolute_path"
+        },
+        "anchor_coverage": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "covered_units": 5,
+          "eligible_units": 5,
+          "ratio": 1.0,
+          "issues": [],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/flex_8k_press_releases/Flex_8-K_2022-01-26.html",
+          "resolved_via": "absolute_path"
+        },
+        "numeric_consistency": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "total_numeric_mentions": 18,
+          "matched_numeric_mentions": 18,
+          "ratio": 1.0,
+          "issues": [],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/flex_8k_press_releases/Flex_8-K_2022-01-26.html",
+          "resolved_via": "absolute_path"
+        },
+        "heading_consistency": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "matched_headings": 3,
+          "total_headings": 3,
+          "ratio": 1.0,
+          "issues": [],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/flex_8k_press_releases/Flex_8-K_2022-01-26.html",
+          "resolved_via": "absolute_path"
+        },
+        "hf_contamination": {
+          "score": 0.0,
+          "weight": 10,
+          "contribution": 0.0,
+          "contaminated_lines": 2,
+          "full_line_hits": 2,
+          "inline_hits": 0,
+          "total_lines": 20,
+          "ratio": 0.1,
+          "examples": [
+            "[full-line] '104'",
+            "[full-line] 'FLEX LTD.'"
+          ]
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "toc_lines": 0,
+          "full_line_hits": 0,
+          "inline_hits": 0,
+          "total_lines": 20,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "expected_overlap_truncation": 2,
+          "broken_sentence_truncation": 0,
+          "total_chunks": 7,
+          "ratio": 0.0,
+          "note": "已区分 chunk overlap 导致的预期截断与无法自然拼接的坏句截断。",
+          "examples": []
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "high_overlap_pairs": 0,
+          "med_overlap_pairs": 0,
+          "total_pairs": 6,
+          "high_ratio": 0.0,
+          "examples": []
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 2,
+          "contribution": 2.0,
+          "sections_with_headers": 3,
+          "total_sections": 3,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 1.0,
+          "weight": 2,
+          "contribution": 2.0,
+          "note": "该文档类型不要求表格提取。"
+        }
+      }
+    },
+    {
+      "file": "Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/flex_2024_10_17_crown_acquisition.md.parsed.json",
+      "file_name": "flex_2024_10_17_crown_acquisition.md.parsed.json",
+      "doc_type_raw": "news_release_only",
+      "doc_type": "news_release",
+      "verdict": "PASS",
+      "total_score": 99.5,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": true,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 12,
+          "contribution": 12.0,
+          "note": "该文档类型无预设的必需 Item。"
+        },
+        "content_volume": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "total_words": 1641,
+          "min_expected": 100,
+          "max_expected": 15000,
+          "issues": []
+        },
+        "source_alignment": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "parsed_word_count": 1432,
+          "reference_word_count": 1431,
+          "coverage_ratio": 1.0007,
+          "shared_word_ratio": 1.0,
+          "issues": [],
+          "examples": [
+            "'Overview  # Flex to Acquire Crown Technical Systems for $325 Million **Date:** October 17, 2024 **Type:** Acquisition Announcement **Source:** https://investors...'"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/News Releases/flex_2024_10_17_crown_acquisition.md",
+          "resolved_via": "absolute_path"
+        },
+        "anchor_coverage": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "covered_units": 20,
+          "eligible_units": 20,
+          "ratio": 1.0,
+          "issues": [],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/News Releases/flex_2024_10_17_crown_acquisition.md",
+          "resolved_via": "absolute_path"
+        },
+        "numeric_consistency": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "total_numeric_mentions": 30,
+          "matched_numeric_mentions": 30,
+          "ratio": 1.0,
+          "issues": [],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/News Releases/flex_2024_10_17_crown_acquisition.md",
+          "resolved_via": "absolute_path"
+        },
+        "heading_consistency": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "matched_headings": 27,
+          "total_headings": 27,
+          "ratio": 1.0,
+          "issues": [],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/News Releases/flex_2024_10_17_crown_acquisition.md",
+          "resolved_via": "absolute_path"
+        },
+        "hf_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "contaminated_lines": 0,
+          "full_line_hits": 0,
+          "inline_hits": 0,
+          "total_lines": 275,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "toc_lines": 0,
+          "full_line_hits": 0,
+          "inline_hits": 0,
+          "total_lines": 275,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 0.9149,
+          "weight": 6,
+          "contribution": 5.49,
+          "expected_overlap_truncation": 20,
+          "broken_sentence_truncation": 1,
+          "total_chunks": 47,
+          "ratio": 0.0213,
+          "note": "已区分 chunk overlap 导致的预期截断与无法自然拼接的坏句截断。",
+          "examples": [
+            "'...- FY2026 data center revenue target: $6.5 billion (35%+ growth)\\n- EMS + Products + Services strategy'"
+          ]
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "high_overlap_pairs": 0,
+          "med_overlap_pairs": 1,
+          "total_pairs": 46,
+          "high_ratio": 0.0,
+          "examples": []
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 2,
+          "contribution": 2.0,
+          "sections_with_headers": 27,
+          "total_sections": 27,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 1.0,
+          "weight": 2,
+          "contribution": 2.0,
+          "note": "该文档类型不要求表格提取。"
+        }
+      }
+    },
+    {
+      "file": "Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/flex_fy24q3_transcript.pdf.parsed.json",
+      "file_name": "flex_fy24q3_transcript.pdf.parsed.json",
+      "doc_type_raw": "flex_transcript_only",
+      "doc_type": "transcript",
+      "verdict": "PARTIAL",
+      "total_score": 69.0,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": true,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 12,
+          "contribution": 12.0,
+          "note": "该文档类型无预设的必需 Item。"
+        },
+        "content_volume": {
+          "score": 0.0005,
+          "weight": 10,
+          "contribution": 0.01,
+          "total_words": 1,
+          "min_expected": 2000,
+          "max_expected": 100000,
+          "issues": [
+            "总词数 1 低于最低阈值 2,000 — 可能提取失败或内容为空"
+          ]
+        },
+        "source_alignment": {
+          "score": 0.0002,
+          "weight": 15,
+          "contribution": 0.0,
+          "parsed_word_count": 1,
+          "reference_word_count": 7364,
+          "coverage_ratio": 0.0001,
+          "shared_word_ratio": 0.0,
+          "issues": [
+            "parsed 正文仅覆盖原文约 0.0%，低于当前类型阈值 30%。",
+            "parsed 词汇与原文的对齐率仅 0.0%，存在原文脱锚风险。"
+          ],
+          "examples": [
+            "'Transcript'"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/flex_transcripts/flex_fy24q3_transcript.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "anchor_coverage": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "covered_units": 0,
+          "eligible_units": 0,
+          "ratio": 1.0,
+          "issues": [
+            "无足够长的 chunk 可用于锚点比对。"
+          ],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/flex_transcripts/flex_fy24q3_transcript.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "numeric_consistency": {
+          "score": 1.0,
+          "weight": 8,
+          "contribution": 8.0,
+          "total_numeric_mentions": 0,
+          "matched_numeric_mentions": 0,
+          "ratio": 1.0,
+          "issues": [
+            "parsed 正文中未检测到可比较的数字。"
+          ],
+          "examples": [],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/flex_transcripts/flex_fy24q3_transcript.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "heading_consistency": {
+          "score": 0.0,
+          "weight": 6,
+          "contribution": 0.0,
+          "matched_headings": 0,
+          "total_headings": 1,
+          "ratio": 0.0,
+          "issues": [
+            "仅 0/1 个标题能在原文中回溯到。"
+          ],
+          "examples": [
+            "Transcript"
+          ],
+          "source_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/flex_transcripts/flex_fy24q3_transcript.pdf",
+          "resolved_via": "absolute_path"
+        },
+        "hf_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "contaminated_lines": 0,
+          "full_line_hits": 0,
+          "inline_hits": 0,
+          "total_lines": 1,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "toc_lines": 0,
+          "full_line_hits": 0,
+          "inline_hits": 0,
+          "total_lines": 1,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 1.0,
+          "weight": 6,
+          "contribution": 6.0,
+          "expected_overlap_truncation": 0,
+          "broken_sentence_truncation": 0,
+          "total_chunks": 1,
+          "ratio": 0.0,
+          "note": "已区分 chunk overlap 导致的预期截断与无法自然拼接的坏句截断。",
+          "examples": []
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "note": "文本单元不足 2 个，无法检查重复。"
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 2,
+          "contribution": 2.0,
+          "sections_with_headers": 1,
+          "total_sections": 1,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 1.0,
+          "weight": 2,
+          "contribution": 2.0,
+          "note": "该文档类型不要求表格提取。"
+        }
+      }
+    }
+  ]
+}

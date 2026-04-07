@@ -1,0 +1,402 @@
+{
+  "source": {
+    "doc_type": "10-Q",
+    "file_name": "Flex_10-Q_2023-10-30.html",
+    "suffix": ".html",
+    "relative_path": "Flex_10-Q_2023-10-30.html",
+    "absolute_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/quarterly_10Q/Flex_10-Q_2023-10-30.html",
+    "size_bytes": 1590374,
+    "parsed_at": "2026-04-06T17:37:15.341165"
+  },
+  "document": {
+    "form_type": "10-Q",
+    "registrant_name": "FLEX LTD.",
+    "period_of_report": "2023-10-30",
+    "fiscal_quarter": "Q2",
+    "fiscal_year_label": "FY24",
+    "commission_file_number": ""
+  },
+  "sections": [
+    {
+      "section_id": "s001",
+      "item_code": "1",
+      "item_label": "Item 1",
+      "header": "Item 1  LEGAL PROCEEDINGS",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 204,
+      "word_count": 29,
+      "chunks": [
+        {
+          "chunk_id": "s001-c001",
+          "type": "prose",
+          "text": "For a description of our material legal proceedings, see note 12 “Commitments and Contingencies” in the notes to the condensed consolidated financial statements, which is incorporated herein by reference.",
+          "char_count": 204,
+          "word_count": 29,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s001",
+          "item_code": "1",
+          "item_label": "Item 1",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 1  LEGAL PROCEEDINGS"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s002",
+      "item_code": "1A",
+      "item_label": "Item 1A",
+      "header": "Item 1A  RISK FACTORS",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 17526,
+      "word_count": 2834,
+      "chunks": [
+        {
+          "chunk_id": "s002-c001",
+          "type": "prose",
+          "text": "In addition to the other information set forth in this report, you should carefully consider the risks and uncertainties discussed in Part I, “Item 1A. Risk Factors” in our Annual Report on Form 10-K for the fiscal year ended March 31, 2023, which could materially affect our business, financial condition or future results. The risks described in our Annual Report on Form 10-K are not the only risks facing our Company. Additional risks and uncertainties not currently known to us or that we currently deem to be not material also may materially and adversely affect our business, financial condition and/or operating results. We are including the following additional risk factors, which supplement the risk factors disclosed in our Annual Report on Form 10-K for the year ended March 31, 2023, and which should be read in conjunction with our description of risk factors in Part I, Item 1A, \"Risk Factors\" of our Annual Report on Form 10-K for the year ended March 31, 2023: We expect to effectuate a distribution of the remaining interests that we indirectly own in Nextracker Inc. (“Nextracker”) to all our shareholders through a series of transactions. The completion of such transactions is subject to numerous conditions which may not be satisfied or waived, and such transactions may not occur. Pursuant to that certain Merger Agreement by and among us, Nextracker, Yuma, Inc. (“Yuma”) and Yuma Acquisition Corp. (“Merger Sub”) dated as of February 7, 2023 (the “Merger Agreement”), we expect to effectuate a distribution of the remaining interests that we own in Nextracker to all our shareholders through the following transactions (together, the “Transactions”): (i) a court-approved capital reduction to be carried out pursuant to Section 78G of the Singapore Companies Act (the “Capital Reduction”), (ii) a distribution of all the shares of the common stock, par value $0.001, of Yuma (the “Yuma Common Stock”) by way of a distribution in specie to our shareholders (the “Distribution”), (iii) the merger of Yuma with and into Yuma Acquisition, Inc., with Yuma surviving the merger as a wholly-owned subsidiary of Nextracker (the “Merger”) and pursuant to which each share of Yuma Common Stock outstanding immediately prior to the Merger will automatically convert into the right to receive a number of shares of Class A common stock of Nextracker (the “Class A common stock”) based on the Exchange Ratio (as defined in the Merger Agreement) (with cash payments to holders of shares of Yuma Common Stock in lieu of any fractional shares of Class A common stock in accordance with the terms of the Merger Agreement), and (iv) the merger of Yuma with and into a wholly-owned limited liability company subsidiary of Nextracker, with such limited liability company surviving the merger as a wholly-owned subsidiary of Nextracker, to be undertaken shortly following the completion of the Merger (together with the Merger, the “Mergers”). The obligations of Nextracker and us to complete the Transactions are subject to a number of conditions, including, among other things, that: (i) we have not exercised our sole and absolute discretion to rescind the written notice we delivered to Nextracker on October 25, 2023 to exercise Flextronics International USA, Inc.’s (“FIUI”) right to effect the Merger, which rescission would result in the abandonment of the Transactions; (ii) we have received the affirmative vote by the holders of at least three-fourths of our Ordinary Shares voting at an extraordinary general meeting of our shareholders in favor of the Capital Reduction and Distribution; (iii) the High Court of Singapore has approved the Capital Reduction and the Distribution; (iv) no stop order suspending the effectiveness of the Registration Statement on Form S-4 (Reg. No. 333-275164) filed with the SEC on October 25, 2023 (the “Registration Statement”) and declared effective by the SEC on October 27, 2023 has been issued and no proceedings for seeking a stop order is pending before the SEC; (v) no governmental entity has enacted, issued, promulgated, enforced or entered any law, rule, regulation, judgment, injunction, stipulation, decree, order or award restraining, enjoining or otherwise making any of the Transactions illegal or otherwise prohibiting or preventing completion of the Transactions; (vi) we have received a tax opinion from a nationally recognized tax advisor, dated as of the closing date of the Merger, to the effect that the Distributions will qualify as tax-free under Section 355 of the Internal Revenue Code of 1986, as amended (the “Code”) and the Mergers will qualify as a tax-free reorganization under Section 368(a) of the Code; and (vii) the Capital Reduction and the Distribution have been completed. No assurance can be given that any of the foregoing conditions or the other conditions set forth in the Merger Agreement will be satisfied or waived. We may not be able to complete the Transactions because of a number of factors, including, among other things: (i) the occurrence of any event, change or other circumstances that could give rise to the termination of the Merger Agreement and (ii) any other failure by us or Nextracker to satisfy the conditions described above or other conditions set forth in the Merger Agreement.",
+          "char_count": 5292,
+          "word_count": 848,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s002",
+          "item_code": "1A",
+          "item_label": "Item 1A",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 1A  RISK FACTORS"
+        },
+        {
+          "chunk_id": "s002-c002",
+          "type": "prose",
+          "text": "If the Distribution, together with a series of internal distributions of the shares of Yuma Common Stock from FIUI to us through a chain of our wholly-owned subsidiaries (the “Distributions”) fail to qualify as tax-free under Sections 355 of the Code or otherwise or the Mergers fail to qualify as a tax-free reorganization under Section 368(a) of the Code, we, our subsidiaries and shareholders could incur significant tax liabilities. We have received a private letter ruling from the Internal Revenue Service (the “IRS”) regarding certain matters germane to the Distributions qualifying as tax-free under Section 355 of the Code. In addition to the private letter ruling, we expect to receive an opinion from Deloitte Tax LLP to the effect that the Distributions will qualify as tax-free under Section 355 of the Code and the Mergers will qualify as a tax-free reorganization under Section 368(a) of the Code. The receipt by us of the opinion from Deloitte Tax LLP is a condition to effecting the Transactions. Although the private letter ruling generally is binding on the IRS, it is based on certain facts and assumptions, and certain representations and undertakings, from us and Nextracker establishing that certain conditions that are necessary to obtain tax-free treatment under the Code have been satisfied. Furthermore, the IRS will not rule on whether a distribution satisfies every requirement for tax-free treatment, which requirements will instead be addressed by the expected Deloitte Tax LLP opinion. The opinion that we expect to receive from Deloitte Tax LLP will conclude that all of the requirements necessary for the Distributions to qualify under Section 355 the Code will be satisfied and will be based on, among other things, the private letter ruling as to the matters addressed by the private letter ruling, certain facts and assumptions, and certain representations and undertakings, from us and Nextracker. If any of the facts, representations, assumptions or undertakings with respect to the private letter ruling or the opinion is not correct or has been violated, the private letter ruling could be revoked retroactively or modified by the IRS, and our ability to rely on the opinion could be jeopardized. The opinion will represent Deloitte Tax LLP’s judgment and will not be binding on the IRS or the courts, and the IRS or the courts may not agree with the conclusions reached in the opinion, so there can be no certainty that the IRS will not challenge the conclusions reflected in the opinion or that a court will not sustain such a challenge. In addition, the opinion will be based on current law, and cannot be relied on if current law changes with retroactive effect. If one or more of the Distributions ultimately fails to qualify as tax-free under Section 355 of the Code, we or one or more of our subsidiaries would recognize gain in an amount equal to the excess of the fair market value of the Yuma Common Stock distributed on the date of the applicable taxable distribution over the tax basis in such shares of the party making the applicable distribution, which could result in significant tax liabilities for us and our subsidiaries. Additionally, we and our subsidiaries may be responsible for withholding taxes on the taxable distribution of Yuma Comma Stock, which could result in significant tax liabilities for us and our subsidiaries apart from taxable gain described immediately above. In addition, if one or more of the Distributions fails to qualify for tax-free treatment under U.S. state or local or non-U.S. law, we and our subsidiaries could incur other significant tax liabilities (including withholding taxes) under U.S. state or local or non-U.S. law. Finally, if the Distribution does not qualify as tax-free under Section 355 of the Code, each U.S. holder of Ordinary Shares would generally be treated as receiving a taxable distribution equal to the fair market value of the Yuma Common Stock received by such U.S. holder in the Distribution. If the Mergers ultimately fail to qualify as a tax-free reorganization under Section 368(a) of the Code, each U.S. holder of Ordinary Shares that receives Yuma Common Stock in the Distribution would generally be treated as having made a taxable disposition of their Yuma Common Stock to Nextracker and would recognize taxable gain or loss on their receipt of Class A common stock in the Mergers. Even if the Distributions qualify as tax-free under Section 355 of the Code, the Distributions would nonetheless be taxable to us and our subsidiaries (but not to U.S. holders of Ordinary Shares) under Section 355(e) of the Code if one or more persons acquire a 50% or greater interest (measured by vote or value) in our stock or that of Yuma’s (or a successor of either, including Nextracker after the Mergers), directly or indirectly, occurring as part of a plan or series of related transactions that includes the Distribution.",
+          "char_count": 4936,
+          "word_count": 809,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s002",
+          "item_code": "1A",
+          "item_label": "Item 1A",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 1A  RISK FACTORS"
+        },
+        {
+          "chunk_id": "s002-c003",
+          "type": "prose",
+          "text": "For purposes of Section 355(e) of the Code, any acquisitions or issuances of our stock or the stock of Yuma (including Nextracker stock after the Mergers), directly or indirectly, within the period beginning two years before the first of the Distributions and ending two years after the last of the Distributions are generally presumed to be part of such a plan, although we or Nextracker may, depending on the facts and circumstances, be able to rebut that presumption. For purposes of this test, the Mergers will be treated as part of a plan that includes the Distributions, but it is expected that the Mergers, standing alone, will not cause the Distribution to be taxable to us under Section 355(e) of the Code because holders of Yuma Common Stock immediately after the Distribution will own at least 50.1% of the stock of Nextracker following the Mergers. However, if the IRS were to determine that another acquisition or issuance of our stock or the stock of Yuma (including Nextracker stock after the Mergers) were part of a plan or series of related transactions that included the Distribution and that triggers the application of Section 355(e) of the Code, we and our subsidiaries would recognize gain as described above. Under the Tax Matters Agreement, which will be entered into by us, Yuma and Nextracker immediately prior to the Distribution and which will govern the rights, responsibilities and obligations of such parties with respect to taxes (including taxes arising in the ordinary course of business and taxes incurred as a result of the Distributions and the Mergers), tax attributes, tax returns, tax contests and certain other matters (the “Tax Matters Agreement”), Yuma and Nextracker (and their successors), on the one hand, and us, on the other hand, may be obligated, in certain cases, to indemnify the other (but not our shareholders) for taxes and certain tax-related losses that arise from the failure of the Distributions or the Mergers to qualify for tax-free treatment under Section 355 or 368(a) of the Code, respectively. Any such indemnification obligation likely would be substantial and likely would have a material adverse effect on the party obligated to make such payments. The Distribution of shares of Yuma Common Stock to our shareholders and/or the subsequent issuance of shares of Class A common stock to our shareholders in exchange for shares of Yuma Common Stock pursuant to the Merger may be prohibited under the securities laws or regulations of any other applicable laws of certain resident jurisdictions of our shareholders, and if any of the foregoing offer of securities is prohibited to such shareholders (the “Affected shareholders”), we may, but we are not required to, seek an exemption or determine another form of return of capital in lieu of distributing such shares of Yuma Common Stock in connection with the Distribution or shares of Class A common stock in connection with the Merger. In the event we decline to make any modifications to accommodate the securities laws or regulations of any other applicable laws of such jurisdictions, the Affected shareholders will not be entitled to the shares of Yuma Common Stock in connection with the Distribution, the shares of Class A common stock in connection with the Merger or the cash equivalent for such shares of Yuma Common Stock or shares of Class A common stock. As of September 29, 2023, there were 437,913,956 Ordinary Shares issued and outstanding held by 2,828 shareholders. We have generally not undertaken an analysis of whether the local securities laws or regulations of any other applicable laws or regulations or any other applicable laws of any resident jurisdiction of each of our shareholder prohibits or restricts (either absolutely or subject to various securities laws requirements, whether legal or administrative, being complied with) the Distribution of shares of Yuma Common Stock or issuance of Class A common stock in connection with the Merger. There is no assurance that the receipt of shares of Yuma Common Stock by the Affected shareholders in the Distribution and/or the subsequent receipt of shares of Class A common stock in the Merger, is permissible under the local securities laws or regulations or any other applicable laws of each resident jurisdiction of all our shareholders. Our shareholders are required to inform themselves of and to observe any such prohibition or restriction at their own expense and without any liability to us. Under the terms of the Distribution, there is no entitlement to receive cash in lieu of shares of Yuma Common Stock and consequently shares of Class A common stock in connection with the Merger, and under the terms of the Merger (other than to account for fractional shares of Class A common stock under the Exchange Ratio (as defined in the Merger Agreement)), there is no entitlement to receive cash in lieu of shares of Class A common stock.",
+          "char_count": 4936,
+          "word_count": 809,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s002",
+          "item_code": "1A",
+          "item_label": "Item 1A",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 1A  RISK FACTORS"
+        },
+        {
+          "chunk_id": "s002-c004",
+          "type": "prose",
+          "text": "For such jurisdictions, we may choose to seek an exemption or determine another form of return of capital in lieu of distributing shares of Yuma Common Stock or shares of Class A common stock, but we are not required to do so. If we decline to make modifications to the terms of the Distribution or the terms of the Merger required by such jurisdictions, and if certain of our shareholders are a resident in those jurisdictions or if certain of our shareholders are otherwise prohibited by local laws or regulations and/or any other applicable laws from accepting the shares of Yuma Common Stock in connection with the Distribution or shares of Class A common stock in connection with the Merger, such shareholders will not receive such shares of Yuma Common Stock in connection with the Distribution or shares of Class A common stock in connection with the Merger and may lose value in their investment in us as a result. In such scenario, such shareholders shall not have any claim whatsoever against us, Yuma and/or Nextracker in connection therewith. Geopolitical uncertainty, including arising from the ongoing conflict between Russia and Ukraine and the Israel-Hamas war, may adversely affect our business, results of operations and financial performance. We have facilities across the globe including in Israel and Ukraine. If these facilities were to be damaged, destroyed or otherwise unable to operate, whether due to war, acts of hostility, or terrorist acts, such an event could jeopardize our ability to develop, manufacture and deliver certain products and adversely affect our operations and results of operations. Our operations have been, and could continue to be, disrupted by the absence of employees called to active duty to perform military service. The Russia-Ukraine conflict, the Israel-Hamas war, and other hostilities or armed conflicts, or the interruption or curtailment of trade or transport between the countries where our facilities are located and their respective trading partners, could adversely affect our operations and results of operations. Further, political, economic and military instability in the regions where are facilities are located may lead to disruptions and instability in global markets, supply chains and industries that could negatively impact our business, financial condition and results of operations.",
+          "char_count": 2359,
+          "word_count": 368,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s002",
+          "item_code": "1A",
+          "item_label": "Item 1A",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 1A  RISK FACTORS"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s003",
+      "item_code": "2",
+      "item_label": "Item 2",
+      "header": "Item 2  UNREGISTERED SALES OF EQUITY SECURITIES, USE OF PROCEEDS, AND ISSUER PURCHASES OF EQUITY SECURITIES",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 2105,
+      "word_count": 340,
+      "chunks": [
+        {
+          "chunk_id": "s003-c001",
+          "type": "prose",
+          "text": "Issuer Purchases of Equity Securities The following table provides information regarding purchases of our ordinary shares made by us for the period from July 1, 2023 through September 29, 2023: Period Total Number of Shares Purchased (1) Average Price Paid per Share Total Number of Shares Purchased as Part of Publicly Announced Plans or Programs Approximate Dollar Value of Shares that May Yet Be Purchased Under the Plans or Programs July 1, 2023 - August 4, 2023 (2) (3) 4,472,813 27.72 4,472,813 1,990,000,059 August 5, 2023 - September 1, 2023 (3) 3,745,405 26.70 3,745,405 1,890,000,341 September 2, 2023 - September 29, 2023 (3) 3,262,975 26.05 3,262,975 1,805,000,584 Total 11,481,193 11,481,193 (1) During the period from July 1, 2023 through September 29, 2023, all purchases were made pursuant to the programs discussed below in open market transactions. All purchases were made in accordance with Rule 10b-18 under the Securities Exchange Act of 1934. (2) On August 25, 2022, our Board of Directors authorized repurchases of our outstanding ordinary shares for up to $1.0 billion. This is in accordance with the share purchase mandate whereby our shareholders approved a repurchase limit of 20% of our issued ordinary shares outstanding at the Annual General Meeting held on the same date as the Board authorization. As of June 30, 2023, we had shares in the aggregate amount of $697 million available to be repurchased under this plan, of which 4.1 million shares in the aggregate amount of $114 million were repurchased as of August 2, 2023 (after which authorization under this plan terminated). (3) On August 2, 2023, our Board of Directors authorized repurchases of our outstanding ordinary shares for up to $2.0 billion. This is in accordance with the share purchase mandate whereby our shareholders approved a repurchase limit of 20% of our issued ordinary shares outstanding at the Annual General Meeting held on the same date as the Board authorization. As of September 29, 2023, shares in the aggregate amount of $1.8 billion were available to be repurchased under the current plan.",
+          "char_count": 2105,
+          "word_count": 340,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s003",
+          "item_code": "2",
+          "item_label": "Item 2",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 2  UNREGISTERED SALES OF EQUITY SECURITIES, USE OF PROCEEDS, AND ISSUER PURCHASES OF EQUITY SECURITIES"
+        },
+        {
+          "chunk_id": "s003-c002",
+          "type": "table",
+          "text": "| Period | Total Number of Shares Purchased (1) | Average Price Paid per Share | Total Number of Shares Purchased as Part of Publicly Announced Plans or Programs | Approximate Dollar Value of Shares that May Yet Be Purchased Under the Plans or Programs |\n| --- | --- | --- | --- | --- |\n| July 1, 2023 - August 4, 2023 (2) (3) | 4,472,813 | $27.72 | 4,472,813 | $1,990,000,059 |\n| August 5, 2023 - September 1, 2023 (3) | 3,745,405 | $26.70 | 3,745,405 | $1,890,000,341 |\n| September 2, 2023 - September 29, 2023 (3) | 3,262,975 | $26.05 | 3,262,975 | $1,805,000,584 |\n| Total | 11,481,193 | 11,481,193 |  |  |",
+          "char_count": 610,
+          "word_count": 121,
+          "has_table": true,
+          "table_titles": [
+            "The following table provides information regarding purchases of our ordinary shares made by us for the period from July 1, 2023 through September 29, 2023:"
+          ],
+          "section_id": "s003",
+          "item_code": "2",
+          "item_label": "Item 2",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 2  UNREGISTERED SALES OF EQUITY SECURITIES, USE OF PROCEEDS, AND ISSUER PURCHASES OF EQUITY SECURITIES"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "s003-t001",
+          "title": "The following table provides information regarding purchases of our ordinary shares made by us for the period from July 1, 2023 through September 29, 2023:",
+          "markdown": "| Period | Total Number of Shares Purchased (1) | Average Price Paid per Share | Total Number of Shares Purchased as Part of Publicly Announced Plans or Programs | Approximate Dollar Value of Shares that May Yet Be Purchased Under the Plans or Programs |\n| --- | --- | --- | --- | --- |\n| July 1, 2023 - August 4, 2023 (2) (3) | 4,472,813 | $27.72 | 4,472,813 | $1,990,000,059 |\n| August 5, 2023 - September 1, 2023 (3) | 3,745,405 | $26.70 | 3,745,405 | $1,890,000,341 |\n| September 2, 2023 - September 29, 2023 (3) | 3,262,975 | $26.05 | 3,262,975 | $1,805,000,584 |\n| Total | 11,481,193 | 11,481,193 |  |  |",
+          "row_count": 4
+        }
+      ]
+    },
+    {
+      "section_id": "s004",
+      "item_code": "3",
+      "item_label": "Item 3",
+      "header": "Item 3  DEFAULTS UPON SENIOR SECURITIES",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 4,
+      "word_count": 1,
+      "chunks": [
+        {
+          "chunk_id": "s004-c001",
+          "type": "prose",
+          "text": "None",
+          "char_count": 4,
+          "word_count": 1,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s004",
+          "item_code": "3",
+          "item_label": "Item 3",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 3  DEFAULTS UPON SENIOR SECURITIES"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s005",
+      "item_code": "4",
+      "item_label": "Item 4",
+      "header": "Item 4  MINE SAFETY DISCLOSURES",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 14,
+      "word_count": 2,
+      "chunks": [
+        {
+          "chunk_id": "s005-c001",
+          "type": "prose",
+          "text": "Not applicable",
+          "char_count": 14,
+          "word_count": 2,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s005",
+          "item_code": "4",
+          "item_label": "Item 4",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 4  MINE SAFETY DISCLOSURES"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s006",
+      "item_code": "5",
+      "item_label": "Item 5",
+      "header": "Item 5  OTHER INFORMATION",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 828,
+      "word_count": 124,
+      "chunks": [
+        {
+          "chunk_id": "s006-c001",
+          "type": "prose",
+          "text": "Insider Trading Arrangements During the fiscal quarter ended September 29, 2023, none of the Company's directors or officers adopted or terminated a \"Rule 10b5-1 trading arrangement\" or \"non-Rule 10b5-1 trading arrangement\", as those terms are defined in Regulation S-K, Item 408. Restructuring Plan On October 25, 2023, the Company’s management committed to targeted restructuring activities to improve operational efficiencies by reducing excess workforce capacity. While a detailed action plan has not been finalized, the Company currently estimates charges of approximately $ million will be recognized in the third quarter of the fiscal year ending March 31, 2024. The charges are expected to primarily relate to employee termination benefits and are expected to be settled in cash in the fiscal year ending March 31, 2024.",
+          "char_count": 828,
+          "word_count": 124,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s006",
+          "item_code": "5",
+          "item_label": "Item 5",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 5  OTHER INFORMATION"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s007",
+      "item_code": "6",
+      "item_label": "Item 6",
+      "header": "Item 6  EXHIBITS",
+      "section_part": "",
+      "section_type": "tail",
+      "is_tail": true,
+      "has_legal_boilerplate": true,
+      "char_count": 1338,
+      "word_count": 203,
+      "chunks": [
+        {
+          "chunk_id": "s007-c001",
+          "type": "prose",
+          "text": "EXHIBIT INDEX Exhibit No. Exhibit Form File No. Filing Date Exhibit No. Filed Herewith 10.01 Amended and Restated Flex Ltd. 2017 Equity Incentive Plan DEF 14A 000-23354 6/21/2023 Annex B 15.01 Letter in lieu of consent of Deloitte & Touche LLP X 31.01 Certification of Principal Executive Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 X 31.02 Certification of Principal Financial Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 X 32.01 Certification of Chief Executive Officer and Chief Financial Officer pursuant to Rule 13a-14(b) under the Securities Exchange Act of 1934 and 18 U.S.C. Section 1350, as adopted pursuant to Section 906 of the Sarbanes-Oxley Act of 2002* X 101.INS XBRL Instance Document X 101.SCH XBRL Taxonomy Extension Schema Document X 101.CAL XBRL Taxonomy Extension Calculation Linkbase Document X 101.DEF XBRL Taxonomy Extension Definition Linkbase Document X 101.LAB XBRL Taxonomy Extension Label Linkbase Document X 101.PRE XBRL Taxonomy Extension Presentation Linkbase Document X Cover Page Interactive Data File (formatted as inline XBRL with applicable taxonomy extension information contained in Exhibit 101)",
+          "char_count": 1338,
+          "word_count": 203,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s007",
+          "item_code": "6",
+          "item_label": "Item 6",
+          "section_part": "",
+          "section_type": "tail",
+          "header": "Item 6  EXHIBITS"
+        },
+        {
+          "chunk_id": "s007-c002",
+          "type": "table",
+          "text": "| Incorporated by Reference |  |  |  |  |  |  |\n| --- | --- | --- | --- | --- | --- | --- |\n| Exhibit No. | Exhibit | Form | File No. | Filing Date | Exhibit No. | Filed Herewith |\n| 10.01 | Amended and Restated Flex Ltd. 2017 Equity Incentive Plan | DEF 14A | 000-23354 | 6/21/2023 | Annex B |  |\n| 15.01 | Letter in lieu of consent of Deloitte & Touche LLP | X |  |  |  |  |\n| 31.01 | Certification of Principal Executive Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 | X |  |  |  |  |\n| 31.02 | Certification of Principal Financial Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 | X |  |  |  |  |\n| 32.01 | Certification of Chief Executive Officer and Chief Financial Officer pursuant to Rule 13a-14(b) under the Securities Exchange Act of 1934 and 18 U.S.C. Section 1350, as adopted pursuant to Section 906 of the Sarbanes-Oxley Act of 2002* | X |  |  |  |  |\n| 101.INS | XBRL Instance Document | X |  |  |  |  |\n| 101.SCH | XBRL Taxonomy Extension Schema Document | X |  |  |  |  |\n| 101.CAL | XBRL Taxonomy Extension Calculation Linkbase Document | X |  |  |  |  |\n| 101.DEF | XBRL Taxonomy Extension Definition Linkbase Document | X |  |  |  |  |\n| 101.LAB | XBRL Taxonomy Extension Label Linkbase Document | X |  |  |  |  |\n| 101.PRE | XBRL Taxonomy Extension Presentation Linkbase Document | X |  |  |  |  |\n| 104 | Cover Page Interactive Data File (formatted as inline XBRL with applicable taxonomy extension information contained in Exhibit 101) |  |  |  |  |  |",
+          "char_count": 1674,
+          "word_count": 332,
+          "has_table": true,
+          "table_titles": [
+            "EXHIBIT INDEX"
+          ],
+          "section_id": "s007",
+          "item_code": "6",
+          "item_label": "Item 6",
+          "section_part": "",
+          "section_type": "tail",
+          "header": "Item 6  EXHIBITS"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "s007-t001",
+          "title": "EXHIBIT INDEX",
+          "markdown": "| Incorporated by Reference |  |  |  |  |  |  |\n| --- | --- | --- | --- | --- | --- | --- |\n| Exhibit No. | Exhibit | Form | File No. | Filing Date | Exhibit No. | Filed Herewith |\n| 10.01 | Amended and Restated Flex Ltd. 2017 Equity Incentive Plan | DEF 14A | 000-23354 | 6/21/2023 | Annex B |  |\n| 15.01 | Letter in lieu of consent of Deloitte & Touche LLP | X |  |  |  |  |\n| 31.01 | Certification of Principal Executive Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 | X |  |  |  |  |\n| 31.02 | Certification of Principal Financial Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 | X |  |  |  |  |\n| 32.01 | Certification of Chief Executive Officer and Chief Financial Officer pursuant to Rule 13a-14(b) under the Securities Exchange Act of 1934 and 18 U.S.C. Section 1350, as adopted pursuant to Section 906 of the Sarbanes-Oxley Act of 2002* | X |  |  |  |  |\n| 101.INS | XBRL Instance Document | X |  |  |  |  |\n| 101.SCH | XBRL Taxonomy Extension Schema Document | X |  |  |  |  |\n| 101.CAL | XBRL Taxonomy Extension Calculation Linkbase Document | X |  |  |  |  |\n| 101.DEF | XBRL Taxonomy Extension Definition Linkbase Document | X |  |  |  |  |\n| 101.LAB | XBRL Taxonomy Extension Label Linkbase Document | X |  |  |  |  |\n| 101.PRE | XBRL Taxonomy Extension Presentation Linkbase Document | X |  |  |  |  |\n| 104 | Cover Page Interactive Data File (formatted as inline XBRL with applicable taxonomy extension information contained in Exhibit 101) |  |  |  |  |  |",
+          "row_count": 13
+        }
+      ]
+    },
+    {
+      "section_id": "s008",
+      "item_code": "",
+      "item_label": "",
+      "header": "SIGNATURES",
+      "section_part": "",
+      "section_type": "tail",
+      "is_tail": true,
+      "has_legal_boilerplate": false,
+      "char_count": 439,
+      "word_count": 65,
+      "chunks": [
+        {
+          "chunk_id": "s008-c001",
+          "type": "prose",
+          "text": "Pursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized. FLEX LTD. (Registrant) /s/ REVATHI ADVAITHI Revathi Advaithi Chief Executive Officer (Principal Executive Officer) Date: October 27, 2023 /s/ PAUL R. LUNDSTROM Paul R. Lundstrom Chief Financial Officer (Principal Financial Officer) Date: October 27, 2023",
+          "char_count": 439,
+          "word_count": 65,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s008",
+          "item_code": "",
+          "item_label": "",
+          "section_part": "",
+          "section_type": "tail",
+          "header": "SIGNATURES"
+        },
+        {
+          "chunk_id": "s008-c002",
+          "type": "table",
+          "text": "| FLEX LTD. |  |\n| --- | --- |\n| (Registrant) |  |\n| /s/ REVATHI ADVAITHI |  |\n| Revathi Advaithi |  |\n| Chief Executive Officer |  |\n| (Principal Executive Officer) |  |\n| Date: | October 27, 2023 |\n| /s/ PAUL R. LUNDSTROM |  |\n| Paul R. Lundstrom |  |\n| Chief Financial Officer |  |\n| (Principal Financial Officer) |  |\n| Date: | October 27, 2023 |",
+          "char_count": 350,
+          "word_count": 76,
+          "has_table": true,
+          "table_titles": [
+            "Pursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized."
+          ],
+          "section_id": "s008",
+          "item_code": "",
+          "item_label": "",
+          "section_part": "",
+          "section_type": "tail",
+          "header": "SIGNATURES"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "s008-t001",
+          "title": "Pursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized.",
+          "markdown": "| FLEX LTD. |  |\n| --- | --- |\n| (Registrant) |  |\n| /s/ REVATHI ADVAITHI |  |\n| Revathi Advaithi |  |\n| Chief Executive Officer |  |\n| (Principal Executive Officer) |  |\n| Date: | October 27, 2023 |\n| /s/ PAUL R. LUNDSTROM |  |\n| Paul R. Lundstrom |  |\n| Chief Financial Officer |  |\n| (Principal Financial Officer) |  |\n| Date: | October 27, 2023 |",
+          "row_count": 11
+        }
+      ]
+    }
+  ],
+  "quality": {
+    "total_pages": 0,
+    "pages_with_text": 0,
+    "total_sections": 8,
+    "prose_sections": 3,
+    "item_codes_found": [
+      "1",
+      "1A",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "missing_expected_items": [],
+    "total_chunks": 14,
+    "total_tables": 3,
+    "total_words": 3598,
+    "warnings": [
+      "parser:bs4"
+    ],
+    "parsed_at": "2026-04-06T17:37:15.341097",
+    "source_file": "Flex_10-Q_2023-10-30.html"
+  }
+}

@@ -17,6 +17,11 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+try:
+    from .extraction_output_utils import prepare_output_root, prepare_shared_sample_dir
+except ImportError:
+    from extraction_output_utils import prepare_output_root, prepare_shared_sample_dir
+
 BASE_DIR = Path(__file__).resolve().parent
 INPUT_DIR = BASE_DIR / "File" / "Flex" / "flex_8k_press_releases"
 OUTPUT_PARENT_DIR = BASE_DIR / "File"
@@ -89,39 +94,6 @@ def _parse_pdf_text(filepath: Path) -> tuple[list[dict[str, Any]], str, list[str
     return pages, _clean_text("\n\n".join(texts)), warnings
 
 
-def _parse_docling_text(filepath: Path) -> tuple[str, list[str]]:
-    warnings: list[str] = []
-    try:
-        from docling.document_converter import DocumentConverter  # type: ignore
-    except Exception:
-        warnings.append("docling_not_installed")
-        return "", warnings
-
-    try:
-        converter = DocumentConverter()
-        result = converter.convert(str(filepath))
-        doc = getattr(result, "document", None)
-        if doc is None:
-            warnings.append("docling_no_document")
-            return "", warnings
-
-        # Prefer markdown output for better structure retention.
-        if hasattr(doc, "export_to_markdown"):
-            text = doc.export_to_markdown() or ""
-        elif hasattr(doc, "export_to_text"):
-            text = doc.export_to_text() or ""
-        else:
-            text = str(doc) or ""
-
-        text = _clean_text(text)
-        if not text:
-            warnings.append("docling_empty_text")
-        return text, warnings
-    except Exception as e:
-        warnings.append(f"docling_error:{e}")
-        return "", warnings
-
-
 def _parse_html_text(filepath: Path) -> tuple[str, list[str]]:
     warnings: list[str] = []
     raw = _read_text_file(filepath)
@@ -157,17 +129,10 @@ def _parse_html_text(filepath: Path) -> tuple[str, list[str]]:
 
 def _parse_source_text(filepath: Path, suffix: str) -> tuple[list[dict[str, Any]], str, list[str]]:
     if suffix == ".pdf":
-        docling_text, docling_warnings = _parse_docling_text(filepath)
-        if docling_text:
-            return [], docling_text, docling_warnings + ["parser:docling"]
-        pages, text, warnings = _parse_pdf_text(filepath)
-        return pages, text, docling_warnings + warnings + ["parser:pypdf"]
+        return _parse_pdf_text(filepath)
     if suffix in {".html", ".htm"}:
-        docling_text, docling_warnings = _parse_docling_text(filepath)
-        if docling_text:
-            return [], docling_text, docling_warnings + ["parser:docling"]
         text, warnings = _parse_html_text(filepath)
-        return [], text, docling_warnings + warnings + ["parser:bs4"]
+        return [], text, warnings
     if suffix in {".txt", ".md"}:
         return [], _clean_text(_read_text_file(filepath)), []
     return [], "", [f"unsupported_file_type:{suffix}"]
@@ -482,6 +447,22 @@ def _parse_date_value(value: str) -> datetime | None:
     return None
 
 
+def _sync_signature_content_date(content: str, normalized_date: str) -> str:
+    if not content or not normalized_date:
+        return content
+
+    date_token = r"([A-Za-z]+\s+\d{1,2},\s+\d{4}|\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{2,4})"
+    # Prefer replacing a date on "Date:" line.
+    pat1 = rf"(?im)^(\s*date\s*[:\-]?\s*){date_token}\b"
+    out, n = re.subn(pat1, rf"\1{normalized_date}", content, count=1)
+    if n > 0:
+        return out
+
+    # Fallback: replace the first date-looking token in signature content.
+    out, n = re.subn(date_token, normalized_date, content, count=1)
+    return out if n > 0 else content
+
+
 def _infer_date_from_filename(file_name: str) -> str:
     m = re.search(r"(\d{4}-\d{2}-\d{2})", file_name)
     return m.group(1) if m else ""
@@ -745,8 +726,15 @@ def parse_document(filepath: Path, rel_path: Path) -> dict[str, Any]:
         section["signature_date"] = sig_raw
         section["signature_date_normalized"] = sig_raw
         if report_date and sig_date and abs((report_date - sig_date).days) > 45:
-            if report_date_raw:
-                section["signature_date_normalized"] = report_date_raw
+            normalized_target = report_date_raw or report_date_norm
+            if normalized_target:
+                section["signature_date_normalized"] = normalized_target
+                section["signature_date"] = normalized_target
+                original_content = str(section.get("content", ""))
+                synced_content = _sync_signature_content_date(original_content, normalized_target)
+                section["content"] = synced_content.strip()
+                section["content_cleaned_for_embedding"] = _clean_text(section["content"])
+                section["char_count"] = len(section["content"])
             warnings.append("signature_date_differs_from_report_date")
     blocks, reading_order = _build_blocks_and_reading_order(sections, legal_lines)
 
@@ -797,16 +785,11 @@ def parse_document(filepath: Path, rel_path: Path) -> dict[str, Any]:
 
 
 def _prepare_output_dir() -> Path:
-    OUTPUT_PARENT_DIR.mkdir(parents=True, exist_ok=True)
-    for p in OUTPUT_PARENT_DIR.glob("Extracted_*"):
-        if p.is_dir():
-            shutil.rmtree(p)
-    legacy = OUTPUT_PARENT_DIR / "extracted"
-    if legacy.exists() and legacy.is_dir():
-        shutil.rmtree(legacy)
-    out = OUTPUT_PARENT_DIR / f"Extracted_{_now_stamp()}"
-    out.mkdir(parents=True, exist_ok=True)
-    return out
+    return prepare_output_root(
+        OUTPUT_PARENT_DIR,
+        legacy_marker_dirs=("flex_8k_press_releases",),
+        current_dir_patterns=("flex_8k_press_releases", "flex_8k_press_releases_*"),
+    )
 
 
 def _safe_base_name(src: Path) -> str:
@@ -820,7 +803,9 @@ def extract_all(input_dir: Path = INPUT_DIR, output_dir: Path | None = None) -> 
     else:
         output_dir.mkdir(parents=True, exist_ok=True)
 
-    out_8k = output_dir / "flex_8k_press_releases"
+    run_stamp = _now_stamp()
+
+    out_8k = output_dir / f"flex_8k_press_releases_{run_stamp}"
     out_8k.mkdir(parents=True, exist_ok=True)
 
     files = [p for p in input_dir.rglob("*") if p.is_file() and p.suffix.lower() in SUPPORTED_SUFFIXES]
@@ -841,14 +826,16 @@ def extract_all(input_dir: Path = INPUT_DIR, output_dir: Path | None = None) -> 
             failed += 1
             errors.append({"file": str(rel), "error": str(e)})
 
+    errors_file = output_dir / "_errors.json"
     if errors:
-        (output_dir / "_errors.json").write_text(
+        errors_file.write_text(
             json.dumps({"count": len(errors), "errors": errors}, ensure_ascii=False, indent=2),
             encoding="utf-8",
         )
+    elif errors_file.exists():
+        errors_file.unlink()
 
-    sample_dir = output_dir / "_test_samples"
-    sample_dir.mkdir(exist_ok=True)
+    sample_dir = prepare_shared_sample_dir(output_dir, run_stamp)
     first_sample = next(iter(sorted(out_8k.rglob("*.parsed.json"))), None)
     if first_sample is not None:
         shutil.copy2(first_sample, sample_dir / first_sample.name)
@@ -861,7 +848,7 @@ def main() -> None:
 
     ap = argparse.ArgumentParser(description="8-K main-event parse-only extractor")
     ap.add_argument("--input-dir", type=str, default=None, help="Input dir (default: Test_Design/File/Flex/flex_8k_press_releases)")
-    ap.add_argument("--output-dir", type=str, default=None, help="Output dir (default: Test_Design/File/Extracted_<timestamp>)")
+    ap.add_argument("--output-dir", type=str, default=None, help="Output dir root (default: Test_Design/File/extracted)")
     args = ap.parse_args()
 
     input_dir = Path(args.input_dir) if args.input_dir else INPUT_DIR

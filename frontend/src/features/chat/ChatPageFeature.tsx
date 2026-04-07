@@ -18,25 +18,29 @@ import {
   Copy,
   RotateCcw,
   Building2,
-  Clock3,
   ArrowUpRight,
   ChevronDown,
   ChevronRight,
   Plus,
+  Settings,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { createCustomQuestion, deleteCustomQuestion, fetchCustomQuestions, requestChat } from './api';
+import { TableAnswer, type TablePayload } from './TableAnswer';
 
 type SearchMode = 'rag' | 'web' | 'hybrid';
 type CompanyFilter = 'Flex' | 'Jabil' | 'Celestica' | 'Benchmark' | 'Sanmina';
-type TimeHorizon = 'Any Time' | 'FY2026' | 'FY2025' | 'Last 12 Months';
 type AnswerProvider = 'openai' | 'claude' | 'none';
 
 interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
+  narrative_text?: string;
+  table_payload?: TablePayload;
   sources?: Source[];
   mode?: SearchMode;
   timestamp: Date;
@@ -213,7 +217,6 @@ const QUICK_QUESTIONS = [
 ];
 
 const COMPANY_FILTERS: CompanyFilter[] = ['Flex', 'Jabil', 'Celestica', 'Benchmark', 'Sanmina'];
-const TIME_HORIZONS: TimeHorizon[] = ['Any Time', 'FY2026', 'FY2025', 'Last 12 Months'];
 
 const modeConfig = {
   rag: {
@@ -245,7 +248,6 @@ export default function ChatPageFeature() {
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<SearchMode>('rag');
   const [selectedCompanies, setSelectedCompanies] = useState<CompanyFilter[]>([]);
-  const [timeHorizon, setTimeHorizon] = useState<TimeHorizon>('Any Time');
   const [answerProvider, setAnswerProvider] = useState<AnswerProvider>('none');
   const [enableFallback, setEnableFallback] = useState(false);
   const [strictGrounding, setStrictGrounding] = useState(true);
@@ -273,6 +275,8 @@ export default function ChatPageFeature() {
   const [newPresetLabel, setNewPresetLabel] = useState('');
   const [newPresetQuery, setNewPresetQuery] = useState('');
   const [sessionId] = useState(() => `session_${Date.now()}`);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const inputDockRef = useRef<HTMLDivElement>(null);
@@ -389,10 +393,6 @@ export default function ChatPageFeature() {
       constraints.push(`Focus on these companies only: ${selectedCompanies.join(', ')}.`);
     }
 
-    if (timeHorizon !== 'Any Time') {
-      constraints.push(`Prioritize ${timeHorizon}.`);
-    }
-
     return constraints.length > 0 ? `${query}\n\nConstraints: ${constraints.join(' ')}` : query;
   };
 
@@ -439,6 +439,8 @@ export default function ChatPageFeature() {
         id: `assistant_${Date.now()}`,
         role: 'assistant',
         content: data.response || data.answer || 'No response received.',
+        narrative_text: data.narrative_text ?? undefined,
+        table_payload: data.table_payload ?? undefined,
         sources: data.sources || [],
         mode,
         timestamp: new Date(),
@@ -481,102 +483,32 @@ export default function ChatPageFeature() {
   return (
     <div className="flex h-full flex-col bg-gradient-to-br from-slate-100 via-slate-50 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <div className="border-b border-slate-200/80 bg-white/90 px-6 py-2.5 backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/80">
-        <div className="mx-auto flex max-w-7xl flex-col gap-2.5">
-          <div className="flex flex-col gap-1.5 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-3xl">
-              <h1 className="text-2xl font-semibold tracking-tight text-slate-950 dark:text-slate-100">Research Chat</h1>
-            </div>
-            <div className="flex flex-wrap items-center gap-3">
-              <div
-                className={`inline-flex items-center gap-1 rounded-full border p-1 text-xs ${
-                  mode === 'hybrid'
-                    ? 'border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800'
-                    : 'border-slate-200/70 bg-slate-100/60 opacity-60 dark:border-slate-700/70 dark:bg-slate-800/50 dark:opacity-60'
+        <div className="mx-auto max-w-7xl">
+          {/* Single title row */}
+          <div className="flex items-center justify-between gap-3">
+            <h1 className="text-xl font-semibold tracking-tight text-slate-950 dark:text-slate-100">Research Chat</h1>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowSettings((prev) => !prev)}
+                title="Settings"
+                className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-xs font-medium transition-colors ${
+                  showSettings
+                    ? 'border-blue-300 bg-blue-50 text-blue-700 dark:border-blue-700 dark:bg-blue-950/40 dark:text-blue-300'
+                    : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-600'
                 }`}
               >
-                <button
-                  type="button"
-                  onClick={() => toggleAnswerProvider('openai')}
-                  disabled={mode !== 'hybrid'}
-                  className={`rounded-full px-2.5 py-1 transition ${
-                    answerProvider === 'openai'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
-                  } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
-                >
-                  OpenAI
-                </button>
-                <button
-                  type="button"
-                  onClick={() => toggleAnswerProvider('claude')}
-                  disabled={mode !== 'hybrid'}
-                  className={`rounded-full px-2.5 py-1 transition ${
-                    answerProvider === 'claude'
-                      ? 'bg-blue-600 text-white'
-                      : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
-                  } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
-                >
-                  Claude
-                </button>
-              </div>
-              <div
-                className={`inline-flex items-center gap-1 rounded-full border p-1 text-xs ${
-                  mode === 'hybrid'
-                    ? 'border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800'
-                    : 'border-slate-200/70 bg-slate-100/60 opacity-60 dark:border-slate-700/70 dark:bg-slate-800/50 dark:opacity-60'
-                }`}
-                title="Fallback, guardrails, and max words controls"
-              >
-                <button
-                  type="button"
-                  onClick={() => setEnableFallback((prev) => !prev)}
-                  disabled={mode !== 'hybrid'}
-                  className={`rounded-full px-2.5 py-1 transition ${
-                    enableFallback
-                      ? 'bg-blue-600 text-white'
-                      : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
-                  } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
-                >
-                  Fallback {enableFallback ? 'On' : 'Off'}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStrictGrounding((prev) => !prev)}
-                  disabled={mode !== 'hybrid'}
-                  className={`rounded-full px-2.5 py-1 transition ${
-                    strictGrounding
-                      ? 'bg-blue-600 text-white'
-                      : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
-                  } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
-                >
-                  Prompt Guardrails {strictGrounding ? 'On' : 'Off'}
-                </button>
-                <span className="mx-1 h-4 w-px bg-slate-300 dark:bg-slate-600" />
-                <span className="px-1.5 text-slate-600 dark:text-slate-300">Max Words</span>
-                <span
-                  className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
-                    isLengthCapActive
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-slate-200 text-slate-500 dark:bg-slate-700 dark:text-slate-300'
-                  }`}
-                >
-                  {isLengthCapActive ? 'On' : 'Off'}
-                </span>
-                <Input
-                  value={maxResponseWords}
-                  onChange={(e) => {
-                    const v = e.target.value.replace(/[^\d]/g, '').slice(0, 4);
-                    setMaxResponseWords(v);
-                  }}
-                  disabled={!isLengthCapActive}
-                  className="h-7 w-16 border-slate-300 bg-white px-2 py-1 text-xs dark:border-slate-600 dark:bg-slate-900"
-                  placeholder="200"
-                />
-              </div>
+                <Settings className="h-3.5 w-3.5" />
+                <span className="hidden sm:inline">Settings</span>
+                {/* Active indicators */}
+                {(mode !== 'rag' || !isAllCompanies) && (
+                  <span className="ml-0.5 h-1.5 w-1.5 rounded-full bg-blue-500" />
+                )}
+              </button>
               {messages.length > 0 && (
                 <Button variant="outline" size="sm" onClick={clearChat} className="border-slate-300 text-slate-600 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800">
-                  <Trash2 className="w-4 h-4" />
-                  Clear Chat
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Clear</span>
                 </Button>
               )}
               <Button
@@ -585,109 +517,192 @@ export default function ChatPageFeature() {
                 className="h-8 bg-blue-600 px-3 text-xs text-white hover:bg-blue-700"
               >
                 <ArrowUpRight className="h-3.5 w-3.5" />
-                Ask Question
+                <span className="hidden sm:inline">Ask</span>
               </Button>
             </div>
           </div>
 
-          <div className="grid gap-2 lg:grid-cols-[1.55fr_1fr_1fr]">
-            <Card className="gap-2 border-slate-200 bg-white/95 p-2.5 shadow-sm dark:border-slate-700 dark:bg-slate-900/90">
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
-                <Database className="h-4 w-4 text-blue-600" />
-                Retrieval Mode
-              </div>
-              <div className="grid gap-1.5 md:grid-cols-3">
-                {(Object.keys(modeConfig) as SearchMode[]).map((m) => {
-                  const config = modeConfig[m];
-                  const Icon = config.icon;
-
-                  return (
-                    <button
-                      key={m}
-                      title={config.desc}
-                      onClick={() => setMode(m)}
-                      className={`rounded-xl border px-2.5 py-1.5 text-left transition-all ${
-                        mode === m
-                          ? `${config.activeClass} dark:border-blue-800 dark:bg-slate-800 dark:text-slate-100`
-                          : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-800'
-                      }`}
-                    >
-                      <div className="flex items-center gap-2">
-                        <Icon className="h-4 w-4" />
-                        <span className="text-sm font-semibold leading-5">{config.label}</span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </Card>
-
-            <Card className="gap-2 border-slate-200 bg-white/95 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900/90">
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
-                <Building2 className="h-4 w-4 text-slate-600" />
-                Company Filter
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                <button
-                  onClick={() => toggleCompany('All')}
-                  className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                    isAllCompanies
-                      ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-300'
-                      : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-900'
+          {/* Collapsible settings panel */}
+          {showSettings && (
+            <div className="mt-2.5 flex flex-col gap-2">
+              {/* Model / fallback / guardrails row */}
+              <div className="flex flex-wrap items-center gap-3">
+                <div
+                  className={`inline-flex items-center gap-1 rounded-full border p-1 text-xs ${
+                    mode === 'hybrid'
+                      ? 'border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800'
+                      : 'border-slate-200/70 bg-slate-100/60 opacity-60 dark:border-slate-700/70 dark:bg-slate-800/50 dark:opacity-60'
                   }`}
                 >
-                  All
-                </button>
-                {COMPANY_FILTERS.map((company) => {
-                  const isSelected = selectedCompanies.includes(company);
-                  return (
                   <button
-                    key={company}
-                    onClick={() => toggleCompany(company)}
-                    className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                      isSelected
-                        ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-300'
-                        : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-900'
+                    type="button"
+                    onClick={() => toggleAnswerProvider('openai')}
+                    disabled={mode !== 'hybrid'}
+                    className={`rounded-full px-2.5 py-1 transition ${
+                      answerProvider === 'openai'
+                        ? 'bg-blue-600 text-white'
+                        : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
+                    } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
+                  >
+                    OpenAI
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => toggleAnswerProvider('claude')}
+                    disabled={mode !== 'hybrid'}
+                    className={`rounded-full px-2.5 py-1 transition ${
+                      answerProvider === 'claude'
+                        ? 'bg-blue-600 text-white'
+                        : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
+                    } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
+                  >
+                    Claude
+                  </button>
+                </div>
+                <div
+                  className={`inline-flex items-center gap-1 rounded-full border p-1 text-xs ${
+                    mode === 'hybrid'
+                      ? 'border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800'
+                      : 'border-slate-200/70 bg-slate-100/60 opacity-60 dark:border-slate-700/70 dark:bg-slate-800/50 dark:opacity-60'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setEnableFallback((prev) => !prev)}
+                    disabled={mode !== 'hybrid'}
+                    className={`rounded-full px-2.5 py-1 transition ${
+                      enableFallback
+                        ? 'bg-blue-600 text-white'
+                        : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
+                    } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
+                  >
+                    Fallback {enableFallback ? 'On' : 'Off'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStrictGrounding((prev) => !prev)}
+                    disabled={mode !== 'hybrid'}
+                    className={`rounded-full px-2.5 py-1 transition ${
+                      strictGrounding
+                        ? 'bg-blue-600 text-white'
+                        : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
+                    } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
+                  >
+                    Guardrails {strictGrounding ? 'On' : 'Off'}
+                  </button>
+                  <span className="mx-1 h-4 w-px bg-slate-300 dark:bg-slate-600" />
+                  <span className="px-1.5 text-slate-600 dark:text-slate-300">Max Words</span>
+                  <span
+                    className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
+                      isLengthCapActive
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-slate-200 text-slate-500 dark:bg-slate-700 dark:text-slate-300'
                     }`}
                   >
-                    {company}
-                  </button>
-                  );
-                })}
+                    {isLengthCapActive ? 'On' : 'Off'}
+                  </span>
+                  <Input
+                    value={maxResponseWords}
+                    onChange={(e) => {
+                      const v = e.target.value.replace(/[^\d]/g, '').slice(0, 4);
+                      setMaxResponseWords(v);
+                    }}
+                    disabled={!isLengthCapActive}
+                    className="h-7 w-16 border-slate-300 bg-white px-2 py-1 text-xs dark:border-slate-600 dark:bg-slate-900"
+                    placeholder="200"
+                  />
+                </div>
               </div>
-            </Card>
 
-            <Card className="gap-2 border-slate-200 bg-white/95 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900/90">
-              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
-                <Clock3 className="h-4 w-4 text-slate-600" />
-                Time Focus
+              {/* Retrieval Mode + Company Filter */}
+              <div className="grid gap-2 lg:grid-cols-[1.55fr_1fr]">
+                <Card className="gap-2 border-slate-200 bg-white/95 p-2.5 shadow-sm dark:border-slate-700 dark:bg-slate-900/90">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                    <Database className="h-4 w-4 text-blue-600" />
+                    Retrieval Mode
+                  </div>
+                  <div className="grid gap-1.5 md:grid-cols-3">
+                    {(Object.keys(modeConfig) as SearchMode[]).map((m) => {
+                      const config = modeConfig[m];
+                      const Icon = config.icon;
+                      return (
+                        <button
+                          key={m}
+                          title={config.desc}
+                          onClick={() => setMode(m)}
+                          className={`rounded-xl border px-2.5 py-1.5 text-left transition-all ${
+                            mode === m
+                              ? `${config.activeClass} dark:border-blue-800 dark:bg-slate-800 dark:text-slate-100`
+                              : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-800'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <Icon className="h-4 w-4" />
+                            <span className="text-sm font-semibold leading-5">{config.label}</span>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </Card>
+
+                <Card className="gap-2 border-slate-200 bg-white/95 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900/90">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                    <Building2 className="h-4 w-4 text-slate-600" />
+                    Company Filter
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    <button
+                      onClick={() => toggleCompany('All')}
+                      className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                        isAllCompanies
+                          ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-300'
+                          : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-900'
+                      }`}
+                    >
+                      All
+                    </button>
+                    {COMPANY_FILTERS.map((company) => {
+                      const isSelected = selectedCompanies.includes(company);
+                      return (
+                        <button
+                          key={company}
+                          onClick={() => toggleCompany(company)}
+                          className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                            isSelected
+                              ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-300'
+                              : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-900'
+                          }`}
+                        >
+                          {company}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </Card>
               </div>
-              <div className="flex flex-wrap gap-1.5">
-                {TIME_HORIZONS.map((range) => (
-                  <button
-                    key={range}
-                    onClick={() => setTimeHorizon(range)}
-                    className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
-                      timeHorizon === range
-                        ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-300'
-                        : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-900'
-                    }`}
-                  >
-                    {range}
-                  </button>
-                ))}
-              </div>
-            </Card>
-          </div>
+            </div>
+          )}
         </div>
       </div>
 
-      <div className="mx-auto w-full max-w-7xl px-6 py-3">
-        <div className="grid min-h-0 gap-4 xl:h-[calc(100vh-148px)] xl:grid-cols-[350px_minmax(0,1fr)]">
-          <Card className="hidden min-h-0 h-[calc(100vh-148px)] overflow-hidden border-slate-200 bg-white/95 p-0 shadow-sm xl:flex xl:flex-col dark:border-slate-700 dark:bg-slate-900/90">
-            <div className="border-b border-slate-200 px-4 py-3 dark:border-slate-700">
-              <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Preset Question Library</h2>
-              <p className="mt-1 text-xs leading-4 text-slate-500 dark:text-slate-400">Level 1, 2, and 3 prompts. Click any question to send directly.</p>
+      <div className="flex-1 min-h-0 overflow-hidden px-6 py-3">
+        <div className={`mx-auto h-full grid min-h-0 gap-4 ${sidebarOpen ? 'xl:grid-cols-[350px_minmax(0,1fr)]' : 'xl:grid-cols-[minmax(0,1fr)]'}`}>
+          {/* Preset Question Library - collapsible */}
+          {sidebarOpen && (
+          <Card className="hidden min-h-0 h-full overflow-hidden border-slate-200 bg-white/95 p-0 shadow-sm xl:flex xl:flex-col dark:border-slate-700 dark:bg-slate-900/90">
+            <div className="border-b border-slate-200 px-4 py-3 dark:border-slate-700 flex items-center justify-between">
+              <div>
+                <h2 className="text-sm font-semibold text-slate-900 dark:text-slate-100">Preset Question Library</h2>
+                <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">Click any question to send directly.</p>
+              </div>
+              <button
+                onClick={() => setSidebarOpen(false)}
+                title="Collapse library"
+                className="flex items-center justify-center rounded-md p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+              >
+                <PanelLeftClose className="h-4 w-4" />
+              </button>
             </div>
             <div className="min-h-0 flex-1 overflow-y-auto px-2 py-2">
               <div className="space-y-2">
@@ -878,8 +893,21 @@ export default function ChatPageFeature() {
               </div>
             </div>
           </Card>
+          )}
 
           <Card className="min-h-0 h-full overflow-hidden border-slate-200 bg-white/95 p-0 shadow-sm flex flex-col dark:border-slate-700 dark:bg-slate-900/90">
+            {/* Re-open sidebar button (xl only, when sidebar is hidden) */}
+            {!sidebarOpen && (
+              <div className="hidden xl:flex border-b border-slate-200 px-4 py-2 dark:border-slate-700">
+                <button
+                  onClick={() => setSidebarOpen(true)}
+                  className="flex items-center gap-1.5 text-xs text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+                >
+                  <PanelLeftOpen className="h-3.5 w-3.5" />
+                  Show Question Library
+                </button>
+              </div>
+            )}
             <ScrollArea className="min-h-0 flex-1 px-6 py-4">
               {messages.length === 0 ? (
                 <div className="flex min-h-[520px] flex-col items-center justify-center text-center">
@@ -894,9 +922,6 @@ export default function ChatPageFeature() {
                     </Badge>
                     <Badge variant="outline" className="border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
                       Company: {companyScopeLabel}
-                    </Badge>
-                    <Badge variant="outline" className="border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                      Time: {timeHorizon}
                     </Badge>
                   </div>
 
@@ -941,9 +966,16 @@ export default function ChatPageFeature() {
                           }`}
                         >
                           {msg.role === 'assistant' ? (
-                            <div className="prose prose-sm max-w-none prose-slate dark:prose-invert">
-                              <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
-                            </div>
+                            msg.table_payload ? (
+                              <TableAnswer
+                                narrativeText={msg.narrative_text}
+                                tablePayload={msg.table_payload}
+                              />
+                            ) : (
+                              <div className="prose prose-sm max-w-none prose-slate dark:prose-invert">
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                              </div>
+                            )
                           ) : (
                             <p className="text-sm leading-6">{msg.content}</p>
                           )}
@@ -1067,7 +1099,7 @@ export default function ChatPageFeature() {
                   {mode === 'rag' ? '19K+ document chunks' : mode === 'web' ? 'Brave Search' : 'Documents + Web'})
                 </p>
                 <p>
-                  Scope: {companyScopeLabel} · {timeHorizon}
+                  Scope: {companyScopeLabel}
                 </p>
               </div>
             </div>

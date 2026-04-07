@@ -1,0 +1,749 @@
+{
+  "run_stamp": "2026-04-06_19-18-10",
+  "generated_at": "2026-04-06T19:18:10.699856",
+  "total_files": 7,
+  "pass": 6,
+  "partial": 1,
+  "fail": 0,
+  "results": [
+    {
+      "file": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/02.-Flex_EP_FY22Q4.pdf.parsed.json",
+      "file_name": "02.-Flex_EP_FY22Q4.pdf.parsed.json",
+      "doc_type_raw": "earnings_presentation",
+      "doc_type": "ep",
+      "verdict": "PASS",
+      "total_score": 85.7,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "issues": [],
+          "has_sections": false,
+          "has_blocks": false,
+          "has_top_chunks": true
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 20,
+          "contribution": 20.0,
+          "note": "该文档类型无预设的必需 Item。"
+        },
+        "content_volume": {
+          "score": 0.7405,
+          "weight": 15,
+          "contribution": 11.11,
+          "total_words": 1481,
+          "min_expected": 2000,
+          "max_expected": 50000,
+          "issues": [
+            "总词数 1,481 低于最低阈值 2,000 — 可能提取失败或内容为空"
+          ]
+        },
+        "hf_contamination": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "contaminated_lines": 0,
+          "total_lines": 254,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "toc_lines": 0,
+          "total_lines": 254,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 0.2083,
+          "weight": 10,
+          "contribution": 2.08,
+          "truncated_chunks": 7,
+          "total_chunks": 15,
+          "ratio": 0.4667,
+          "note": "因 chunk overlap，部分截断属于预期行为。",
+          "examples": [
+            "'...h\\nSolutions\\nIndustrial\\nCEC\\nLifestyle\\nConsumer\\nDevicesKey markets\\ndriving outsized\\ngrowthInvesting in high-growth markets'",
+            "'...pipeline remains healthy\\n•Headwinds with US module supply (anti-dumping investigation) and component shortagesNEXTRACKER'",
+            "'...rentiated capabilities\\nprovide significant value for our customersFlex’s competitive advantages\\nbolster our right to win'",
+            "'...j. SG&A\\n% of Revenue\\n$1,760$1,9577.3%7.5%\\nF21 F22Adj. Gross Profit\\nSee Appendix for GAAP to Non -GAAP reconciliation. 16'",
+            "'...estor Relations section of our website which includes press releases and summary financials of\\nthe respective periods.17'",
+            "'...estor Relations section of our website which includes press releases and summary financials of\\nthe respective periods.18'"
+          ]
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "high_overlap_pairs": 0,
+          "med_overlap_pairs": 4,
+          "total_pairs": 14,
+          "high_ratio": 0.0,
+          "examples": []
+        },
+        "header_hierarchy": {
+          "score": 0.5,
+          "weight": 5,
+          "contribution": 2.5,
+          "note": "未找到 sections 数组。"
+        },
+        "table_extraction": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "note": "该文档类型不要求表格提取。"
+        }
+      }
+    },
+    {
+      "file": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/2025_Flex_10K.parsed.json",
+      "file_name": "2025_Flex_10K.parsed.json",
+      "doc_type_raw": "10-K",
+      "doc_type": "10k",
+      "verdict": "PASS",
+      "total_score": 93.9,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": false,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 20,
+          "contribution": 20.0,
+          "expected": [
+            "1",
+            "1A",
+            "7",
+            "8"
+          ],
+          "found": [
+            "1",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "1A",
+            "1B",
+            "1C",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "7A",
+            "8",
+            "9",
+            "9A",
+            "9B",
+            "9C"
+          ],
+          "missing": []
+        },
+        "content_volume": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "total_words": 60971,
+          "min_expected": 30000,
+          "max_expected": 300000,
+          "issues": []
+        },
+        "hf_contamination": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "contaminated_lines": 0,
+          "total_lines": 96,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "toc_lines": 0,
+          "total_lines": 96,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "truncated_chunks": 14,
+          "total_chunks": 96,
+          "ratio": 0.1458,
+          "note": "因 chunk overlap，部分截断属于预期行为。",
+          "examples": [
+            "'...quare feet in facilities that we own with the remaining 25.8 million square feet in leased facilities. Table of Contents'",
+            "'...were available to be repurchased under the current plan. RECENT SALES OF UNREGISTERED SECURITIES None. Table of Contents'",
+            "'...ue, it could result in material impairments of our goodwill. Refer to note 2 to the consolidated financial statements in'",
+            "'...tements in Item 8, \"Financial Statements and Supplementary Data\" for recent accounting pronouncements. Table of Contents'",
+            "'...ve a material effect on our financial position, results of operations and cash flows in the near-term. Table of Contents'",
+            "'...e quarterly earnings per share may not equal the total earnings per share amounts for the fiscal year. Table of Contents'"
+          ]
+        },
+        "duplication": {
+          "score": 0.7368,
+          "weight": 10,
+          "contribution": 7.37,
+          "high_overlap_pairs": 5,
+          "med_overlap_pairs": 64,
+          "total_pairs": 95,
+          "high_ratio": 0.0526,
+          "examples": [
+            {
+              "chunk_indices": [
+                83,
+                84
+              ],
+              "jaccard": 0.508,
+              "preview_a": "(a) Evaluation of Disclosure Controls and Procedures The Company's management, with the participatio",
+              "preview_b": "over financial reporting that occurred during the fourth quarter ended March 31, 2025 that materiall"
+            },
+            {
+              "chunk_indices": [
+                87,
+                88
+              ],
+              "jaccard": 1.0,
+              "preview_a": "Information with respect to this item may be found in the Company's definitive proxy statement to be",
+              "preview_b": "Information with respect to this item may be found in the Company's definitive proxy statement to be"
+            },
+            {
+              "chunk_indices": [
+                88,
+                89
+              ],
+              "jaccard": 0.893,
+              "preview_a": "Information with respect to this item may be found in the Company's definitive proxy statement to be",
+              "preview_b": "RELATED SHAREHOLDER MATTERS Information with respect to this item may be found in the Company's defi"
+            },
+            {
+              "chunk_indices": [
+                89,
+                90
+              ],
+              "jaccard": 0.862,
+              "preview_a": "RELATED SHAREHOLDER MATTERS Information with respect to this item may be found in the Company's defi",
+              "preview_b": "INDEPENDENCE Information with respect to this item may be found in the Company's definitive proxy st"
+            }
+          ]
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "sections_with_headers": 29,
+          "total_sections": 29,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 0.3,
+          "weight": 5,
+          "contribution": 1.5,
+          "total_tables": 0,
+          "quality_warnings": [
+            "parser:pypdf",
+            "pypdf_not_installed",
+            "parser:pdfplumber",
+            "no_structured_tables_extracted"
+          ],
+          "issues": [
+            "未提取到结构化表格 — 财务报表可能缺乏表格结构",
+            "quality.warnings 含 'no_structured_tables_extracted'"
+          ]
+        }
+      }
+    },
+    {
+      "file": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/2025_Q2_Flex_10Q.parsed.json",
+      "file_name": "2025_Q2_Flex_10Q.parsed.json",
+      "doc_type_raw": "10-Q",
+      "doc_type": "10q",
+      "verdict": "PARTIAL",
+      "total_score": 76.5,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": false,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 0.0,
+          "weight": 20,
+          "contribution": 0.0,
+          "expected": [
+            "1",
+            "1A",
+            "2"
+          ],
+          "found": [],
+          "missing": [
+            "1",
+            "1A",
+            "2"
+          ]
+        },
+        "content_volume": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "total_words": 23805,
+          "min_expected": 8000,
+          "max_expected": 100000,
+          "issues": []
+        },
+        "hf_contamination": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "contaminated_lines": 0,
+          "total_lines": 25,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "toc_lines": 0,
+          "total_lines": 25,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "truncated_chunks": 1,
+          "total_chunks": 25,
+          "ratio": 0.04,
+          "note": "因 chunk overlap，部分截断属于预期行为。",
+          "examples": [
+            "'... Officer (Principal Executive Officer) /s/ KEVIN KRUMM Kevin Krumm Chief Financial Officer (Principal Financial Officer)'"
+          ]
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "high_overlap_pairs": 0,
+          "med_overlap_pairs": 4,
+          "total_pairs": 24,
+          "high_ratio": 0.0,
+          "examples": []
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "sections_with_headers": 1,
+          "total_sections": 1,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 0.3,
+          "weight": 5,
+          "contribution": 1.5,
+          "total_tables": 0,
+          "quality_warnings": [
+            "parser:docling",
+            "missing_expected_items:1,2,3,4",
+            "no_structured_tables_extracted"
+          ],
+          "issues": [
+            "未提取到结构化表格 — 财务报表可能缺乏表格结构",
+            "quality.warnings 含 'no_structured_tables_extracted'"
+          ]
+        }
+      }
+    },
+    {
+      "file": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/FLEX_PR_26Q1.pdf.parsed.json",
+      "file_name": "FLEX_PR_26Q1.pdf.parsed.json",
+      "doc_type_raw": "press_release_only",
+      "doc_type": "press_release",
+      "verdict": "PASS",
+      "total_score": 95.0,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": true,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 20,
+          "contribution": 20.0,
+          "note": "该文档类型无预设的必需 Item。"
+        },
+        "content_volume": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "total_words": 3451,
+          "min_expected": 100,
+          "max_expected": 15000,
+          "issues": []
+        },
+        "hf_contamination": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "contaminated_lines": 0,
+          "total_lines": 175,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "toc_lines": 0,
+          "total_lines": 175,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 0.4966,
+          "weight": 10,
+          "contribution": 4.97,
+          "truncated_chunks": 13,
+          "total_chunks": 37,
+          "ratio": 0.3514,
+          "note": "因 chunk overlap，部分截断属于预期行为。",
+          "examples": [
+            "'...ck-based compensation expense, $0.15 for net intangible amortization and $0.09 for net restructuring &amp; other charges'",
+            "'...s Yvette Lorenz Director, Executive Communications and Corporate PR (415) 225-7315 Yvette.Lorenz@flex.com\\n<!-- image -->'",
+            "'FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS'",
+            "'...P financial measures. See the accompanying notes on Schedule V attached to this press release.\\nSCHEDULE I\\n<!-- image -->'",
+            "'FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (In millions, except per share amounts)'",
+            "'... | $ 0.72 | $ 0.51 |\\nSee the accompanying notes on Schedule V attached to this press release.\\nSCHEDULE II\\n<!-- image -->'"
+          ]
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "high_overlap_pairs": 0,
+          "med_overlap_pairs": 0,
+          "total_pairs": 36,
+          "high_ratio": 0.0,
+          "examples": []
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "sections_with_headers": 17,
+          "total_sections": 17,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "note": "该文档类型不要求表格提取。"
+        }
+      }
+    },
+    {
+      "file": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/Flex_8-K_2022-01-26.html.parsed.json",
+      "file_name": "Flex_8-K_2022-01-26.html.parsed.json",
+      "doc_type_raw": "8k_only",
+      "doc_type": "8k",
+      "verdict": "PASS",
+      "total_score": 81.6,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": true,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 20,
+          "contribution": 20.0,
+          "note": "该文档类型无预设的必需 Item。"
+        },
+        "content_volume": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "total_words": 511,
+          "min_expected": 100,
+          "max_expected": 50000,
+          "issues": []
+        },
+        "hf_contamination": {
+          "score": 0.0,
+          "weight": 15,
+          "contribution": 0.0,
+          "contaminated_lines": 2,
+          "total_lines": 20,
+          "ratio": 0.1,
+          "examples": [
+            "'104'",
+            "'FLEX LTD.'"
+          ]
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "toc_lines": 0,
+          "total_lines": 20,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 0.6607,
+          "weight": 10,
+          "contribution": 6.61,
+          "truncated_chunks": 2,
+          "total_chunks": 7,
+          "ratio": 0.2857,
+          "note": "因 chunk overlap，部分截断属于预期行为。",
+          "examples": [
+            "'...ess release, dated January 26, 2022, issued by Flex Ltd.\\n104\\nCover Page Interactive Data File (formatted as Inline XBRL)'",
+            "'...rized.\\nFLEX LTD.\\nDate: January 26, 2022\\nBy:\\n/s/ Paul R. Lundstrom\\nName:\\nPaul R. Lundstrom\\nTitle:\\nChief Financial Officer'"
+          ]
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "high_overlap_pairs": 0,
+          "med_overlap_pairs": 0,
+          "total_pairs": 6,
+          "high_ratio": 0.0,
+          "examples": []
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "sections_with_headers": 3,
+          "total_sections": 3,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "note": "该文档类型不要求表格提取。"
+        }
+      }
+    },
+    {
+      "file": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/flex_2024_10_17_crown_acquisition.md.parsed.json",
+      "file_name": "flex_2024_10_17_crown_acquisition.md.parsed.json",
+      "doc_type_raw": "news_release_only",
+      "doc_type": "news_release",
+      "verdict": "PASS",
+      "total_score": 92.6,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": true,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 20,
+          "contribution": 20.0,
+          "note": "该文档类型无预设的必需 Item。"
+        },
+        "content_volume": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "total_words": 1641,
+          "min_expected": 100,
+          "max_expected": 15000,
+          "issues": []
+        },
+        "hf_contamination": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "contaminated_lines": 0,
+          "total_lines": 275,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "toc_lines": 0,
+          "total_lines": 275,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 0.258,
+          "weight": 10,
+          "contribution": 2.58,
+          "truncated_chunks": 21,
+          "total_chunks": 47,
+          "ratio": 0.4468,
+          "note": "因 chunk overlap，部分截断属于预期行为。",
+          "examples": [
+            "'...\\n**CapEx Related:** Yes ($325M acquisition investment)\\n**AI Related:** Yes (data center power infrastructure for AI)\\n---'",
+            "'...le challenges in the data center space. The transaction is expected to be accretive in the first year after closure.\\n---'",
+            "'...Approximately $120 million\\n- **EBITDA Margin:** High-teens (17-19%)\\n- **Strong profitability and growth trajectory**\\n---'",
+            "'...cation)\\n- Canada\\n**Customer Base:**\\n- Utilities\\n- Data centers\\n- Power generation\\n- Long-standing customer relationships'",
+            "'... distribution and protection\\n- Data center critical power infrastructure\\n- Power generation and distribution systems\\n---'",
+            "'...he Flex team and accelerate growth through Flex\\'s global reach and strong presence in markets such as data centers.\"\\n---'"
+          ]
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "high_overlap_pairs": 0,
+          "med_overlap_pairs": 1,
+          "total_pairs": 46,
+          "high_ratio": 0.0,
+          "examples": []
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "sections_with_headers": 27,
+          "total_sections": 27,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "note": "该文档类型不要求表格提取。"
+        }
+      }
+    },
+    {
+      "file": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/extracted/_test_samples_2026-04-06_18-09-12/flex_fy24q3_transcript.pdf.parsed.json",
+      "file_name": "flex_fy24q3_transcript.pdf.parsed.json",
+      "doc_type_raw": "flex_transcript_only",
+      "doc_type": "transcript",
+      "verdict": "PASS",
+      "total_score": 85.0,
+      "checks": {
+        "structure": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "issues": [],
+          "has_sections": true,
+          "has_blocks": true,
+          "has_top_chunks": false
+        },
+        "key_items": {
+          "score": 1.0,
+          "weight": 20,
+          "contribution": 20.0,
+          "note": "该文档类型无预设的必需 Item。"
+        },
+        "content_volume": {
+          "score": 0.0005,
+          "weight": 15,
+          "contribution": 0.01,
+          "total_words": 1,
+          "min_expected": 2000,
+          "max_expected": 100000,
+          "issues": [
+            "总词数 1 低于最低阈值 2,000 — 可能提取失败或内容为空"
+          ]
+        },
+        "hf_contamination": {
+          "score": 1.0,
+          "weight": 15,
+          "contribution": 15.0,
+          "contaminated_lines": 0,
+          "total_lines": 1,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "toc_contamination": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "toc_lines": 0,
+          "total_lines": 1,
+          "ratio": 0.0,
+          "examples": []
+        },
+        "truncation": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "truncated_chunks": 0,
+          "total_chunks": 1,
+          "ratio": 0.0,
+          "note": "因 chunk overlap，部分截断属于预期行为。",
+          "examples": []
+        },
+        "duplication": {
+          "score": 1.0,
+          "weight": 10,
+          "contribution": 10.0,
+          "note": "文本单元不足 2 个，无法检查重复。"
+        },
+        "header_hierarchy": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "sections_with_headers": 1,
+          "total_sections": 1,
+          "ratio": 1.0,
+          "issues": []
+        },
+        "table_extraction": {
+          "score": 1.0,
+          "weight": 5,
+          "contribution": 5.0,
+          "note": "该文档类型不要求表格提取。"
+        }
+      }
+    }
+  ]
+}

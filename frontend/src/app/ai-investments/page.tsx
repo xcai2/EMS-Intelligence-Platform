@@ -164,10 +164,10 @@ export default function AIInvestmentsPage() {
               <div className="bg-gradient-to-br from-orange-500 to-red-600 p-1.5 rounded-xl">
                 <DollarSign className="h-5 w-5 text-white" />
               </div>
-              Big Five CapEx Intelligence
+              Hyperscaler CapEx
             </h1>
             <p className="text-slate-500 mt-0.5 text-sm">
-              AWS, Alphabet, Microsoft, Meta, Oracle - FY2026 Capital Expenditure Outlook
+              FY2026 AI Infrastructure Spending
             </p>
           </div>
           <div className="flex items-center gap-3">
@@ -190,7 +190,7 @@ export default function AIInvestmentsPage() {
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2">
             <Building2 className="h-5 w-5 text-blue-500" />
-            Company Investment Subdomains & Stargate Project
+            AI Investment Details
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
@@ -234,7 +234,7 @@ export default function AIInvestmentsPage() {
                     >
                       {selectedCompany.name.charAt(0)}
                     </div>
-                    {selectedCompany.name} - AI Investment Details
+                    {selectedCompany.name}
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
@@ -291,7 +291,7 @@ export default function AIInvestmentsPage() {
             <div className="rounded-xl border border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 p-4 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800">
               <h3 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
                 <Globe className="h-5 w-5 text-blue-500 dark:text-blue-400" />
-                Stargate Project - $500B AI Infrastructure Initiative
+                Stargate Project
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-3">
                 <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
@@ -335,7 +335,7 @@ export default function AIInvestmentsPage() {
               </div>
               <div className="mt-4 border-t border-slate-200 pt-4 dark:border-white/10">
                 <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Source: Futurum Research - AI Capex 2026 Report
+                  Source: Futurum Research
                   <a
                     href="https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/"
                     target="_blank"
@@ -426,7 +426,7 @@ export default function AIInvestmentsPage() {
               </BarChart>
             </ResponsiveContainer>
             <ChartDescription
-              description="Year-over-year capital expenditure comparison for Big 5 tech companies focused on AI infrastructure. 2026 projections show near-doubling of investment levels."
+              description="2025 vs 2026 CapEx by company. 2026 projections reflect near-doubling of AI infrastructure investment."
               source={data.source}
               lastUpdated={data.last_updated}
             />
@@ -464,7 +464,7 @@ export default function AIInvestmentsPage() {
               </PieChart>
             </ResponsiveContainer>
             <ChartDescription
-              description="Market share of planned AI infrastructure spending among Big 5 companies. Amazon leads with ~30% of total planned investment."
+              description="Share of 2026 AI infrastructure spending by company."
               source="Company Earnings Reports"
             />
           </CardContent>

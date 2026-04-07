@@ -1,0 +1,387 @@
+{
+  "source": {
+    "doc_type": "10-Q",
+    "file_name": "Flex_10-Q_2024-02-02.html",
+    "suffix": ".html",
+    "relative_path": "Flex_10-Q_2024-02-02.html",
+    "absolute_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/quarterly_10Q/Flex_10-Q_2024-02-02.html",
+    "size_bytes": 1561018,
+    "parsed_at": "2026-04-06T17:37:15.728623"
+  },
+  "document": {
+    "form_type": "10-Q",
+    "registrant_name": "FLEX LTD.",
+    "period_of_report": "2024-02-02",
+    "fiscal_quarter": "Q3",
+    "fiscal_year_label": "FY24",
+    "commission_file_number": ""
+  },
+  "sections": [
+    {
+      "section_id": "s001",
+      "item_code": "1",
+      "item_label": "Item 1",
+      "header": "Item 1  LEGAL PROCEEDINGS",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 204,
+      "word_count": 29,
+      "chunks": [
+        {
+          "chunk_id": "s001-c001",
+          "type": "prose",
+          "text": "For a description of our material legal proceedings, see note 12 “Commitments and Contingencies” in the notes to the condensed consolidated financial statements, which is incorporated herein by reference.",
+          "char_count": 204,
+          "word_count": 29,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s001",
+          "item_code": "1",
+          "item_label": "Item 1",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 1  LEGAL PROCEEDINGS"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s002",
+      "item_code": "1A",
+      "item_label": "Item 1A",
+      "header": "Item 1A  RISK FACTORS",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 11612,
+      "word_count": 1862,
+      "chunks": [
+        {
+          "chunk_id": "s002-c001",
+          "type": "prose",
+          "text": "In addition to the other information set forth in this report, you should carefully consider the risks and uncertainties discussed in Part I, “Item 1A. Risk Factors” in our Annual Report on Form 10-K for the fiscal year ended March 31, 2023 and in subsequent quarterly reports on Form 10-Q, which could materially affect our business, financial condition or future results. The risks described in our Annual Report on Form 10-K and the additional risk factors set forth below are not the only risks facing our Company. Additional risks and uncertainties not currently known to us or that we currently deem to be not material also may materially and adversely affect our business, financial condition and/or operating results. We are including the following additional risk factors, which supplement the risk factors disclosed in our Annual Report on Form 10-K for the year ended March 31, 2023, and which should be read in conjunction with our description of risk factors in Part I, Item 1A, “Risk Factors” of our Annual Report on Form 10-K for the year ended March 31, 2023: If the Distribution, or any distribution in the series of internal distributions of the shares of Yuma Common Stock from Flextronics International USA, Inc. (“FIUI”) to us through a chain of our wholly-owned subsidiaries (together with the Distribution, the “Distributions”), fail to qualify as tax-free under Sections 355 of the Internal Revenue Code of 1986, as amended (the “Code”) or otherwise or the Mergers fail to qualify as a tax-free reorganization under Section 368(a) of the Code, we, our subsidiaries and shareholders could incur significant tax liabilities. Pursuant to that certain Merger Agreement by and among us, Nextracker, Yuma, Inc. (“Yuma”) and Yuma Acquisition Corp. (“Merger Sub”) dated as of February 7, 2023 (the “Merger Agreement”), on January 2, 2024, we effectuated a distribution of the remaining interests that we owned in Nextracker to all our shareholders through the following transactions (together, the “Transactions”): (i) a court-approved capital reduction carried out pursuant to Section 78G of the Singapore Companies Act (the “Capital Reduction”), (ii) a distribution of all the shares of the common stock, par value $0.001, of Yuma (the “Yuma Common Stock”) by way of a distribution in specie to our shareholders (the “Distribution”), (iii) the merger of Yuma Merger Sub with and into Yuma, with Yuma surviving the merger as a wholly-owned subsidiary of Nextracker (the “Merger”) and pursuant to which each share of Yuma Common Stock outstanding immediately prior to the Merger were automatically converted into the right to receive a number of shares of Class A common stock of Nextracker (the “Class A common stock”) based on the Exchange Ratio (as defined in the Merger Agreement) (with cash payments to holders of shares of Yuma Common Stock in lieu of any fractional shares of Class A common stock in accordance with the terms of the Merger Agreement), and (iv) the merger of Yuma with and into a wholly-owned limited liability company subsidiary of Nextracker, with such limited liability company surviving the merger as a wholly-owned subsidiary of Nextracker, which was undertaken on January 2, 2024 shortly following the completion of the Merger (together with the Merger, the “Mergers”). We have received a private letter ruling from the Internal Revenue Service (the “IRS”) regarding certain matters germane to the Distributions qualifying as tax-free under Section 355 of the Code. In addition to the private letter ruling, we have received an opinion from Deloitte Tax LLP to the effect that the Distributions will qualify as tax-free under Section 355 of the Code and the Mergers will qualify as a tax-free reorganization under Section 368(a) of the Code. The receipt by us of the opinion from Deloitte Tax LLP was a condition to effecting the Transactions. Although the private letter ruling generally is binding on the IRS, it is based on certain facts and assumptions, and certain representations and undertakings, from us and Nextracker establishing that certain conditions that are necessary to obtain tax-free treatment under the Code have been satisfied. Furthermore, the IRS will not rule on whether a distribution satisfies every requirement for tax-free treatment, which requirements are instead addressed by the Deloitte Tax LLP opinion. The opinion that we have received from Deloitte Tax LLP concludes that all of the requirements necessary for the Distributions to qualify under Section 355 the Code have been satisfied and was based on, among other things, the private letter ruling as to the matters addressed by the private letter ruling, certain facts and assumptions, and certain representations and undertakings, from us and Nextracker. If any of the facts, representations, assumptions or undertakings with respect to the private letter ruling or the opinion is not correct or has been violated, the private letter ruling could be revoked retroactively or modified by the IRS, and our ability to rely on the opinion could be jeopardized.",
+          "char_count": 5089,
+          "word_count": 813,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s002",
+          "item_code": "1A",
+          "item_label": "Item 1A",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 1A  RISK FACTORS"
+        },
+        {
+          "chunk_id": "s002-c002",
+          "type": "prose",
+          "text": "The opinion represents Deloitte Tax LLP’s judgment and is not binding on the IRS or the courts, and the IRS or the courts may not agree with the conclusions reached in the opinion, so there can be no certainty that the IRS will not challenge the conclusions reflected in the opinion or that a court will not sustain such a challenge. In addition, the opinion was based on then-current law, and cannot be relied on if such law changes with retroactive effect. If one or more of the Distributions ultimately fails to qualify as tax-free under Section 355 of the Code, we or one or more of our subsidiaries would recognize gain in an amount equal to the excess of the fair market value of the Yuma Common Stock distributed on the date of the applicable taxable distribution over the tax basis in such shares of the party making the applicable distribution, which could result in significant tax liabilities for us and our subsidiaries. Additionally, we and our subsidiaries may be responsible for withholding taxes on the taxable distribution of Yuma Comma Stock, which could result in significant tax liabilities for us and our subsidiaries apart from taxable gain described immediately above. In addition, if one or more of the Distributions fails to qualify for tax-free treatment under U.S. state or local or non-U.S. law, we and our subsidiaries could incur other significant tax liabilities (including withholding taxes) under U.S. state or local or non-U.S. law. Finally, if the Distribution does not qualify as tax-free under Section 355 of the Code, each U.S. holder of Ordinary Shares would generally be treated as receiving a taxable distribution equal to the fair market value of the Yuma Common Stock received by such U.S. holder in the Distribution. If the Mergers ultimately fail to qualify as a tax-free reorganization under Section 368(a) of the Code, each U.S. holder of Ordinary Shares that receives Yuma Common Stock in the Distributions would generally be treated as having made a taxable disposition of their Yuma Common Stock to Nextracker and would recognize taxable gain or loss on their receipt of Class A common stock in the Mergers. Even if the Distributions qualify as tax-free under Section 355 of the Code, the Distributions would nonetheless be taxable to us and our subsidiaries (but not to U.S. holders of Ordinary Shares) under Section 355(e) of the Code if one or more persons acquire a 50% or greater interest (measured by vote or value) in our stock or that of Yuma’s (or a successor of either, including Nextracker after the Mergers), directly or indirectly, occurring as part of a plan or series of related transactions that includes the Distributions. For purposes of Section 355(e) of the Code, any acquisitions or issuances of our stock or the stock of Yuma (including Nextracker stock after the Mergers), directly or indirectly, within the period beginning two years before the first of the Distributions and ending two years after the last of the Distributions are generally presumed to be part of such a plan, although we or Nextracker may, depending on the facts and circumstances, be able to rebut that presumption. For purposes of this test, the Mergers will be treated as part of a plan that includes the Distributions, but it is expected that the Mergers, standing alone, will not cause the Distributions to be taxable to us under Section 355(e) of the Code because holders of Yuma Common Stock immediately after the Distributions will own at least 50.1% of the stock of Nextracker following the Mergers. However, if the IRS were to determine that another acquisition or issuance of our stock or the stock of Yuma (including Nextracker stock after the Mergers) were part of a plan or series of related transactions that included the Distributions and that triggers the application of Section 355(e) of the Code, we and our subsidiaries would recognize gain as described above. Under the Tax Matters Agreement, which was entered into by us, Yuma and Nextracker on January 2, 2024 immediately prior to the Distributions and which governs the rights, responsibilities and obligations of such parties with respect to taxes (including taxes arising in the ordinary course of business and taxes incurred as a result of the Distributions and the Mergers), tax attributes, tax returns, tax contests and certain other matters (the “Tax Matters Agreement”), us, Yuma and Nextracker (and their successors) are barred from taking certain actions (or failing to take certain actions) that could adversely affect the tax-free treatment of the Distributions or the Mergers, subject to certain exceptions. Yuma and Nextracker (and their successors), on the one hand, and us, on the other hand, may also be obligated under the Tax Matters Agreement, in certain cases, to indemnify the other (but not our shareholders) for taxes and certain tax-related losses that arise from the failure of the Distributions or the Mergers to qualify for tax-free treatment under Section 355 or 368(a) of the Code, respectively.",
+          "char_count": 5042,
+          "word_count": 832,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s002",
+          "item_code": "1A",
+          "item_label": "Item 1A",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 1A  RISK FACTORS"
+        },
+        {
+          "chunk_id": "s002-c003",
+          "type": "prose",
+          "text": "Any such indemnification obligation likely would be substantial and likely would have a material adverse effect on the party obligated to make such payments. Geopolitical uncertainty, including arising from the ongoing conflict between Russia and Ukraine and the Israel-Hamas war, may adversely affect our business, results of operations and financial performance. We have facilities across the globe including in Israel and Ukraine. If these facilities were to be damaged, destroyed or otherwise unable to operate, whether due to war, acts of hostility, or terrorist acts, such an event could jeopardize our ability to develop, manufacture and deliver certain products and adversely affect our operations and results of operations. Our operations have been, and could continue to be, disrupted by the absence of employees called to active duty to perform military service. The Russia-Ukraine conflict, the Israel-Hamas war, the attacks on shipping vessels in the Red Sea, and other hostilities or armed conflicts, or the interruption or curtailment of trade or transport between the countries where our facilities are located and their respective trading partners, could adversely affect our operations and results of operations. Further, political, economic and military instability around the world may lead to disruptions and instability in global markets, supply chains and industries that could negatively impact our business, financial condition and results of operations.",
+          "char_count": 1479,
+          "word_count": 217,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s002",
+          "item_code": "1A",
+          "item_label": "Item 1A",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 1A  RISK FACTORS"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s003",
+      "item_code": "2",
+      "item_label": "Item 2",
+      "header": "Item 2  UNREGISTERED SALES OF EQUITY SECURITIES, USE OF PROCEEDS, AND ISSUER PURCHASES OF EQUITY SECURITIES",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 1462,
+      "word_count": 230,
+      "chunks": [
+        {
+          "chunk_id": "s003-c001",
+          "type": "prose",
+          "text": "Issuer Purchases of Equity Securities The following table provides information regarding purchases of our ordinary shares made by us for the period from September 30, 2023 through December 31, 2023: Period (2) Total Number of Shares Purchased (1) Average Price Paid per Share Total Number of Shares Purchased as Part of Publicly Announced Plans or Programs Approximate Dollar Value of Shares that May Yet Be Purchased Under the Plans or Programs September 30, 2023 - November 3, 2023 5,690,804 25.48 5,690,804 1,660,000,998 November 4, 2023 - December 1, 2023 3,626,951 26.19 3,626,951 1,565,004,252 December 2, 2023 - December 31, 2023 1,370,357 25.54 1,370,357 1,530,004,320 Total 10,688,112 10,688,112 (1) During the period from September 30, 2023 through December 31, 2023, all purchases were made pursuant to the programs discussed below in open market transactions. All purchases were made in accordance with Rule 10b-18 under the Securities Exchange Act of 1934. (2) On August 2, 2023, our Board of Directors authorized repurchases of our outstanding ordinary shares for up to $2.0 billion. This is in accordance with the share purchase mandate whereby our shareholders approved a repurchase limit of 20% of our issued ordinary shares outstanding at the Annual General Meeting held on the same date as the Board authorization. As of December 31, 2023, shares in the aggregate amount of $1.5 billion were available to be repurchased under the current plan.",
+          "char_count": 1462,
+          "word_count": 230,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s003",
+          "item_code": "2",
+          "item_label": "Item 2",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 2  UNREGISTERED SALES OF EQUITY SECURITIES, USE OF PROCEEDS, AND ISSUER PURCHASES OF EQUITY SECURITIES"
+        },
+        {
+          "chunk_id": "s003-c002",
+          "type": "table",
+          "text": "| Period (2) | Total Number of Shares Purchased (1) | Average Price Paid per Share | Total Number of Shares Purchased as Part of Publicly Announced Plans or Programs | Approximate Dollar Value of Shares that May Yet Be Purchased Under the Plans or Programs |\n| --- | --- | --- | --- | --- |\n| September 30, 2023 - November 3, 2023 | 5,690,804 | $25.48 | 5,690,804 | $1,660,000,998 |\n| November 4, 2023 - December 1, 2023 | 3,626,951 | $26.19 | 3,626,951 | $1,565,004,252 |\n| December 2, 2023 - December 31, 2023 | 1,370,357 | $25.54 | 1,370,357 | $1,530,004,320 |\n| Total | 10,688,112 | 10,688,112 |  |  |",
+          "char_count": 605,
+          "word_count": 118,
+          "has_table": true,
+          "table_titles": [
+            "The following table provides information regarding purchases of our ordinary shares made by us for the period from September 30, 2023 through December 31, 2023:"
+          ],
+          "section_id": "s003",
+          "item_code": "2",
+          "item_label": "Item 2",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 2  UNREGISTERED SALES OF EQUITY SECURITIES, USE OF PROCEEDS, AND ISSUER PURCHASES OF EQUITY SECURITIES"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "s003-t001",
+          "title": "The following table provides information regarding purchases of our ordinary shares made by us for the period from September 30, 2023 through December 31, 2023:",
+          "markdown": "| Period (2) | Total Number of Shares Purchased (1) | Average Price Paid per Share | Total Number of Shares Purchased as Part of Publicly Announced Plans or Programs | Approximate Dollar Value of Shares that May Yet Be Purchased Under the Plans or Programs |\n| --- | --- | --- | --- | --- |\n| September 30, 2023 - November 3, 2023 | 5,690,804 | $25.48 | 5,690,804 | $1,660,000,998 |\n| November 4, 2023 - December 1, 2023 | 3,626,951 | $26.19 | 3,626,951 | $1,565,004,252 |\n| December 2, 2023 - December 31, 2023 | 1,370,357 | $25.54 | 1,370,357 | $1,530,004,320 |\n| Total | 10,688,112 | 10,688,112 |  |  |",
+          "row_count": 4
+        }
+      ]
+    },
+    {
+      "section_id": "s004",
+      "item_code": "3",
+      "item_label": "Item 3",
+      "header": "Item 3  DEFAULTS UPON SENIOR SECURITIES",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 4,
+      "word_count": 1,
+      "chunks": [
+        {
+          "chunk_id": "s004-c001",
+          "type": "prose",
+          "text": "None",
+          "char_count": 4,
+          "word_count": 1,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s004",
+          "item_code": "3",
+          "item_label": "Item 3",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 3  DEFAULTS UPON SENIOR SECURITIES"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s005",
+      "item_code": "4",
+      "item_label": "Item 4",
+      "header": "Item 4  MINE SAFETY DISCLOSURES",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 14,
+      "word_count": 2,
+      "chunks": [
+        {
+          "chunk_id": "s005-c001",
+          "type": "prose",
+          "text": "Not applicable",
+          "char_count": 14,
+          "word_count": 2,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s005",
+          "item_code": "4",
+          "item_label": "Item 4",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 4  MINE SAFETY DISCLOSURES"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s006",
+      "item_code": "5",
+      "item_label": "Item 5",
+      "header": "Item 5  OTHER INFORMATION",
+      "section_part": "",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 1402,
+      "word_count": 231,
+      "chunks": [
+        {
+          "chunk_id": "s006-c001",
+          "type": "prose",
+          "text": "Insider Trading Arrangements During the fiscal quarter ended December 31, 2023, the officers listed below adopted trading plans intended to satisfy the affirmative defense conditions of Rule 10b5-1(c) under the Securities Exchange Act of 1934, as amended. On November 22, 2023 , Scott Offer , Executive Vice President and General Counsel , adopted a trading plan that provides for the sale of up to 150,000 ordinary shares of the Company. The plan will terminate on March 14, 2024, subject to early termination for certain specified events set forth in the plan. On December 5, 2023 , Michael P. Hartung , President, Agility Solutions , adopted a trading plan that provides for the sale of up to 43,381 ordinary shares of the Company. The plan will terminate on December 5, 2024, subject to early termination for certain specified events set forth in the plan. On December 14, 2023 , Hooi Tan , President, Global Operations and Components, adopted a trading plan that provides for the sale of up to 32,110 ordinary shares of the Company. The plan will terminate on December 12, 2024, subject to early termination for certain specified events set forth in the plan. No other officers or directors adopted or terminated a \"Rule 10b5-1 trading arrangement\" or \"non-Rule 10b5-1 trading arrangement\", as those terms are defined in Regulation S-K, Item 408, during the fiscal quarter ended December 31, 2023.",
+          "char_count": 1402,
+          "word_count": 231,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s006",
+          "item_code": "5",
+          "item_label": "Item 5",
+          "section_part": "",
+          "section_type": "filing_item",
+          "header": "Item 5  OTHER INFORMATION"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s007",
+      "item_code": "6",
+      "item_label": "Item 6",
+      "header": "Item 6  EXHIBITS",
+      "section_part": "",
+      "section_type": "tail",
+      "is_tail": true,
+      "has_legal_boilerplate": true,
+      "char_count": 1238,
+      "word_count": 187,
+      "chunks": [
+        {
+          "chunk_id": "s007-c001",
+          "type": "prose",
+          "text": "EXHIBIT INDEX Exhibit No. Exhibit Form File No. Filing Date Exhibit No. Filed Herewith 15.01 Letter in lieu of consent of Deloitte & Touche LLP X 31.01 Certification of Principal Executive Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 X 31.02 Certification of Principal Financial Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 X 32.01 Certification of Chief Executive Officer and Chief Financial Officer pursuant to Rule 13a-14(b) under the Securities Exchange Act of 1934 and 18 U.S.C. Section 1350, as adopted pursuant to Section 906 of the Sarbanes-Oxley Act of 2002* X 101.INS XBRL Instance Document X 101.SCH XBRL Taxonomy Extension Schema Document X 101.CAL XBRL Taxonomy Extension Calculation Linkbase Document X 101.DEF XBRL Taxonomy Extension Definition Linkbase Document X 101.LAB XBRL Taxonomy Extension Label Linkbase Document X 101.PRE XBRL Taxonomy Extension Presentation Linkbase Document X Cover Page Interactive Data File (formatted as inline XBRL with applicable taxonomy extension information contained in Exhibit 101)",
+          "char_count": 1238,
+          "word_count": 187,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s007",
+          "item_code": "6",
+          "item_label": "Item 6",
+          "section_part": "",
+          "section_type": "tail",
+          "header": "Item 6  EXHIBITS"
+        },
+        {
+          "chunk_id": "s007-c002",
+          "type": "table",
+          "text": "| Incorporated by Reference |  |  |  |  |  |  |\n| --- | --- | --- | --- | --- | --- | --- |\n| Exhibit No. | Exhibit | Form | File No. | Filing Date | Exhibit No. | Filed Herewith |\n| 15.01 | Letter in lieu of consent of Deloitte & Touche LLP | X |  |  |  |  |\n| 31.01 | Certification of Principal Executive Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 | X |  |  |  |  |\n| 31.02 | Certification of Principal Financial Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 | X |  |  |  |  |\n| 32.01 | Certification of Chief Executive Officer and Chief Financial Officer pursuant to Rule 13a-14(b) under the Securities Exchange Act of 1934 and 18 U.S.C. Section 1350, as adopted pursuant to Section 906 of the Sarbanes-Oxley Act of 2002* | X |  |  |  |  |\n| 101.INS | XBRL Instance Document | X |  |  |  |  |\n| 101.SCH | XBRL Taxonomy Extension Schema Document | X |  |  |  |  |\n| 101.CAL | XBRL Taxonomy Extension Calculation Linkbase Document | X |  |  |  |  |\n| 101.DEF | XBRL Taxonomy Extension Definition Linkbase Document | X |  |  |  |  |\n| 101.LAB | XBRL Taxonomy Extension Label Linkbase Document | X |  |  |  |  |\n| 101.PRE | XBRL Taxonomy Extension Presentation Linkbase Document | X |  |  |  |  |\n| 104 | Cover Page Interactive Data File (formatted as inline XBRL with applicable taxonomy extension information contained in Exhibit 101) |  |  |  |  |  |",
+          "char_count": 1557,
+          "word_count": 308,
+          "has_table": true,
+          "table_titles": [
+            "EXHIBIT INDEX"
+          ],
+          "section_id": "s007",
+          "item_code": "6",
+          "item_label": "Item 6",
+          "section_part": "",
+          "section_type": "tail",
+          "header": "Item 6  EXHIBITS"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "s007-t001",
+          "title": "EXHIBIT INDEX",
+          "markdown": "| Incorporated by Reference |  |  |  |  |  |  |\n| --- | --- | --- | --- | --- | --- | --- |\n| Exhibit No. | Exhibit | Form | File No. | Filing Date | Exhibit No. | Filed Herewith |\n| 15.01 | Letter in lieu of consent of Deloitte & Touche LLP | X |  |  |  |  |\n| 31.01 | Certification of Principal Executive Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 | X |  |  |  |  |\n| 31.02 | Certification of Principal Financial Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002 | X |  |  |  |  |\n| 32.01 | Certification of Chief Executive Officer and Chief Financial Officer pursuant to Rule 13a-14(b) under the Securities Exchange Act of 1934 and 18 U.S.C. Section 1350, as adopted pursuant to Section 906 of the Sarbanes-Oxley Act of 2002* | X |  |  |  |  |\n| 101.INS | XBRL Instance Document | X |  |  |  |  |\n| 101.SCH | XBRL Taxonomy Extension Schema Document | X |  |  |  |  |\n| 101.CAL | XBRL Taxonomy Extension Calculation Linkbase Document | X |  |  |  |  |\n| 101.DEF | XBRL Taxonomy Extension Definition Linkbase Document | X |  |  |  |  |\n| 101.LAB | XBRL Taxonomy Extension Label Linkbase Document | X |  |  |  |  |\n| 101.PRE | XBRL Taxonomy Extension Presentation Linkbase Document | X |  |  |  |  |\n| 104 | Cover Page Interactive Data File (formatted as inline XBRL with applicable taxonomy extension information contained in Exhibit 101) |  |  |  |  |  |",
+          "row_count": 12
+        }
+      ]
+    },
+    {
+      "section_id": "s008",
+      "item_code": "",
+      "item_label": "",
+      "header": "SIGNATURES",
+      "section_part": "",
+      "section_type": "tail",
+      "is_tail": true,
+      "has_legal_boilerplate": false,
+      "char_count": 439,
+      "word_count": 65,
+      "chunks": [
+        {
+          "chunk_id": "s008-c001",
+          "type": "prose",
+          "text": "Pursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized. FLEX LTD. (Registrant) /s/ REVATHI ADVAITHI Revathi Advaithi Chief Executive Officer (Principal Executive Officer) Date: February 2, 2024 /s/ PAUL R. LUNDSTROM Paul R. Lundstrom Chief Financial Officer (Principal Financial Officer) Date: February 2, 2024",
+          "char_count": 439,
+          "word_count": 65,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s008",
+          "item_code": "",
+          "item_label": "",
+          "section_part": "",
+          "section_type": "tail",
+          "header": "SIGNATURES"
+        },
+        {
+          "chunk_id": "s008-c002",
+          "type": "table",
+          "text": "| FLEX LTD. |  |\n| --- | --- |\n| (Registrant) |  |\n| /s/ REVATHI ADVAITHI |  |\n| Revathi Advaithi |  |\n| Chief Executive Officer |  |\n| (Principal Executive Officer) |  |\n| Date: | February 2, 2024 |\n| /s/ PAUL R. LUNDSTROM |  |\n| Paul R. Lundstrom |  |\n| Chief Financial Officer |  |\n| (Principal Financial Officer) |  |\n| Date: | February 2, 2024 |",
+          "char_count": 350,
+          "word_count": 76,
+          "has_table": true,
+          "table_titles": [
+            "Pursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized."
+          ],
+          "section_id": "s008",
+          "item_code": "",
+          "item_label": "",
+          "section_part": "",
+          "section_type": "tail",
+          "header": "SIGNATURES"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "s008-t001",
+          "title": "Pursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized.",
+          "markdown": "| FLEX LTD. |  |\n| --- | --- |\n| (Registrant) |  |\n| /s/ REVATHI ADVAITHI |  |\n| Revathi Advaithi |  |\n| Chief Executive Officer |  |\n| (Principal Executive Officer) |  |\n| Date: | February 2, 2024 |\n| /s/ PAUL R. LUNDSTROM |  |\n| Paul R. Lundstrom |  |\n| Chief Financial Officer |  |\n| (Principal Financial Officer) |  |\n| Date: | February 2, 2024 |",
+          "row_count": 11
+        }
+      ]
+    }
+  ],
+  "quality": {
+    "total_pages": 0,
+    "pages_with_text": 0,
+    "total_sections": 8,
+    "prose_sections": 3,
+    "item_codes_found": [
+      "1",
+      "1A",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "missing_expected_items": [],
+    "total_chunks": 13,
+    "total_tables": 3,
+    "total_words": 2607,
+    "warnings": [
+      "parser:bs4"
+    ],
+    "parsed_at": "2026-04-06T17:37:15.728572",
+    "source_file": "Flex_10-Q_2024-02-02.html"
+  }
+}

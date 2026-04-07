@@ -34,7 +34,6 @@ Request payload (main fields in current UI):
 
 - Search modes: Filing Search / Web Search / Hybrid Search
 - Company filters: Flex, Jabil, Celestica, Benchmark, Sanmina (multi-select)
-- Time horizon selector exists in UI state (Any Time, FY2026, FY2025, Last 12 Months)
 - Prompt controls:
   - Quick Questions
   - Research Topics (QUESTION_BANK primary/secondary tree)

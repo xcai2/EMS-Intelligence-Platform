@@ -11,22 +11,11 @@ export default function Home() {
 
     const MIN_ANIMATION_MS = 2200;
     const MAX_WAIT_MS = 7000;
-    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
-
     const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-    const warmNewsData = async () => {
-      await Promise.allSettled([
-        fetch(`${API_URL}/api/news/all?count_per_company=12`, { cache: 'no-store' }),
-        fetch(`${API_URL}/api/news/industry?count=20`, { cache: 'no-store' }),
-        fetch(`${API_URL}/api/news/comparative`, { cache: 'no-store' }),
-      ]);
-    };
 
     const run = async () => {
       const minAnimation = sleep(MIN_ANIMATION_MS);
       const preloadWork = Promise.allSettled([
-        warmNewsData(),
         router.prefetch('/news'),
       ]);
 

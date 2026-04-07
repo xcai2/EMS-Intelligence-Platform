@@ -1,0 +1,313 @@
+{
+  "source": {
+    "doc_type": "10-Q",
+    "file_name": "Flex_10-Q_2021-07-30.html",
+    "suffix": ".html",
+    "relative_path": "Flex_10-Q_2021-07-30.html",
+    "absolute_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/quarterly_10Q/Flex_10-Q_2021-07-30.html",
+    "size_bytes": 1353699,
+    "parsed_at": "2026-04-06T17:37:13.760995"
+  },
+  "document": {
+    "form_type": "10-Q",
+    "registrant_name": "FLEX LTD.",
+    "period_of_report": "2021-07-30",
+    "fiscal_quarter": "Q1",
+    "fiscal_year_label": "FY22",
+    "commission_file_number": ""
+  },
+  "sections": [
+    {
+      "section_id": "s001",
+      "item_code": "",
+      "item_label": "",
+      "header": "Part I  , “Item 1A. Risk Factors” in our Annual Report on Form 10-K for the fiscal year ended March 31, 2021",
+      "section_part": "Part I",
+      "section_type": "part_header",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 0,
+      "word_count": 0,
+      "chunks": [],
+      "tables": []
+    },
+    {
+      "section_id": "s002",
+      "item_code": "2",
+      "item_label": "Item 2",
+      "header": "Item 2  UNREGISTERED SALES OF EQUITY SECURITIES AND USE OF PROCEEDS",
+      "section_part": "Part I",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 1396,
+      "word_count": 230,
+      "chunks": [
+        {
+          "chunk_id": "s002-c001",
+          "type": "prose",
+          "text": "Issuer Purchases of Equity Securities The following table provides information regarding purchases of our ordinary shares made by us for the period from April 1, 2021 through July 2, 2021: Period (2) Total Number of Shares Purchased (1) Average Price Paid per Share Total Number of Shares Purchased as Part of Publicly Announced Plans or Programs Approximate Dollar Value of Shares that May Yet Be Purchased Under the Plans or Programs April 1, 2021 - May 7, 2021 774,186 18.33 774,186 302,318,325 May 8, 2021 - June 4, 2021 4,277,655 18.00 4,277,655 225,333,146 June 5, 2021 - July 2, 2021 3,972,582 17.88 3,972,582 154,318,352 Total 9,024,423 9,024,423 (1) During the period from April 1, 2021 through July 2, 2021, all purchases were made pursuant to the program discussed below in open market transactions. All purchases were made in accordance with Rule 10b-18 under the Securities Exchange Act of 1934. (2) On August 7, 2020, our Board of Directors authorized repurchases of our outstanding ordinary shares for up to $500 million. This is in accordance with the share purchase mandate whereby our shareholders approved a repurchase limit of 20% of our issued ordinary shares outstanding at the Annual General Meeting held on the same date as the Board authorization. As of July 2, 2021, shares in the aggregate amount of $154 million were available to be repurchased under the current plan.",
+          "char_count": 1396,
+          "word_count": 230,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s002",
+          "item_code": "2",
+          "item_label": "Item 2",
+          "section_part": "Part I",
+          "section_type": "filing_item",
+          "header": "Item 2  UNREGISTERED SALES OF EQUITY SECURITIES AND USE OF PROCEEDS"
+        },
+        {
+          "chunk_id": "s002-c002",
+          "type": "table",
+          "text": "| Period (2) | Total Number of Shares Purchased (1) | Average Price Paid per Share | Total Number of Shares Purchased as Part of Publicly Announced Plans or Programs | Approximate Dollar Value of Shares that May Yet Be Purchased Under the Plans or Programs |\n| --- | --- | --- | --- | --- |\n| April 1, 2021 - May 7, 2021 | 774,186 | $18.33 | 774,186 | $302,318,325 |\n| May 8, 2021 - June 4, 2021 | 4,277,655 | $18.00 | 4,277,655 | $225,333,146 |\n| June 5, 2021 - July 2, 2021 | 3,972,582 | $17.88 | 3,972,582 | $154,318,352 |\n| Total | 9,024,423 | 9,024,423 |  |  |",
+          "char_count": 565,
+          "word_count": 118,
+          "has_table": true,
+          "table_titles": [
+            "The following table provides information regarding purchases of our ordinary shares made by us for the period from April 1, 2021 through July 2, 2021:"
+          ],
+          "section_id": "s002",
+          "item_code": "2",
+          "item_label": "Item 2",
+          "section_part": "Part I",
+          "section_type": "filing_item",
+          "header": "Item 2  UNREGISTERED SALES OF EQUITY SECURITIES AND USE OF PROCEEDS"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "s002-t001",
+          "title": "The following table provides information regarding purchases of our ordinary shares made by us for the period from April 1, 2021 through July 2, 2021:",
+          "markdown": "| Period (2) | Total Number of Shares Purchased (1) | Average Price Paid per Share | Total Number of Shares Purchased as Part of Publicly Announced Plans or Programs | Approximate Dollar Value of Shares that May Yet Be Purchased Under the Plans or Programs |\n| --- | --- | --- | --- | --- |\n| April 1, 2021 - May 7, 2021 | 774,186 | $18.33 | 774,186 | $302,318,325 |\n| May 8, 2021 - June 4, 2021 | 4,277,655 | $18.00 | 4,277,655 | $225,333,146 |\n| June 5, 2021 - July 2, 2021 | 3,972,582 | $17.88 | 3,972,582 | $154,318,352 |\n| Total | 9,024,423 | 9,024,423 |  |  |",
+          "row_count": 4
+        }
+      ]
+    },
+    {
+      "section_id": "s003",
+      "item_code": "3",
+      "item_label": "Item 3",
+      "header": "Item 3  DEFAULTS UPON SENIOR SECURITIES",
+      "section_part": "Part I",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 4,
+      "word_count": 1,
+      "chunks": [
+        {
+          "chunk_id": "s003-c001",
+          "type": "prose",
+          "text": "None",
+          "char_count": 4,
+          "word_count": 1,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s003",
+          "item_code": "3",
+          "item_label": "Item 3",
+          "section_part": "Part I",
+          "section_type": "filing_item",
+          "header": "Item 3  DEFAULTS UPON SENIOR SECURITIES"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s004",
+      "item_code": "4",
+      "item_label": "Item 4",
+      "header": "Item 4  MINE SAFETY DISCLOSURES",
+      "section_part": "Part I",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 14,
+      "word_count": 2,
+      "chunks": [
+        {
+          "chunk_id": "s004-c001",
+          "type": "prose",
+          "text": "Not applicable",
+          "char_count": 14,
+          "word_count": 2,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s004",
+          "item_code": "4",
+          "item_label": "Item 4",
+          "section_part": "Part I",
+          "section_type": "filing_item",
+          "header": "Item 4  MINE SAFETY DISCLOSURES"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s005",
+      "item_code": "5",
+      "item_label": "Item 5",
+      "header": "Item 5  OTHER INFORMATION",
+      "section_part": "Part I",
+      "section_type": "filing_item",
+      "is_tail": false,
+      "has_legal_boilerplate": false,
+      "char_count": 4,
+      "word_count": 1,
+      "chunks": [
+        {
+          "chunk_id": "s005-c001",
+          "type": "prose",
+          "text": "None",
+          "char_count": 4,
+          "word_count": 1,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s005",
+          "item_code": "5",
+          "item_label": "Item 5",
+          "section_part": "Part I",
+          "section_type": "filing_item",
+          "header": "Item 5  OTHER INFORMATION"
+        }
+      ],
+      "tables": []
+    },
+    {
+      "section_id": "s006",
+      "item_code": "6",
+      "item_label": "Item 6",
+      "header": "Item 6  EXHIBITS",
+      "section_part": "Part I",
+      "section_type": "tail",
+      "is_tail": true,
+      "has_legal_boilerplate": true,
+      "char_count": 1560,
+      "word_count": 235,
+      "chunks": [
+        {
+          "chunk_id": "s006-c001",
+          "type": "prose",
+          "text": "EXHIBIT INDEX Exhibit No. Exhibit Form File No. Filing Date Exhibit No. Filed Herewith 10.01 Description of Annual Incentive Bonus Plan for Fiscal Year 2022 X 10.02 Form of Restricted Share Unit Award Agreement under the Amended and Restated 2017 Equity Incentive Plan for performance-based vesting awards (FY22). X 10.03 Summary of Compensation Arrangements of Certain Executive Officers of Flex Ltd. X 15.01 Letter in lieu of consent of Deloitte & Touche LLP. X 31.01 Certification of Principal Executive Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002. X 31.02 Certification of Principal Financial Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002. X 32.01 Certification of Chief Executive Officer and Chief Financial Officer pursuant to Rule 13a-14(b) under the Securities Exchange Act of 1934 and 18 U.S.C. Section 1350, as adopted pursuant to Section 906 of the Sarbanes-Oxley Act of 2002.* X 101.INS XBRL Instance Document X 101.SCH XBRL Taxonomy Extension Schema Document X 101.CAL XBRL Taxonomy Extension Calculation Linkbase Document X 101.DEF XBRL Taxonomy Extension Definition Linkbase Document X 101.LAB XBRL Taxonomy Extension Label Linkbase Document X 101.PRE XBRL Taxonomy Extension Presentation Linkbase Document X Cover Page Interactive Data File (formatted as inline XBRL with applicable taxonomy extension information contained in Exhibits 101)",
+          "char_count": 1560,
+          "word_count": 235,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s006",
+          "item_code": "6",
+          "item_label": "Item 6",
+          "section_part": "Part I",
+          "section_type": "tail",
+          "header": "Item 6  EXHIBITS"
+        },
+        {
+          "chunk_id": "s006-c002",
+          "type": "table",
+          "text": "| Incorporated by Reference |  |  |  |  |  |  |\n| --- | --- | --- | --- | --- | --- | --- |\n| Exhibit No. | Exhibit | Form | File No. | Filing Date | Exhibit No. | Filed Herewith |\n| 10.01 | Description of Annual Incentive Bonus Plan for Fiscal Year 2022 | X |  |  |  |  |\n| 10.02 | Form of Restricted Share Unit Award Agreement under the Amended and Restated 2017 Equity Incentive Plan for performance-based vesting awards (FY22). | X |  |  |  |  |\n| 10.03 | Summary of Compensation Arrangements of Certain Executive Officers of Flex Ltd. | X |  |  |  |  |\n| 15.01 | Letter in lieu of consent of Deloitte & Touche LLP. | X |  |  |  |  |\n| 31.01 | Certification of Principal Executive Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002. | X |  |  |  |  |\n| 31.02 | Certification of Principal Financial Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002. | X |  |  |  |  |\n| 32.01 | Certification of Chief Executive Officer and Chief Financial Officer pursuant to Rule 13a-14(b) under the Securities Exchange Act of 1934 and 18 U.S.C. Section 1350, as adopted pursuant to Section 906 of the Sarbanes-Oxley Act of 2002.* | X |  |  |  |  |\n| 101.INS | XBRL Instance Document | X |  |  |  |  |\n| 101.SCH | XBRL Taxonomy Extension Schema Document | X |  |  |  |  |\n| 101.CAL | XBRL Taxonomy Extension Calculation Linkbase Document | X |  |  |  |  |\n| 101.DEF | XBRL Taxonomy Extension Definition Linkbase Document | X |  |  |  |  |\n| 101.LAB | XBRL Taxonomy Extension Label Linkbase Document | X |  |  |  |  |\n| 101.PRE | XBRL Taxonomy Extension Presentation Linkbase Document | X |  |  |  |  |\n| 104 | Cover Page Interactive Data File (formatted as inline XBRL with applicable taxonomy extension information contained in Exhibits 101) |  |  |  |  |  |",
+          "char_count": 1939,
+          "word_count": 380,
+          "has_table": true,
+          "table_titles": [
+            "EXHIBIT INDEX"
+          ],
+          "section_id": "s006",
+          "item_code": "6",
+          "item_label": "Item 6",
+          "section_part": "Part I",
+          "section_type": "tail",
+          "header": "Item 6  EXHIBITS"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "s006-t001",
+          "title": "EXHIBIT INDEX",
+          "markdown": "| Incorporated by Reference |  |  |  |  |  |  |\n| --- | --- | --- | --- | --- | --- | --- |\n| Exhibit No. | Exhibit | Form | File No. | Filing Date | Exhibit No. | Filed Herewith |\n| 10.01 | Description of Annual Incentive Bonus Plan for Fiscal Year 2022 | X |  |  |  |  |\n| 10.02 | Form of Restricted Share Unit Award Agreement under the Amended and Restated 2017 Equity Incentive Plan for performance-based vesting awards (FY22). | X |  |  |  |  |\n| 10.03 | Summary of Compensation Arrangements of Certain Executive Officers of Flex Ltd. | X |  |  |  |  |\n| 15.01 | Letter in lieu of consent of Deloitte & Touche LLP. | X |  |  |  |  |\n| 31.01 | Certification of Principal Executive Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002. | X |  |  |  |  |\n| 31.02 | Certification of Principal Financial Officer pursuant to Rule 13a-14(a) under the Securities Exchange Act of 1934, as adopted pursuant to Section 302 of the Sarbanes-Oxley Act of 2002. | X |  |  |  |  |\n| 32.01 | Certification of Chief Executive Officer and Chief Financial Officer pursuant to Rule 13a-14(b) under the Securities Exchange Act of 1934 and 18 U.S.C. Section 1350, as adopted pursuant to Section 906 of the Sarbanes-Oxley Act of 2002.* | X |  |  |  |  |\n| 101.INS | XBRL Instance Document | X |  |  |  |  |\n| 101.SCH | XBRL Taxonomy Extension Schema Document | X |  |  |  |  |\n| 101.CAL | XBRL Taxonomy Extension Calculation Linkbase Document | X |  |  |  |  |\n| 101.DEF | XBRL Taxonomy Extension Definition Linkbase Document | X |  |  |  |  |\n| 101.LAB | XBRL Taxonomy Extension Label Linkbase Document | X |  |  |  |  |\n| 101.PRE | XBRL Taxonomy Extension Presentation Linkbase Document | X |  |  |  |  |\n| 104 | Cover Page Interactive Data File (formatted as inline XBRL with applicable taxonomy extension information contained in Exhibits 101) |  |  |  |  |  |",
+          "row_count": 15
+        }
+      ]
+    },
+    {
+      "section_id": "s007",
+      "item_code": "",
+      "item_label": "",
+      "header": "SIGNATURES",
+      "section_part": "",
+      "section_type": "tail",
+      "is_tail": true,
+      "has_legal_boilerplate": false,
+      "char_count": 433,
+      "word_count": 65,
+      "chunks": [
+        {
+          "chunk_id": "s007-c001",
+          "type": "prose",
+          "text": "Pursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized. FLEX LTD. (Registrant) /s/ REVATHI ADVAITHI Revathi Advaithi Chief Executive Officer (Principal Executive Officer) Date: July 30, 2021 /s/ PAUL R. LUNDSTROM Paul R. Lundstrom Chief Financial Officer (Principal Financial Officer) Date: July 30, 2021",
+          "char_count": 433,
+          "word_count": 65,
+          "has_table": false,
+          "table_titles": [],
+          "section_id": "s007",
+          "item_code": "",
+          "item_label": "",
+          "section_part": "",
+          "section_type": "tail",
+          "header": "SIGNATURES"
+        },
+        {
+          "chunk_id": "s007-c002",
+          "type": "table",
+          "text": "| FLEX LTD. |  |\n| --- | --- |\n| (Registrant) |  |\n| /s/ REVATHI ADVAITHI |  |\n| Revathi Advaithi |  |\n| Chief Executive Officer |  |\n| (Principal Executive Officer) |  |\n| Date: | July 30, 2021 |\n| /s/ PAUL R. LUNDSTROM |  |\n| Paul R. Lundstrom |  |\n| Chief Financial Officer |  |\n| (Principal Financial Officer) |  |\n| Date: | July 30, 2021 |",
+          "char_count": 344,
+          "word_count": 76,
+          "has_table": true,
+          "table_titles": [
+            "Pursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized."
+          ],
+          "section_id": "s007",
+          "item_code": "",
+          "item_label": "",
+          "section_part": "",
+          "section_type": "tail",
+          "header": "SIGNATURES"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "s007-t001",
+          "title": "Pursuant to the requirements of the Securities Exchange Act of 1934, the Registrant has duly caused this report to be signed on its behalf by the undersigned thereunto duly authorized.",
+          "markdown": "| FLEX LTD. |  |\n| --- | --- |\n| (Registrant) |  |\n| /s/ REVATHI ADVAITHI |  |\n| Revathi Advaithi |  |\n| Chief Executive Officer |  |\n| (Principal Executive Officer) |  |\n| Date: | July 30, 2021 |\n| /s/ PAUL R. LUNDSTROM |  |\n| Paul R. Lundstrom |  |\n| Chief Financial Officer |  |\n| (Principal Financial Officer) |  |\n| Date: | July 30, 2021 |",
+          "row_count": 11
+        }
+      ]
+    }
+  ],
+  "quality": {
+    "total_pages": 0,
+    "pages_with_text": 0,
+    "total_sections": 7,
+    "prose_sections": 1,
+    "item_codes_found": [
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "missing_expected_items": [
+      "1"
+    ],
+    "total_chunks": 9,
+    "total_tables": 3,
+    "total_words": 534,
+    "warnings": [
+      "parser:bs4",
+      "missing_expected_items:1",
+      "low_word_count"
+    ],
+    "parsed_at": "2026-04-06T17:37:13.760933",
+    "source_file": "Flex_10-Q_2021-07-30.html"
+  }
+}

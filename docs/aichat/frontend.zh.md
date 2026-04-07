@@ -34,7 +34,6 @@ ChatPageFeature.tsx 当前请求：
 
 - 搜索模式：Filing Search / Web Search / Hybrid Search
 - 公司筛选：Flex、Jabil、Celestica、Benchmark、Sanmina（可多选）
-- 时间范围选择器存在于页面状态（Any Time、FY2026、FY2025、Last 12 Months）
 - Prompt 区域：
   - Quick Questions
   - Research Topics（QUESTION_BANK 的一级/二级结构）

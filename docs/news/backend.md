@@ -103,7 +103,10 @@ Exposed via `backend/api/routes/advanced_data.py` and implemented in `backend/ne
 
 ### Main News service (`backend/news/service.py`)
 - Runtime cache dict in memory
-- Persisted file: `data/news_runtime_cache.json`
+- Persisted files:
+  `data/news_cache/company_news.json`
+  `data/news_cache/industry_news.json`
+  `data/news_cache/comparative_news.json`
 - Normal request uses cache when key exists
 - `force_refresh=true` bypasses cache and re-fetches
 - Restart reloads persisted cache file

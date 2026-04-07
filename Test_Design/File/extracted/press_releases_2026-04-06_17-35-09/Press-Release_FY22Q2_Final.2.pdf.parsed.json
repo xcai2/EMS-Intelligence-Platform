@@ -1,0 +1,1664 @@
+{
+  "source": {
+    "doc_type": "press_release_only",
+    "suffix": ".pdf",
+    "file_name": "Press-Release_FY22Q2_Final.2.pdf",
+    "relative_path": "Press-Release_FY22Q2_Final.2.pdf",
+    "absolute_path": "/Users/gao/Desktop/Flex-Practicum-Project-2026/Test_Design/File/Flex/Press Releases/Press-Release_FY22Q2_Final.2.pdf",
+    "size_bytes": 465229,
+    "parsed_at": "2026-04-06T17:37:17.539287"
+  },
+  "classification": {
+    "doc_family": "corporate_communication",
+    "doc_subtype": "press_release",
+    "confidence": 0.9,
+    "signals_used": [
+      "press_release_keyword",
+      "press_release_keyword",
+      "results_keyword"
+    ]
+  },
+  "cover_metadata": {
+    "line_count": 1,
+    "raw_lines": [
+      "<!-- image -->"
+    ],
+    "fields": {
+      "title": "FLEX REPORTS SECOND QUARTER FISCAL 2022 RESULTS",
+      "date": "",
+      "type": "",
+      "source": "",
+      "tags": "",
+      "relevance": "",
+      "capex_related": "",
+      "ai_related": "",
+      "registrant_name_raw": "Flex",
+      "registrant_name_normalized": "Flex",
+      "registrant_name": "Flex",
+      "date_of_report_raw": "",
+      "date_of_report_normalized": "",
+      "date_of_report": ""
+    }
+  },
+  "usage_policy": {
+    "full_text_role": "inspection_full_text",
+    "full_text_core_role": "chunk_embedding_input",
+    "chunk_source_field": "full_text_core"
+  },
+  "full_text": "<!-- image -->\n\n## FLEX REPORTS SECOND QUARTER FISCAL 2022 RESULTS\n\nSan Jose, Calif., October 27, 2021 -Flex (NASDAQ: FLEX) today announced results for its second quarter ended October 1, 2021.\n\n## Second Quarter Fiscal Year 2022 Highlights:\n\n- Net Sales: $6.2 billion\n- GAAP Operating Income: $237 million\n- Adjusted Operating Income: $286 million\n- GAAP Net Income: $336 million\n- Adjusted Net Income: $233 million\n- GAAP Earnings Per Share: $0.69 which includes $0.30 non-cash income related to a favorable operational tax ruling\n- Adjusted Earnings Per Share: $0.48\n\nAn explanation and reconciliation of non-GAAP financial measures to GAAP financial measures is presented in Schedules II and V attached to this press release.\n\n'Our fiscal second quarter was ano ther strong result for Flex, achieving year over year revenue growth in our Agility and Reliability segments, as well as EPS and margin expansion. I would like to thank our team for their exceptional execution, managing through the supply chain challenges, ' said Revathi Advaithi, Flex Chief Executive Officer. 'We remain focused on driving profitable growth and margin expansion through organic and inorganic investments.'\n\n## Third Quarter Fiscal 2022 Guidance\n\n- Revenue: $6.1 billion to $6.5 billion\n- GAAP Operating Income: $210 million to $250 million\n- Adjusted Operating Income: $250 million to $290 million\n- GAAP EPS: $0.30 to $0.36 which includes $0.05 for stock-based compensation expense and $0.03 for net intangible amortization\n- Adjusted EPS: $0.38 to $0.44\n\n## Fiscal Year 2022 Guidance Updated\n\n- Revenue: $24.8 billion to $25.8 billion\n- GAAP EPS: $1.71 to $1.86 which includes $0.19 for stock-based compensation expense and $0.11 for net intangible amortization offset by ($0.31) for restructuring and other gains primarily related to $0.30 non-cash income from a favorable operational tax ruling recorded in Q2FY22\n- Adjusted EPS: $1.70 to $1.85\n\n<!-- image -->\n\n## P R E S S R E L E A S E\n\n## Webcast and Conference Call\n\nThe Flex management team will host a conference call today at 1:30 PM (PT) / 4:30 PM (ET), to review second quarter fiscal 2022 results. A live webcast of the event and slides will be available on the Flex Investor Relations website at http://investors.flex.com. An audio replay and transcript will also be available after the event on the Flex Investor Relations website.\n\n## About Flex\n\nFlex (Reg. No. 199002645H) is the manufacturing partner of choice that helps a diverse customer base design and build products that improve the world. Through the collective strength of a global workforce across 30 countries and responsible, sustainable operations, Flex delivers technology innovation, supply chain, and manufacturing solutions to diverse industries and end markets.\n\n## Contacts\n\nInvestors &amp; Analysts David Rubin Vice President, Investor Relations (408) 577-4632 David.Rubin@flex.com\n\nMedia &amp; Press Mark Plungy Director, Corporate Integrated Communications (408) 442-1691 Mark.Plungy@flex.com\n\n## P R E S S R E L E A S E\n\n## Forward-Looking Statements\n\nThis press release contains forward-looking statements within the meaning of U.S. securities laws, including: statements related to future expected revenues and earnings per share; our planned acquisition of Anord Mardix, the expected timing for the closin g of the acquisition, expected benefits of the acquisition and Anord Mardix's expected impact on our financial results; and our consideration of alternatives relating to our Nextracker business. These forward-looking statements involve risks and uncertainties that could cause the actual results to differ materially from those anticipated by these forward-looking statements. Readers are cautioned not to place undue reliance on these forward-looking statements. These risks include: the effects of the COVID-19 pandemic on our business, results of operations and financial condition; that we many not achieve our expected future revenues and earnings; the effects that the current macroeconomic environment could have on our business and demand for our products; the impact of component shortages and logistical constraints, including their impact on our revenues; uncertainties and risks relating to our ability to successfully complete a transaction for our Nextracker business, including the potential initial public offering of our Nextracker business, including the possibility that we may not be able to consummate the transaction on the expected timeline or at all, or that we will achieve the anticipated benefits of the transaction; the possibility that regulatory and other approvals and conditions to our acquisition of Anord Mardix are not received or satisfied on a timely basis or at all; the possibility that we may not fully realize the projected benefits of the acquisition; the possibility that Anord Mardix's revenue may not meet expectations; changes in the anticipated timing for closing the acquisition; business disruption during the pendency of or following the acquisition; diversion of management time on acquisition-related issues; the reaction of customers and other persons to the acquisition; other events that could adversely impact the completion of the acquisition or the expected benefits of the acquisition, including the ongoing COVID-19 pandemic and other industry or economic conditions outside of our control; the effects that current credit and market conditions could have on the liquidity and financial condition of our customers and suppliers, including any impact on their ability to meet their contractual obligations to us; the challenges of effectively managing our operations, including our ability to control costs and manage changes in our operations; litigation and regulatory investigations and proceedings; our compliance with legal and regulatory requirements; the possibility that benefits of the Compan y's restructuring actions may not materialize as expected; that the expected revenue and margins from recently launched programs may not be realized; our dependence on industries that continually produce technologically advanced products with short product life cycles; the short-term nature of our customers' commitments and rapid changes in demand may cause supply chain and other issues which adversely affect our operating results; our dependence on a small number of customers; our industry is extremely competitive; we may be exposed to financially troubled customers or suppliers; geopolitical risk, including the termination and renegotiation of international trade agreements and trade policies, including the impact of tariffs and related regulatory actions; the success of certain of our activities depends on our ability to protect our intellectual property rights and we may be exposed to claims of infringement or breach of license agreements; a breach of our IT or physical security systems, or violation of data privacy laws, may cause us to incur significant legal and financial exposure; we may be exposed to product liability and product warranty liability; and that recently\n\n<!-- image -->\n\n## P R E S S R E L E A S E\n\nproposed changes or future changes in tax laws in certain jurisdictions where we operate could materially impact our tax expense. In addition, the COVID-19 pandemic increases the likelihood and potential severity of many of the foregoing risks.\n\nAdditional information concerning these, and other risks is described under 'Risk Factors' and 'Management's Discussion and Analysis of Financial Condition and Results of Operations' in our annual report on Form 10 -K for the fiscal year ended March 31, 2021 and in subsequent quarterly reports on Form 10-Q. The forward-looking statements in this press release are based on current expectations and Flex assumes no obligation to update these forward-looking statements. Our share repurchase program does not obligate the Company to repurchase a specific number of shares and may be suspended or terminated at any time without prior notice.\n\nThis press release does not constitute an offer to sell or the solicitation of an offer to buy any securities. Any securities to be offered in any offering may not be sold nor may offers to buy be accepted prior to the time a registration statement becomes effective.\n\n<!-- image -->\n\n## SCHEDULE I\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)\n\n| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 6,229 | $ 5,985 |\n| Cost of sales | 5,755 | 5,566 |\n| Restructuring charges | 9 | 24 |\n| Gross profit | 465 | 395 |\n| Selling, general and administrative expenses | 213 | 193 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 15 | 16 |\n| Operating income | 237 | 175 |\n| Interest and other, net | (134) | 22 |\n| Income before income taxes | 371 | 153 |\n| Provision for income taxes | 35 | 40 |\n| Net income | $ 336 | $ 113 |\n| Earnings per share: | | |\n| GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\n| Diluted shares used in computing per share amounts | 487 | 504 |\n\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n\n<!-- image -->\n\n## P R E S S R E L E A S E\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)\n\n| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 12,571 | $ 11,138 |\n| Cost of sales | 11,625 | 10,406 |\n| Restructuring charges | 9 | 34 |\n| Gross profit | 937 | 698 |\n| Selling, general and administrative expenses | 414 | 384 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 30 | 31 |\n| Operating income | 493 | 272 |\n| Interest and other, net | (111) | 51 |\n| Income before income taxes | 604 | 221 |\n| Provision for income taxes | 62 | 56 |\n| Net income | $ 542 | $ 165 |\n| Earnings per share: | | |\n| GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\n| Diluted shares used in computing per share amounts | 493 | 503 |\n\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n\n<!-- image -->\n\n## SCHEDULE II\n\n## FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *\n\n| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 237 | $ 175 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Non-GAAP operating income | $ 286 | $ 247 |\n| GAAP provision for income taxes | $ 35 | $ 40 |\n| Intangible amortization benefit | 2 | 2 |\n| Other tax related adjustments | (3) | (2) |\n| Tax benefit on restructuring and other | - | 2 |\n| Non-GAAP provision for income taxes | $ 34 | $ 42 |\n| GAAP net income | $ 336 | $ 113 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Interest and other, net | (152) | (3) |\n| Adjustments for taxes | 1 | (2) |\n| Non-GAAP net income | $ 233 | $ 180 |\n| Diluted earnings per share: GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\n\nSee the accompanying notes on Schedule V attached to this press release.\n\n*Amounts may not sum due to rounding\n\n<!-- image -->\n\n## FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *\n\n| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 493 | $ 272 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Non-GAAP operating income | $ 576 | $ 410 |\n| GAAP provision for income taxes | $ 62 | $ 56 |\n| Intangible amortization benefit | 4 | 4 |\n| Other tax related adjustments | 3 | (3) |\n| Tax benefit on restructuring and other | - | 4 |\n| Non-GAAP provision for income taxes | $ 70 | $ 60 |\n| GAAP net income | $ 542 | $ 165 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Interest and other, net | (155) | (2) |\n| Adjustments for taxes | (7) | (5) |\n| Non-GAAP net income | $ 462 | $ 296 |\n| Diluted earnings per share: GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\n\nSee the accompanying notes on Schedule V attached to this press release.\n\n*Amounts may not sum due to rounding\n\n<!-- image -->\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED BALANCE SHEETS (2) (In millions)\n\n| | As of October 1, 2021 | As of October 1, 2021 | As of March 31, 2021 |\n|-------------------------------------------------------------|-------------------------|-------------------------|------------------------|\n| ASSETS | | | |\n| Current assets: | | | |\n| Cash and cash equivalents | $ | 2,458 | $ 2,637 |\n| Accounts receivable, net of allowance for doubtful accounts | | 3,505 | 3,959 |\n| Contract assets | | 392 | 282 |\n| Inventories | | 5,168 | 3,895 |\n| Other current assets | | 660 | 590 |\n| Total current assets | | 12,183 | 11,363 |\n| Property and equipment, net | | 2,100 | 2,097 |\n| Operating lease right-of-use assets, net | | 612 | 642 |\n| Goodwill | | 1,085 | 1,090 |\n| Other intangible assets, net | | 182 | 213 |\n| Other assets | | 549 | 431 |\n| Total assets | $ | 16,711 | $ 15,836 |\n| LIABILITIES AND SHAREHOLDERS' EQUITY | | | |\n| Current liabilities: | | | |\n| Bank borrowings and current portion of long- term debt | $ | 284 | $ 268 |\n| Accounts payable | | 5,848 | 5,247 |\n| Accrued payroll | | 450 | 473 |\n| Deferred revenue and customer working capital advances | | 1,146 | 848 |\n| Other current liabilities | | 960 | 998 |\n| Total current liabilities | | 8,688 | 7,834 |\n| Long-term debt, net of current portion | | 3,501 | 3,515 |\n| Operating lease liabilities, non-current | | 534 | 562 |\n| Other liabilities | | 474 | 489 |\n| Total shareholders' equity | | 3,514 | 3,436 |\n| Total liabilities and shareholders' equity | $ | 16,711 | $ 15,836 |\n\nSee the accompanying notes on Schedule V attached to this press release.\n\n## SCHEDULE III\n\n<!-- image -->\n\nSCHEDULE IV\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS (In millions)\n\n| | Six-Month Periods Ended | Six-Month Periods Ended |\n|-------------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| CASH FLOWS FROM OPERATING ACTIVITIES: | | |\n| Net income | $ 542 | $ 165 |\n| Depreciation, amortization and other impairment | 236 | 283 |\n| charges Changes in working capital and other, net | (264) | (813) |\n| Net cash provided by (used in) operating | 514 | (365) |\n| CASH FLOWS FROM INVESTING ACTIVITIES: | | |\n| Purchases of property and equipment | (210) | (185) |\n| Proceeds from the disposition of property and | 5 | 14 |\n| equipment Other investing activities, net | 2 | 13 |\n| Net cash used in investing activities | (203) | (158) |\n| CASH FLOWS FROM FINANCING ACTIVITIES: | | |\n| Proceeds from bank borrowings and long-term | 20 | 1,943 |\n| debt Repayments of bank borrowings and long-term | (9) | (1,005) |\n| debt Payments for repurchases of ordinary shares | (490) | - |\n| Other financing activities, net | (8) | 2 |\n| Net cash provided by (used in) financing | (487) | 940 |\n| Effect of exchange rates on cash and cash equivalents | (3) | 19 |\n| Net increase (decrease) in cash and cash equivalents | (179) | 436 |\n| Cash and cash equivalents, beginning of period | 2,637 | 1,923 |\n| Cash and cash equivalents, end of period | $ 2,458 | $ 2,359 |\n\n## P R E S S R E L E A S E\n\n## FLEX AND SUBSIDIARIES NOTES TO SCHEDULES I, II, and III\n\n- (1) To supplement Flex's unaudited selected financial data presented consistent with Generally Accepted Accounting Principles ('GAAP'), the Company discloses certain non -GAAP financial measures that exclude certain charges and gains, including non-GAAP operating income, non-GAAP net income and non-GAAP net income per diluted share. These supplemental measures exclude restructuring charges, customer-related asset impairments (recoveries), stock-based compensation expense, intangible amortization, other discrete events as applicable and the related tax effects. These non-GAAP measures are not in accordance with or an alternative for GAAP and may be different from non-GAAP measures used by other companies. We believe that these non-GAAP measures have limitations in that they do not reflect all of the amounts associated with Flex's results of operations as determined in accordance with GAAP and that these measures should only be used to evaluate Flex's results of operations in conjunction with the corresponding GAAP measures. The presentation of this additional information is not meant to be considered in isolation or as a substitute for the most directly comparable GAAP measures. We compensate for the limitations of non-GAAP financial measures by relying upon GAAP results to gain a complete picture of the Company's performance.\n\nIn calculating non-GAAP financial measures, we exclude certain items to facilitate a review of the comparability of the Company's operating performance on a period-to-period basis because such items are not, in our view, related to the Company's ongoing operational performance. We use non-GAAP measures to evaluate the operating performance of our business, for comparison with forecasts and strategic plans, for calculating return on investment, and for benchmarking performance externally against competitors. In addition, management's incentive compensation is determined using certain non -GAAP measures. Also, when evaluating potential acquisitions, we exclude certain of the items described below from consideration of the target's performance and valuation. Since we find these measures to be useful, we believe that investors benefit from seeing results 'through the eyes' of management in addition to seeing GAAP r esults. We believe that these non-GAAP measures, when read in conjunction with the Company's GAAP financials, provide useful information to investors by offering:\n\n- the ability to make more meaningful period-toperiod comparisons of the Company's on-going operating results;\n- the ability to better identify trends in the Company's underlying business and perform related trend analyses;\n- a better understanding of how management plans and measures the Company's underlying business; and\n- an easier way to compare the Company's operating results against analyst financial models and operating results of competitors that supplement their GAAP results with non-GAAP financial measures.\n\nThe following are explanations of each of the adjustments that we incorporate into nonGAAP measures, as well as the reasons for excluding each of these individual items in the reconciliations of these non-GAAP financial measures:\n\nStock-based compensation expense consists of non-cash charges for the estimated fair value of stock options and unvested restricted share unit awards granted to employees and assumed in business acquisitions. The Company believes that the\n\n## SCHEDULE V\n\n## P R E S S R E L E A S E\n\nexclusion of these charges provides for more accurate comparisons of its operating results to peer companies due to the varying available valuation methodologies, subjective assumptions and the variety of award types. In addition, the Company believes it is useful to investors to understand the specific impact stock-based compensation expense has on its operating results.\n\nIntangible amortization consists primarily of non-cash charges that can be impacted by, among other things, the timing and magnitude of acquisitions. The Company considers its operating results without these charges when evaluating its ongoing performance and forecasting its earnings trends, and therefore excludes such charges when presenting non-GAAP financial measures. The Company believes that the assessment of its operations excluding these costs is relevant to its assessment of internal operations and comparisons to the performance of its competitors.\n\nRestructuring charges include severance for rationalization at existing sites and corporate SG&amp;A functions as well as asset impairment, and other charges related to the closures and consolidations of certain operating sites and targeted activities to restructure the business. These costs may vary in size based on the Company's initiatives and are not directly related to ongoing or core business results, and do not reflect expected future operating expenses. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\n\nIn order to support the Compa ny's strategy and build a sustainable organization, and after considering that the economic recovery from the pandemic would be slower than anticipated, the Company identified certain structural changes to restructuring the business in fiscal year 2021. These restructuring actions eliminated non-core activities primarily within the Company's corporate function, aligned the Company's cost structure with its reorganizing and optimizing of its operations model along its two reporting segments, and further sharpened its focus to winning business in end markets where it had competitive advantages and deep domain expertise. During the three and six-month periods ended September 25, 2020, the Company recognized approximately $35 million and $45 million of restructuring charges respectively, most of which related to employee severance.\n\nLegal and other consist primarily of costs not directly related to core business results and may include matters relating to commercial disputes, government regulatory and compliance, intellectual property, antitrust, tax, employment or shareholder issues, product liability claims and other issues on a global basis as well as customer related asset recoveries. During the first quarter of fiscal year 2021, the Company accrued for certain loss contingencies where losses are considered probable and estimable. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\n\nInterest and other, net consists of various other types of items that are not directly related to ongoing or core business results, such as the gain or losses related to certain divestitures, debt extinguishment costs and impairment charges or gains associated with certain non-core investments. The Company excludes these items because they are not related to the Company's ongoing operating performance or do not affect core operations. Excluding these amounts provides investors with a basis to compare Company performance against the performance of other companies without this variability.\n\n## P R E S S R E L E A S E\n\nIn September 2021, the Company received approval from the relevant tax authorities in Brazil of the Credit Habilitation request related to certain federal operational tax credit and the Company recorded a total gain of 809.6 million Brazilian reals (approximately USD $149.3 million based on the exchange rate as of October 1, 2021) under interest and other, net in the condensed statements of operations for the three and six-month periods ended October 1, 2021. The total gain recorded included credits from February 2003 to September 2021, net of additional taxes, as the Credit Habilitation received covering the period from February 2003 to December 2019 resolved any uncertainty regarding the Company's ability to claim such credits. This gain is non-cash and can only be used to offset certain current and future tax obligations.\n\nAdjustment for taxes relates to the tax effects of the various adjustments that we incorporate into non-GAAP measures in order to provide a more meaningful measure on non-GAAP net income and certain adjustments related to non-recurring settlements of tax contingencies or other non-recurring tax charges, when applicable.\n\n- (2) Beginning in the second quarter of fiscal year 2022, the Company elected to include operating income as a subtotal in the condensed consolidated statements of operations. In addition, deferred revenue and customer working capital advances, previously included within other current liabilities, have been separately presented as deferred revenue and customer working capital advances in the current liabilities section of the condensed consolidated balance sheets. Further, certain unbilled receivables previously presented as part of accounts receivable, net of allowance for doubtful accounts are now being presented as contract assets on the condensed consolidated balance sheets as billing is to occur subsequent to revenue recognition and is conditional upon other than the passage of time. The Company reclassified $146.8 million of unbilled receivables from account receivable, net of allowance for doubtful accounts to contract assets for the period ended March 31, 2021 in order to align with the current year presentation. These presentation changes were applied to all periods presented in the condensed consolidated statement of operations and balance sheets. The foregoing changes in presentation had no impact on the Company's results of operations or cash flows.",
+  "chunk_text": "# Overview\n\n<!-- image -->\n\n## FLEX REPORTS SECOND QUARTER FISCAL 2022 RESULTS\n\nSan Jose, Calif., October 27, 2021 -Flex (NASDAQ: FLEX) today announced results for its second quarter ended October 1, 2021.\n\n## Second Quarter Fiscal Year 2022 Highlights:\n\n- Net Sales: $6.2 billion\n- GAAP Operating Income: $237 million\n- Adjusted Operating Income: $286 million\n- GAAP Net Income: $336 million\n- Adjusted Net Income: $233 million\n- GAAP Earnings Per Share: $0.69 which includes $0.30 non-cash income related to a favorable operational tax ruling\n- Adjusted Earnings Per Share: $0.48\nAn explanation and reconciliation of non-GAAP financial measures to GAAP financial measures is presented in Schedules II and V attached to this press release.\n'Our fiscal second quarter was ano ther strong result for Flex, achieving year over year revenue growth in our Agility and Reliability segments, as well as EPS and margin expansion. I would like to thank our team for their exceptional execution, managing through the supply chain challenges, ' said Revathi Advaithi, Flex Chief Executive Officer. 'We remain focused on driving profitable growth and margin expansion through organic and inorganic investments.'\n\n## Third Quarter Fiscal 2022 Guidance\n\n- Revenue: $6.1 billion to $6.5 billion\n- GAAP Operating Income: $210 million to $250 million\n- Adjusted Operating Income: $250 million to $290 million\n- GAAP EPS: $0.30 to $0.36 which includes $0.05 for stock-based compensation expense and $0.03 for net intangible amortization\n- Adjusted EPS: $0.38 to $0.44\n\n## Fiscal Year 2022 Guidance Updated\n\n- Revenue: $24.8 billion to $25.8 billion\n- GAAP EPS: $1.71 to $1.86 which includes $0.19 for stock-based compensation expense and $0.11 for net intangible amortization offset by ($0.31) for restructuring and other gains primarily related to $0.30 non-cash income from a favorable operational tax ruling recorded in Q2FY22\n- Adjusted EPS: $1.70 to $1.85\n<!-- image -->\n\n## Webcast and Conference Call\n\nThe Flex management team will host a conference call today at 1:30 PM (PT) / 4:30 PM (ET), to review second quarter fiscal 2022 results. A live webcast of the event and slides will be available on the Flex Investor Relations website at http://investors.flex.com. An audio replay and transcript will also be available after the event on the Flex Investor Relations website.\n\n## About Flex\n\nFlex (Reg. No. 199002645H) is the manufacturing partner of choice that helps a diverse customer base design and build products that improve the world. Through the collective strength of a global workforce across 30 countries and responsible, sustainable operations, Flex delivers technology innovation, supply chain, and manufacturing solutions to diverse industries and end markets.\n\n## Contacts\n\nInvestors &amp; Analysts David Rubin Vice President, Investor Relations (408) 577-4632 David.Rubin@flex.com\nMedia &amp; Press Mark Plungy Director, Corporate Integrated Communications (408) 442-1691 Mark.Plungy@flex.com\n\n## Notes and Disclosures\n\nproposed changes or future changes in tax laws in certain jurisdictions where we operate could materially impact our tax expense. In addition, the COVID-19 pandemic increases the likelihood and potential severity of many of the foregoing risks.\nAdditional information concerning these, and other risks is described under 'Risk Factors' and 'Management's Discussion and Analysis of Financial Condition and Results of Operations' in our annual report on Form 10 -K for the fiscal year ended March 31, 2021 and in subsequent quarterly reports on Form 10-Q. The forward-looking statements in this press release are based on current expectations and Flex assumes no obligation to update these forward-looking statements. Our share repurchase program does not obligate the Company to repurchase a specific number of shares and may be suspended or terminated at any time without prior notice.\nThis press release does not constitute an offer to sell or the solicitation of an offer to buy any securities. Any securities to be offered in any offering may not be sold nor may offers to buy be accepted prior to the time a registration statement becomes effective.\n<!-- image -->\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)\n\n| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 6,229 | $ 5,985 |\n| Cost of sales | 5,755 | 5,566 |\n| Restructuring charges | 9 | 24 |\n| Gross profit | 465 | 395 |\n| Selling, general and administrative expenses | 213 | 193 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 15 | 16 |\n| Operating income | 237 | 175 |\n| Interest and other, net | (134) | 22 |\n| Income before income taxes | 371 | 153 |\n| Provision for income taxes | 35 | 40 |\n| Net income | $ 336 | $ 113 |\n| Earnings per share: | | |\n| GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\n| Diluted shares used in computing per share amounts | 487 | 504 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)\n\n| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 12,571 | $ 11,138 |\n| Cost of sales | 11,625 | 10,406 |\n| Restructuring charges | 9 | 34 |\n| Gross profit | 937 | 698 |\n| Selling, general and administrative expenses | 414 | 384 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 30 | 31 |\n| Operating income | 493 | 272 |\n| Interest and other, net | (111) | 51 |\n| Income before income taxes | 604 | 221 |\n| Provision for income taxes | 62 | 56 |\n| Net income | $ 542 | $ 165 |\n| Earnings per share: | | |\n| GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\n| Diluted shares used in computing per share amounts | 493 | 503 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->\n\n## FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *\n\n| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 237 | $ 175 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Non-GAAP operating income | $ 286 | $ 247 |\n| GAAP provision for income taxes | $ 35 | $ 40 |\n| Intangible amortization benefit | 2 | 2 |\n| Other tax related adjustments | (3) | (2) |\n| Tax benefit on restructuring and other | - | 2 |\n| Non-GAAP provision for income taxes | $ 34 | $ 42 |\n| GAAP net income | $ 336 | $ 113 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Interest and other, net | (152) | (3) |\n| Adjustments for taxes | 1 | (2) |\n| Non-GAAP net income | $ 233 | $ 180 |\n| Diluted earnings per share: GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->\n\n## FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *\n\n| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 493 | $ 272 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Non-GAAP operating income | $ 576 | $ 410 |\n| GAAP provision for income taxes | $ 62 | $ 56 |\n| Intangible amortization benefit | 4 | 4 |\n| Other tax related adjustments | 3 | (3) |\n| Tax benefit on restructuring and other | - | 4 |\n| Non-GAAP provision for income taxes | $ 70 | $ 60 |\n| GAAP net income | $ 542 | $ 165 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Interest and other, net | (155) | (2) |\n| Adjustments for taxes | (7) | (5) |\n| Non-GAAP net income | $ 462 | $ 296 |\n| Diluted earnings per share: GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED BALANCE SHEETS (2) (In millions)\n\n| | As of October 1, 2021 | As of October 1, 2021 | As of March 31, 2021 |\n|-------------------------------------------------------------|-------------------------|-------------------------|------------------------|\n| ASSETS | | | |\n| Current assets: | | | |\n| Cash and cash equivalents | $ | 2,458 | $ 2,637 |\n| Accounts receivable, net of allowance for doubtful accounts | | 3,505 | 3,959 |\n| Contract assets | | 392 | 282 |\n| Inventories | | 5,168 | 3,895 |\n| Other current assets | | 660 | 590 |\n| Total current assets | | 12,183 | 11,363 |\n| Property and equipment, net | | 2,100 | 2,097 |\n| Operating lease right-of-use assets, net | | 612 | 642 |\n| Goodwill | | 1,085 | 1,090 |\n| Other intangible assets, net | | 182 | 213 |\n| Other assets | | 549 | 431 |\n| Total assets | $ | 16,711 | $ 15,836 |\n| LIABILITIES AND SHAREHOLDERS' EQUITY | | | |\n| Current liabilities: | | | |\n| Bank borrowings and current portion of long- term debt | $ | 284 | $ 268 |\n| Accounts payable | | 5,848 | 5,247 |\n| Accrued payroll | | 450 | 473 |\n| Deferred revenue and customer working capital advances | | 1,146 | 848 |\n| Other current liabilities | | 960 | 998 |\n| Total current liabilities | | 8,688 | 7,834 |\n| Long-term debt, net of current portion | | 3,501 | 3,515 |\n| Operating lease liabilities, non-current | | 534 | 562 |\n| Other liabilities | | 474 | 489 |\n| Total shareholders' equity | | 3,514 | 3,436 |\n| Total liabilities and shareholders' equity | $ | 16,711 | $ 15,836 |\nSee the accompanying notes on Schedule V attached to this press release.\n\n## SCHEDULE III\n\n<!-- image -->\nSCHEDULE IV\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS (In millions)\n\n| | Six-Month Periods Ended | Six-Month Periods Ended |\n|-------------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| CASH FLOWS FROM OPERATING ACTIVITIES: | | |\n| Net income | $ 542 | $ 165 |\n| Depreciation, amortization and other impairment | 236 | 283 |\n| charges Changes in working capital and other, net | (264) | (813) |\n| Net cash provided by (used in) operating | 514 | (365) |\n| CASH FLOWS FROM INVESTING ACTIVITIES: | | |\n| Purchases of property and equipment | (210) | (185) |\n| Proceeds from the disposition of property and | 5 | 14 |\n| equipment Other investing activities, net | 2 | 13 |\n| Net cash used in investing activities | (203) | (158) |\n| CASH FLOWS FROM FINANCING ACTIVITIES: | | |\n| Proceeds from bank borrowings and long-term | 20 | 1,943 |\n| debt Repayments of bank borrowings and long-term | (9) | (1,005) |\n| debt Payments for repurchases of ordinary shares | (490) | - |\n| Other financing activities, net | (8) | 2 |\n| Net cash provided by (used in) financing | (487) | 940 |\n| Effect of exchange rates on cash and cash equivalents | (3) | 19 |\n| Net increase (decrease) in cash and cash equivalents | (179) | 436 |\n| Cash and cash equivalents, beginning of period | 2,637 | 1,923 |\n| Cash and cash equivalents, end of period | $ 2,458 | $ 2,359 |\n\n## FLEX AND SUBSIDIARIES NOTES TO SCHEDULES I, II, and III\n\n- (1) To supplement Flex's unaudited selected financial data presented consistent with Generally Accepted Accounting Principles ('GAAP'), the Company discloses certain non -GAAP financial measures that exclude certain charges and gains, including non-GAAP operating income, non-GAAP net income and non-GAAP net income per diluted share. These supplemental measures exclude restructuring charges, customer-related asset impairments (recoveries), stock-based compensation expense, intangible amortization, other discrete events as applicable and the related tax effects. These non-GAAP measures are not in accordance with or an alternative for GAAP and may be different from non-GAAP measures used by other companies. We believe that these non-GAAP measures have limitations in that they do not reflect all of the amounts associated with Flex's results of operations as determined in accordance with GAAP and that these measures should only be used to evaluate Flex's results of operations in conjunction with the corresponding GAAP measures. The presentation of this additional information is not meant to be considered in isolation or as a substitute for the most directly comparable GAAP measures. We compensate for the limitations of non-GAAP financial measures by relying upon GAAP results to gain a complete picture of the Company's performance.\nIn calculating non-GAAP financial measures, we exclude certain items to facilitate a review of the comparability of the Company's operating performance on a period-to-period basis because such items are not, in our view, related to the Company's ongoing operational performance. We use non-GAAP measures to evaluate the operating performance of our business, for comparison with forecasts and strategic plans, for calculating return on investment, and for benchmarking performance externally against competitors. In addition, management's incentive compensation is determined using certain non -GAAP measures. Also, when evaluating potential acquisitions, we exclude certain of the items described below from consideration of the target's performance and valuation. Since we find these measures to be useful, we believe that investors benefit from seeing results 'through the eyes' of management in addition to seeing GAAP r esults. We believe that these non-GAAP measures, when read in conjunction with the Company's GAAP financials, provide useful information to investors by offering:\n- the ability to make more meaningful period-toperiod comparisons of the Company's on-going operating results;\n- the ability to better identify trends in the Company's underlying business and perform related trend analyses;\n- a better understanding of how management plans and measures the Company's underlying business; and\n- an easier way to compare the Company's operating results against analyst financial models and operating results of competitors that supplement their GAAP results with non-GAAP financial measures.\nThe following are explanations of each of the adjustments that we incorporate into nonGAAP measures, as well as the reasons for excluding each of these individual items in the reconciliations of these non-GAAP financial measures:\nStock-based compensation expense consists of non-cash charges for the estimated fair value of stock options and unvested restricted share unit awards granted to employees and assumed in business acquisitions. The Company believes that the\n\n## Notes and Disclosures\n\nexclusion of these charges provides for more accurate comparisons of its operating results to peer companies due to the varying available valuation methodologies, subjective assumptions and the variety of award types. In addition, the Company believes it is useful to investors to understand the specific impact stock-based compensation expense has on its operating results.\nIntangible amortization consists primarily of non-cash charges that can be impacted by, among other things, the timing and magnitude of acquisitions. The Company considers its operating results without these charges when evaluating its ongoing performance and forecasting its earnings trends, and therefore excludes such charges when presenting non-GAAP financial measures. The Company believes that the assessment of its operations excluding these costs is relevant to its assessment of internal operations and comparisons to the performance of its competitors.\nRestructuring charges include severance for rationalization at existing sites and corporate SG&amp;A functions as well as asset impairment, and other charges related to the closures and consolidations of certain operating sites and targeted activities to restructure the business. These costs may vary in size based on the Company's initiatives and are not directly related to ongoing or core business results, and do not reflect expected future operating expenses. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nIn order to support the Compa ny's strategy and build a sustainable organization, and after considering that the economic recovery from the pandemic would be slower than anticipated, the Company identified certain structural changes to restructuring the business in fiscal year 2021. These restructuring actions eliminated non-core activities primarily within the Company's corporate function, aligned the Company's cost structure with its reorganizing and optimizing of its operations model along its two reporting segments, and further sharpened its focus to winning business in end markets where it had competitive advantages and deep domain expertise. During the three and six-month periods ended September 25, 2020, the Company recognized approximately $35 million and $45 million of restructuring charges respectively, most of which related to employee severance.\nLegal and other consist primarily of costs not directly related to core business results and may include matters relating to commercial disputes, government regulatory and compliance, intellectual property, antitrust, tax, employment or shareholder issues, product liability claims and other issues on a global basis as well as customer related asset recoveries. During the first quarter of fiscal year 2021, the Company accrued for certain loss contingencies where losses are considered probable and estimable. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nInterest and other, net consists of various other types of items that are not directly related to ongoing or core business results, such as the gain or losses related to certain divestitures, debt extinguishment costs and impairment charges or gains associated with certain non-core investments. The Company excludes these items because they are not related to the Company's ongoing operating performance or do not affect core operations. Excluding these amounts provides investors with a basis to compare Company performance against the performance of other companies without this variability.\n\n## Notes and Disclosures\n\nIn September 2021, the Company received approval from the relevant tax authorities in Brazil of the Credit Habilitation request related to certain federal operational tax credit and the Company recorded a total gain of 809.6 million Brazilian reals (approximately USD $149.3 million based on the exchange rate as of October 1, 2021) under interest and other, net in the condensed statements of operations for the three and six-month periods ended October 1, 2021. The total gain recorded included credits from February 2003 to September 2021, net of additional taxes, as the Credit Habilitation received covering the period from February 2003 to December 2019 resolved any uncertainty regarding the Company's ability to claim such credits. This gain is non-cash and can only be used to offset certain current and future tax obligations.\nAdjustment for taxes relates to the tax effects of the various adjustments that we incorporate into non-GAAP measures in order to provide a more meaningful measure on non-GAAP net income and certain adjustments related to non-recurring settlements of tax contingencies or other non-recurring tax charges, when applicable.\n- (2) Beginning in the second quarter of fiscal year 2022, the Company elected to include operating income as a subtotal in the condensed consolidated statements of operations. In addition, deferred revenue and customer working capital advances, previously included within other current liabilities, have been separately presented as deferred revenue and customer working capital advances in the current liabilities section of the condensed consolidated balance sheets. Further, certain unbilled receivables previously presented as part of accounts receivable, net of allowance for doubtful accounts are now being presented as contract assets on the condensed consolidated balance sheets as billing is to occur subsequent to revenue recognition and is conditional upon other than the passage of time. The Company reclassified $146.8 million of unbilled receivables from account receivable, net of allowance for doubtful accounts to contract assets for the period ended March 31, 2021 in order to align with the current year presentation. These presentation changes were applied to all periods presented in the condensed consolidated statement of operations and balance sheets. The foregoing changes in presentation had no impact on the Company's results of operations or cash flows.",
+  "full_text_core": "# Overview\n\n<!-- image -->\n\n## FLEX REPORTS SECOND QUARTER FISCAL 2022 RESULTS\n\nSan Jose, Calif., October 27, 2021 -Flex (NASDAQ: FLEX) today announced results for its second quarter ended October 1, 2021.\n\n## Second Quarter Fiscal Year 2022 Highlights:\n\n- Net Sales: $6.2 billion\n- GAAP Operating Income: $237 million\n- Adjusted Operating Income: $286 million\n- GAAP Net Income: $336 million\n- Adjusted Net Income: $233 million\n- GAAP Earnings Per Share: $0.69 which includes $0.30 non-cash income related to a favorable operational tax ruling\n- Adjusted Earnings Per Share: $0.48\nAn explanation and reconciliation of non-GAAP financial measures to GAAP financial measures is presented in Schedules II and V attached to this press release.\n'Our fiscal second quarter was ano ther strong result for Flex, achieving year over year revenue growth in our Agility and Reliability segments, as well as EPS and margin expansion. I would like to thank our team for their exceptional execution, managing through the supply chain challenges, ' said Revathi Advaithi, Flex Chief Executive Officer. 'We remain focused on driving profitable growth and margin expansion through organic and inorganic investments.'\n\n## Third Quarter Fiscal 2022 Guidance\n\n- Revenue: $6.1 billion to $6.5 billion\n- GAAP Operating Income: $210 million to $250 million\n- Adjusted Operating Income: $250 million to $290 million\n- GAAP EPS: $0.30 to $0.36 which includes $0.05 for stock-based compensation expense and $0.03 for net intangible amortization\n- Adjusted EPS: $0.38 to $0.44\n\n## Fiscal Year 2022 Guidance Updated\n\n- Revenue: $24.8 billion to $25.8 billion\n- GAAP EPS: $1.71 to $1.86 which includes $0.19 for stock-based compensation expense and $0.11 for net intangible amortization offset by ($0.31) for restructuring and other gains primarily related to $0.30 non-cash income from a favorable operational tax ruling recorded in Q2FY22\n- Adjusted EPS: $1.70 to $1.85\n<!-- image -->\n\n## Webcast and Conference Call\n\nThe Flex management team will host a conference call today at 1:30 PM (PT) / 4:30 PM (ET), to review second quarter fiscal 2022 results. A live webcast of the event and slides will be available on the Flex Investor Relations website at http://investors.flex.com. An audio replay and transcript will also be available after the event on the Flex Investor Relations website.\n\n## About Flex\n\nFlex (Reg. No. 199002645H) is the manufacturing partner of choice that helps a diverse customer base design and build products that improve the world. Through the collective strength of a global workforce across 30 countries and responsible, sustainable operations, Flex delivers technology innovation, supply chain, and manufacturing solutions to diverse industries and end markets.\n\n## Contacts\n\nInvestors &amp; Analysts David Rubin Vice President, Investor Relations (408) 577-4632 David.Rubin@flex.com\nMedia &amp; Press Mark Plungy Director, Corporate Integrated Communications (408) 442-1691 Mark.Plungy@flex.com\n\n## Notes and Disclosures\n\nproposed changes or future changes in tax laws in certain jurisdictions where we operate could materially impact our tax expense. In addition, the COVID-19 pandemic increases the likelihood and potential severity of many of the foregoing risks.\nAdditional information concerning these, and other risks is described under 'Risk Factors' and 'Management's Discussion and Analysis of Financial Condition and Results of Operations' in our annual report on Form 10 -K for the fiscal year ended March 31, 2021 and in subsequent quarterly reports on Form 10-Q. The forward-looking statements in this press release are based on current expectations and Flex assumes no obligation to update these forward-looking statements. Our share repurchase program does not obligate the Company to repurchase a specific number of shares and may be suspended or terminated at any time without prior notice.\nThis press release does not constitute an offer to sell or the solicitation of an offer to buy any securities. Any securities to be offered in any offering may not be sold nor may offers to buy be accepted prior to the time a registration statement becomes effective.\n<!-- image -->\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)\n\n| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 6,229 | $ 5,985 |\n| Cost of sales | 5,755 | 5,566 |\n| Restructuring charges | 9 | 24 |\n| Gross profit | 465 | 395 |\n| Selling, general and administrative expenses | 213 | 193 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 15 | 16 |\n| Operating income | 237 | 175 |\n| Interest and other, net | (134) | 22 |\n| Income before income taxes | 371 | 153 |\n| Provision for income taxes | 35 | 40 |\n| Net income | $ 336 | $ 113 |\n| Earnings per share: | | |\n| GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\n| Diluted shares used in computing per share amounts | 487 | 504 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)\n\n| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 12,571 | $ 11,138 |\n| Cost of sales | 11,625 | 10,406 |\n| Restructuring charges | 9 | 34 |\n| Gross profit | 937 | 698 |\n| Selling, general and administrative expenses | 414 | 384 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 30 | 31 |\n| Operating income | 493 | 272 |\n| Interest and other, net | (111) | 51 |\n| Income before income taxes | 604 | 221 |\n| Provision for income taxes | 62 | 56 |\n| Net income | $ 542 | $ 165 |\n| Earnings per share: | | |\n| GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\n| Diluted shares used in computing per share amounts | 493 | 503 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->\n\n## FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *\n\n| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 237 | $ 175 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Non-GAAP operating income | $ 286 | $ 247 |\n| GAAP provision for income taxes | $ 35 | $ 40 |\n| Intangible amortization benefit | 2 | 2 |\n| Other tax related adjustments | (3) | (2) |\n| Tax benefit on restructuring and other | - | 2 |\n| Non-GAAP provision for income taxes | $ 34 | $ 42 |\n| GAAP net income | $ 336 | $ 113 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Interest and other, net | (152) | (3) |\n| Adjustments for taxes | 1 | (2) |\n| Non-GAAP net income | $ 233 | $ 180 |\n| Diluted earnings per share: GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->\n\n## FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *\n\n| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 493 | $ 272 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Non-GAAP operating income | $ 576 | $ 410 |\n| GAAP provision for income taxes | $ 62 | $ 56 |\n| Intangible amortization benefit | 4 | 4 |\n| Other tax related adjustments | 3 | (3) |\n| Tax benefit on restructuring and other | - | 4 |\n| Non-GAAP provision for income taxes | $ 70 | $ 60 |\n| GAAP net income | $ 542 | $ 165 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Interest and other, net | (155) | (2) |\n| Adjustments for taxes | (7) | (5) |\n| Non-GAAP net income | $ 462 | $ 296 |\n| Diluted earnings per share: GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED BALANCE SHEETS (2) (In millions)\n\n| | As of October 1, 2021 | As of October 1, 2021 | As of March 31, 2021 |\n|-------------------------------------------------------------|-------------------------|-------------------------|------------------------|\n| ASSETS | | | |\n| Current assets: | | | |\n| Cash and cash equivalents | $ | 2,458 | $ 2,637 |\n| Accounts receivable, net of allowance for doubtful accounts | | 3,505 | 3,959 |\n| Contract assets | | 392 | 282 |\n| Inventories | | 5,168 | 3,895 |\n| Other current assets | | 660 | 590 |\n| Total current assets | | 12,183 | 11,363 |\n| Property and equipment, net | | 2,100 | 2,097 |\n| Operating lease right-of-use assets, net | | 612 | 642 |\n| Goodwill | | 1,085 | 1,090 |\n| Other intangible assets, net | | 182 | 213 |\n| Other assets | | 549 | 431 |\n| Total assets | $ | 16,711 | $ 15,836 |\n| LIABILITIES AND SHAREHOLDERS' EQUITY | | | |\n| Current liabilities: | | | |\n| Bank borrowings and current portion of long- term debt | $ | 284 | $ 268 |\n| Accounts payable | | 5,848 | 5,247 |\n| Accrued payroll | | 450 | 473 |\n| Deferred revenue and customer working capital advances | | 1,146 | 848 |\n| Other current liabilities | | 960 | 998 |\n| Total current liabilities | | 8,688 | 7,834 |\n| Long-term debt, net of current portion | | 3,501 | 3,515 |\n| Operating lease liabilities, non-current | | 534 | 562 |\n| Other liabilities | | 474 | 489 |\n| Total shareholders' equity | | 3,514 | 3,436 |\n| Total liabilities and shareholders' equity | $ | 16,711 | $ 15,836 |\nSee the accompanying notes on Schedule V attached to this press release.\n\n## SCHEDULE III\n\n<!-- image -->\nSCHEDULE IV\n\n## FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS (In millions)\n\n| | Six-Month Periods Ended | Six-Month Periods Ended |\n|-------------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| CASH FLOWS FROM OPERATING ACTIVITIES: | | |\n| Net income | $ 542 | $ 165 |\n| Depreciation, amortization and other impairment | 236 | 283 |\n| charges Changes in working capital and other, net | (264) | (813) |\n| Net cash provided by (used in) operating | 514 | (365) |\n| CASH FLOWS FROM INVESTING ACTIVITIES: | | |\n| Purchases of property and equipment | (210) | (185) |\n| Proceeds from the disposition of property and | 5 | 14 |\n| equipment Other investing activities, net | 2 | 13 |\n| Net cash used in investing activities | (203) | (158) |\n| CASH FLOWS FROM FINANCING ACTIVITIES: | | |\n| Proceeds from bank borrowings and long-term | 20 | 1,943 |\n| debt Repayments of bank borrowings and long-term | (9) | (1,005) |\n| debt Payments for repurchases of ordinary shares | (490) | - |\n| Other financing activities, net | (8) | 2 |\n| Net cash provided by (used in) financing | (487) | 940 |\n| Effect of exchange rates on cash and cash equivalents | (3) | 19 |\n| Net increase (decrease) in cash and cash equivalents | (179) | 436 |\n| Cash and cash equivalents, beginning of period | 2,637 | 1,923 |\n| Cash and cash equivalents, end of period | $ 2,458 | $ 2,359 |\n\n## FLEX AND SUBSIDIARIES NOTES TO SCHEDULES I, II, and III\n\n- (1) To supplement Flex's unaudited selected financial data presented consistent with Generally Accepted Accounting Principles ('GAAP'), the Company discloses certain non -GAAP financial measures that exclude certain charges and gains, including non-GAAP operating income, non-GAAP net income and non-GAAP net income per diluted share. These supplemental measures exclude restructuring charges, customer-related asset impairments (recoveries), stock-based compensation expense, intangible amortization, other discrete events as applicable and the related tax effects. These non-GAAP measures are not in accordance with or an alternative for GAAP and may be different from non-GAAP measures used by other companies. We believe that these non-GAAP measures have limitations in that they do not reflect all of the amounts associated with Flex's results of operations as determined in accordance with GAAP and that these measures should only be used to evaluate Flex's results of operations in conjunction with the corresponding GAAP measures. The presentation of this additional information is not meant to be considered in isolation or as a substitute for the most directly comparable GAAP measures. We compensate for the limitations of non-GAAP financial measures by relying upon GAAP results to gain a complete picture of the Company's performance.\nIn calculating non-GAAP financial measures, we exclude certain items to facilitate a review of the comparability of the Company's operating performance on a period-to-period basis because such items are not, in our view, related to the Company's ongoing operational performance. We use non-GAAP measures to evaluate the operating performance of our business, for comparison with forecasts and strategic plans, for calculating return on investment, and for benchmarking performance externally against competitors. In addition, management's incentive compensation is determined using certain non -GAAP measures. Also, when evaluating potential acquisitions, we exclude certain of the items described below from consideration of the target's performance and valuation. Since we find these measures to be useful, we believe that investors benefit from seeing results 'through the eyes' of management in addition to seeing GAAP r esults. We believe that these non-GAAP measures, when read in conjunction with the Company's GAAP financials, provide useful information to investors by offering:\n- the ability to make more meaningful period-toperiod comparisons of the Company's on-going operating results;\n- the ability to better identify trends in the Company's underlying business and perform related trend analyses;\n- a better understanding of how management plans and measures the Company's underlying business; and\n- an easier way to compare the Company's operating results against analyst financial models and operating results of competitors that supplement their GAAP results with non-GAAP financial measures.\nThe following are explanations of each of the adjustments that we incorporate into nonGAAP measures, as well as the reasons for excluding each of these individual items in the reconciliations of these non-GAAP financial measures:\nStock-based compensation expense consists of non-cash charges for the estimated fair value of stock options and unvested restricted share unit awards granted to employees and assumed in business acquisitions. The Company believes that the\n\n## Notes and Disclosures\n\nexclusion of these charges provides for more accurate comparisons of its operating results to peer companies due to the varying available valuation methodologies, subjective assumptions and the variety of award types. In addition, the Company believes it is useful to investors to understand the specific impact stock-based compensation expense has on its operating results.\nIntangible amortization consists primarily of non-cash charges that can be impacted by, among other things, the timing and magnitude of acquisitions. The Company considers its operating results without these charges when evaluating its ongoing performance and forecasting its earnings trends, and therefore excludes such charges when presenting non-GAAP financial measures. The Company believes that the assessment of its operations excluding these costs is relevant to its assessment of internal operations and comparisons to the performance of its competitors.\nRestructuring charges include severance for rationalization at existing sites and corporate SG&amp;A functions as well as asset impairment, and other charges related to the closures and consolidations of certain operating sites and targeted activities to restructure the business. These costs may vary in size based on the Company's initiatives and are not directly related to ongoing or core business results, and do not reflect expected future operating expenses. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nIn order to support the Compa ny's strategy and build a sustainable organization, and after considering that the economic recovery from the pandemic would be slower than anticipated, the Company identified certain structural changes to restructuring the business in fiscal year 2021. These restructuring actions eliminated non-core activities primarily within the Company's corporate function, aligned the Company's cost structure with its reorganizing and optimizing of its operations model along its two reporting segments, and further sharpened its focus to winning business in end markets where it had competitive advantages and deep domain expertise. During the three and six-month periods ended September 25, 2020, the Company recognized approximately $35 million and $45 million of restructuring charges respectively, most of which related to employee severance.\nLegal and other consist primarily of costs not directly related to core business results and may include matters relating to commercial disputes, government regulatory and compliance, intellectual property, antitrust, tax, employment or shareholder issues, product liability claims and other issues on a global basis as well as customer related asset recoveries. During the first quarter of fiscal year 2021, the Company accrued for certain loss contingencies where losses are considered probable and estimable. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nInterest and other, net consists of various other types of items that are not directly related to ongoing or core business results, such as the gain or losses related to certain divestitures, debt extinguishment costs and impairment charges or gains associated with certain non-core investments. The Company excludes these items because they are not related to the Company's ongoing operating performance or do not affect core operations. Excluding these amounts provides investors with a basis to compare Company performance against the performance of other companies without this variability.\n\n## Notes and Disclosures\n\nIn September 2021, the Company received approval from the relevant tax authorities in Brazil of the Credit Habilitation request related to certain federal operational tax credit and the Company recorded a total gain of 809.6 million Brazilian reals (approximately USD $149.3 million based on the exchange rate as of October 1, 2021) under interest and other, net in the condensed statements of operations for the three and six-month periods ended October 1, 2021. The total gain recorded included credits from February 2003 to September 2021, net of additional taxes, as the Credit Habilitation received covering the period from February 2003 to December 2019 resolved any uncertainty regarding the Company's ability to claim such credits. This gain is non-cash and can only be used to offset certain current and future tax obligations.\nAdjustment for taxes relates to the tax effects of the various adjustments that we incorporate into non-GAAP measures in order to provide a more meaningful measure on non-GAAP net income and certain adjustments related to non-recurring settlements of tax contingencies or other non-recurring tax charges, when applicable.\n- (2) Beginning in the second quarter of fiscal year 2022, the Company elected to include operating income as a subtotal in the condensed consolidated statements of operations. In addition, deferred revenue and customer working capital advances, previously included within other current liabilities, have been separately presented as deferred revenue and customer working capital advances in the current liabilities section of the condensed consolidated balance sheets. Further, certain unbilled receivables previously presented as part of accounts receivable, net of allowance for doubtful accounts are now being presented as contract assets on the condensed consolidated balance sheets as billing is to occur subsequent to revenue recognition and is conditional upon other than the passage of time. The Company reclassified $146.8 million of unbilled receivables from account receivable, net of allowance for doubtful accounts to contract assets for the period ended March 31, 2021 in order to align with the current year presentation. These presentation changes were applied to all periods presented in the condensed consolidated statement of operations and balance sheets. The foregoing changes in presentation had no impact on the Company's results of operations or cash flows.",
+  "pages": [],
+  "blocks": [
+    {
+      "block_id": "s1:h",
+      "type": "heading",
+      "section_id": "s1",
+      "page_num": 0,
+      "content": "Overview",
+      "char_count": 8
+    },
+    {
+      "block_id": "s1:p",
+      "type": "paragraph",
+      "section_id": "s1",
+      "page_num": 0,
+      "content": "<!-- image -->",
+      "char_count": 14,
+      "is_tail": false
+    },
+    {
+      "block_id": "s2:h",
+      "type": "heading",
+      "section_id": "s2",
+      "page_num": 0,
+      "content": "FLEX REPORTS SECOND QUARTER FISCAL 2022 RESULTS",
+      "char_count": 47
+    },
+    {
+      "block_id": "s2:p",
+      "type": "paragraph",
+      "section_id": "s2",
+      "page_num": 0,
+      "content": "San Jose, Calif., October 27, 2021 -Flex (NASDAQ: FLEX) today announced results for its second quarter ended October 1, 2021.",
+      "char_count": 125,
+      "is_tail": false
+    },
+    {
+      "block_id": "s3:h",
+      "type": "heading",
+      "section_id": "s3",
+      "page_num": 0,
+      "content": "Second Quarter Fiscal Year 2022 Highlights:",
+      "char_count": 43
+    },
+    {
+      "block_id": "s3:p",
+      "type": "paragraph",
+      "section_id": "s3",
+      "page_num": 0,
+      "content": "- Net Sales: $6.2 billion\n- GAAP Operating Income: $237 million\n- Adjusted Operating Income: $286 million\n- GAAP Net Income: $336 million\n- Adjusted Net Income: $233 million\n- GAAP Earnings Per Share: $0.69 which includes $0.30 non-cash income related to a favorable operational tax ruling\n- Adjusted Earnings Per Share: $0.48\nAn explanation and reconciliation of non-GAAP financial measures to GAAP financial measures is presented in Schedules II and V attached to this press release.\n'Our fiscal second quarter was ano ther strong result for Flex, achieving year over year revenue growth in our Agility and Reliability segments, as well as EPS and margin expansion. I would like to thank our team for their exceptional execution, managing through the supply chain challenges, ' said Revathi Advaithi, Flex Chief Executive Officer. 'We remain focused on driving profitable growth and margin expansion through organic and inorganic investments.'",
+      "char_count": 945,
+      "is_tail": false
+    },
+    {
+      "block_id": "s4:h",
+      "type": "heading",
+      "section_id": "s4",
+      "page_num": 0,
+      "content": "Third Quarter Fiscal 2022 Guidance",
+      "char_count": 34
+    },
+    {
+      "block_id": "s4:p",
+      "type": "paragraph",
+      "section_id": "s4",
+      "page_num": 0,
+      "content": "- Revenue: $6.1 billion to $6.5 billion\n- GAAP Operating Income: $210 million to $250 million\n- Adjusted Operating Income: $250 million to $290 million\n- GAAP EPS: $0.30 to $0.36 which includes $0.05 for stock-based compensation expense and $0.03 for net intangible amortization\n- Adjusted EPS: $0.38 to $0.44",
+      "char_count": 309,
+      "is_tail": false
+    },
+    {
+      "block_id": "s5:h",
+      "type": "heading",
+      "section_id": "s5",
+      "page_num": 0,
+      "content": "Fiscal Year 2022 Guidance Updated",
+      "char_count": 33
+    },
+    {
+      "block_id": "s5:p",
+      "type": "paragraph",
+      "section_id": "s5",
+      "page_num": 0,
+      "content": "- Revenue: $24.8 billion to $25.8 billion\n- GAAP EPS: $1.71 to $1.86 which includes $0.19 for stock-based compensation expense and $0.11 for net intangible amortization offset by ($0.31) for restructuring and other gains primarily related to $0.30 non-cash income from a favorable operational tax ruling recorded in Q2FY22\n- Adjusted EPS: $1.70 to $1.85\n<!-- image -->",
+      "char_count": 368,
+      "is_tail": false
+    },
+    {
+      "block_id": "s6:h",
+      "type": "heading",
+      "section_id": "s6",
+      "page_num": 0,
+      "content": "Webcast and Conference Call",
+      "char_count": 27
+    },
+    {
+      "block_id": "s6:p",
+      "type": "paragraph",
+      "section_id": "s6",
+      "page_num": 0,
+      "content": "The Flex management team will host a conference call today at 1:30 PM (PT) / 4:30 PM (ET), to review second quarter fiscal 2022 results. A live webcast of the event and slides will be available on the Flex Investor Relations website at http://investors.flex.com. An audio replay and transcript will also be available after the event on the Flex Investor Relations website.",
+      "char_count": 372,
+      "is_tail": false
+    },
+    {
+      "block_id": "s7:h",
+      "type": "heading",
+      "section_id": "s7",
+      "page_num": 0,
+      "content": "About Flex",
+      "char_count": 10
+    },
+    {
+      "block_id": "s7:p",
+      "type": "paragraph",
+      "section_id": "s7",
+      "page_num": 0,
+      "content": "Flex (Reg. No. 199002645H) is the manufacturing partner of choice that helps a diverse customer base design and build products that improve the world. Through the collective strength of a global workforce across 30 countries and responsible, sustainable operations, Flex delivers technology innovation, supply chain, and manufacturing solutions to diverse industries and end markets.",
+      "char_count": 383,
+      "is_tail": false
+    },
+    {
+      "block_id": "s8:h",
+      "type": "heading",
+      "section_id": "s8",
+      "page_num": 0,
+      "content": "Contacts",
+      "char_count": 8
+    },
+    {
+      "block_id": "s8:p",
+      "type": "paragraph",
+      "section_id": "s8",
+      "page_num": 0,
+      "content": "Investors &amp; Analysts David Rubin Vice President, Investor Relations (408) 577-4632 David.Rubin@flex.com\nMedia &amp; Press Mark Plungy Director, Corporate Integrated Communications (408) 442-1691 Mark.Plungy@flex.com",
+      "char_count": 219,
+      "is_tail": false
+    },
+    {
+      "block_id": "s9:h",
+      "type": "heading",
+      "section_id": "s9",
+      "page_num": 0,
+      "content": "Notes and Disclosures",
+      "char_count": 21
+    },
+    {
+      "block_id": "s9:p",
+      "type": "paragraph",
+      "section_id": "s9",
+      "page_num": 0,
+      "content": "proposed changes or future changes in tax laws in certain jurisdictions where we operate could materially impact our tax expense. In addition, the COVID-19 pandemic increases the likelihood and potential severity of many of the foregoing risks.\nAdditional information concerning these, and other risks is described under 'Risk Factors' and 'Management's Discussion and Analysis of Financial Condition and Results of Operations' in our annual report on Form 10 -K for the fiscal year ended March 31, 2021 and in subsequent quarterly reports on Form 10-Q. The forward-looking statements in this press release are based on current expectations and Flex assumes no obligation to update these forward-looking statements. Our share repurchase program does not obligate the Company to repurchase a specific number of shares and may be suspended or terminated at any time without prior notice.\nThis press release does not constitute an offer to sell or the solicitation of an offer to buy any securities. Any securities to be offered in any offering may not be sold nor may offers to buy be accepted prior to the time a registration statement becomes effective.\n<!-- image -->",
+      "char_count": 1168,
+      "is_tail": false
+    },
+    {
+      "block_id": "s10:h",
+      "type": "heading",
+      "section_id": "s10",
+      "page_num": 0,
+      "content": "FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)",
+      "char_count": 106
+    },
+    {
+      "block_id": "s10:p",
+      "type": "paragraph",
+      "section_id": "s10",
+      "page_num": 0,
+      "content": "| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 6,229 | $ 5,985 |\n| Cost of sales | 5,755 | 5,566 |\n| Restructuring charges | 9 | 24 |\n| Gross profit | 465 | 395 |\n| Selling, general and administrative expenses | 213 | 193 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 15 | 16 |\n| Operating income | 237 | 175 |\n| Interest and other, net | (134) | 22 |\n| Income before income taxes | 371 | 153 |\n| Provision for income taxes | 35 | 40 |\n| Net income | $ 336 | $ 113 |\n| Earnings per share: | | |\n| GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\n| Diluted shares used in computing per share amounts | 487 | 504 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->",
+      "char_count": 1006,
+      "is_tail": false
+    },
+    {
+      "block_id": "s11:h",
+      "type": "heading",
+      "section_id": "s11",
+      "page_num": 0,
+      "content": "FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)",
+      "char_count": 106
+    },
+    {
+      "block_id": "s11:p",
+      "type": "paragraph",
+      "section_id": "s11",
+      "page_num": 0,
+      "content": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 12,571 | $ 11,138 |\n| Cost of sales | 11,625 | 10,406 |\n| Restructuring charges | 9 | 34 |\n| Gross profit | 937 | 698 |\n| Selling, general and administrative expenses | 414 | 384 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 30 | 31 |\n| Operating income | 493 | 272 |\n| Interest and other, net | (111) | 51 |\n| Income before income taxes | 604 | 221 |\n| Provision for income taxes | 62 | 56 |\n| Net income | $ 542 | $ 165 |\n| Earnings per share: | | |\n| GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\n| Diluted shares used in computing per share amounts | 493 | 503 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->",
+      "char_count": 1002,
+      "is_tail": false
+    },
+    {
+      "block_id": "s12:h",
+      "type": "heading",
+      "section_id": "s12",
+      "page_num": 0,
+      "content": "FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *",
+      "char_count": 107
+    },
+    {
+      "block_id": "s12:p",
+      "type": "paragraph",
+      "section_id": "s12",
+      "page_num": 0,
+      "content": "| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 237 | $ 175 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Non-GAAP operating income | $ 286 | $ 247 |\n| GAAP provision for income taxes | $ 35 | $ 40 |\n| Intangible amortization benefit | 2 | 2 |\n| Other tax related adjustments | (3) | (2) |\n| Tax benefit on restructuring and other | - | 2 |\n| Non-GAAP provision for income taxes | $ 34 | $ 42 |\n| GAAP net income | $ 336 | $ 113 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Interest and other, net | (152) | (3) |\n| Adjustments for taxes | 1 | (2) |\n| Non-GAAP net income | $ 233 | $ 180 |\n| Diluted earnings per share: GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->",
+      "char_count": 1203,
+      "is_tail": false
+    },
+    {
+      "block_id": "s13:h",
+      "type": "heading",
+      "section_id": "s13",
+      "page_num": 0,
+      "content": "FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *",
+      "char_count": 107
+    },
+    {
+      "block_id": "s13:p",
+      "type": "paragraph",
+      "section_id": "s13",
+      "page_num": 0,
+      "content": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 493 | $ 272 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Non-GAAP operating income | $ 576 | $ 410 |\n| GAAP provision for income taxes | $ 62 | $ 56 |\n| Intangible amortization benefit | 4 | 4 |\n| Other tax related adjustments | 3 | (3) |\n| Tax benefit on restructuring and other | - | 4 |\n| Non-GAAP provision for income taxes | $ 70 | $ 60 |\n| GAAP net income | $ 542 | $ 165 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Interest and other, net | (155) | (2) |\n| Adjustments for taxes | (7) | (5) |\n| Non-GAAP net income | $ 462 | $ 296 |\n| Diluted earnings per share: GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->",
+      "char_count": 1193,
+      "is_tail": false
+    },
+    {
+      "block_id": "s14:h",
+      "type": "heading",
+      "section_id": "s14",
+      "page_num": 0,
+      "content": "FLEX UNAUDITED CONDENSED CONSOLIDATED BALANCE SHEETS (2) (In millions)",
+      "char_count": 70
+    },
+    {
+      "block_id": "s14:p",
+      "type": "paragraph",
+      "section_id": "s14",
+      "page_num": 0,
+      "content": "| | As of October 1, 2021 | As of October 1, 2021 | As of March 31, 2021 |\n|-------------------------------------------------------------|-------------------------|-------------------------|------------------------|\n| ASSETS | | | |\n| Current assets: | | | |\n| Cash and cash equivalents | $ | 2,458 | $ 2,637 |\n| Accounts receivable, net of allowance for doubtful accounts | | 3,505 | 3,959 |\n| Contract assets | | 392 | 282 |\n| Inventories | | 5,168 | 3,895 |\n| Other current assets | | 660 | 590 |\n| Total current assets | | 12,183 | 11,363 |\n| Property and equipment, net | | 2,100 | 2,097 |\n| Operating lease right-of-use assets, net | | 612 | 642 |\n| Goodwill | | 1,085 | 1,090 |\n| Other intangible assets, net | | 182 | 213 |\n| Other assets | | 549 | 431 |\n| Total assets | $ | 16,711 | $ 15,836 |\n| LIABILITIES AND SHAREHOLDERS' EQUITY | | | |\n| Current liabilities: | | | |\n| Bank borrowings and current portion of long- term debt | $ | 284 | $ 268 |\n| Accounts payable | | 5,848 | 5,247 |\n| Accrued payroll | | 450 | 473 |\n| Deferred revenue and customer working capital advances | | 1,146 | 848 |\n| Other current liabilities | | 960 | 998 |\n| Total current liabilities | | 8,688 | 7,834 |\n| Long-term debt, net of current portion | | 3,501 | 3,515 |\n| Operating lease liabilities, non-current | | 534 | 562 |\n| Other liabilities | | 474 | 489 |\n| Total shareholders' equity | | 3,514 | 3,436 |\n| Total liabilities and shareholders' equity | $ | 16,711 | $ 15,836 |\nSee the accompanying notes on Schedule V attached to this press release.",
+      "char_count": 1547,
+      "is_tail": false
+    },
+    {
+      "block_id": "s15:h",
+      "type": "heading",
+      "section_id": "s15",
+      "page_num": 0,
+      "content": "SCHEDULE III",
+      "char_count": 12
+    },
+    {
+      "block_id": "s15:p",
+      "type": "paragraph",
+      "section_id": "s15",
+      "page_num": 0,
+      "content": "<!-- image -->\nSCHEDULE IV",
+      "char_count": 26,
+      "is_tail": false
+    },
+    {
+      "block_id": "s16:h",
+      "type": "heading",
+      "section_id": "s16",
+      "page_num": 0,
+      "content": "FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS (In millions)",
+      "char_count": 76
+    },
+    {
+      "block_id": "s16:p",
+      "type": "paragraph",
+      "section_id": "s16",
+      "page_num": 0,
+      "content": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|-------------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| CASH FLOWS FROM OPERATING ACTIVITIES: | | |\n| Net income | $ 542 | $ 165 |\n| Depreciation, amortization and other impairment | 236 | 283 |\n| charges Changes in working capital and other, net | (264) | (813) |\n| Net cash provided by (used in) operating | 514 | (365) |\n| CASH FLOWS FROM INVESTING ACTIVITIES: | | |\n| Purchases of property and equipment | (210) | (185) |\n| Proceeds from the disposition of property and | 5 | 14 |\n| equipment Other investing activities, net | 2 | 13 |\n| Net cash used in investing activities | (203) | (158) |\n| CASH FLOWS FROM FINANCING ACTIVITIES: | | |\n| Proceeds from bank borrowings and long-term | 20 | 1,943 |\n| debt Repayments of bank borrowings and long-term | (9) | (1,005) |\n| debt Payments for repurchases of ordinary shares | (490) | - |\n| Other financing activities, net | (8) | 2 |\n| Net cash provided by (used in) financing | (487) | 940 |\n| Effect of exchange rates on cash and cash equivalents | (3) | 19 |\n| Net increase (decrease) in cash and cash equivalents | (179) | 436 |\n| Cash and cash equivalents, beginning of period | 2,637 | 1,923 |\n| Cash and cash equivalents, end of period | $ 2,458 | $ 2,359 |",
+      "char_count": 1374,
+      "is_tail": false
+    },
+    {
+      "block_id": "s17:h",
+      "type": "heading",
+      "section_id": "s17",
+      "page_num": 0,
+      "content": "FLEX AND SUBSIDIARIES NOTES TO SCHEDULES I, II, and III",
+      "char_count": 55
+    },
+    {
+      "block_id": "s17:p",
+      "type": "paragraph",
+      "section_id": "s17",
+      "page_num": 0,
+      "content": "- (1) To supplement Flex's unaudited selected financial data presented consistent with Generally Accepted Accounting Principles ('GAAP'), the Company discloses certain non -GAAP financial measures that exclude certain charges and gains, including non-GAAP operating income, non-GAAP net income and non-GAAP net income per diluted share. These supplemental measures exclude restructuring charges, customer-related asset impairments (recoveries), stock-based compensation expense, intangible amortization, other discrete events as applicable and the related tax effects. These non-GAAP measures are not in accordance with or an alternative for GAAP and may be different from non-GAAP measures used by other companies. We believe that these non-GAAP measures have limitations in that they do not reflect all of the amounts associated with Flex's results of operations as determined in accordance with GAAP and that these measures should only be used to evaluate Flex's results of operations in conjunction with the corresponding GAAP measures. The presentation of this additional information is not meant to be considered in isolation or as a substitute for the most directly comparable GAAP measures. We compensate for the limitations of non-GAAP financial measures by relying upon GAAP results to gain a complete picture of the Company's performance.\nIn calculating non-GAAP financial measures, we exclude certain items to facilitate a review of the comparability of the Company's operating performance on a period-to-period basis because such items are not, in our view, related to the Company's ongoing operational performance. We use non-GAAP measures to evaluate the operating performance of our business, for comparison with forecasts and strategic plans, for calculating return on investment, and for benchmarking performance externally against competitors. In addition, management's incentive compensation is determined using certain non -GAAP measures. Also, when evaluating potential acquisitions, we exclude certain of the items described below from consideration of the target's performance and valuation. Since we find these measures to be useful, we believe that investors benefit from seeing results 'through the eyes' of management in addition to seeing GAAP r esults. We believe that these non-GAAP measures, when read in conjunction with the Company's GAAP financials, provide useful information to investors by offering:\n- the ability to make more meaningful period-toperiod comparisons of the Company's on-going operating results;\n- the ability to better identify trends in the Company's underlying business and perform related trend analyses;\n- a better understanding of how management plans and measures the Company's underlying business; and\n- an easier way to compare the Company's operating results against analyst financial models and operating results of competitors that supplement their GAAP results with non-GAAP financial measures.\nThe following are explanations of each of the adjustments that we incorporate into nonGAAP measures, as well as the reasons for excluding each of these individual items in the reconciliations of these non-GAAP financial measures:\nStock-based compensation expense consists of non-cash charges for the estimated fair value of stock options and unvested restricted share unit awards granted to employees and assumed in business acquisitions. The Company believes that the",
+      "char_count": 3429,
+      "is_tail": false
+    },
+    {
+      "block_id": "s18:h",
+      "type": "heading",
+      "section_id": "s18",
+      "page_num": 0,
+      "content": "Notes and Disclosures",
+      "char_count": 21
+    },
+    {
+      "block_id": "s18:p",
+      "type": "paragraph",
+      "section_id": "s18",
+      "page_num": 0,
+      "content": "exclusion of these charges provides for more accurate comparisons of its operating results to peer companies due to the varying available valuation methodologies, subjective assumptions and the variety of award types. In addition, the Company believes it is useful to investors to understand the specific impact stock-based compensation expense has on its operating results.\nIntangible amortization consists primarily of non-cash charges that can be impacted by, among other things, the timing and magnitude of acquisitions. The Company considers its operating results without these charges when evaluating its ongoing performance and forecasting its earnings trends, and therefore excludes such charges when presenting non-GAAP financial measures. The Company believes that the assessment of its operations excluding these costs is relevant to its assessment of internal operations and comparisons to the performance of its competitors.\nRestructuring charges include severance for rationalization at existing sites and corporate SG&amp;A functions as well as asset impairment, and other charges related to the closures and consolidations of certain operating sites and targeted activities to restructure the business. These costs may vary in size based on the Company's initiatives and are not directly related to ongoing or core business results, and do not reflect expected future operating expenses. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nIn order to support the Compa ny's strategy and build a sustainable organization, and after considering that the economic recovery from the pandemic would be slower than anticipated, the Company identified certain structural changes to restructuring the business in fiscal year 2021. These restructuring actions eliminated non-core activities primarily within the Company's corporate function, aligned the Company's cost structure with its reorganizing and optimizing of its operations model along its two reporting segments, and further sharpened its focus to winning business in end markets where it had competitive advantages and deep domain expertise. During the three and six-month periods ended September 25, 2020, the Company recognized approximately $35 million and $45 million of restructuring charges respectively, most of which related to employee severance.\nLegal and other consist primarily of costs not directly related to core business results and may include matters relating to commercial disputes, government regulatory and compliance, intellectual property, antitrust, tax, employment or shareholder issues, product liability claims and other issues on a global basis as well as customer related asset recoveries. During the first quarter of fiscal year 2021, the Company accrued for certain loss contingencies where losses are considered probable and estimable. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nInterest and other, net consists of various other types of items that are not directly related to ongoing or core business results, such as the gain or losses related to certain divestitures, debt extinguishment costs and impairment charges or gains associated with certain non-core investments. The Company excludes these items because they are not related to the Company's ongoing operating performance or do not affect core operations. Excluding these amounts provides investors with a basis to compare Company performance against the performance of other companies without this variability.",
+      "char_count": 3784,
+      "is_tail": false
+    },
+    {
+      "block_id": "s19:h",
+      "type": "heading",
+      "section_id": "s19",
+      "page_num": 0,
+      "content": "Notes and Disclosures",
+      "char_count": 21
+    },
+    {
+      "block_id": "s19:p",
+      "type": "paragraph",
+      "section_id": "s19",
+      "page_num": 0,
+      "content": "In September 2021, the Company received approval from the relevant tax authorities in Brazil of the Credit Habilitation request related to certain federal operational tax credit and the Company recorded a total gain of 809.6 million Brazilian reals (approximately USD $149.3 million based on the exchange rate as of October 1, 2021) under interest and other, net in the condensed statements of operations for the three and six-month periods ended October 1, 2021. The total gain recorded included credits from February 2003 to September 2021, net of additional taxes, as the Credit Habilitation received covering the period from February 2003 to December 2019 resolved any uncertainty regarding the Company's ability to claim such credits. This gain is non-cash and can only be used to offset certain current and future tax obligations.\nAdjustment for taxes relates to the tax effects of the various adjustments that we incorporate into non-GAAP measures in order to provide a more meaningful measure on non-GAAP net income and certain adjustments related to non-recurring settlements of tax contingencies or other non-recurring tax charges, when applicable.\n- (2) Beginning in the second quarter of fiscal year 2022, the Company elected to include operating income as a subtotal in the condensed consolidated statements of operations. In addition, deferred revenue and customer working capital advances, previously included within other current liabilities, have been separately presented as deferred revenue and customer working capital advances in the current liabilities section of the condensed consolidated balance sheets. Further, certain unbilled receivables previously presented as part of accounts receivable, net of allowance for doubtful accounts are now being presented as contract assets on the condensed consolidated balance sheets as billing is to occur subsequent to revenue recognition and is conditional upon other than the passage of time. The Company reclassified $146.8 million of unbilled receivables from account receivable, net of allowance for doubtful accounts to contract assets for the period ended March 31, 2021 in order to align with the current year presentation. These presentation changes were applied to all periods presented in the condensed consolidated statement of operations and balance sheets. The foregoing changes in presentation had no impact on the Company's results of operations or cash flows.",
+      "char_count": 2441,
+      "is_tail": false
+    },
+    {
+      "block_id": "legal:1",
+      "type": "legal_disclaimer",
+      "section_id": "",
+      "page_num": 0,
+      "content": "This press release contains forward-looking statements within the meaning of U.S. securities laws, including: statements related to future expected revenues and earnings per share; our planned acquisition of Anord Mardix, the expected timing for the closin g of the acquisition, expected benefits of the acquisition and Anord Mardix's expected impact on our financial results; and our consideration of alternatives relating to our Nextracker business. These forward-looking statements involve risks and uncertainties that could cause the actual results to differ materially from those anticipated by these forward-looking statements. Readers are cautioned not to place undue reliance on these forward-looking statements. These risks include: the effects of the COVID-19 pandemic on our business, results of operations and financial condition; that we many not achieve our expected future revenues and earnings; the effects that the current macroeconomic environment could have on our business and demand for our products; the impact of component shortages and logistical constraints, including their impact on our revenues; uncertainties and risks relating to our ability to successfully complete a transaction for our Nextracker business, including the potential initial public offering of our Nextracker business, including the possibility that we may not be able to consummate the transaction on the expected timeline or at all, or that we will achieve the anticipated benefits of the transaction; the possibility that regulatory and other approvals and conditions to our acquisition of Anord Mardix are not received or satisfied on a timely basis or at all; the possibility that we may not fully realize the projected benefits of the acquisition; the possibility that Anord Mardix's revenue may not meet expectations; changes in the anticipated timing for closing the acquisition; business disruption during the pendency of or following the acquisition; diversion of management time on acquisition-related issues; the reaction of customers and other persons to the acquisition; other events that could adversely impact the completion of the acquisition or the expected benefits of the acquisition, including the ongoing COVID-19 pandemic and other industry or economic conditions outside of our control; the effects that current credit and market conditions could have on the liquidity and financial condition of our customers and suppliers, including any impact on their ability to meet their contractual obligations to us; the challenges of effectively managing our operations, including our ability to control costs and manage changes in our operations; litigation and regulatory investigations and proceedings; our compliance with legal and regulatory requirements; the possibility that benefits of the Compan y's restructuring actions may not materialize as expected; that the expected revenue and margins from recently launched programs may not be realized; our dependence on industries that continually produce technologically advanced products with short product life cycles; the short-term nature of our customers' commitments and rapid changes in demand may cause supply chain and other issues which adversely affect our operating results; our dependence on a small number of customers; our industry is extremely competitive; we may be exposed to financially troubled customers or suppliers; geopolitical risk, including the termination and renegotiation of international trade agreements and trade policies, including the impact of tariffs and related regulatory actions; the success of certain of our activities depends on our ability to protect our intellectual property rights and we may be exposed to claims of infringement or breach of license agreements; a breach of our IT or physical security systems, or violation of data privacy laws, may cause us to incur significant legal and financial exposure; we may be exposed to product liability and product warranty liability; and that recently",
+      "char_count": 4012
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "s1",
+      "header": "Overview",
+      "level": 1,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "<!-- image -->",
+      "content_raw": "<!-- image -->",
+      "content_cleaned_for_embedding": "<!-- image -->",
+      "char_count": 14,
+      "has_legal_boilerplate": false
+    },
+    {
+      "section_id": "s2",
+      "header": "FLEX REPORTS SECOND QUARTER FISCAL 2022 RESULTS",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "San Jose, Calif., October 27, 2021 -Flex (NASDAQ: FLEX) today announced results for its second quarter ended October 1, 2021.",
+      "content_raw": "San Jose, Calif., October 27, 2021 -Flex (NASDAQ: FLEX) today announced results for its second quarter ended October 1, 2021.",
+      "content_cleaned_for_embedding": "San Jose, Calif., October 27, 2021 -Flex (NASDAQ: FLEX) today announced results for its second quarter ended October 1, 2021.",
+      "char_count": 125,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s3",
+      "header": "Second Quarter Fiscal Year 2022 Highlights:",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "- Net Sales: $6.2 billion\n- GAAP Operating Income: $237 million\n- Adjusted Operating Income: $286 million\n- GAAP Net Income: $336 million\n- Adjusted Net Income: $233 million\n- GAAP Earnings Per Share: $0.69 which includes $0.30 non-cash income related to a favorable operational tax ruling\n- Adjusted Earnings Per Share: $0.48\nAn explanation and reconciliation of non-GAAP financial measures to GAAP financial measures is presented in Schedules II and V attached to this press release.\n'Our fiscal second quarter was ano ther strong result for Flex, achieving year over year revenue growth in our Agility and Reliability segments, as well as EPS and margin expansion. I would like to thank our team for their exceptional execution, managing through the supply chain challenges, ' said Revathi Advaithi, Flex Chief Executive Officer. 'We remain focused on driving profitable growth and margin expansion through organic and inorganic investments.'",
+      "content_raw": "- Net Sales: $6.2 billion\n- GAAP Operating Income: $237 million\n- Adjusted Operating Income: $286 million\n- GAAP Net Income: $336 million\n- Adjusted Net Income: $233 million\n- GAAP Earnings Per Share: $0.69 which includes $0.30 non-cash income related to a favorable operational tax ruling\n- Adjusted Earnings Per Share: $0.48\nAn explanation and reconciliation of non-GAAP financial measures to GAAP financial measures is presented in Schedules II and V attached to this press release.\n'Our fiscal second quarter was ano ther strong result for Flex, achieving year over year revenue growth in our Agility and Reliability segments, as well as EPS and margin expansion. I would like to thank our team for their exceptional execution, managing through the supply chain challenges, ' said Revathi Advaithi, Flex Chief Executive Officer. 'We remain focused on driving profitable growth and margin expansion through organic and inorganic investments.'",
+      "content_cleaned_for_embedding": "- Net Sales: $6.2 billion\n- GAAP Operating Income: $237 million\n- Adjusted Operating Income: $286 million\n- GAAP Net Income: $336 million\n- Adjusted Net Income: $233 million\n- GAAP Earnings Per Share: $0.69 which includes $0.30 non-cash income related to a favorable operational tax ruling\n- Adjusted Earnings Per Share: $0.48\nAn explanation and reconciliation of non-GAAP financial measures to GAAP financial measures is presented in Schedules II and V attached to this press release.\n'Our fiscal second quarter was ano ther strong result for Flex, achieving year over year revenue growth in our Agility and Reliability segments, as well as EPS and margin expansion. I would like to thank our team for their exceptional execution, managing through the supply chain challenges, ' said Revathi Advaithi, Flex Chief Executive Officer. 'We remain focused on driving profitable growth and margin expansion through organic and inorganic investments.'",
+      "char_count": 945,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s4",
+      "header": "Third Quarter Fiscal 2022 Guidance",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "- Revenue: $6.1 billion to $6.5 billion\n- GAAP Operating Income: $210 million to $250 million\n- Adjusted Operating Income: $250 million to $290 million\n- GAAP EPS: $0.30 to $0.36 which includes $0.05 for stock-based compensation expense and $0.03 for net intangible amortization\n- Adjusted EPS: $0.38 to $0.44",
+      "content_raw": "- Revenue: $6.1 billion to $6.5 billion\n- GAAP Operating Income: $210 million to $250 million\n- Adjusted Operating Income: $250 million to $290 million\n- GAAP EPS: $0.30 to $0.36 which includes $0.05 for stock-based compensation expense and $0.03 for net intangible amortization\n- Adjusted EPS: $0.38 to $0.44",
+      "content_cleaned_for_embedding": "- Revenue: $6.1 billion to $6.5 billion\n- GAAP Operating Income: $210 million to $250 million\n- Adjusted Operating Income: $250 million to $290 million\n- GAAP EPS: $0.30 to $0.36 which includes $0.05 for stock-based compensation expense and $0.03 for net intangible amortization\n- Adjusted EPS: $0.38 to $0.44",
+      "char_count": 309,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s5",
+      "header": "Fiscal Year 2022 Guidance Updated",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "- Revenue: $24.8 billion to $25.8 billion\n- GAAP EPS: $1.71 to $1.86 which includes $0.19 for stock-based compensation expense and $0.11 for net intangible amortization offset by ($0.31) for restructuring and other gains primarily related to $0.30 non-cash income from a favorable operational tax ruling recorded in Q2FY22\n- Adjusted EPS: $1.70 to $1.85\n<!-- image -->",
+      "content_raw": "- Revenue: $24.8 billion to $25.8 billion\n- GAAP EPS: $1.71 to $1.86 which includes $0.19 for stock-based compensation expense and $0.11 for net intangible amortization offset by ($0.31) for restructuring and other gains primarily related to $0.30 non-cash income from a favorable operational tax ruling recorded in Q2FY22\n- Adjusted EPS: $1.70 to $1.85\n<!-- image -->",
+      "content_cleaned_for_embedding": "- Revenue: $24.8 billion to $25.8 billion\n- GAAP EPS: $1.71 to $1.86 which includes $0.19 for stock-based compensation expense and $0.11 for net intangible amortization offset by ($0.31) for restructuring and other gains primarily related to $0.30 non-cash income from a favorable operational tax ruling recorded in Q2FY22\n- Adjusted EPS: $1.70 to $1.85\n<!-- image -->",
+      "char_count": 368,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s6",
+      "header": "Webcast and Conference Call",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "The Flex management team will host a conference call today at 1:30 PM (PT) / 4:30 PM (ET), to review second quarter fiscal 2022 results. A live webcast of the event and slides will be available on the Flex Investor Relations website at http://investors.flex.com. An audio replay and transcript will also be available after the event on the Flex Investor Relations website.",
+      "content_raw": "The Flex management team will host a conference call today at 1:30 PM (PT) / 4:30 PM (ET), to review second quarter fiscal 2022 results. A live webcast of the event and slides will be available on the Flex Investor Relations website at http://investors.flex.com. An audio replay and transcript will also be available after the event on the Flex Investor Relations website.",
+      "content_cleaned_for_embedding": "The Flex management team will host a conference call today at 1:30 PM (PT) / 4:30 PM (ET), to review second quarter fiscal 2022 results. A live webcast of the event and slides will be available on the Flex Investor Relations website at http://investors.flex.com. An audio replay and transcript will also be available after the event on the Flex Investor Relations website.",
+      "char_count": 372,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s7",
+      "header": "About Flex",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "Flex (Reg. No. 199002645H) is the manufacturing partner of choice that helps a diverse customer base design and build products that improve the world. Through the collective strength of a global workforce across 30 countries and responsible, sustainable operations, Flex delivers technology innovation, supply chain, and manufacturing solutions to diverse industries and end markets.",
+      "content_raw": "Flex (Reg. No. 199002645H) is the manufacturing partner of choice that helps a diverse customer base design and build products that improve the world. Through the collective strength of a global workforce across 30 countries and responsible, sustainable operations, Flex delivers technology innovation, supply chain, and manufacturing solutions to diverse industries and end markets.",
+      "content_cleaned_for_embedding": "Flex (Reg. No. 199002645H) is the manufacturing partner of choice that helps a diverse customer base design and build products that improve the world. Through the collective strength of a global workforce across 30 countries and responsible, sustainable operations, Flex delivers technology innovation, supply chain, and manufacturing solutions to diverse industries and end markets.",
+      "char_count": 383,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s8",
+      "header": "Contacts",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "Investors &amp; Analysts David Rubin Vice President, Investor Relations (408) 577-4632 David.Rubin@flex.com\nMedia &amp; Press Mark Plungy Director, Corporate Integrated Communications (408) 442-1691 Mark.Plungy@flex.com",
+      "content_raw": "Investors &amp; Analysts David Rubin Vice President, Investor Relations (408) 577-4632 David.Rubin@flex.com\nMedia &amp; Press Mark Plungy Director, Corporate Integrated Communications (408) 442-1691 Mark.Plungy@flex.com",
+      "content_cleaned_for_embedding": "Investors &amp; Analysts David Rubin Vice President, Investor Relations (408) 577-4632 David.Rubin@flex.com\nMedia &amp; Press Mark Plungy Director, Corporate Integrated Communications (408) 442-1691 Mark.Plungy@flex.com",
+      "char_count": 219,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s9",
+      "header": "Notes and Disclosures",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "proposed changes or future changes in tax laws in certain jurisdictions where we operate could materially impact our tax expense. In addition, the COVID-19 pandemic increases the likelihood and potential severity of many of the foregoing risks.\nAdditional information concerning these, and other risks is described under 'Risk Factors' and 'Management's Discussion and Analysis of Financial Condition and Results of Operations' in our annual report on Form 10 -K for the fiscal year ended March 31, 2021 and in subsequent quarterly reports on Form 10-Q. The forward-looking statements in this press release are based on current expectations and Flex assumes no obligation to update these forward-looking statements. Our share repurchase program does not obligate the Company to repurchase a specific number of shares and may be suspended or terminated at any time without prior notice.\nThis press release does not constitute an offer to sell or the solicitation of an offer to buy any securities. Any securities to be offered in any offering may not be sold nor may offers to buy be accepted prior to the time a registration statement becomes effective.\n<!-- image -->",
+      "content_raw": "proposed changes or future changes in tax laws in certain jurisdictions where we operate could materially impact our tax expense. In addition, the COVID-19 pandemic increases the likelihood and potential severity of many of the foregoing risks.\nAdditional information concerning these, and other risks is described under 'Risk Factors' and 'Management's Discussion and Analysis of Financial Condition and Results of Operations' in our annual report on Form 10 -K for the fiscal year ended March 31, 2021 and in subsequent quarterly reports on Form 10-Q. The forward-looking statements in this press release are based on current expectations and Flex assumes no obligation to update these forward-looking statements. Our share repurchase program does not obligate the Company to repurchase a specific number of shares and may be suspended or terminated at any time without prior notice.\nThis press release does not constitute an offer to sell or the solicitation of an offer to buy any securities. Any securities to be offered in any offering may not be sold nor may offers to buy be accepted prior to the time a registration statement becomes effective.\n<!-- image -->",
+      "content_cleaned_for_embedding": "proposed changes or future changes in tax laws in certain jurisdictions where we operate could materially impact our tax expense. In addition, the COVID-19 pandemic increases the likelihood and potential severity of many of the foregoing risks.\nAdditional information concerning these, and other risks is described under 'Risk Factors' and 'Management's Discussion and Analysis of Financial Condition and Results of Operations' in our annual report on Form 10 -K for the fiscal year ended March 31, 2021 and in subsequent quarterly reports on Form 10-Q. The forward-looking statements in this press release are based on current expectations and Flex assumes no obligation to update these forward-looking statements. Our share repurchase program does not obligate the Company to repurchase a specific number of shares and may be suspended or terminated at any time without prior notice.\nThis press release does not constitute an offer to sell or the solicitation of an offer to buy any securities. Any securities to be offered in any offering may not be sold nor may offers to buy be accepted prior to the time a registration statement becomes effective.\n<!-- image -->",
+      "char_count": 1168,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s10",
+      "header": "FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 6,229 | $ 5,985 |\n| Cost of sales | 5,755 | 5,566 |\n| Restructuring charges | 9 | 24 |\n| Gross profit | 465 | 395 |\n| Selling, general and administrative expenses | 213 | 193 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 15 | 16 |\n| Operating income | 237 | 175 |\n| Interest and other, net | (134) | 22 |\n| Income before income taxes | 371 | 153 |\n| Provision for income taxes | 35 | 40 |\n| Net income | $ 336 | $ 113 |\n| Earnings per share: | | |\n| GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\n| Diluted shares used in computing per share amounts | 487 | 504 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->",
+      "content_raw": "| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 6,229 | $ 5,985 |\n| Cost of sales | 5,755 | 5,566 |\n| Restructuring charges | 9 | 24 |\n| Gross profit | 465 | 395 |\n| Selling, general and administrative expenses | 213 | 193 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 15 | 16 |\n| Operating income | 237 | 175 |\n| Interest and other, net | (134) | 22 |\n| Income before income taxes | 371 | 153 |\n| Provision for income taxes | 35 | 40 |\n| Net income | $ 336 | $ 113 |\n| Earnings per share: | | |\n| GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\n| Diluted shares used in computing per share amounts | 487 | 504 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->",
+      "content_cleaned_for_embedding": "| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 6,229 | $ 5,985 |\n| Cost of sales | 5,755 | 5,566 |\n| Restructuring charges | 9 | 24 |\n| Gross profit | 465 | 395 |\n| Selling, general and administrative expenses | 213 | 193 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 15 | 16 |\n| Operating income | 237 | 175 |\n| Interest and other, net | (134) | 22 |\n| Income before income taxes | 371 | 153 |\n| Provision for income taxes | 35 | 40 |\n| Net income | $ 336 | $ 113 |\n| Earnings per share: | | |\n| GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\n| Diluted shares used in computing per share amounts | 487 | 504 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->",
+      "char_count": 1006,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s11",
+      "header": "FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 12,571 | $ 11,138 |\n| Cost of sales | 11,625 | 10,406 |\n| Restructuring charges | 9 | 34 |\n| Gross profit | 937 | 698 |\n| Selling, general and administrative expenses | 414 | 384 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 30 | 31 |\n| Operating income | 493 | 272 |\n| Interest and other, net | (111) | 51 |\n| Income before income taxes | 604 | 221 |\n| Provision for income taxes | 62 | 56 |\n| Net income | $ 542 | $ 165 |\n| Earnings per share: | | |\n| GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\n| Diluted shares used in computing per share amounts | 493 | 503 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->",
+      "content_raw": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 12,571 | $ 11,138 |\n| Cost of sales | 11,625 | 10,406 |\n| Restructuring charges | 9 | 34 |\n| Gross profit | 937 | 698 |\n| Selling, general and administrative expenses | 414 | 384 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 30 | 31 |\n| Operating income | 493 | 272 |\n| Interest and other, net | (111) | 51 |\n| Income before income taxes | 604 | 221 |\n| Provision for income taxes | 62 | 56 |\n| Net income | $ 542 | $ 165 |\n| Earnings per share: | | |\n| GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\n| Diluted shares used in computing per share amounts | 493 | 503 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->",
+      "content_cleaned_for_embedding": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP: | | |\n| Net sales | $ 12,571 | $ 11,138 |\n| Cost of sales | 11,625 | 10,406 |\n| Restructuring charges | 9 | 34 |\n| Gross profit | 937 | 698 |\n| Selling, general and administrative expenses | 414 | 384 |\n| Restructuring charges | - | 11 |\n| Intangible amortization | 30 | 31 |\n| Operating income | 493 | 272 |\n| Interest and other, net | (111) | 51 |\n| Income before income taxes | 604 | 221 |\n| Provision for income taxes | 62 | 56 |\n| Net income | $ 542 | $ 165 |\n| Earnings per share: | | |\n| GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\n| Diluted shares used in computing per share amounts | 493 | 503 |\nSee Schedule II for the reconciliation of GAAP to non-GAAP financial measures. See the accompanying notes on Schedule V attached to this press release.\n<!-- image -->",
+      "char_count": 1002,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s12",
+      "header": "FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 237 | $ 175 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Non-GAAP operating income | $ 286 | $ 247 |\n| GAAP provision for income taxes | $ 35 | $ 40 |\n| Intangible amortization benefit | 2 | 2 |\n| Other tax related adjustments | (3) | (2) |\n| Tax benefit on restructuring and other | - | 2 |\n| Non-GAAP provision for income taxes | $ 34 | $ 42 |\n| GAAP net income | $ 336 | $ 113 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Interest and other, net | (152) | (3) |\n| Adjustments for taxes | 1 | (2) |\n| Non-GAAP net income | $ 233 | $ 180 |\n| Diluted earnings per share: GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->",
+      "content_raw": "| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 237 | $ 175 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Non-GAAP operating income | $ 286 | $ 247 |\n| GAAP provision for income taxes | $ 35 | $ 40 |\n| Intangible amortization benefit | 2 | 2 |\n| Other tax related adjustments | (3) | (2) |\n| Tax benefit on restructuring and other | - | 2 |\n| Non-GAAP provision for income taxes | $ 34 | $ 42 |\n| GAAP net income | $ 336 | $ 113 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Interest and other, net | (152) | (3) |\n| Adjustments for taxes | 1 | (2) |\n| Non-GAAP net income | $ 233 | $ 180 |\n| Diluted earnings per share: GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->",
+      "content_cleaned_for_embedding": "| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------|-----------------------------|-----------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 237 | $ 175 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Non-GAAP operating income | $ 286 | $ 247 |\n| GAAP provision for income taxes | $ 35 | $ 40 |\n| Intangible amortization benefit | 2 | 2 |\n| Other tax related adjustments | (3) | (2) |\n| Tax benefit on restructuring and other | - | 2 |\n| Non-GAAP provision for income taxes | $ 34 | $ 42 |\n| GAAP net income | $ 336 | $ 113 |\n| Intangible amortization | 15 | 16 |\n| Stock-based compensation expense | 24 | 24 |\n| Restructuring charges | 9 | 35 |\n| Legal and other | 1 | (3) |\n| Interest and other, net | (152) | (3) |\n| Adjustments for taxes | 1 | (2) |\n| Non-GAAP net income | $ 233 | $ 180 |\n| Diluted earnings per share: GAAP | $ 0.69 | $ 0.22 |\n| Non-GAAP | $ 0.48 | $ 0.36 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->",
+      "char_count": 1203,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s13",
+      "header": "FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 493 | $ 272 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Non-GAAP operating income | $ 576 | $ 410 |\n| GAAP provision for income taxes | $ 62 | $ 56 |\n| Intangible amortization benefit | 4 | 4 |\n| Other tax related adjustments | 3 | (3) |\n| Tax benefit on restructuring and other | - | 4 |\n| Non-GAAP provision for income taxes | $ 70 | $ 60 |\n| GAAP net income | $ 542 | $ 165 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Interest and other, net | (155) | (2) |\n| Adjustments for taxes | (7) | (5) |\n| Non-GAAP net income | $ 462 | $ 296 |\n| Diluted earnings per share: GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->",
+      "content_raw": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 493 | $ 272 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Non-GAAP operating income | $ 576 | $ 410 |\n| GAAP provision for income taxes | $ 62 | $ 56 |\n| Intangible amortization benefit | 4 | 4 |\n| Other tax related adjustments | 3 | (3) |\n| Tax benefit on restructuring and other | - | 4 |\n| Non-GAAP provision for income taxes | $ 70 | $ 60 |\n| GAAP net income | $ 542 | $ 165 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Interest and other, net | (155) | (2) |\n| Adjustments for taxes | (7) | (5) |\n| Non-GAAP net income | $ 462 | $ 296 |\n| Diluted earnings per share: GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->",
+      "content_cleaned_for_embedding": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| GAAP operating income | $ 493 | $ 272 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Non-GAAP operating income | $ 576 | $ 410 |\n| GAAP provision for income taxes | $ 62 | $ 56 |\n| Intangible amortization benefit | 4 | 4 |\n| Other tax related adjustments | 3 | (3) |\n| Tax benefit on restructuring and other | - | 4 |\n| Non-GAAP provision for income taxes | $ 70 | $ 60 |\n| GAAP net income | $ 542 | $ 165 |\n| Intangible amortization | 30 | 31 |\n| Stock-based compensation expense | 44 | 37 |\n| Restructuring charges | 9 | 45 |\n| Legal and other | - | 25 |\n| Interest and other, net | (155) | (2) |\n| Adjustments for taxes | (7) | (5) |\n| Non-GAAP net income | $ 462 | $ 296 |\n| Diluted earnings per share: GAAP | $ 1.10 | $ 0.33 |\n| Non-GAAP | $ 0.94 | $ 0.59 |\nSee the accompanying notes on Schedule V attached to this press release.\n*Amounts may not sum due to rounding\n<!-- image -->",
+      "char_count": 1193,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s14",
+      "header": "FLEX UNAUDITED CONDENSED CONSOLIDATED BALANCE SHEETS (2) (In millions)",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "| | As of October 1, 2021 | As of October 1, 2021 | As of March 31, 2021 |\n|-------------------------------------------------------------|-------------------------|-------------------------|------------------------|\n| ASSETS | | | |\n| Current assets: | | | |\n| Cash and cash equivalents | $ | 2,458 | $ 2,637 |\n| Accounts receivable, net of allowance for doubtful accounts | | 3,505 | 3,959 |\n| Contract assets | | 392 | 282 |\n| Inventories | | 5,168 | 3,895 |\n| Other current assets | | 660 | 590 |\n| Total current assets | | 12,183 | 11,363 |\n| Property and equipment, net | | 2,100 | 2,097 |\n| Operating lease right-of-use assets, net | | 612 | 642 |\n| Goodwill | | 1,085 | 1,090 |\n| Other intangible assets, net | | 182 | 213 |\n| Other assets | | 549 | 431 |\n| Total assets | $ | 16,711 | $ 15,836 |\n| LIABILITIES AND SHAREHOLDERS' EQUITY | | | |\n| Current liabilities: | | | |\n| Bank borrowings and current portion of long- term debt | $ | 284 | $ 268 |\n| Accounts payable | | 5,848 | 5,247 |\n| Accrued payroll | | 450 | 473 |\n| Deferred revenue and customer working capital advances | | 1,146 | 848 |\n| Other current liabilities | | 960 | 998 |\n| Total current liabilities | | 8,688 | 7,834 |\n| Long-term debt, net of current portion | | 3,501 | 3,515 |\n| Operating lease liabilities, non-current | | 534 | 562 |\n| Other liabilities | | 474 | 489 |\n| Total shareholders' equity | | 3,514 | 3,436 |\n| Total liabilities and shareholders' equity | $ | 16,711 | $ 15,836 |\nSee the accompanying notes on Schedule V attached to this press release.",
+      "content_raw": "| | As of October 1, 2021 | As of October 1, 2021 | As of March 31, 2021 |\n|-------------------------------------------------------------|-------------------------|-------------------------|------------------------|\n| ASSETS | | | |\n| Current assets: | | | |\n| Cash and cash equivalents | $ | 2,458 | $ 2,637 |\n| Accounts receivable, net of allowance for doubtful accounts | | 3,505 | 3,959 |\n| Contract assets | | 392 | 282 |\n| Inventories | | 5,168 | 3,895 |\n| Other current assets | | 660 | 590 |\n| Total current assets | | 12,183 | 11,363 |\n| Property and equipment, net | | 2,100 | 2,097 |\n| Operating lease right-of-use assets, net | | 612 | 642 |\n| Goodwill | | 1,085 | 1,090 |\n| Other intangible assets, net | | 182 | 213 |\n| Other assets | | 549 | 431 |\n| Total assets | $ | 16,711 | $ 15,836 |\n| LIABILITIES AND SHAREHOLDERS' EQUITY | | | |\n| Current liabilities: | | | |\n| Bank borrowings and current portion of long- term debt | $ | 284 | $ 268 |\n| Accounts payable | | 5,848 | 5,247 |\n| Accrued payroll | | 450 | 473 |\n| Deferred revenue and customer working capital advances | | 1,146 | 848 |\n| Other current liabilities | | 960 | 998 |\n| Total current liabilities | | 8,688 | 7,834 |\n| Long-term debt, net of current portion | | 3,501 | 3,515 |\n| Operating lease liabilities, non-current | | 534 | 562 |\n| Other liabilities | | 474 | 489 |\n| Total shareholders' equity | | 3,514 | 3,436 |\n| Total liabilities and shareholders' equity | $ | 16,711 | $ 15,836 |\nSee the accompanying notes on Schedule V attached to this press release.",
+      "content_cleaned_for_embedding": "| | As of October 1, 2021 | As of October 1, 2021 | As of March 31, 2021 |\n|-------------------------------------------------------------|-------------------------|-------------------------|------------------------|\n| ASSETS | | | |\n| Current assets: | | | |\n| Cash and cash equivalents | $ | 2,458 | $ 2,637 |\n| Accounts receivable, net of allowance for doubtful accounts | | 3,505 | 3,959 |\n| Contract assets | | 392 | 282 |\n| Inventories | | 5,168 | 3,895 |\n| Other current assets | | 660 | 590 |\n| Total current assets | | 12,183 | 11,363 |\n| Property and equipment, net | | 2,100 | 2,097 |\n| Operating lease right-of-use assets, net | | 612 | 642 |\n| Goodwill | | 1,085 | 1,090 |\n| Other intangible assets, net | | 182 | 213 |\n| Other assets | | 549 | 431 |\n| Total assets | $ | 16,711 | $ 15,836 |\n| LIABILITIES AND SHAREHOLDERS' EQUITY | | | |\n| Current liabilities: | | | |\n| Bank borrowings and current portion of long- term debt | $ | 284 | $ 268 |\n| Accounts payable | | 5,848 | 5,247 |\n| Accrued payroll | | 450 | 473 |\n| Deferred revenue and customer working capital advances | | 1,146 | 848 |\n| Other current liabilities | | 960 | 998 |\n| Total current liabilities | | 8,688 | 7,834 |\n| Long-term debt, net of current portion | | 3,501 | 3,515 |\n| Operating lease liabilities, non-current | | 534 | 562 |\n| Other liabilities | | 474 | 489 |\n| Total shareholders' equity | | 3,514 | 3,436 |\n| Total liabilities and shareholders' equity | $ | 16,711 | $ 15,836 |\nSee the accompanying notes on Schedule V attached to this press release.",
+      "char_count": 1547,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s15",
+      "header": "SCHEDULE III",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "<!-- image -->\nSCHEDULE IV",
+      "content_raw": "<!-- image -->\nSCHEDULE IV",
+      "content_cleaned_for_embedding": "<!-- image -->\nSCHEDULE IV",
+      "char_count": 26,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s16",
+      "header": "FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS (In millions)",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|-------------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| CASH FLOWS FROM OPERATING ACTIVITIES: | | |\n| Net income | $ 542 | $ 165 |\n| Depreciation, amortization and other impairment | 236 | 283 |\n| charges Changes in working capital and other, net | (264) | (813) |\n| Net cash provided by (used in) operating | 514 | (365) |\n| CASH FLOWS FROM INVESTING ACTIVITIES: | | |\n| Purchases of property and equipment | (210) | (185) |\n| Proceeds from the disposition of property and | 5 | 14 |\n| equipment Other investing activities, net | 2 | 13 |\n| Net cash used in investing activities | (203) | (158) |\n| CASH FLOWS FROM FINANCING ACTIVITIES: | | |\n| Proceeds from bank borrowings and long-term | 20 | 1,943 |\n| debt Repayments of bank borrowings and long-term | (9) | (1,005) |\n| debt Payments for repurchases of ordinary shares | (490) | - |\n| Other financing activities, net | (8) | 2 |\n| Net cash provided by (used in) financing | (487) | 940 |\n| Effect of exchange rates on cash and cash equivalents | (3) | 19 |\n| Net increase (decrease) in cash and cash equivalents | (179) | 436 |\n| Cash and cash equivalents, beginning of period | 2,637 | 1,923 |\n| Cash and cash equivalents, end of period | $ 2,458 | $ 2,359 |",
+      "content_raw": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|-------------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| CASH FLOWS FROM OPERATING ACTIVITIES: | | |\n| Net income | $ 542 | $ 165 |\n| Depreciation, amortization and other impairment | 236 | 283 |\n| charges Changes in working capital and other, net | (264) | (813) |\n| Net cash provided by (used in) operating | 514 | (365) |\n| CASH FLOWS FROM INVESTING ACTIVITIES: | | |\n| Purchases of property and equipment | (210) | (185) |\n| Proceeds from the disposition of property and | 5 | 14 |\n| equipment Other investing activities, net | 2 | 13 |\n| Net cash used in investing activities | (203) | (158) |\n| CASH FLOWS FROM FINANCING ACTIVITIES: | | |\n| Proceeds from bank borrowings and long-term | 20 | 1,943 |\n| debt Repayments of bank borrowings and long-term | (9) | (1,005) |\n| debt Payments for repurchases of ordinary shares | (490) | - |\n| Other financing activities, net | (8) | 2 |\n| Net cash provided by (used in) financing | (487) | 940 |\n| Effect of exchange rates on cash and cash equivalents | (3) | 19 |\n| Net increase (decrease) in cash and cash equivalents | (179) | 436 |\n| Cash and cash equivalents, beginning of period | 2,637 | 1,923 |\n| Cash and cash equivalents, end of period | $ 2,458 | $ 2,359 |",
+      "content_cleaned_for_embedding": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|-------------------------------------------------------|---------------------------|---------------------------|\n| | October 1, 2021 | September 25, 2020 |\n| CASH FLOWS FROM OPERATING ACTIVITIES: | | |\n| Net income | $ 542 | $ 165 |\n| Depreciation, amortization and other impairment | 236 | 283 |\n| charges Changes in working capital and other, net | (264) | (813) |\n| Net cash provided by (used in) operating | 514 | (365) |\n| CASH FLOWS FROM INVESTING ACTIVITIES: | | |\n| Purchases of property and equipment | (210) | (185) |\n| Proceeds from the disposition of property and | 5 | 14 |\n| equipment Other investing activities, net | 2 | 13 |\n| Net cash used in investing activities | (203) | (158) |\n| CASH FLOWS FROM FINANCING ACTIVITIES: | | |\n| Proceeds from bank borrowings and long-term | 20 | 1,943 |\n| debt Repayments of bank borrowings and long-term | (9) | (1,005) |\n| debt Payments for repurchases of ordinary shares | (490) | - |\n| Other financing activities, net | (8) | 2 |\n| Net cash provided by (used in) financing | (487) | 940 |\n| Effect of exchange rates on cash and cash equivalents | (3) | 19 |\n| Net increase (decrease) in cash and cash equivalents | (179) | 436 |\n| Cash and cash equivalents, beginning of period | 2,637 | 1,923 |\n| Cash and cash equivalents, end of period | $ 2,458 | $ 2,359 |",
+      "char_count": 1374,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s17",
+      "header": "FLEX AND SUBSIDIARIES NOTES TO SCHEDULES I, II, and III",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "- (1) To supplement Flex's unaudited selected financial data presented consistent with Generally Accepted Accounting Principles ('GAAP'), the Company discloses certain non -GAAP financial measures that exclude certain charges and gains, including non-GAAP operating income, non-GAAP net income and non-GAAP net income per diluted share. These supplemental measures exclude restructuring charges, customer-related asset impairments (recoveries), stock-based compensation expense, intangible amortization, other discrete events as applicable and the related tax effects. These non-GAAP measures are not in accordance with or an alternative for GAAP and may be different from non-GAAP measures used by other companies. We believe that these non-GAAP measures have limitations in that they do not reflect all of the amounts associated with Flex's results of operations as determined in accordance with GAAP and that these measures should only be used to evaluate Flex's results of operations in conjunction with the corresponding GAAP measures. The presentation of this additional information is not meant to be considered in isolation or as a substitute for the most directly comparable GAAP measures. We compensate for the limitations of non-GAAP financial measures by relying upon GAAP results to gain a complete picture of the Company's performance.\nIn calculating non-GAAP financial measures, we exclude certain items to facilitate a review of the comparability of the Company's operating performance on a period-to-period basis because such items are not, in our view, related to the Company's ongoing operational performance. We use non-GAAP measures to evaluate the operating performance of our business, for comparison with forecasts and strategic plans, for calculating return on investment, and for benchmarking performance externally against competitors. In addition, management's incentive compensation is determined using certain non -GAAP measures. Also, when evaluating potential acquisitions, we exclude certain of the items described below from consideration of the target's performance and valuation. Since we find these measures to be useful, we believe that investors benefit from seeing results 'through the eyes' of management in addition to seeing GAAP r esults. We believe that these non-GAAP measures, when read in conjunction with the Company's GAAP financials, provide useful information to investors by offering:\n- the ability to make more meaningful period-toperiod comparisons of the Company's on-going operating results;\n- the ability to better identify trends in the Company's underlying business and perform related trend analyses;\n- a better understanding of how management plans and measures the Company's underlying business; and\n- an easier way to compare the Company's operating results against analyst financial models and operating results of competitors that supplement their GAAP results with non-GAAP financial measures.\nThe following are explanations of each of the adjustments that we incorporate into nonGAAP measures, as well as the reasons for excluding each of these individual items in the reconciliations of these non-GAAP financial measures:\nStock-based compensation expense consists of non-cash charges for the estimated fair value of stock options and unvested restricted share unit awards granted to employees and assumed in business acquisitions. The Company believes that the",
+      "content_raw": "- (1) To supplement Flex's unaudited selected financial data presented consistent with Generally Accepted Accounting Principles ('GAAP'), the Company discloses certain non -GAAP financial measures that exclude certain charges and gains, including non-GAAP operating income, non-GAAP net income and non-GAAP net income per diluted share. These supplemental measures exclude restructuring charges, customer-related asset impairments (recoveries), stock-based compensation expense, intangible amortization, other discrete events as applicable and the related tax effects. These non-GAAP measures are not in accordance with or an alternative for GAAP and may be different from non-GAAP measures used by other companies. We believe that these non-GAAP measures have limitations in that they do not reflect all of the amounts associated with Flex's results of operations as determined in accordance with GAAP and that these measures should only be used to evaluate Flex's results of operations in conjunction with the corresponding GAAP measures. The presentation of this additional information is not meant to be considered in isolation or as a substitute for the most directly comparable GAAP measures. We compensate for the limitations of non-GAAP financial measures by relying upon GAAP results to gain a complete picture of the Company's performance.\nIn calculating non-GAAP financial measures, we exclude certain items to facilitate a review of the comparability of the Company's operating performance on a period-to-period basis because such items are not, in our view, related to the Company's ongoing operational performance. We use non-GAAP measures to evaluate the operating performance of our business, for comparison with forecasts and strategic plans, for calculating return on investment, and for benchmarking performance externally against competitors. In addition, management's incentive compensation is determined using certain non -GAAP measures. Also, when evaluating potential acquisitions, we exclude certain of the items described below from consideration of the target's performance and valuation. Since we find these measures to be useful, we believe that investors benefit from seeing results 'through the eyes' of management in addition to seeing GAAP r esults. We believe that these non-GAAP measures, when read in conjunction with the Company's GAAP financials, provide useful information to investors by offering:\n- the ability to make more meaningful period-toperiod comparisons of the Company's on-going operating results;\n- the ability to better identify trends in the Company's underlying business and perform related trend analyses;\n- a better understanding of how management plans and measures the Company's underlying business; and\n- an easier way to compare the Company's operating results against analyst financial models and operating results of competitors that supplement their GAAP results with non-GAAP financial measures.\nThe following are explanations of each of the adjustments that we incorporate into nonGAAP measures, as well as the reasons for excluding each of these individual items in the reconciliations of these non-GAAP financial measures:\nStock-based compensation expense consists of non-cash charges for the estimated fair value of stock options and unvested restricted share unit awards granted to employees and assumed in business acquisitions. The Company believes that the",
+      "content_cleaned_for_embedding": "- (1) To supplement Flex's unaudited selected financial data presented consistent with Generally Accepted Accounting Principles ('GAAP'), the Company discloses certain non -GAAP financial measures that exclude certain charges and gains, including non-GAAP operating income, non-GAAP net income and non-GAAP net income per diluted share. These supplemental measures exclude restructuring charges, customer-related asset impairments (recoveries), stock-based compensation expense, intangible amortization, other discrete events as applicable and the related tax effects. These non-GAAP measures are not in accordance with or an alternative for GAAP and may be different from non-GAAP measures used by other companies. We believe that these non-GAAP measures have limitations in that they do not reflect all of the amounts associated with Flex's results of operations as determined in accordance with GAAP and that these measures should only be used to evaluate Flex's results of operations in conjunction with the corresponding GAAP measures. The presentation of this additional information is not meant to be considered in isolation or as a substitute for the most directly comparable GAAP measures. We compensate for the limitations of non-GAAP financial measures by relying upon GAAP results to gain a complete picture of the Company's performance.\nIn calculating non-GAAP financial measures, we exclude certain items to facilitate a review of the comparability of the Company's operating performance on a period-to-period basis because such items are not, in our view, related to the Company's ongoing operational performance. We use non-GAAP measures to evaluate the operating performance of our business, for comparison with forecasts and strategic plans, for calculating return on investment, and for benchmarking performance externally against competitors. In addition, management's incentive compensation is determined using certain non -GAAP measures. Also, when evaluating potential acquisitions, we exclude certain of the items described below from consideration of the target's performance and valuation. Since we find these measures to be useful, we believe that investors benefit from seeing results 'through the eyes' of management in addition to seeing GAAP r esults. We believe that these non-GAAP measures, when read in conjunction with the Company's GAAP financials, provide useful information to investors by offering:\n- the ability to make more meaningful period-toperiod comparisons of the Company's on-going operating results;\n- the ability to better identify trends in the Company's underlying business and perform related trend analyses;\n- a better understanding of how management plans and measures the Company's underlying business; and\n- an easier way to compare the Company's operating results against analyst financial models and operating results of competitors that supplement their GAAP results with non-GAAP financial measures.\nThe following are explanations of each of the adjustments that we incorporate into nonGAAP measures, as well as the reasons for excluding each of these individual items in the reconciliations of these non-GAAP financial measures:\nStock-based compensation expense consists of non-cash charges for the estimated fair value of stock options and unvested restricted share unit awards granted to employees and assumed in business acquisitions. The Company believes that the",
+      "char_count": 3429,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s18",
+      "header": "Notes and Disclosures",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "exclusion of these charges provides for more accurate comparisons of its operating results to peer companies due to the varying available valuation methodologies, subjective assumptions and the variety of award types. In addition, the Company believes it is useful to investors to understand the specific impact stock-based compensation expense has on its operating results.\nIntangible amortization consists primarily of non-cash charges that can be impacted by, among other things, the timing and magnitude of acquisitions. The Company considers its operating results without these charges when evaluating its ongoing performance and forecasting its earnings trends, and therefore excludes such charges when presenting non-GAAP financial measures. The Company believes that the assessment of its operations excluding these costs is relevant to its assessment of internal operations and comparisons to the performance of its competitors.\nRestructuring charges include severance for rationalization at existing sites and corporate SG&amp;A functions as well as asset impairment, and other charges related to the closures and consolidations of certain operating sites and targeted activities to restructure the business. These costs may vary in size based on the Company's initiatives and are not directly related to ongoing or core business results, and do not reflect expected future operating expenses. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nIn order to support the Compa ny's strategy and build a sustainable organization, and after considering that the economic recovery from the pandemic would be slower than anticipated, the Company identified certain structural changes to restructuring the business in fiscal year 2021. These restructuring actions eliminated non-core activities primarily within the Company's corporate function, aligned the Company's cost structure with its reorganizing and optimizing of its operations model along its two reporting segments, and further sharpened its focus to winning business in end markets where it had competitive advantages and deep domain expertise. During the three and six-month periods ended September 25, 2020, the Company recognized approximately $35 million and $45 million of restructuring charges respectively, most of which related to employee severance.\nLegal and other consist primarily of costs not directly related to core business results and may include matters relating to commercial disputes, government regulatory and compliance, intellectual property, antitrust, tax, employment or shareholder issues, product liability claims and other issues on a global basis as well as customer related asset recoveries. During the first quarter of fiscal year 2021, the Company accrued for certain loss contingencies where losses are considered probable and estimable. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nInterest and other, net consists of various other types of items that are not directly related to ongoing or core business results, such as the gain or losses related to certain divestitures, debt extinguishment costs and impairment charges or gains associated with certain non-core investments. The Company excludes these items because they are not related to the Company's ongoing operating performance or do not affect core operations. Excluding these amounts provides investors with a basis to compare Company performance against the performance of other companies without this variability.",
+      "content_raw": "exclusion of these charges provides for more accurate comparisons of its operating results to peer companies due to the varying available valuation methodologies, subjective assumptions and the variety of award types. In addition, the Company believes it is useful to investors to understand the specific impact stock-based compensation expense has on its operating results.\nIntangible amortization consists primarily of non-cash charges that can be impacted by, among other things, the timing and magnitude of acquisitions. The Company considers its operating results without these charges when evaluating its ongoing performance and forecasting its earnings trends, and therefore excludes such charges when presenting non-GAAP financial measures. The Company believes that the assessment of its operations excluding these costs is relevant to its assessment of internal operations and comparisons to the performance of its competitors.\nRestructuring charges include severance for rationalization at existing sites and corporate SG&amp;A functions as well as asset impairment, and other charges related to the closures and consolidations of certain operating sites and targeted activities to restructure the business. These costs may vary in size based on the Company's initiatives and are not directly related to ongoing or core business results, and do not reflect expected future operating expenses. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nIn order to support the Compa ny's strategy and build a sustainable organization, and after considering that the economic recovery from the pandemic would be slower than anticipated, the Company identified certain structural changes to restructuring the business in fiscal year 2021. These restructuring actions eliminated non-core activities primarily within the Company's corporate function, aligned the Company's cost structure with its reorganizing and optimizing of its operations model along its two reporting segments, and further sharpened its focus to winning business in end markets where it had competitive advantages and deep domain expertise. During the three and six-month periods ended September 25, 2020, the Company recognized approximately $35 million and $45 million of restructuring charges respectively, most of which related to employee severance.\nLegal and other consist primarily of costs not directly related to core business results and may include matters relating to commercial disputes, government regulatory and compliance, intellectual property, antitrust, tax, employment or shareholder issues, product liability claims and other issues on a global basis as well as customer related asset recoveries. During the first quarter of fiscal year 2021, the Company accrued for certain loss contingencies where losses are considered probable and estimable. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nInterest and other, net consists of various other types of items that are not directly related to ongoing or core business results, such as the gain or losses related to certain divestitures, debt extinguishment costs and impairment charges or gains associated with certain non-core investments. The Company excludes these items because they are not related to the Company's ongoing operating performance or do not affect core operations. Excluding these amounts provides investors with a basis to compare Company performance against the performance of other companies without this variability.",
+      "content_cleaned_for_embedding": "exclusion of these charges provides for more accurate comparisons of its operating results to peer companies due to the varying available valuation methodologies, subjective assumptions and the variety of award types. In addition, the Company believes it is useful to investors to understand the specific impact stock-based compensation expense has on its operating results.\nIntangible amortization consists primarily of non-cash charges that can be impacted by, among other things, the timing and magnitude of acquisitions. The Company considers its operating results without these charges when evaluating its ongoing performance and forecasting its earnings trends, and therefore excludes such charges when presenting non-GAAP financial measures. The Company believes that the assessment of its operations excluding these costs is relevant to its assessment of internal operations and comparisons to the performance of its competitors.\nRestructuring charges include severance for rationalization at existing sites and corporate SG&amp;A functions as well as asset impairment, and other charges related to the closures and consolidations of certain operating sites and targeted activities to restructure the business. These costs may vary in size based on the Company's initiatives and are not directly related to ongoing or core business results, and do not reflect expected future operating expenses. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nIn order to support the Compa ny's strategy and build a sustainable organization, and after considering that the economic recovery from the pandemic would be slower than anticipated, the Company identified certain structural changes to restructuring the business in fiscal year 2021. These restructuring actions eliminated non-core activities primarily within the Company's corporate function, aligned the Company's cost structure with its reorganizing and optimizing of its operations model along its two reporting segments, and further sharpened its focus to winning business in end markets where it had competitive advantages and deep domain expertise. During the three and six-month periods ended September 25, 2020, the Company recognized approximately $35 million and $45 million of restructuring charges respectively, most of which related to employee severance.\nLegal and other consist primarily of costs not directly related to core business results and may include matters relating to commercial disputes, government regulatory and compliance, intellectual property, antitrust, tax, employment or shareholder issues, product liability claims and other issues on a global basis as well as customer related asset recoveries. During the first quarter of fiscal year 2021, the Company accrued for certain loss contingencies where losses are considered probable and estimable. These costs are excluded by the Company's management in assessing current operating performance and forecasting its earnings trends and are therefore excluded by the Company from its non-GAAP measures.\nInterest and other, net consists of various other types of items that are not directly related to ongoing or core business results, such as the gain or losses related to certain divestitures, debt extinguishment costs and impairment charges or gains associated with certain non-core investments. The Company excludes these items because they are not related to the Company's ongoing operating performance or do not affect core operations. Excluding these amounts provides investors with a basis to compare Company performance against the performance of other companies without this variability.",
+      "char_count": 3784,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    },
+    {
+      "section_id": "s19",
+      "header": "Notes and Disclosures",
+      "level": 2,
+      "item_code": "",
+      "section_type": "news_section",
+      "is_tail": false,
+      "content": "In September 2021, the Company received approval from the relevant tax authorities in Brazil of the Credit Habilitation request related to certain federal operational tax credit and the Company recorded a total gain of 809.6 million Brazilian reals (approximately USD $149.3 million based on the exchange rate as of October 1, 2021) under interest and other, net in the condensed statements of operations for the three and six-month periods ended October 1, 2021. The total gain recorded included credits from February 2003 to September 2021, net of additional taxes, as the Credit Habilitation received covering the period from February 2003 to December 2019 resolved any uncertainty regarding the Company's ability to claim such credits. This gain is non-cash and can only be used to offset certain current and future tax obligations.\nAdjustment for taxes relates to the tax effects of the various adjustments that we incorporate into non-GAAP measures in order to provide a more meaningful measure on non-GAAP net income and certain adjustments related to non-recurring settlements of tax contingencies or other non-recurring tax charges, when applicable.\n- (2) Beginning in the second quarter of fiscal year 2022, the Company elected to include operating income as a subtotal in the condensed consolidated statements of operations. In addition, deferred revenue and customer working capital advances, previously included within other current liabilities, have been separately presented as deferred revenue and customer working capital advances in the current liabilities section of the condensed consolidated balance sheets. Further, certain unbilled receivables previously presented as part of accounts receivable, net of allowance for doubtful accounts are now being presented as contract assets on the condensed consolidated balance sheets as billing is to occur subsequent to revenue recognition and is conditional upon other than the passage of time. The Company reclassified $146.8 million of unbilled receivables from account receivable, net of allowance for doubtful accounts to contract assets for the period ended March 31, 2021 in order to align with the current year presentation. These presentation changes were applied to all periods presented in the condensed consolidated statement of operations and balance sheets. The foregoing changes in presentation had no impact on the Company's results of operations or cash flows.",
+      "content_raw": "In September 2021, the Company received approval from the relevant tax authorities in Brazil of the Credit Habilitation request related to certain federal operational tax credit and the Company recorded a total gain of 809.6 million Brazilian reals (approximately USD $149.3 million based on the exchange rate as of October 1, 2021) under interest and other, net in the condensed statements of operations for the three and six-month periods ended October 1, 2021. The total gain recorded included credits from February 2003 to September 2021, net of additional taxes, as the Credit Habilitation received covering the period from February 2003 to December 2019 resolved any uncertainty regarding the Company's ability to claim such credits. This gain is non-cash and can only be used to offset certain current and future tax obligations.\nAdjustment for taxes relates to the tax effects of the various adjustments that we incorporate into non-GAAP measures in order to provide a more meaningful measure on non-GAAP net income and certain adjustments related to non-recurring settlements of tax contingencies or other non-recurring tax charges, when applicable.\n- (2) Beginning in the second quarter of fiscal year 2022, the Company elected to include operating income as a subtotal in the condensed consolidated statements of operations. In addition, deferred revenue and customer working capital advances, previously included within other current liabilities, have been separately presented as deferred revenue and customer working capital advances in the current liabilities section of the condensed consolidated balance sheets. Further, certain unbilled receivables previously presented as part of accounts receivable, net of allowance for doubtful accounts are now being presented as contract assets on the condensed consolidated balance sheets as billing is to occur subsequent to revenue recognition and is conditional upon other than the passage of time. The Company reclassified $146.8 million of unbilled receivables from account receivable, net of allowance for doubtful accounts to contract assets for the period ended March 31, 2021 in order to align with the current year presentation. These presentation changes were applied to all periods presented in the condensed consolidated statement of operations and balance sheets. The foregoing changes in presentation had no impact on the Company's results of operations or cash flows.",
+      "content_cleaned_for_embedding": "In September 2021, the Company received approval from the relevant tax authorities in Brazil of the Credit Habilitation request related to certain federal operational tax credit and the Company recorded a total gain of 809.6 million Brazilian reals (approximately USD $149.3 million based on the exchange rate as of October 1, 2021) under interest and other, net in the condensed statements of operations for the three and six-month periods ended October 1, 2021. The total gain recorded included credits from February 2003 to September 2021, net of additional taxes, as the Credit Habilitation received covering the period from February 2003 to December 2019 resolved any uncertainty regarding the Company's ability to claim such credits. This gain is non-cash and can only be used to offset certain current and future tax obligations.\nAdjustment for taxes relates to the tax effects of the various adjustments that we incorporate into non-GAAP measures in order to provide a more meaningful measure on non-GAAP net income and certain adjustments related to non-recurring settlements of tax contingencies or other non-recurring tax charges, when applicable.\n- (2) Beginning in the second quarter of fiscal year 2022, the Company elected to include operating income as a subtotal in the condensed consolidated statements of operations. In addition, deferred revenue and customer working capital advances, previously included within other current liabilities, have been separately presented as deferred revenue and customer working capital advances in the current liabilities section of the condensed consolidated balance sheets. Further, certain unbilled receivables previously presented as part of accounts receivable, net of allowance for doubtful accounts are now being presented as contract assets on the condensed consolidated balance sheets as billing is to occur subsequent to revenue recognition and is conditional upon other than the passage of time. The Company reclassified $146.8 million of unbilled receivables from account receivable, net of allowance for doubtful accounts to contract assets for the period ended March 31, 2021 in order to align with the current year presentation. These presentation changes were applied to all periods presented in the condensed consolidated statement of operations and balance sheets. The foregoing changes in presentation had no impact on the Company's results of operations or cash flows.",
+      "char_count": 2441,
+      "has_legal_boilerplate": false,
+      "legal_boilerplate_lines": []
+    }
+  ],
+  "exhibits": [],
+  "tables": [
+    {
+      "table_id": "table:docling_1",
+      "table_type": "financial_statement",
+      "header": [
+        "",
+        "Three-Month Periods Ended.October 1, 2021",
+        "Three-Month Periods Ended.September 25, 2020"
+      ],
+      "rows": [
+        [
+          "GAAP:",
+          "",
+          ""
+        ],
+        [
+          "Net sales",
+          "$ 6,229",
+          "$ 5,985"
+        ],
+        [
+          "Cost of sales",
+          "5,755",
+          "5,566"
+        ],
+        [
+          "Restructuring charges",
+          "9",
+          "24"
+        ],
+        [
+          "Gross profit",
+          "465",
+          "395"
+        ],
+        [
+          "Selling, general and administrative expenses",
+          "213",
+          "193"
+        ],
+        [
+          "Restructuring charges",
+          "-",
+          "11"
+        ],
+        [
+          "Intangible amortization",
+          "15",
+          "16"
+        ],
+        [
+          "Operating income",
+          "237",
+          "175"
+        ],
+        [
+          "Interest and other, net",
+          "(134)",
+          "22"
+        ],
+        [
+          "Income before income taxes",
+          "371",
+          "153"
+        ],
+        [
+          "Provision for income taxes",
+          "35",
+          "40"
+        ],
+        [
+          "Net income",
+          "$ 336",
+          "$ 113"
+        ],
+        [
+          "Earnings per share:",
+          "",
+          ""
+        ],
+        [
+          "GAAP",
+          "$ 0.69",
+          "$ 0.22"
+        ],
+        [
+          "Non-GAAP",
+          "$ 0.48",
+          "$ 0.36"
+        ],
+        [
+          "Diluted shares used in computing per share amounts",
+          "487",
+          "504"
+        ]
+      ],
+      "row_count": 17,
+      "col_count": 3
+    },
+    {
+      "table_id": "table:docling_2",
+      "table_type": "financial_statement",
+      "header": [
+        "",
+        "Six-Month Periods Ended.October 1, 2021",
+        "Six-Month Periods Ended.September 25, 2020"
+      ],
+      "rows": [
+        [
+          "GAAP:",
+          "",
+          ""
+        ],
+        [
+          "Net sales",
+          "$ 12,571",
+          "$ 11,138"
+        ],
+        [
+          "Cost of sales",
+          "11,625",
+          "10,406"
+        ],
+        [
+          "Restructuring charges",
+          "9",
+          "34"
+        ],
+        [
+          "Gross profit",
+          "937",
+          "698"
+        ],
+        [
+          "Selling, general and administrative expenses",
+          "414",
+          "384"
+        ],
+        [
+          "Restructuring charges",
+          "-",
+          "11"
+        ],
+        [
+          "Intangible amortization",
+          "30",
+          "31"
+        ],
+        [
+          "Operating income",
+          "493",
+          "272"
+        ],
+        [
+          "Interest and other, net",
+          "(111)",
+          "51"
+        ],
+        [
+          "Income before income taxes",
+          "604",
+          "221"
+        ],
+        [
+          "Provision for income taxes",
+          "62",
+          "56"
+        ],
+        [
+          "Net income",
+          "$ 542",
+          "$ 165"
+        ],
+        [
+          "Earnings per share:",
+          "",
+          ""
+        ],
+        [
+          "GAAP",
+          "$ 1.10",
+          "$ 0.33"
+        ],
+        [
+          "Non-GAAP",
+          "$ 0.94",
+          "$ 0.59"
+        ],
+        [
+          "Diluted shares used in computing per share amounts",
+          "493",
+          "503"
+        ]
+      ],
+      "row_count": 17,
+      "col_count": 3
+    },
+    {
+      "table_id": "table:docling_3",
+      "table_type": "financial_statement",
+      "header": [
+        "",
+        "Three-Month Periods Ended.October 1, 2021",
+        "Three-Month Periods Ended.September 25, 2020"
+      ],
+      "rows": [
+        [
+          "GAAP operating income",
+          "$ 237",
+          "$ 175"
+        ],
+        [
+          "Intangible amortization",
+          "15",
+          "16"
+        ],
+        [
+          "Stock-based compensation expense",
+          "24",
+          "24"
+        ],
+        [
+          "Restructuring charges",
+          "9",
+          "35"
+        ],
+        [
+          "Legal and other",
+          "1",
+          "(3)"
+        ],
+        [
+          "Non-GAAP operating income",
+          "$ 286",
+          "$ 247"
+        ],
+        [
+          "GAAP provision for income taxes",
+          "$ 35",
+          "$ 40"
+        ],
+        [
+          "Intangible amortization benefit",
+          "2",
+          "2"
+        ],
+        [
+          "Other tax related adjustments",
+          "(3)",
+          "(2)"
+        ],
+        [
+          "Tax benefit on restructuring and other",
+          "-",
+          "2"
+        ],
+        [
+          "Non-GAAP provision for income taxes",
+          "$ 34",
+          "$ 42"
+        ],
+        [
+          "GAAP net income",
+          "$ 336",
+          "$ 113"
+        ],
+        [
+          "Intangible amortization",
+          "15",
+          "16"
+        ],
+        [
+          "Stock-based compensation expense",
+          "24",
+          "24"
+        ],
+        [
+          "Restructuring charges",
+          "9",
+          "35"
+        ],
+        [
+          "Legal and other",
+          "1",
+          "(3)"
+        ],
+        [
+          "Interest and other, net",
+          "(152)",
+          "(3)"
+        ],
+        [
+          "Adjustments for taxes",
+          "1",
+          "(2)"
+        ],
+        [
+          "Non-GAAP net income",
+          "$ 233",
+          "$ 180"
+        ],
+        [
+          "Diluted earnings per share: GAAP",
+          "$ 0.69",
+          "$ 0.22"
+        ],
+        [
+          "Non-GAAP",
+          "$ 0.48",
+          "$ 0.36"
+        ]
+      ],
+      "row_count": 21,
+      "col_count": 3
+    },
+    {
+      "table_id": "table:docling_4",
+      "table_type": "financial_statement",
+      "header": [
+        "",
+        "Six-Month Periods Ended.October 1, 2021",
+        "Six-Month Periods Ended.September 25, 2020"
+      ],
+      "rows": [
+        [
+          "GAAP operating income",
+          "$ 493",
+          "$ 272"
+        ],
+        [
+          "Intangible amortization",
+          "30",
+          "31"
+        ],
+        [
+          "Stock-based compensation expense",
+          "44",
+          "37"
+        ],
+        [
+          "Restructuring charges",
+          "9",
+          "45"
+        ],
+        [
+          "Legal and other",
+          "-",
+          "25"
+        ],
+        [
+          "Non-GAAP operating income",
+          "$ 576",
+          "$ 410"
+        ],
+        [
+          "GAAP provision for income taxes",
+          "$ 62",
+          "$ 56"
+        ],
+        [
+          "Intangible amortization benefit",
+          "4",
+          "4"
+        ],
+        [
+          "Other tax related adjustments",
+          "3",
+          "(3)"
+        ],
+        [
+          "Tax benefit on restructuring and other",
+          "-",
+          "4"
+        ],
+        [
+          "Non-GAAP provision for income taxes",
+          "$ 70",
+          "$ 60"
+        ],
+        [
+          "GAAP net income",
+          "$ 542",
+          "$ 165"
+        ],
+        [
+          "Intangible amortization",
+          "30",
+          "31"
+        ],
+        [
+          "Stock-based compensation expense",
+          "44",
+          "37"
+        ],
+        [
+          "Restructuring charges",
+          "9",
+          "45"
+        ],
+        [
+          "Legal and other",
+          "-",
+          "25"
+        ],
+        [
+          "Interest and other, net",
+          "(155)",
+          "(2)"
+        ],
+        [
+          "Adjustments for taxes",
+          "(7)",
+          "(5)"
+        ],
+        [
+          "Non-GAAP net income",
+          "$ 462",
+          "$ 296"
+        ],
+        [
+          "Diluted earnings per share: GAAP",
+          "$ 1.10",
+          "$ 0.33"
+        ],
+        [
+          "Non-GAAP",
+          "$ 0.94",
+          "$ 0.59"
+        ]
+      ],
+      "row_count": 21,
+      "col_count": 3
+    },
+    {
+      "table_id": "table:docling_5",
+      "table_type": "financial_statement",
+      "header": [
+        "",
+        "As of October 1, 2021",
+        "As of October 1, 2021",
+        "As of March 31, 2021"
+      ],
+      "rows": [
+        [
+          "ASSETS",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Current assets:",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Cash and cash equivalents",
+          "$",
+          "2,458",
+          "$ 2,637"
+        ],
+        [
+          "Accounts receivable, net of allowance for doubtful accounts",
+          "",
+          "3,505",
+          "3,959"
+        ],
+        [
+          "Contract assets",
+          "",
+          "392",
+          "282"
+        ],
+        [
+          "Inventories",
+          "",
+          "5,168",
+          "3,895"
+        ],
+        [
+          "Other current assets",
+          "",
+          "660",
+          "590"
+        ],
+        [
+          "Total current assets",
+          "",
+          "12,183",
+          "11,363"
+        ],
+        [
+          "Property and equipment, net",
+          "",
+          "2,100",
+          "2,097"
+        ],
+        [
+          "Operating lease right-of-use assets, net",
+          "",
+          "612",
+          "642"
+        ],
+        [
+          "Goodwill",
+          "",
+          "1,085",
+          "1,090"
+        ],
+        [
+          "Other intangible assets, net",
+          "",
+          "182",
+          "213"
+        ],
+        [
+          "Other assets",
+          "",
+          "549",
+          "431"
+        ],
+        [
+          "Total assets",
+          "$",
+          "16,711",
+          "$ 15,836"
+        ],
+        [
+          "LIABILITIES AND SHAREHOLDERS' EQUITY",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Current liabilities:",
+          "",
+          "",
+          ""
+        ],
+        [
+          "Bank borrowings and current portion of long- term debt",
+          "$",
+          "284",
+          "$ 268"
+        ],
+        [
+          "Accounts payable",
+          "",
+          "5,848",
+          "5,247"
+        ],
+        [
+          "Accrued payroll",
+          "",
+          "450",
+          "473"
+        ],
+        [
+          "Deferred revenue and customer working capital advances",
+          "",
+          "1,146",
+          "848"
+        ],
+        [
+          "Other current liabilities",
+          "",
+          "960",
+          "998"
+        ],
+        [
+          "Total current liabilities",
+          "",
+          "8,688",
+          "7,834"
+        ],
+        [
+          "Long-term debt, net of current portion",
+          "",
+          "3,501",
+          "3,515"
+        ],
+        [
+          "Operating lease liabilities, non-current",
+          "",
+          "534",
+          "562"
+        ],
+        [
+          "Other liabilities",
+          "",
+          "474",
+          "489"
+        ],
+        [
+          "Total shareholders' equity",
+          "",
+          "3,514",
+          "3,436"
+        ],
+        [
+          "Total liabilities and shareholders' equity",
+          "$",
+          "16,711",
+          "$ 15,836"
+        ]
+      ],
+      "row_count": 27,
+      "col_count": 4
+    },
+    {
+      "table_id": "table:docling_6",
+      "table_type": "financial_statement",
+      "header": [
+        "",
+        "Six-Month Periods Ended.October 1, 2021",
+        "Six-Month Periods Ended.September 25, 2020"
+      ],
+      "rows": [
+        [
+          "CASH FLOWS FROM OPERATING ACTIVITIES:",
+          "",
+          ""
+        ],
+        [
+          "Net income",
+          "$ 542",
+          "$ 165"
+        ],
+        [
+          "Depreciation, amortization and other impairment",
+          "236",
+          "283"
+        ],
+        [
+          "charges Changes in working capital and other, net",
+          "(264)",
+          "(813)"
+        ],
+        [
+          "Net cash provided by (used in) operating",
+          "514",
+          "(365)"
+        ],
+        [
+          "CASH FLOWS FROM INVESTING ACTIVITIES:",
+          "",
+          ""
+        ],
+        [
+          "Purchases of property and equipment",
+          "(210)",
+          "(185)"
+        ],
+        [
+          "Proceeds from the disposition of property and",
+          "5",
+          "14"
+        ],
+        [
+          "equipment Other investing activities, net",
+          "2",
+          "13"
+        ],
+        [
+          "Net cash used in investing activities",
+          "(203)",
+          "(158)"
+        ],
+        [
+          "CASH FLOWS FROM FINANCING ACTIVITIES:",
+          "",
+          ""
+        ],
+        [
+          "Proceeds from bank borrowings and long-term",
+          "20",
+          "1,943"
+        ],
+        [
+          "debt Repayments of bank borrowings and long-term",
+          "(9)",
+          "(1,005)"
+        ],
+        [
+          "debt Payments for repurchases of ordinary shares",
+          "(490)",
+          "-"
+        ],
+        [
+          "Other financing activities, net",
+          "(8)",
+          "2"
+        ],
+        [
+          "Net cash provided by (used in) financing",
+          "(487)",
+          "940"
+        ],
+        [
+          "Effect of exchange rates on cash and cash equivalents",
+          "(3)",
+          "19"
+        ],
+        [
+          "Net increase (decrease) in cash and cash equivalents",
+          "(179)",
+          "436"
+        ],
+        [
+          "Cash and cash equivalents, beginning of period",
+          "2,637",
+          "1,923"
+        ],
+        [
+          "Cash and cash equivalents, end of period",
+          "$ 2,458",
+          "$ 2,359"
+        ]
+      ],
+      "row_count": 20,
+      "col_count": 3
+    }
+  ],
+  "reading_order": [
+    {
+      "order": 1,
+      "type": "heading",
+      "ref": "s1:h",
+      "page_num": 0,
+      "preview": "Overview"
+    },
+    {
+      "order": 2,
+      "type": "paragraph",
+      "ref": "s1:p",
+      "page_num": 0,
+      "preview": "<!-- image -->"
+    },
+    {
+      "order": 3,
+      "type": "heading",
+      "ref": "s2:h",
+      "page_num": 0,
+      "preview": "FLEX REPORTS SECOND QUARTER FISCAL 2022 RESULTS"
+    },
+    {
+      "order": 4,
+      "type": "paragraph",
+      "ref": "s2:p",
+      "page_num": 0,
+      "preview": "San Jose, Calif., October 27, 2021 -Flex (NASDAQ: FLEX) today announced results for its second quarter ended October 1, "
+    },
+    {
+      "order": 5,
+      "type": "heading",
+      "ref": "s3:h",
+      "page_num": 0,
+      "preview": "Second Quarter Fiscal Year 2022 Highlights:"
+    },
+    {
+      "order": 6,
+      "type": "paragraph",
+      "ref": "s3:p",
+      "page_num": 0,
+      "preview": "- Net Sales: $6.2 billion\n- GAAP Operating Income: $237 million\n- Adjusted Operating Income: $286 million\n- GAAP Net Inc"
+    },
+    {
+      "order": 7,
+      "type": "heading",
+      "ref": "s4:h",
+      "page_num": 0,
+      "preview": "Third Quarter Fiscal 2022 Guidance"
+    },
+    {
+      "order": 8,
+      "type": "paragraph",
+      "ref": "s4:p",
+      "page_num": 0,
+      "preview": "- Revenue: $6.1 billion to $6.5 billion\n- GAAP Operating Income: $210 million to $250 million\n- Adjusted Operating Incom"
+    },
+    {
+      "order": 9,
+      "type": "heading",
+      "ref": "s5:h",
+      "page_num": 0,
+      "preview": "Fiscal Year 2022 Guidance Updated"
+    },
+    {
+      "order": 10,
+      "type": "paragraph",
+      "ref": "s5:p",
+      "page_num": 0,
+      "preview": "- Revenue: $24.8 billion to $25.8 billion\n- GAAP EPS: $1.71 to $1.86 which includes $0.19 for stock-based compensation e"
+    },
+    {
+      "order": 11,
+      "type": "heading",
+      "ref": "s6:h",
+      "page_num": 0,
+      "preview": "Webcast and Conference Call"
+    },
+    {
+      "order": 12,
+      "type": "paragraph",
+      "ref": "s6:p",
+      "page_num": 0,
+      "preview": "The Flex management team will host a conference call today at 1:30 PM (PT) / 4:30 PM (ET), to review second quarter fisc"
+    },
+    {
+      "order": 13,
+      "type": "heading",
+      "ref": "s7:h",
+      "page_num": 0,
+      "preview": "About Flex"
+    },
+    {
+      "order": 14,
+      "type": "paragraph",
+      "ref": "s7:p",
+      "page_num": 0,
+      "preview": "Flex (Reg. No. 199002645H) is the manufacturing partner of choice that helps a diverse customer base design and build pr"
+    },
+    {
+      "order": 15,
+      "type": "heading",
+      "ref": "s8:h",
+      "page_num": 0,
+      "preview": "Contacts"
+    },
+    {
+      "order": 16,
+      "type": "paragraph",
+      "ref": "s8:p",
+      "page_num": 0,
+      "preview": "Investors &amp; Analysts David Rubin Vice President, Investor Relations (408) 577-4632 David.Rubin@flex.com\nMedia &amp; "
+    },
+    {
+      "order": 17,
+      "type": "heading",
+      "ref": "s9:h",
+      "page_num": 0,
+      "preview": "Notes and Disclosures"
+    },
+    {
+      "order": 18,
+      "type": "paragraph",
+      "ref": "s9:p",
+      "page_num": 0,
+      "preview": "proposed changes or future changes in tax laws in certain jurisdictions where we operate could materially impact our tax"
+    },
+    {
+      "order": 19,
+      "type": "heading",
+      "ref": "s10:h",
+      "page_num": 0,
+      "preview": "FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)"
+    },
+    {
+      "order": 20,
+      "type": "paragraph",
+      "ref": "s10:p",
+      "page_num": 0,
+      "preview": "| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------------------|------"
+    },
+    {
+      "order": 21,
+      "type": "heading",
+      "ref": "s11:h",
+      "page_num": 0,
+      "preview": "FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (2) (In millions, except per share amounts)"
+    },
+    {
+      "order": 22,
+      "type": "paragraph",
+      "ref": "s11:p",
+      "page_num": 0,
+      "preview": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------------------|----------"
+    },
+    {
+      "order": 23,
+      "type": "heading",
+      "ref": "s12:h",
+      "page_num": 0,
+      "preview": "FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *"
+    },
+    {
+      "order": 24,
+      "type": "paragraph",
+      "ref": "s12:p",
+      "page_num": 0,
+      "preview": "| | Three-Month Periods Ended | Three-Month Periods Ended |\n|----------------------------------------|------------------"
+    },
+    {
+      "order": 25,
+      "type": "heading",
+      "ref": "s13:h",
+      "page_num": 0,
+      "preview": "FLEX RECONCILIATION OF GAAP TO NON-GAAP FINANCIAL MEASURES (1)(2) (In millions, except per share amounts) *"
+    },
+    {
+      "order": 26,
+      "type": "paragraph",
+      "ref": "s13:p",
+      "page_num": 0,
+      "preview": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|----------------------------------------|----------------------"
+    },
+    {
+      "order": 27,
+      "type": "heading",
+      "ref": "s14:h",
+      "page_num": 0,
+      "preview": "FLEX UNAUDITED CONDENSED CONSOLIDATED BALANCE SHEETS (2) (In millions)"
+    },
+    {
+      "order": 28,
+      "type": "paragraph",
+      "ref": "s14:p",
+      "page_num": 0,
+      "preview": "| | As of October 1, 2021 | As of October 1, 2021 | As of March 31, 2021 |\n|--------------------------------------------"
+    },
+    {
+      "order": 29,
+      "type": "heading",
+      "ref": "s15:h",
+      "page_num": 0,
+      "preview": "SCHEDULE III"
+    },
+    {
+      "order": 30,
+      "type": "paragraph",
+      "ref": "s15:p",
+      "page_num": 0,
+      "preview": "<!-- image -->\nSCHEDULE IV"
+    },
+    {
+      "order": 31,
+      "type": "heading",
+      "ref": "s16:h",
+      "page_num": 0,
+      "preview": "FLEX UNAUDITED CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS (In millions)"
+    },
+    {
+      "order": 32,
+      "type": "paragraph",
+      "ref": "s16:p",
+      "page_num": 0,
+      "preview": "| | Six-Month Periods Ended | Six-Month Periods Ended |\n|-------------------------------------------------------|-------"
+    },
+    {
+      "order": 33,
+      "type": "heading",
+      "ref": "s17:h",
+      "page_num": 0,
+      "preview": "FLEX AND SUBSIDIARIES NOTES TO SCHEDULES I, II, and III"
+    },
+    {
+      "order": 34,
+      "type": "paragraph",
+      "ref": "s17:p",
+      "page_num": 0,
+      "preview": "- (1) To supplement Flex's unaudited selected financial data presented consistent with Generally Accepted Accounting Pri"
+    },
+    {
+      "order": 35,
+      "type": "heading",
+      "ref": "s18:h",
+      "page_num": 0,
+      "preview": "Notes and Disclosures"
+    },
+    {
+      "order": 36,
+      "type": "paragraph",
+      "ref": "s18:p",
+      "page_num": 0,
+      "preview": "exclusion of these charges provides for more accurate comparisons of its operating results to peer companies due to the "
+    },
+    {
+      "order": 37,
+      "type": "heading",
+      "ref": "s19:h",
+      "page_num": 0,
+      "preview": "Notes and Disclosures"
+    },
+    {
+      "order": 38,
+      "type": "paragraph",
+      "ref": "s19:p",
+      "page_num": 0,
+      "preview": "In September 2021, the Company received approval from the relevant tax authorities in Brazil of the Credit Habilitation "
+    },
+    {
+      "order": 39,
+      "type": "legal_disclaimer",
+      "ref": "legal:1",
+      "page_num": 0,
+      "preview": "This press release contains forward-looking statements within the meaning of U.S. securities laws, including: statements"
+    }
+  ],
+  "quality": {
+    "total_pages": 0,
+    "pages_with_text": 0,
+    "pages_with_text_ratio": 0,
+    "table_count": 6,
+    "section_count": 19,
+    "block_count": 39,
+    "text_char_count": 26193,
+    "text_word_count": 4323,
+    "warnings": [
+      "parser:docling"
+    ]
+  }
+}

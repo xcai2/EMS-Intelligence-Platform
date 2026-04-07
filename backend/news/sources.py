@@ -64,15 +64,19 @@ OFFICIAL_COMPANY_SOURCES = {
 
 OFFICIAL_NEWS_KEYWORDS = [
     "news",
+    "newsroom",
     "press",
     "release",
     "announcement",
     "earnings",
-    "ai",
-    "data center",
-    "infrastructure",
-    "cloud",
-    "server",
+    "news release",
+    "investor",
+    "relations",
+    "investor relations",
+    "media",
+    "media center",
+    "event",
+    "events",
 ]
 
 FALLBACK_COMPANY_NEWS = {
