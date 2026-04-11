@@ -9,6 +9,7 @@ LLM Reranking (inspired by RAG-Challenge-2):
 """
 import re
 import json
+from datetime import date
 from typing import Optional
 
 from openai import OpenAI
@@ -68,6 +69,263 @@ _RECENCY_KEYWORDS = {
     "latest", "recent", "newest", "most recent", "current", "last quarter",
     "this year", "this quarter", "updated", "new",
 }
+
+# ---------------------------------------------------------------------------
+# QUARTER RANGE EXTRACTION
+# ---------------------------------------------------------------------------
+
+# 各公司财年开始月份
+COMPANY_FY_START = {
+    "Flex": 4,      # 4月开始，3月结束
+    "Jabil": 9,     # 9月开始，8月结束
+    "Celestica": 1, # 自然年
+    "Benchmark": 1, # 自然年
+    "Sanmina": 10,  # 10月开始，9月结束
+}
+
+_QUARTER_COUNT_WORDS = {
+    "one": 1, "two": 2, "three": 3, "four": 4,
+    "five": 5, "six": 6,
+    "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6,
+}
+
+
+def _extract_quarter_range(query: str) -> Optional[int]:
+    """
+    从问题中提取用户想要多少个季度的数据。
+    支持以下变体：
+      "last three quarters"      -> 3
+      "past 3 quarters"          -> 3
+      "recent 3 quarters"        -> 3
+      "last few quarters"        -> 3 (默认)
+      "last several quarters"    -> 3 (默认)
+      "last quarter"             -> 1
+      "recent quarter"           -> 1
+    """
+    q_lower = query.lower()
+
+    # 变体1: last/past/previous/prior/recent + 英文数字 + quarter(s)
+    pattern = r'\b(?:last|past|previous|prior|recent)\s+(\w+)\s+quarters?\b'
+    match = re.search(pattern, q_lower)
+    if match:
+        word = match.group(1)
+        count = _QUARTER_COUNT_WORDS.get(word)
+        if count:
+            return count
+
+    # 变体2: last/past/previous/prior/recent + 阿拉伯数字 + quarter(s)
+    digit_match = re.search(
+        r'\b(?:last|past|previous|prior|recent)\s+(\d+)\s+quarters?\b',
+        q_lower
+    )
+    if digit_match:
+        count = int(digit_match.group(1))
+        if 1 <= count <= 12:
+            return count
+
+    # 变体3: "last few/several/some/multiple quarters" -> 默认 3
+    if re.search(
+        r'\b(?:last|past|previous|prior|recent)\s+(?:few|several|some|multiple)\s+quarters?\b',
+        q_lower
+    ):
+        return 3
+
+    # 变体4: 单独的 "last/recent quarter"（单数）
+    if re.search(r'\b(?:last|past|previous|prior|recent)\s+quarter\b', q_lower):
+        return 1
+
+
+def _extract_explicit_periods(query: str) -> list[tuple[str, str]]:
+    """
+    解析用户明确指定的季度范围。
+    支持：
+      "FY2025 Q1 to Q3"       -> [("2025","Q1"), ("2025","Q2"), ("2025","Q3")]
+      "FY2025 Q1, Q2, Q3"     -> [("2025","Q1"), ("2025","Q2"), ("2025","Q3")]
+      "Q2 and Q3 FY2024"      -> [("2024","Q2"), ("2024","Q3")]
+      "FY24 Q3 and FY25 Q1"   -> [("2024","Q3"), ("2025","Q1")]
+      "Q1 to Q3"              -> [("","Q1"), ("","Q2"), ("","Q3")]
+      "Q1-Q3"                 -> [("","Q1"), ("","Q2"), ("","Q3")]
+    没有匹配返回空列表。
+    """
+    q_lower = query.lower()
+    periods = []
+
+    # 模式1: FY2025 Q1 to/through/- Q3 (同一财年内的连续范围)
+    m = re.search(
+        r'\bfy\s*(\d{2,4})\s+q([1-4])\s*(?:to|through|-)\s*q([1-4])\b',
+        q_lower
+    )
+    if m:
+        year = m.group(1)
+        year = f"20{year}" if len(year) == 2 else year
+        start_q = int(m.group(2))
+        end_q = int(m.group(3))
+        for q in range(start_q, end_q + 1):
+            periods.append((year, f"Q{q}"))
+        return periods
+
+    # 模式2: Q1 to Q3 / Q1-Q3 / Q1 through Q3 (没有指定财年)
+    m2 = re.search(r'\bq([1-4])\s*(?:to|through|-)\s*q([1-4])\b', q_lower)
+    if m2:
+        start_q = int(m2.group(1))
+        end_q = int(m2.group(2))
+        if end_q >= start_q:
+            for q in range(start_q, end_q + 1):
+                periods.append(("", f"Q{q}"))
+            return periods
+
+    # 模式3: FY2024 Q1, Q2, Q3 或 Q2 and Q3 FY2024 (同一财年，列举)
+    # 只有一个 FY 时才走这里，多个 FY 留给模式4处理
+    all_years = re.findall(r'\bfy\s*(\d{2,4})\b', q_lower)
+    q_matches = re.findall(r'\bq([1-4])\b', q_lower)
+    if len(all_years) == 1 and q_matches:
+        year = all_years[0]
+        year = f"20{year}" if len(year) == 2 else year
+        for q in q_matches:
+            p = (year, f"Q{q}")
+            if p not in periods:
+                periods.append(p)
+        return periods
+
+    # 模式4: FY24 Q3 and FY25 Q1 (跨财年，各自指定)
+    # 先找所有 FY+year 的位置，再找紧跟其后的 Q
+    cross_matches = re.findall(r'\bfy\s*(\d{2,4})\b[^fy]*?\bq([1-4])\b', q_lower)
+    if len(cross_matches) >= 2:
+        for year, q in cross_matches:
+            year = f"20{year}" if len(year) == 2 else year
+            p = (year, f"Q{q}")
+            if p not in periods:
+                periods.append(p)
+        return periods
+
+    return periods
+
+
+def _extract_quarters_ago(query: str, company: str = None) -> list[tuple[str, str]]:
+    """
+    解析 "N quarters ago" 类型的相对时间表达。
+    返回那一个特定季度的 (fiscal_year, quarter)。
+    例如:
+      "two quarters ago"   -> 2个季度前的那个季度
+      "3 quarters ago"     -> 3个季度前的那个季度
+      "last quarter"       -> 已在 _extract_quarter_range 处理，这里不重复
+    """
+    q_lower = query.lower()
+
+    # 匹配 "N quarters ago"
+    pattern = r'\b(\w+)\s+quarters?\s+ago\b'
+    match = re.search(pattern, q_lower)
+    if not match:
+        return []
+
+    word = match.group(1)
+    count = _QUARTER_COUNT_WORDS.get(word)
+    if not count:
+        return []
+
+    # 从今天往前数 count 个季度，再多数1个跳过当前季度
+    today = date.today()
+    fy_start = COMPANY_FY_START.get(company, 1) if company else 1
+
+    month = today.month
+    year = today.year
+
+    # 先跳过当前季度
+    month -= 3
+    if month <= 0:
+        month += 12
+        year -= 1
+
+    # 再往前数 count 个季度
+    for _ in range(count - 1):
+        month -= 3
+        if month <= 0:
+            month += 12
+            year -= 1
+
+    fy_month = (month - fy_start) % 12
+    q_num = fy_month // 3 + 1
+    fy_year = year - 1 if month < fy_start else year
+
+    return [(str(fy_year), f"Q{q_num}")]
+
+
+def _get_recent_fiscal_periods(n_quarters: int, company: str = None) -> list[tuple[str, str]]:
+    """
+    根据今天日期，计算过去 N 个已完成季度对应的 (fiscal_year, quarter) 列表。
+    没有指定公司时按自然年（1月开始）计算。
+    """
+    today = date.today()
+    fy_start = COMPANY_FY_START.get(company, 1) if company else 1
+
+    periods = []
+    year = today.year
+    month = today.month
+
+    # 多算一个，用来跳过当前还没结束的季度
+    for _ in range(n_quarters + 1):
+        fy_month = (month - fy_start) % 12      # 在财年内是第几个月（0-based）
+        q_num = fy_month // 3 + 1               # 第几季度
+
+        # FY label logic:
+        # - Calendar year (fy_start=1): FY = current year
+        # - month >= fy_start: we just started a new FY that ends NEXT calendar year → FY = year+1
+        # - month < fy_start:  we are in the FY that started LAST calendar year → FY = year
+        if fy_start == 1:
+            fy_year = year
+        elif month >= fy_start:
+            fy_year = year + 1  # FY started this calendar year, ends next
+        else:
+            fy_year = year      # FY started last calendar year, ends this year
+
+        # Format to match ChromaDB metadata: "FY25", "FY26", etc.
+        fy_label = f"FY{fy_year % 100:02d}"
+        periods.append((fy_label, f"Q{q_num}"))
+
+        # 往前退3个月
+        month -= 3
+        if month <= 0:
+            month += 12
+            year -= 1
+
+    # 去重、跳过第一个（当前进行中的季度）、取 N 个
+    seen = []
+    for p in periods:
+        if p not in seen:
+            seen.append(p)
+    return seen[1:n_quarters + 1]
+
+
+def _build_quarter_range_note(n_quarters: int, company: str = None) -> str:
+    """
+    生成当前季度未完结的提示，注入给 LLM。
+    例如: [TIME RANGE NOTE] Current quarter FY2026 Q1 is still in progress
+          and has been excluded. The following covers the last 3 completed
+          quarters: FY2025 Q4, FY2025 Q3, FY2025 Q2.
+    """
+    today = date.today()
+    fy_start = COMPANY_FY_START.get(company, 1) if company else 1
+
+    month = today.month
+    year = today.year
+
+    fy_month = (month - fy_start) % 12
+    q_num = fy_month // 3 + 1
+    fy_year = year - 1 if month < fy_start else year
+
+    current_fy = str(fy_year)
+    current_q = f"Q{q_num}"
+
+    target_periods = _get_recent_fiscal_periods(n_quarters, company)
+    # target_periods already contains "FY26" format — don't prepend "FY" again
+    periods_str = ", ".join(f"{fy} {q}" for fy, q in target_periods)
+
+    return (
+        f"[TIME RANGE NOTE] The current quarter (FY{current_fy} {current_q}) "
+        f"is still in progress and has been excluded. "
+        f"The following data covers the last {n_quarters} completed quarter(s): "
+        f"{periods_str}."
+    )
 
 # ---------------------------------------------------------------------------
 # CAPEX SYNONYM EXPANSION
@@ -654,8 +912,178 @@ def search_documents(
             if any(v.lower() in fy.lower() for v in variants):
                 doc["similarity"] += 0.15
 
-    # Recency boosting
-    if _wants_latest(query):
+    # 最高优先：用户说了 "N quarters ago"（特指某一个季度）
+    ago_periods = _extract_quarters_ago(query, company_filter)
+    explicit_periods = _extract_explicit_periods(query)
+    n_quarters = _extract_quarter_range(query)
+    if ago_periods:
+        fy, q = ago_periods[0]
+        note_doc = {
+            "content": (
+                f"[TIME RANGE NOTE] User is asking about a specific point in time: "
+                f"FY{fy} {q}. Only return data from this quarter."
+            ),
+            "company": "SYSTEM",
+            "source": "system",
+            "filing_type": "SYSTEM",
+            "fiscal_year": "",
+            "quarter": "",
+            "similarity": 99.0,
+            "section_header": "",
+            "page_num": 0,
+        }
+        docs.insert(0, note_doc)
+
+        # 检测缺失
+        found = any(
+            str(doc.get("fiscal_year", "")) == fy and doc.get("quarter", "") == q
+            for doc in docs
+        )
+        if not found:
+            warning_doc = {
+                "content": (
+                    f"[DATA GAP WARNING] FY{fy} {q} was requested but has NO data "
+                    f"in the database. Explicitly tell the user this data is unavailable."
+                ),
+                "company": "SYSTEM",
+                "source": "system",
+                "filing_type": "SYSTEM",
+                "fiscal_year": "",
+                "quarter": "",
+                "similarity": 98.0,
+                "section_header": "",
+                "page_num": 0,
+            }
+            docs.insert(1, warning_doc)
+
+        # boost / 降权
+        for doc in docs:
+            period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
+            if period == (fy, q):
+                doc["similarity"] += 0.25
+            else:
+                doc["similarity"] -= 0.15
+
+    # 次优先：用户显式指定了具体 periods（如 "FY2025 Q1 to Q3"）
+    elif explicit_periods:
+        # 生成时间范围说明
+        periods_str = ", ".join(
+            f"FY{fy} {q}" if fy else q for fy, q in explicit_periods
+        )
+        note_doc = {
+            "content": (
+                f"[TIME RANGE NOTE] Using explicitly specified periods: {periods_str}."
+            ),
+            "company": "SYSTEM",
+            "source": "system",
+            "filing_type": "SYSTEM",
+            "fiscal_year": "",
+            "quarter": "",
+            "similarity": 99.0,
+            "section_header": "",
+            "page_num": 0,
+        }
+        docs.insert(0, note_doc)
+
+        # 检测缺失
+        found_periods = set()
+        for doc in docs:
+            period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
+            if period in explicit_periods:
+                found_periods.add(period)
+
+        missing_periods = [p for p in explicit_periods if p not in found_periods]
+        if missing_periods:
+            missing_str = ", ".join(
+                f"FY{fy} {q}" if fy else q for fy, q in missing_periods
+            )
+            warning_doc = {
+                "content": (
+                    f"[DATA GAP WARNING] The following quarter(s) were requested "
+                    f"but have NO data in the database: {missing_str}. "
+                    f"You MUST explicitly tell the user that data for these quarters "
+                    f"is not available."
+                ),
+                "company": "SYSTEM",
+                "source": "system",
+                "filing_type": "SYSTEM",
+                "fiscal_year": "",
+                "quarter": "",
+                "similarity": 98.0,
+                "section_header": "",
+                "page_num": 0,
+            }
+            docs.insert(1, warning_doc)
+
+        # boost / 降权
+        for doc in docs:
+            period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
+            if period in explicit_periods:
+                doc["similarity"] += 0.25
+            else:
+                doc["similarity"] -= 0.15
+
+    # 其次：用户说了 last N quarters
+    elif n_quarters is not None:
+        # 根据今天日期精确计算目标 periods
+        target_periods = _get_recent_fiscal_periods(n_quarters, company_filter)
+
+        # 检测数据库中实际存在哪些 target periods
+        found_periods = set()
+        for doc in docs:
+            period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
+            if period in target_periods:
+                found_periods.add(period)
+
+        # 找出缺失的 periods
+        missing_periods = [p for p in target_periods if p not in found_periods]
+
+        # 生成当前季度未完结的提示，注入到 docs 最前面
+        quarter_note = _build_quarter_range_note(n_quarters, company_filter)
+        note_doc = {
+            "content": quarter_note,
+            "company": "SYSTEM",
+            "source": "system",
+            "filing_type": "SYSTEM",
+            "fiscal_year": "",
+            "quarter": "",
+            "similarity": 99.0,
+            "section_header": "",
+            "page_num": 0,
+        }
+        docs.insert(0, note_doc)
+
+        # 如果有缺失，再插入一条数据缺失警告
+        if missing_periods:
+            # fy already has "FY" prefix ("FY26") — don't prepend again
+            missing_str = ", ".join(f"{fy} {q}" for fy, q in missing_periods)
+            warning_doc = {
+                "content": (
+                    f"[DATA GAP WARNING] The following quarter(s) were requested "
+                    f"but have NO data in the database: {missing_str}. "
+                    f"You MUST explicitly tell the user that data for these quarters "
+                    f"is not available."
+                ),
+                "company": "SYSTEM",
+                "source": "system",
+                "filing_type": "SYSTEM",
+                "fiscal_year": "",
+                "quarter": "",
+                "similarity": 98.0,
+                "section_header": "",
+                "page_num": 0,
+            }
+            docs.insert(1, warning_doc)
+
+        # boost / 降权
+        for doc in docs:
+            period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
+            if period in target_periods:
+                doc["similarity"] += 0.25
+            else:
+                doc["similarity"] -= 0.15
+
+    elif _wants_latest(query):
         docs.sort(key=lambda d: (_fy_sort_key(d), _quarter_sort_key(d)), reverse=True)
         for i, doc in enumerate(docs):
             doc["similarity"] += max(0, 0.10 - i * 0.005)
@@ -970,6 +1398,97 @@ def search_cross_company(
 ) -> list[dict]:
     """Search across all companies without a company filter."""
     return search_documents(query, n_results=n_results, use_reranking=use_reranking)
+
+
+def search_multi_company_by_periods(
+    query: str,
+    companies: list[str],
+    n_quarters: int,
+    n_results: int = 20,
+) -> list[dict]:
+    """
+    多公司查询时，按各自财年分别计算 target periods，再合并结果。
+    保证每家公司的时间窗口都对齐到正确的财年季度。
+    """
+    all_docs = []
+    all_missing = []
+    company_period_info = []
+
+    for company in companies:
+        target_periods = _get_recent_fiscal_periods(n_quarters, company)
+        company_period_info.append(
+            f"  - {company}: " + ", ".join(f"{fy} {q}" for fy, q in target_periods)
+        )
+
+        # 用该公司自己的 target_periods 去检索
+        company_docs = search_documents(
+            query=query,
+            company_filter=company,
+            n_results=n_results,
+        )
+
+        # 检测缺失
+        found_periods = set()
+        for doc in company_docs:
+            period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
+            if period in target_periods:
+                found_periods.add(period)
+
+        missing = [p for p in target_periods if p not in found_periods]
+        for p in missing:
+            all_missing.append((company, p[0], p[1]))
+
+        # boost / 降权
+        for doc in company_docs:
+            period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
+            if period in target_periods:
+                doc["similarity"] += 0.25
+            else:
+                doc["similarity"] -= 0.15
+
+        all_docs.extend(company_docs)
+
+    # 注入多公司财年对齐说明
+    alignment_note = (
+        "[MULTI-COMPANY TIME ALIGNMENT] Each company uses its own fiscal calendar. "
+        f"The last {n_quarters} completed quarters for each company are:\n"
+        + "\n".join(company_period_info)
+    )
+    note_doc = {
+        "content": alignment_note,
+        "company": "SYSTEM",
+        "source": "system",
+        "filing_type": "SYSTEM",
+        "fiscal_year": "",
+        "quarter": "",
+        "similarity": 99.0,
+        "section_header": "",
+        "page_num": 0,
+    }
+    all_docs.insert(0, note_doc)
+
+    # 如果有缺失数据，再注入警告
+    if all_missing:
+        missing_str = ", ".join(f"{company} FY{fy} {q}" for company, fy, q in all_missing)
+        warning_doc = {
+            "content": (
+                f"[DATA GAP WARNING] The following company-quarter combinations "
+                f"have NO data in the database: {missing_str}. "
+                f"You MUST explicitly tell the user which ones are missing."
+            ),
+            "company": "SYSTEM",
+            "source": "system",
+            "filing_type": "SYSTEM",
+            "fiscal_year": "",
+            "quarter": "",
+            "similarity": 98.0,
+            "section_header": "",
+            "page_num": 0,
+        }
+        all_docs.insert(1, warning_doc)
+
+    all_docs.sort(key=lambda d: float(d.get("similarity", 0)), reverse=True)
+    return all_docs[:n_results * len(companies)]
 
 
 def search_with_parent_retrieval(

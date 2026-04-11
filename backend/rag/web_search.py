@@ -91,13 +91,66 @@ def search_web_sync(query: str, count: int = WEB_SEARCH_RESULTS) -> list[dict]:
     return loop.run_until_complete(search_web(query, count))
 
 
+async def fetch_page_text(url: str, max_chars: int = 3000) -> str:
+    """Fetch and extract main text content from a web page."""
+    try:
+        async with httpx.AsyncClient(follow_redirects=True) as client:
+            resp = await client.get(
+                url,
+                timeout=8.0,
+                headers={
+                    "User-Agent": "Mozilla/5.0 (compatible; CapExIntel/1.0)"
+                },
+            )
+            resp.raise_for_status()
+            html = resp.text
+
+        from bs4 import BeautifulSoup
+
+        soup = BeautifulSoup(html, "html.parser")
+
+        # Remove non-content elements
+        for tag in soup(["script", "style", "nav", "footer", "header", "aside", "iframe", "noscript"]):
+            tag.decompose()
+
+        text = soup.get_text(separator="\n", strip=True)
+
+        # Collapse multiple blank lines
+        lines = [ln.strip() for ln in text.splitlines() if ln.strip()]
+        text = "\n".join(lines)
+
+        return text[:max_chars]
+    except Exception:
+        return ""
+
+
+async def enrich_web_results(results: list[dict], max_pages: int = 3) -> list[dict]:
+    """Fetch full page text for top results to give LLM more context."""
+    import asyncio
+
+    tasks = []
+    for r in results[:max_pages]:
+        tasks.append(fetch_page_text(r["url"]))
+
+    page_texts = await asyncio.gather(*tasks)
+
+    for r, text in zip(results[:max_pages], page_texts):
+        if text:
+            r["full_text"] = text
+
+    return results
+
+
 def format_web_results_for_context(results: list[dict]) -> str:
     """Format web results as context for LLM."""
     if not results:
         return ""
-    
+
     parts = []
     for i, result in enumerate(results, 1):
-        parts.append(f"[Web {i}: {result['title']}]\n{result['description']}\nURL: {result['url']}")
-    
+        section = f"[Web {i}: {result['title']}]\n{result['description']}\nURL: {result['url']}"
+        if result.get("full_text"):
+            section += f"\n\n--- Page Content ---\n{result['full_text']}"
+        parts.append(section)
+
     return "\n\n".join(parts)
