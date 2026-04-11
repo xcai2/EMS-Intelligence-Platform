@@ -13,6 +13,7 @@ try:
 except ImportError:
     HAS_PDFPLUMBER = False
 
+from backend.core.config import TRACKED_COMPANY_NAMES
 from backend.rag.retriever import search_documents
 
 
@@ -287,7 +288,7 @@ def compare_company_financials() -> dict:
     """
     Compare extracted financials across all companies.
     """
-    companies = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+    companies = list(TRACKED_COMPANY_NAMES)
     
     results = {
         "companies": [],

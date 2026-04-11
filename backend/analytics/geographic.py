@@ -5,6 +5,7 @@ Provides facility mapping and regional investment analysis.
 from typing import Optional
 from collections import defaultdict
 
+from backend.core.config import TRACKED_COMPANY_NAMES
 from backend.rag.retriever import search_documents
 
 
@@ -135,9 +136,9 @@ def get_company_facilities(company: str, include_extracted: bool = True) -> dict
 
 def get_regional_distribution(company: str) -> dict:
     """Get regional distribution of facilities."""
-    company_data = KNOWN_FACILITIES.get(company)
-    
-    if not company_data:
+    company_data = get_company_facilities(company)
+
+    if "error" in company_data:
         return {"company": company, "error": "Company not found"}
     
     regions = {
@@ -149,15 +150,17 @@ def get_regional_distribution(company: str) -> dict:
     distribution = {"Americas": 0, "EMEA": 0, "APAC": 0}
     
     # Count HQ
-    hq_country = company_data["headquarters"]["country"]
-    for region, countries in regions.items():
-        if hq_country in countries:
-            distribution[region] += 1
-            break
+    headquarters = company_data.get("headquarters")
+    if headquarters:
+        hq_country = headquarters.get("country")
+        for region, countries in regions.items():
+            if hq_country in countries:
+                distribution[region] += 1
+                break
     
     # Count facilities
-    for facility in company_data["facilities"]:
-        country = facility["country"]
+    for facility in company_data.get("facilities", []):
+        country = facility.get("country")
         for region, countries in regions.items():
             if country in countries:
                 distribution[region] += 1
@@ -170,7 +173,7 @@ def get_regional_distribution(company: str) -> dict:
         "company": company,
         "distribution": distribution,
         "percentages": percentages,
-        "primary_region": max(distribution, key=distribution.get),
+        "primary_region": max(distribution, key=distribution.get) if total > 0 else None,
     }
 
 
@@ -180,7 +183,7 @@ def get_all_facilities_map(include_extracted: bool = True) -> dict:
     by_company = {}
     new_discoveries = []
     
-    companies = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+    companies = list(TRACKED_COMPANY_NAMES)
     
     for company in companies:
         company_facilities = get_company_facilities(company, include_extracted=include_extracted)
@@ -271,7 +274,7 @@ def compare_geographic_footprints() -> dict:
     """
     Compare geographic footprints across all companies.
     """
-    companies = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+    companies = list(TRACKED_COMPANY_NAMES)
     
     results = {
         "companies": [],
@@ -312,9 +315,14 @@ def compare_geographic_footprints() -> dict:
     
     # Analyze overlap (cities with multiple companies)
     city_companies = defaultdict(list)
-    for company, data in KNOWN_FACILITIES.items():
-        for facility in data["facilities"]:
-            city_companies[facility["city"]].append(company)
+    for company in companies:
+        facilities = get_company_facilities(company)
+        if "error" in facilities:
+            continue
+        for facility in facilities.get("facilities", []):
+            city = facility.get("city")
+            if city:
+                city_companies[city].append(company)
     
     overlap_cities = {city: companies for city, companies in city_companies.items() if len(companies) > 1}
     results["overlap_analysis"] = {

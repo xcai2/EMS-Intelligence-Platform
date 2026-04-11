@@ -353,5 +353,11 @@
     ],
     "total_extracted": 13,
     "documents_analyzed": 50
+  },
+  "Plexus": {
+    "company": "Plexus",
+    "facilities": [],
+    "total_extracted": 0,
+    "documents_analyzed": 0
   }
 }

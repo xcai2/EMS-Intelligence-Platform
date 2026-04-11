@@ -35,17 +35,13 @@ CATEGORIES = {
         "capital spending",
         "capital investment",
         "capital investments",
-        "investment",
-        "expansion",
-        "factory",
-        "facility",
-        "plant",
         "capacity expansion",
         "manufacturing expansion",
-        "million",
-        "billion",
-        "spending",
-        "infrastructure",
+        "factory expansion",
+        "facility expansion",
+        "plant expansion",
+        "new facility",
+        "infrastructure investment",
         "property plant equipment",
     ],
     "strategy": [
@@ -121,5 +117,22 @@ BLOCKED_OR_PAYWALL_DOMAINS = {
 }
 
 EXCLUDED_NOISE_TERMS = [
+    # Sports / entertainment associations that never produce relevant EMS news.
     "fiba",
+    "nba",
+    "nfl",
+    "nhl",
+    "mlb",
+    # Generic job-board / HR content that floods search results for EMS queries.
+    "job opening",
+    "job posting",
+    "we are hiring",
+    "apply now",
+    "career opportunity",
+    # "EMS" acronym ambiguity: FortiClient EMS is a Fortinet security product,
+    # not Electronics Manufacturing Services.
+    "forticlient",
+    "fortinet ems",
+    "emergency medical",
+    "emergency management",
 ]

@@ -204,12 +204,16 @@ class NewsFeed:
     ) -> dict:
         """
         Get recent news for a specific company.
-        
+
         Args:
             ticker: Company ticker symbol
             category: Optional category filter (earnings, ai, capex, strategy, operations)
             count: Number of results to return
         """
+        raw_cache_key = f"company:{ticker}:raw"
+        if force_refresh:
+            # Force refresh must replace old company payload, never merge with it.
+            self._runtime_cache.pop(raw_cache_key, None)
         return await build_company_news_payload(
             self,
             ticker,
@@ -222,12 +226,19 @@ class NewsFeed:
         """
         Get industry-wide EMS/electronics manufacturing news.
         """
+        if force_refresh:
+            # Drop all industry cached variants so refresh result fully replaces old entries.
+            industry_keys = [key for key in self._runtime_cache.keys() if key.startswith("industry:")]
+            for key in industry_keys:
+                self._runtime_cache.pop(key, None)
         return await build_industry_news_payload(self, count=count, force_refresh=force_refresh)
     
     async def get_competitor_comparison_news(self, force_refresh: bool = False) -> dict:
         """
         Get comparative news mentioning multiple competitors.
         """
+        if force_refresh:
+            self._runtime_cache.pop("comparative", None)
         return await build_comparative_news_payload(self, force_refresh=force_refresh)
     
     async def get_all_companies_news(self, count_per_company: int = 100, force_refresh: bool = False) -> dict:
@@ -237,18 +248,28 @@ class NewsFeed:
         cache_key = f"all:{count_per_company}"
         if not force_refresh and cache_key in self._aggregate_cache:
             return self._aggregate_cache[cache_key]
+        if force_refresh:
+            company_cache_keys = [
+                key for key in self._runtime_cache.keys()
+                if key.startswith("company:") and key.endswith(":raw")
+            ]
+            for key in company_cache_keys:
+                self._runtime_cache.pop(key, None)
+            self._invalidate_aggregate_cache("all:")
 
         all_news = {}
-        
+
         for ticker in COMPANIES.keys():
+            will_fetch = force_refresh
             news = await self.get_company_news(
                 ticker,
                 count=count_per_company,
                 force_refresh=force_refresh,
             )
             all_news[ticker] = news
-            if force_refresh:
-                # Add delay only when external source fetches are actually running.
+            if will_fetch:
+                # Add delay when external source fetches are actually running
+                # (either explicit force_refresh or auto-fetch for uncached companies).
                 await asyncio.sleep(0.5)
         
         result = {

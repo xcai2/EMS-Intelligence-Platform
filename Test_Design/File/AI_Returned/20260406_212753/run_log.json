@@ -1,0 +1,34 @@
+{
+  "started_at": "2026-04-06T21:27:53-07:00",
+  "finished_at": "2026-04-06T21:30:36-07:00",
+  "model_provider": "openai",
+  "model_name": "gpt-4o",
+  "env_file": "backend/.env",
+  "output_dir": "Test_Design/File/AI_Returned/20260406_212753",
+  "files": [
+    {
+      "source_file": "Test_Design/File/Flex/Earnings Presentation/EP_FY23Q3_FINAL.pdf",
+      "status": "success",
+      "started_at": "2026-04-06T21:27:53-07:00",
+      "finished_at": "2026-04-06T21:28:11-07:00",
+      "duration_seconds": 18.27,
+      "prompt_file": "Test_Design/File/AI_Returned/20260406_212753/EP_FY23Q3_FINAL.prompt.txt",
+      "raw_output_file": "Test_Design/File/AI_Returned/20260406_212753/EP_FY23Q3_FINAL.raw.txt",
+      "parsed_output_file": "Test_Design/File/AI_Returned/20260406_212753/EP_FY23Q3_FINAL.parsed.json",
+      "json_recovered": true,
+      "json_parse_error": null
+    },
+    {
+      "source_file": "Test_Design/File/Flex/Earnings Presentation/ep_fy24q2_final.pdf",
+      "status": "success",
+      "started_at": "2026-04-06T21:28:11-07:00",
+      "finished_at": "2026-04-06T21:30:36-07:00",
+      "duration_seconds": 38.81,
+      "prompt_file": "Test_Design/File/AI_Returned/20260406_212753/ep_fy24q2_final.prompt.txt",
+      "raw_output_file": "Test_Design/File/AI_Returned/20260406_212753/ep_fy24q2_final.raw.txt",
+      "parsed_output_file": "Test_Design/File/AI_Returned/20260406_212753/ep_fy24q2_final.parsed.json",
+      "json_recovered": true,
+      "json_parse_error": null
+    }
+  ]
+}

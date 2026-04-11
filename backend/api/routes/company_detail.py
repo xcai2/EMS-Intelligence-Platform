@@ -17,6 +17,15 @@ from backend.analytics.table_extractor import extract_company_financials, extrac
 
 router = APIRouter()
 
+DEFAULT_COMPANY_COLORS = {
+    "FLEX": "#3B82F6",
+    "JBL": "#10B981",
+    "CLS": "#6366F1",
+    "BHE": "#F59E0B",
+    "SANM": "#EF4444",
+    "PLXS": "#14B8A6",
+}
+
 
 def get_company_info(company_name: str) -> dict:
     """Get company configuration info."""
@@ -33,10 +42,10 @@ def get_company_info(company_name: str) -> dict:
         "ticker": ticker,
         "name": company_config["name"],
         "cik": company_config["cik"],
-        "fiscal_year_end": company_config["fiscal_year_end"],
-        "headquarters": company_config["headquarters"],
-        "industry": company_config["industry"],
-        "color": company_config["color"],
+        "fiscal_year_end": company_config.get("fiscal_year_end", "Unknown"),
+        "headquarters": company_config.get("headquarters", "Unknown"),
+        "industry": company_config.get("industry", company_config.get("sector", "Unknown")),
+        "color": company_config.get("color", DEFAULT_COMPANY_COLORS.get(ticker, "#64748B")),
     }
 
 

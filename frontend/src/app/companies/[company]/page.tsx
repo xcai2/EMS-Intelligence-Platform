@@ -51,6 +51,7 @@ const COMPANY_COLORS: Record<string, string> = {
   'celestica': '#6366F1',
   'benchmark': '#F59E0B',
   'sanmina': '#EF4444',
+  'plexus': '#14B8A6',
 };
 
 const COMPANY_NAMES: Record<string, string> = {
@@ -59,6 +60,7 @@ const COMPANY_NAMES: Record<string, string> = {
   'celestica': 'Celestica Inc.',
   'benchmark': 'Benchmark Electronics',
   'sanmina': 'Sanmina Corporation',
+  'plexus': 'Plexus Corp',
 };
 
 type TabType = 'overview' | 'filings' | 'financials' | 'ai' | 'capex' | 'geographic' | 'news' | 'patents' | 'hiring' | 'ocp';

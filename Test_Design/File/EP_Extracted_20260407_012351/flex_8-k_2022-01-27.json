@@ -1,0 +1,32 @@
+{
+  "source_file": "Flex_8-K_2022-01-27.html",
+  "output_mode": "chunk_ready_rule_based",
+  "document_type": "8-K",
+  "company": "FLEX LTD.",
+  "period": "January 26, 2022",
+  "chunks": [
+    {
+      "chunk_id": "20220126_01_item_5_02",
+      "section_title": "Item 5.02  Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.",
+      "page_range": [
+        1,
+        1
+      ],
+      "chunk_type": "business_update",
+      "content": "(d) On January 26, 2022, Patrick J. Ward was appointed to the Company’s Board of Directors and as a member of the Audit Committee. Mr. Ward joined the Board as an independent director. There is no arrangement or understanding between Mr. Ward and any other person pursuant to which Mr. Ward was appointed as a director. Furthermore, Mr. Ward has no related-party transactions reportable under Item 5.02 of Form 8-K or Item 404(a) of Regulation S-K and there are no financial, organizational, or familial affiliations between Mr. Ward and the Company. The Board has also determined that Mr. Ward qualifies as an “audit committee financial expert” as that term is defined by the applicable Securities and Exchange Commission regulations and the Nasdaq listing rules.\nPursuant to the Company’s non-management directors’ compensation programs, Mr. Ward will be entitled to receive: (i) annual cash compensation of $105,000, payable quarterly in arrears, for services rendered as a director and member of the Audit Committee; (ii) a pro-rated share of the annual restricted stock unit award received by our non-management directors following the last annual general meeting; and (iii) an annual restricted stock unit award following each annual general meeting of shareholders having an aggregate fair market value of $185,000. The foregoing description of the Company’s non-management directors’ compensation program is qualified by reference to the description included in the definitive proxy statement for the Company’s 2021 Annual General Meeting, which was filed with the Securities and Exchange Commission on June 26, 2021.\nThe Company’s Constitution provides that, subject to the Singapore Companies Act, every director shall be entitled to be indemnified by the Company against all costs, charges, losses, expenses and liabilities incurred by such person in the execution and discharge of such person’s duties or in relation thereto. Our directors are covered by indemnification agreements with the Company and a wholly-owned subsidiary which provide for indemnification to the maximum extent permitted by applicable law. The Company has also obtained a policy of directors’ and officers’ liability insurance that will insure directors against the costs of defense, settlements and judgments in connection with proceedings in which our directors are involved by reason of having served as directors or agents of the Company.\nOn January 27, 2022, the Company issued a press release announcing the appointment of Mr. Ward, a copy of which is attached as Exhibit 99.1 hereto.",
+      "metadata": {
+        "source_file": "Flex_8-K_2022-01-27.html",
+        "document_type": "8-K",
+        "company": "FLEX LTD.",
+        "period": "January 26, 2022",
+        "chunk_id": "20220126_01_item_5_02",
+        "section_title": "Item 5.02  Departure of Directors or Certain Officers; Election of Directors; Appointment of Certain Officers; Compensatory Arrangements of Certain Officers.",
+        "page_range": [
+          1,
+          1
+        ],
+        "chunk_type": "business_update"
+      }
+    }
+  ]
+}

@@ -6,8 +6,9 @@ import re
 from typing import Literal
 from collections import defaultdict
 
-from backend.rag.retriever import search_documents
 from backend.core.cache import analytics_cache, cached
+from backend.core.config import TRACKED_COMPANY_NAMES
+from backend.rag.retriever import search_documents
 
 
 # Classification keywords
@@ -186,7 +187,7 @@ def compare_investment_focus() -> dict:
     """
     Compare investment focus across all companies.
     """
-    companies = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+    companies = list(TRACKED_COMPANY_NAMES)
     
     results = {
         "companies": [],

@@ -9,7 +9,7 @@ from backend.core.config import COMPANIES
 from backend.news.filtering import CATEGORIES
 from backend.news.news_filters import dedupe_items, normalize_result
 from backend.news.news_filter_policies import build_company_news_response, filter_company_news_items
-from backend.news.normalizer import sort_items_by_recency_and_relevance
+from backend.news.normalizer import filter_items_by_max_age, sort_items_by_recency_and_relevance
 from backend.news.query_helpers import build_company_alias_query
 from backend.news.sources import FALLBACK_COMPANY_NEWS, OFFICIAL_COMPANY_SOURCES
 from backend.rag.web_search import search_web_with_diagnostics
@@ -354,7 +354,25 @@ async def build_company_news_payload(
     cached_raw = feed._runtime_cache.get(raw_cache_key)
     if not force_refresh:
         if cached_raw:
-            return build_company_news_response(cached_raw, category, count, CATEGORIES)
+            # Re-apply current filter rules to the cached item list so that any
+            # changes to excluded_noise_terms, strict_title_match, or the
+            # is_company_related_item() logic take effect immediately on restart,
+            # without requiring a full force_refresh re-fetch.
+            refiltered = filter_company_news_items(
+                feed,
+                filter_items_by_max_age(cached_raw.get("news", [])),
+                ticker,
+                company_name,
+            )
+            refiltered_raw = {
+                **cached_raw,
+                "news": refiltered,
+                "final_kept_count": len(refiltered),
+            }
+            # Update in-memory cache so subsequent reads in this session are free.
+            feed._runtime_cache[raw_cache_key] = refiltered_raw
+            feed._persist_runtime_cache()
+            return build_company_news_response(refiltered_raw, category, count, CATEGORIES)
         return build_company_news_response(
             {
                 "ticker": ticker,
@@ -464,7 +482,8 @@ async def build_company_news_payload(
         COMPANY_SOURCE_BUCKET_ORDER,
     )
 
-    filtered_items = filter_company_news_items(feed, capped_candidates, ticker, company_name)
+    recent_candidates = filter_items_by_max_age(capped_candidates)
+    filtered_items = filter_company_news_items(feed, recent_candidates, ticker, company_name)
     pre_fallback_kept_count = len(filtered_items)
     pre_fallback_kept_source_counts = _count_items_by_source(
         filtered_items,
@@ -505,7 +524,12 @@ async def build_company_news_payload(
             COMPANY_FINAL_SOURCE_ORDER,
         )
         fallback_final_candidate_count = _final_candidate_counts["fallback"]
-        filtered_items = filter_company_news_items(feed, final_candidate_pool, ticker, company_name)
+        filtered_items = filter_company_news_items(
+            feed,
+            filter_items_by_max_age(final_candidate_pool),
+            ticker,
+            company_name,
+        )
         final_kept_source_counts = _count_items_by_source(
             filtered_items,
             final_winning_source_by_key,

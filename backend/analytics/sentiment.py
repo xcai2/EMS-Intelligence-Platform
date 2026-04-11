@@ -7,7 +7,7 @@ from collections import Counter
 from typing import Optional
 from openai import OpenAI
 
-from backend.core.config import OPENAI_API_KEY, LLM_MODEL
+from backend.core.config import OPENAI_API_KEY, LLM_MODEL, TRACKED_COMPANY_NAMES
 from backend.rag.retriever import search_documents, get_company_documents
 from backend.core.cache import analytics_cache, cached
 
@@ -196,15 +196,19 @@ def compare_company_sentiments(companies: list[str] = None) -> list[dict]:
         List of sentiment analyses for comparison
     """
     if companies is None:
-        companies = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+        companies = list(TRACKED_COMPANY_NAMES)
     
     results = []
     for company in companies:
         analysis = analyze_company_sentiment(company)
+        analysis.setdefault("company", company)
         results.append(analysis)
     
     # Sort by sentiment score
-    results.sort(key=lambda x: x.get("sentiment_score", 0), reverse=True)
+    results.sort(
+        key=lambda x: x.get("sentiment_score", float("-inf")) if "error" not in x else float("-inf"),
+        reverse=True,
+    )
     
     return results
 
