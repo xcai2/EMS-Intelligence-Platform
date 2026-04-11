@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import re
 from datetime import datetime
 from typing import TYPE_CHECKING, Optional
 from urllib.parse import quote_plus, urlparse
 
 from backend.news.filtering import AI_TERMS, BLOCKED_OR_PAYWALL_DOMAINS, CAPEX_TERMS, CATEGORIES, EXCLUDED_NOISE_TERMS
+from backend.news.normalizer import parse_published_dt
 from backend.news.source_parsing import (
     extract_source,
     extract_source_from_google_description,
@@ -34,7 +36,7 @@ def categorize_content(content: str, categories_map: dict[str, list[str]]) -> li
             categories.append("ai")
         if any(term in content_lower for term in ["liquid cooling", "immersion cooling", "thermal management", "heat exchanger", "cold plate"]):
             categories.append("cooling")
-        if any(term in content_lower for term in ["million", "billion", "invest", "expand", "new facility", "build"]):
+        if any(term in content_lower for term in ["new facility", "factory expansion", "plant expansion", "capacity expansion"]):
             categories.append("capex")
         if any(term in content_lower for term in ["acquire", "deal", "agreement", "partner", "announce"]):
             categories.append("strategy")
@@ -75,11 +77,74 @@ def is_likely_accessible(url: str) -> bool:
         return False
 
 
+# Substrings that appear only in malformed / CSS-artifact titles scraped from
+# public-board HTML pages.  Any hit → discard the item before doing anything else.
+_GARBAGE_TITLE_SIGNALS = [
+    ".css-",
+    "fill:currentcolor",
+    "user-select:",
+    "font-size:",
+    "background-color:",
+    "display:none",
+    "visibility:hidden",
+    "<script",
+    "<style",
+    "<?xml",
+    "<!doctype",
+]
+
+_URL_DATED_PATH_PATTERN = re.compile(r"/(20\d{2})/(0[1-9]|1[0-2])/([0-3]\d)(?:/|$)")
+_URL_COMPACT_DATE_PATTERN = re.compile(r"(20\d{2})(0[1-9]|1[0-2])([0-3]\d)")
+
+
+def _extract_published_from_url(url: str) -> str:
+    """Recover a best-effort publish date from dated URL patterns."""
+    path = (urlparse(url).path or "").strip()
+    if not path:
+        return ""
+    path_match = _URL_DATED_PATH_PATTERN.search(path)
+    if path_match:
+        year, month, day = path_match.groups()
+        return f"{year}-{month}-{day}T00:00:00+00:00"
+
+    compact_match = _URL_COMPACT_DATE_PATTERN.search(path)
+    if compact_match:
+        year, month, day = compact_match.groups()
+        return f"{year}-{month}-{day}T00:00:00+00:00"
+    return ""
+
+
+def _resolve_published_value(feed: "NewsFeed", result: dict, url: str) -> str:
+    """Ensure normalized items always carry a usable timestamp string."""
+    raw_candidates = [
+        result.get("published"),
+        result.get("published_at"),
+        result.get("date"),
+    ]
+    for candidate in raw_candidates:
+        value = (candidate or "").strip()
+        if not value:
+            continue
+        # Keep original value when recognized so relative-time strings are preserved.
+        if parse_published_dt(value) is not None:
+            return value
+
+    from_url = _extract_published_from_url(url)
+    if from_url:
+        return from_url
+
+    return feed._now_utc_iso()
+
+
 def normalize_result(feed: "NewsFeed", result: dict, company_name: str = "") -> Optional[dict]:
     """Normalize different search/feed payloads into a unified news record."""
     title = (result.get("title") or "").strip()
     url = (result.get("url") or "").strip()
     if not title or not url:
+        return None
+
+    title_lower = title.lower()
+    if any(sig in title_lower for sig in _GARBAGE_TITLE_SIGNALS):
         return None
 
     noise_content = f"{title} {result.get('description', '')} {url} {result.get('source', '')}".lower()
@@ -120,12 +185,7 @@ def normalize_result(feed: "NewsFeed", result: dict, company_name: str = "") -> 
         "source": resolved_source,
         "original_source": resolved_source,
         "aggregator": result.get("aggregator") or None,
-        "published": (
-            result.get("published")
-            or result.get("published_at")
-            or result.get("date")
-            or ""
-        ),
+        "published": _resolve_published_value(feed, result, url),
         "categories": categories,
         "relevance_score": calculate_relevance(
             {"title": title, "description": description},

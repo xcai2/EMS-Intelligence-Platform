@@ -35,6 +35,7 @@ const COMPANY_COLORS: Record<string, string> = {
   Celestica: '#6366F1',
   Benchmark: '#F59E0B',
   Sanmina: '#EF4444',
+  Plexus: '#14B8A6',
 };
 
 interface Facility {
@@ -51,7 +52,7 @@ export default function HeatmapPage() {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [comparison, setComparison] = useState<any>(null);
   const [selectedCompanies, setSelectedCompanies] = useState<string[]>([
-    'Flex', 'Jabil', 'Celestica', 'Benchmark', 'Sanmina'
+    'Flex', 'Jabil', 'Celestica', 'Benchmark', 'Sanmina', 'Plexus'
   ]);
   const [facilityType, setFacilityType] = useState<string>('all');
   const [loading, setLoading] = useState(true);

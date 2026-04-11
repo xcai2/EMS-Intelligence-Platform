@@ -8,7 +8,7 @@ Event Lake Architecture:
 - Deduplication and event merging
 
 This module transforms "where is the money going" into aggregatable event records
-that can be compared across 5 companies.
+that can be compared across tracked EMS companies.
 """
 
 import hashlib
@@ -21,7 +21,7 @@ from typing import Optional
 
 from pydantic import BaseModel, Field
 
-from backend.core.config import OPENAI_API_KEY, RERANK_MODEL, LLM_MODEL
+from backend.core.config import OPENAI_API_KEY, RERANK_MODEL, LLM_MODEL, TRACKED_COMPANY_NAMES
 
 
 # ---------------------------------------------------------------------------
@@ -427,7 +427,7 @@ def _extract_structured_event_rules(text: str, metadata: dict) -> Optional[CapEx
     text_lower = text.lower()
     
     # Detect company
-    companies = ["flex", "jabil", "celestica", "benchmark", "sanmina"]
+    companies = [company.lower() for company in TRACKED_COMPANY_NAMES]
     company = metadata.get("company", "")
     if not company:
         for c in companies:

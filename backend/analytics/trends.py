@@ -7,8 +7,9 @@ from typing import Optional
 from collections import defaultdict
 from statistics import mean, stdev
 
-from backend.rag.retriever import search_documents, get_company_documents
 from backend.core.cache import analytics_cache, cached
+from backend.core.config import TRACKED_COMPANY_NAMES
+from backend.rag.retriever import search_documents, get_company_documents
 
 
 def extract_percentages(text: str) -> list[float]:
@@ -219,7 +220,7 @@ def compare_company_trends() -> dict:
     """
     Compare trends across all tracked companies.
     """
-    companies = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+    companies = list(TRACKED_COMPANY_NAMES)
     
     results = {
         "companies": [],

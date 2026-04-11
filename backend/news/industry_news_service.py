@@ -5,8 +5,10 @@ from __future__ import annotations
 from datetime import datetime
 from typing import TYPE_CHECKING
 
+from backend.core.config import TRACKED_COMPANY_NAMES
 from backend.news.news_filters import normalize_result
 from backend.news.news_filter_policies import filter_industry_news_items
+from backend.news.normalizer import filter_items_by_max_age
 from backend.news.sources import FALLBACK_INDUSTRY_NEWS
 from backend.rag.web_search import search_web
 
@@ -24,7 +26,20 @@ async def build_industry_news_payload(
     if not force_refresh:
         cached_payload = feed._runtime_cache.get(cache_key)
         if cached_payload:
-            return cached_payload
+            # Re-apply current filter rules so changes to EXCLUDED_NOISE_TERMS,
+            # is_ai_related(), or mentions_tracked_company() take effect on restart.
+            refiltered = filter_industry_news_items(
+                feed,
+                filter_items_by_max_age(cached_payload.get("news", [])),
+            )
+            refiltered_payload = {
+                **cached_payload,
+                "news": refiltered[:count],
+                "total_found": len(refiltered),
+            }
+            feed._runtime_cache[cache_key] = refiltered_payload
+            feed._persist_runtime_cache()
+            return refiltered_payload
         return {
             "news": [],
             "total_found": 0,
@@ -36,10 +51,11 @@ async def build_industry_news_payload(
             },
         }
 
+    tracked_company_query = " ".join(TRACKED_COMPANY_NAMES) + " AI news"
     queries = [
         "EMS AI infrastructure supply chain news",
         "electronics manufacturing data center demand",
-        "Flex Jabil Celestica Benchmark Sanmina AI news",
+        tracked_company_query,
         "NVIDIA hyperscaler manufacturing partners news",
         "liquid cooling data center manufacturing news",
         "immersion cooling AI server supply chain news",
@@ -62,7 +78,7 @@ async def build_industry_news_payload(
         merged_items = [normalize_result(feed, item) for item in FALLBACK_INDUSTRY_NEWS]
         merged_items = [item for item in merged_items if item]
 
-    unique_results = filter_industry_news_items(feed, merged_items)
+    unique_results = filter_industry_news_items(feed, filter_items_by_max_age(merged_items))
 
     result = {
         "news": unique_results[:count],

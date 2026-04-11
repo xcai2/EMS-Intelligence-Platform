@@ -32,7 +32,7 @@ import { createCustomQuestion, deleteCustomQuestion, fetchCustomQuestions, reque
 import { TableAnswer, type TablePayload } from './TableAnswer';
 
 type SearchMode = 'rag' | 'web' | 'hybrid';
-type CompanyFilter = 'Flex' | 'Jabil' | 'Celestica' | 'Benchmark' | 'Sanmina';
+type CompanyFilter = 'Flex' | 'Jabil' | 'Celestica' | 'Benchmark' | 'Sanmina' | 'Plexus';
 type AnswerProvider = 'openai' | 'claude' | 'none';
 
 interface Message {
@@ -196,7 +196,7 @@ const QUICK_QUESTIONS = [
   },
   {
     label: 'CapEx Guidance',
-    query: 'Compare CapEx guidance across all 5 EMS companies for the current fiscal year.',
+    query: 'Compare CapEx guidance across all 6 EMS companies for the current fiscal year.',
   },
   {
     label: 'Liquid Cooling',
@@ -216,7 +216,7 @@ const QUICK_QUESTIONS = [
   },
 ];
 
-const COMPANY_FILTERS: CompanyFilter[] = ['Flex', 'Jabil', 'Celestica', 'Benchmark', 'Sanmina'];
+const COMPANY_FILTERS: CompanyFilter[] = ['Flex', 'Jabil', 'Celestica', 'Benchmark', 'Sanmina', 'Plexus'];
 
 const modeConfig = {
   rag: {

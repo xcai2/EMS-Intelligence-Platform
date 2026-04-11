@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 
 from backend.api.routes import companies, analysis
 from backend.aichat.routes import router as aichat_router
-from backend.api.routes import ingestion, sentiment, earnings, analytics, geographic, financials, alerts, company_detail, exports, advanced_data
+from backend.api.routes import ingestion, sentiment, earnings, analytics, geographic, financials, alerts, company_detail, exports, supplemental_data
 from backend.api.routes import reports as reports_router
 from backend.api.routes import dashboard as dashboard_router
 from backend.api.routes import intelligence as intelligence_router
@@ -86,7 +86,7 @@ app.include_router(company_detail.router, prefix="/api", tags=["Company Detail"]
 app.include_router(news_router, prefix="/api", tags=["News"])
 app.include_router(exports.router, prefix="/api", tags=["Exports"])
 app.include_router(intelligence_router.router, prefix="/api/intelligence", tags=["Competitive Intelligence"])
-app.include_router(advanced_data.router, prefix="/api", tags=["Advanced Data"])
+app.include_router(supplemental_data.router, prefix="/api", tags=["Supplemental Data"])
 app.include_router(reports_router.router, prefix="/api", tags=["Reports & Calendar"])
 app.include_router(dashboard_router.router, prefix="/api", tags=["Dashboard"])
 

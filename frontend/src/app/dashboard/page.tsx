@@ -113,6 +113,7 @@ const COMPANY_COLORS: Record<string, string> = {
   'Celestica': '#6366F1',
   'Benchmark': '#F59E0B',
   'Sanmina': '#EF4444',
+  'Plexus': '#14B8A6',
 };
 
 export default function DashboardPage() {
@@ -139,7 +140,7 @@ export default function DashboardPage() {
         const quickData = await quickRes.json();
         setData({
           total_documents: quickData.stats?.total_documents || 0,
-          companies_tracked: quickData.stats?.companies_tracked || 5,
+          companies_tracked: quickData.stats?.companies_tracked || 6,
           sec_filings: 0,
           earnings_documents: 0,
           documents_by_company: {},

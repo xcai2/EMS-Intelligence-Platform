@@ -19,7 +19,7 @@ from backend.core.database import (
     has_company_collections,
     embed_text,
 )
-from backend.core.config import OPENAI_API_KEY, RERANK_MODEL
+from backend.core.config import OPENAI_API_KEY, RERANK_MODEL, TRACKED_COMPANY_NAMES
 
 
 def _extract_year_from_query(query: str) -> Optional[str]:
@@ -155,7 +155,7 @@ def expand_query(query: str) -> str:
 # ---------------------------------------------------------------------------
 
 # Known companies in our database
-KNOWN_COMPANIES = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+KNOWN_COMPANIES = list(TRACKED_COMPANY_NAMES)
 
 
 def extract_companies_from_query(query: str) -> list[str]:

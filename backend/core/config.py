@@ -93,7 +93,15 @@ COMPANIES = {
         "sector": "EMS",
         "description": "Global electronics manufacturing services company",
     },
+    "PLXS": {
+        "name": "Plexus Corp",
+        "cik": "0000785786",
+        "sector": "EMS",
+        "description": "Global product design, manufacturing, and aftermarket services provider",
+    },
 }
+
+TRACKED_COMPANY_NAMES = [company["name"].split()[0] for company in COMPANIES.values()]
 
 COMPANY_NAME_TO_TICKER = {
     "Flex": "FLEX",
@@ -101,4 +109,5 @@ COMPANY_NAME_TO_TICKER = {
     "Celestica": "CLS",
     "Benchmark": "BHE",
     "Sanmina": "SANM",
+    "Plexus": "PLXS",
 }

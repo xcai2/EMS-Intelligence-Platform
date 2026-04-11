@@ -70,6 +70,7 @@ const COMPANY_COLORS: Record<string, string> = {
   'Celestica': '#6366F1',
   'Benchmark': '#F59E0B',
   'Sanmina': '#EF4444',
+  'Plexus': '#14B8A6',
 };
 
 const OUTLOOK_COLORS: Record<string, string> = {
@@ -120,6 +121,14 @@ const ESTIMATED_EARNINGS_2026: EarningsCalendarRow[] = [
     q3: '2026/06/28',
     q4: '2026/09/27',
     fy: '2026/09/27',
+  },
+  {
+    company: 'Plexus',
+    q1: '—',
+    q2: '—',
+    q3: '—',
+    q4: '—',
+    fy: '—',
   },
 ];
 

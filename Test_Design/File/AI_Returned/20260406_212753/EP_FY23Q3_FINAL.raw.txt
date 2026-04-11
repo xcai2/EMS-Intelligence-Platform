@@ -1,0 +1,52 @@
+```json
+{
+  "source_file": "Test_Design/File/Flex/Earnings Presentation/EP_FY23Q3_FINAL.pdf",
+  "output_mode": "chunk_ready",
+  "content": [
+    {
+      "section_title": "Q3 Fiscal 2023 Overview",
+      "content": "Quarter End: December 31, 2022\nEarnings Announcement: January 25, 2023"
+    },
+    {
+      "section_title": "Forward-Looking Statements",
+      "content": "This presentation contains forward-looking statements within the meaning of U.S. securities laws, including: statements related to future expected revenues and earnings per share. These forward-looking statements involve risks and uncertainties that could cause the actual results to differ materially from those anticipated by these forward-looking statements."
+    },
+    {
+      "section_title": "Q3F23 Financial Performance",
+      "content": "Revenue: $7.8B\nAdj. Operating Income: $372M\nAdj. Net Income: $285M\nAdj. Earnings Per Share: $0.62\nRevenue growth of 17% year-over-year\nReturned $40 million to shareholders in the form of share repurchases\nPublicly filed Form S-1 with the SEC for Nextracker IPO"
+    },
+    {
+      "section_title": "Fiscal Third Quarter Trends",
+      "content": "Reliability: robust demand in industrial and automotive, healthcare remains steady\nAgility: strong demand across CEC, consumer-end market weakness continues\nReliability: EV/ADAS, Renewables, factory automation, healthcare outsourcing remain strong\nAgility: heightened demand in cloud expansion, comms infrastructure and network security"
+    },
+    {
+      "section_title": "FY23 and FY24 Outlook",
+      "content": "Strong FY23…expect continued growth in FY24\nCore portfolio aligned to long-term growth trends and higher-value business\nFavorable secular growth drivers including renewables, next gen mobility, and cloud expansion\nImproving Reliability adjusted operating margins\nInventory normalization / cash generation"
+    },
+    {
+      "section_title": "Key Financials",
+      "content": "Revenue: $7,756M (+17% Y/Y)\nAdj. Gross Profit: $595M (7.7% margin)\nAdj. Operating Income: $372M (4.8% margin)\nAdj. Earnings Per Share: $0.62"
+    },
+    {
+      "section_title": "Segment Performance",
+      "content": "Reliability: Revenue $3.2B, 19% growth, Adj. Operating Income $143M\nAgility: Revenue $4.0B, 13% growth, Adj. Operating Income $181M\nNextracker: Revenue $0.5B, 53% growth, Adj. Operating Income $60M"
+    },
+    {
+      "section_title": "Cash Flow Overview",
+      "content": "GAAP Net Income: $237M\nOperating Cash Flow: $359M\nCapital Expenditures, net: ($157M)\nAdjusted Free Cash Flow: $202M"
+    },
+    {
+      "section_title": "Q4 FY23 Financial Guidance",
+      "content": "Revenue: $7.0B - $7.4B\nAdj. Operating Income: $315M - $345M\nAdj. Earnings per Share: $0.48 - $0.54"
+    },
+    {
+      "section_title": "FY23 Financial Guidance",
+      "content": "Revenue: $29.9B - $30.3B\nAdj. Operating Margin: ~4.7%\nAdj. Earnings per Share: $2.27 - $2.33"
+    },
+    {
+      "section_title": "Long-Term Growth Strategy",
+      "content": "Flex is continuing to deliver long-term growth\nResilient portfolio supporting revenue growth and driving continued margin expansion\nLeveraging operational initiatives to drive efficiency and improve productivity\nBalanced investments to support growth opportunities"
+    }
+  ]
+}
+```

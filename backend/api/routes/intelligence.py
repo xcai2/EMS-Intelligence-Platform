@@ -19,13 +19,15 @@ from fastapi import APIRouter
 from backend.analytics.classifier import classify_company_investments
 from backend.analytics.sentiment import analyze_company_sentiment
 from backend.analytics.trends import analyze_company_trends
+from backend.core.config import TRACKED_COMPANY_NAMES
 from backend.core.database import get_all_collections_stats
 from backend.rag.retriever import search_documents
 
 router = APIRouter()
 
 
-TRACKED_COMPANIES = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+TRACKED_COMPANIES = list(TRACKED_COMPANY_NAMES)
+TRACKED_COMPANY_COUNT = len(TRACKED_COMPANIES)
 DYNAMIC_ANALYSIS_CACHE_FILE = Path("data/competitor_dynamic_cache.json")
 
 
@@ -320,42 +322,42 @@ DEFAULT_ANALYST_QUESTIONS = [
         "question": "What is the AI/Data Center revenue mix for each company, and how has it changed YoY?",
         "category": "AI Investment",
         "complexity": "comparison",
-        "companies": ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"],
+        "companies": list(TRACKED_COMPANIES),
     },
     {
         "id": "q2",
-        "question": "Compare CapEx guidance across all 5 EMS companies for the current fiscal year",
+        "question": f"Compare CapEx guidance across all {TRACKED_COMPANY_COUNT} EMS companies for the current fiscal year",
         "category": "Capital Expenditure",
         "complexity": "comparison",
-        "companies": ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"],
+        "companies": list(TRACKED_COMPANIES),
     },
     {
         "id": "q3",
         "question": "What liquid cooling and power management capabilities are each company developing?",
         "category": "AI Infrastructure",
         "complexity": "descriptive",
-        "companies": ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"],
+        "companies": list(TRACKED_COMPANIES),
     },
     {
         "id": "q4",
         "question": "Which hyperscaler customers are driving AI server demand for EMS companies?",
         "category": "Customer Analysis",
         "complexity": "descriptive",
-        "companies": ["Flex", "Jabil", "Celestica"],
+        "companies": list(TRACKED_COMPANIES),
     },
     {
         "id": "q5",
         "question": "What are the gross margin trends for AI/DC vs traditional segments?",
         "category": "Financials",
         "complexity": "numeric",
-        "companies": ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"],
+        "companies": list(TRACKED_COMPANIES),
     },
     {
         "id": "q6",
         "question": "What manufacturing capacity expansions are planned for AI server production?",
         "category": "Operations",
         "complexity": "descriptive",
-        "companies": ["Flex", "Jabil", "Celestica"],
+        "companies": list(TRACKED_COMPANIES),
     },
 ]
 
@@ -431,6 +433,19 @@ EMS_AI_DYNAMICS = {
             ],
             "investment_focus": ["Optical components", "Industrial automation"],
             "guidance_outlook": "Stable - balanced portfolio approach",
+        },
+        {
+            "company": "Plexus",
+            "ticker": "PLXS",
+            "ai_revenue_growth_pct": 34,
+            "ai_revenue_mix_pct": 16,
+            "recent_highlights": [
+                "Expanding complex product-realization support for compute-adjacent customer programs",
+                "Healthcare, industrial, and aerospace/defense platforms remain the core execution base",
+                "Selective communications and cloud-adjacent builds provide upside without changing mix discipline",
+            ],
+            "investment_focus": ["Product realization", "Complex program ramps", "High-reliability systems"],
+            "guidance_outlook": "Stable - selective AI-adjacent participation with focus on complex regulated end markets",
         },
     ],
 }
