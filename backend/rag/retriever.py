@@ -245,9 +245,15 @@ def _extract_quarters_ago(query: str, company: str = None) -> list[tuple[str, st
 
     fy_month = (month - fy_start) % 12
     q_num = fy_month // 3 + 1
-    fy_year = year - 1 if month < fy_start else year
+    if fy_start == 1:
+        fy_year = year
+    elif month >= fy_start:
+        fy_year = year + 1
+    else:
+        fy_year = year
+    fy_label = f"FY{fy_year % 100:02d}"
 
-    return [(str(fy_year), f"Q{q_num}")]
+    return [(fy_label, f"Q{q_num}")]
 
 
 def _get_recent_fiscal_periods(n_quarters: int, company: str = None) -> list[tuple[str, str]]:
@@ -311,17 +317,22 @@ def _build_quarter_range_note(n_quarters: int, company: str = None) -> str:
 
     fy_month = (month - fy_start) % 12
     q_num = fy_month // 3 + 1
-    fy_year = year - 1 if month < fy_start else year
-
-    current_fy = str(fy_year)
+    if fy_start == 1:
+        fy_year = year
+    elif month >= fy_start:
+        fy_year = year + 1
+    else:
+        fy_year = year
+    current_fy = f"FY{fy_year % 100:02d}"
     current_q = f"Q{q_num}"
 
     target_periods = _get_recent_fiscal_periods(n_quarters, company)
-    # target_periods already contains "FY26" format — don't prepend "FY" again
-    periods_str = ", ".join(f"{fy} {q}" for fy, q in target_periods)
+    # Show oldest → newest for natural chronological order
+    reversed_periods = list(reversed(target_periods))
+    periods_str = ", ".join(f"{fy} {q}" for fy, q in reversed_periods)
 
     return (
-        f"[TIME RANGE NOTE] The current quarter (FY{current_fy} {current_q}) "
+        f"[TIME RANGE NOTE] The current quarter ({current_fy} {current_q}) "
         f"is still in progress and has been excluded. "
         f"The following data covers the last {n_quarters} completed quarter(s): "
         f"{periods_str}."
