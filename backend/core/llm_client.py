@@ -34,6 +34,9 @@ from backend.core.config import (
     ANTHROPIC_API_KEY,
     ANTHROPIC_MODEL,
     ANTHROPIC_RERANK_MODEL,
+    GOOGLE_API_KEY,
+    GEMINI_MODEL,
+    GEMINI_RERANK_MODEL,
 )
 
 # ---------------------------------------------------------------------------
@@ -46,6 +49,10 @@ def _openai_model(model_key: str) -> str:
 
 def _anthropic_model(model_key: str) -> str:
     return ANTHROPIC_MODEL if model_key == "main" else ANTHROPIC_RERANK_MODEL
+
+
+def _gemini_model(model_key: str) -> str:
+    return GEMINI_MODEL if model_key == "main" else GEMINI_RERANK_MODEL
 
 
 def _extract_json(text: str) -> str:
@@ -87,6 +94,8 @@ def llm_complete(
     """
     if LLM_PROVIDER == "anthropic":
         return _anthropic_complete(messages, system, model_key, max_tokens, stream)
+    elif LLM_PROVIDER == "gemini":
+        return _gemini_complete(messages, system, model_key, max_tokens, stream)
     else:
         return _openai_complete(messages, system, model_key, max_tokens, stream)
 
@@ -108,6 +117,8 @@ def llm_structured(
     """
     if LLM_PROVIDER == "anthropic":
         return _anthropic_structured(messages, system, model_key, schema, max_tokens)
+    elif LLM_PROVIDER == "gemini":
+        return _gemini_structured(messages, system, model_key, schema, max_tokens)
     else:
         return _openai_structured(messages, system, model_key, schema, max_tokens)
 
@@ -228,6 +239,92 @@ def _anthropic_structured(messages, system, model_key, schema, max_tokens):
     try:
         resp = client.messages.create(**kwargs)
         raw = resp.content[0].text if resp.content else ""
+        data = json.loads(_extract_json(raw))
+        return schema(**data) if schema else data
+    except Exception:
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Gemini implementation
+# ---------------------------------------------------------------------------
+
+def _gemini_messages_to_contents(messages: list[dict]) -> list[dict]:
+    """Convert OpenAI-style messages to Gemini 'contents' format."""
+    contents = []
+    for msg in messages:
+        role = msg.get("role", "user")
+        # Gemini uses "user" / "model" instead of "user" / "assistant"
+        gemini_role = "model" if role == "assistant" else "user"
+        contents.append({
+            "role": gemini_role,
+            "parts": [{"text": msg.get("content", "")}],
+        })
+    return contents
+
+
+def _gemini_complete(messages, system, model_key, max_tokens, stream):
+    import google.generativeai as genai
+    genai.configure(api_key=GOOGLE_API_KEY)
+    model_name = _gemini_model(model_key)
+
+    model = genai.GenerativeModel(
+        model_name=model_name,
+        system_instruction=system if system else None,
+    )
+    contents = _gemini_messages_to_contents(messages)
+    generation_config = {"max_output_tokens": max_tokens}
+
+    if stream:
+        def _gen():
+            resp = model.generate_content(
+                contents,
+                generation_config=generation_config,
+                stream=True,
+            )
+            for chunk in resp:
+                if hasattr(chunk, "text") and chunk.text:
+                    yield chunk.text
+        return _gen()
+    else:
+        resp = model.generate_content(
+            contents,
+            generation_config=generation_config,
+        )
+        return resp.text or ""
+
+
+def _gemini_structured(messages, system, model_key, schema, max_tokens):
+    """Gemini structured output via JSON instruction injection."""
+    import google.generativeai as genai
+
+    schema_desc = ""
+    if schema:
+        try:
+            schema_desc = json.dumps(schema.model_json_schema(), indent=2)
+        except Exception:
+            schema_desc = str(schema)
+
+    json_instruction = (
+        "\n\nIMPORTANT: You must respond with ONLY valid JSON that exactly matches "
+        "this schema — no markdown, no explanation, no extra text:\n" + schema_desc
+    )
+    augmented_system = (system or "") + json_instruction
+
+    genai.configure(api_key=GOOGLE_API_KEY)
+    model_name = _gemini_model(model_key)
+    model = genai.GenerativeModel(
+        model_name=model_name,
+        system_instruction=augmented_system,
+    )
+    contents = _gemini_messages_to_contents(messages)
+
+    try:
+        resp = model.generate_content(
+            contents,
+            generation_config={"max_output_tokens": max_tokens},
+        )
+        raw = resp.text or ""
         data = json.loads(_extract_json(raw))
         return schema(**data) if schema else data
     except Exception:

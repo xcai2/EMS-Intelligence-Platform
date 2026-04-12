@@ -14,11 +14,12 @@ load_dotenv(BASE_DIR / "backend" / ".env")
 # ---------------------------------------------------------------------------
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY", "")
 ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 BRAVE_API_KEY = os.getenv("BRAVE_API_KEY", "")
 SEC_USER_AGENT = os.getenv("SEC_USER_AGENT", "CapExIntel/1.0 (team@example.com)")
 
 # ---------------------------------------------------------------------------
-# LLM PROVIDER  ("openai" or "anthropic")
+# LLM PROVIDER  ("openai" or "anthropic" or "gemini")
 # ---------------------------------------------------------------------------
 LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai")
 
@@ -32,6 +33,10 @@ RERANK_MODEL = "gpt-4o-mini"
 # Anthropic models (used when LLM_PROVIDER="anthropic")
 ANTHROPIC_MODEL = "claude-sonnet-4-6"
 ANTHROPIC_RERANK_MODEL = "claude-haiku-4-5-20251001"
+
+# Gemini models (used when LLM_PROVIDER="gemini" or answer_provider="gemini")
+GEMINI_MODEL = "gemini-2.5-flash"
+GEMINI_RERANK_MODEL = "gemini-2.0-flash"
 
 # Embedding model (local, free)
 EMBEDDING_MODEL = "all-mpnet-base-v2"

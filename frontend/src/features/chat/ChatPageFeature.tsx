@@ -33,7 +33,7 @@ import { TableAnswer, type TablePayload } from './TableAnswer';
 
 type SearchMode = 'rag' | 'web' | 'hybrid';
 type CompanyFilter = 'Flex' | 'Jabil' | 'Celestica' | 'Benchmark' | 'Sanmina' | 'Plexus';
-type AnswerProvider = 'openai' | 'claude' | 'none';
+type AnswerProvider = 'openai' | 'claude' | 'gemini' | 'none';
 type TimeFocus = 'any' | 'fy2026' | 'fy2025' | 'last12m';
 
 interface Message {
@@ -568,6 +568,17 @@ export default function ChatPageFeature() {
                     }`}
                   >
                     Claude
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => toggleAnswerProvider('gemini')}
+                    className={`rounded-full px-2.5 py-1 transition ${
+                      answerProvider === 'gemini'
+                        ? 'bg-blue-600 text-white'
+                        : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
+                    }`}
+                  >
+                    Gemini
                   </button>
                 </div>
               </div>

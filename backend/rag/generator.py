@@ -333,9 +333,21 @@ CRITICAL RULES:
 - Bold the quarter label and number: **1. Q2 FY2026**
 - Bold the tone label inside the paragraph
 - Use bullet points with **bold theme titles** for key details
+- Each bullet MUST be on its own line, starting with "- " (a hyphen and a space)
+- Leave a BLANK LINE between the paragraph and the bullet list
 - Only use information from Retrieved Documents. Never fabricate.
 - If a quarter has no data, write: "No direct statement found for this quarter."
-- Always order quarters from MOST RECENT to OLDEST"""
+- Always order quarters from MOST RECENT to OLDEST
+- COUNTING RULE: Only count actual fiscal QUARTERS (Q1/Q2/Q3/Q4) in the Overview's quarter count.
+  Annual 10-K filings are NOT a quarter — do not include them as a numbered section, and do not count them.
+  If the only document for a fiscal year is the annual 10-K, omit that year entirely from the quarter list.
+- The number stated in "Over the N quarters covered" MUST exactly equal the number of numbered quarter sections that follow.
+- The Overview's quarter range string MUST exactly describe the set of quarters you actually list.
+  If the quarters are contiguous (e.g. Q1, Q2, Q3 FY2025), you MAY write "Q1 FY2025 through Q3 FY2025".
+  If they are NOT contiguous (e.g. you list only Q1 and Q3 FY2025, skipping Q2), you MUST write them
+  explicitly, e.g. "Q1 FY2025 and Q3 FY2025" — NEVER imply a continuous range you did not cover.
+- If a [CALENDAR YEAR NOTE] is present in the Retrieved Documents, restrict your coverage to the fiscal
+  quarters listed there. Do not invent extra quarters, and do not omit any that the note lists as having data."""
 
 
 # Legacy prompt for backward compatibility
@@ -591,6 +603,20 @@ def generate_structured_response(
         if parsed is None:
             raise ValueError("llm_structured returned None")
 
+        # Historical has a different schema (no final_answer) — handle it before the common path
+        if query_type == "historical":
+            return {
+                "reasoning": [],
+                "reasoning_summary": "",
+                "answer": "",
+                "confidence": getattr(parsed, "confidence", "medium"),
+                "sources": getattr(parsed, "relevant_sources", []),
+                "query_type": "historical",
+                "quarters": [q.model_dump() for q in getattr(parsed, "quarters", []) or []],
+                "opening": getattr(parsed, "opening", ""),
+                "raw_response": parsed.model_dump() if hasattr(parsed, "model_dump") else None,
+            }
+
         # Extract common fields
         reasoning_steps = []
         if hasattr(parsed, 'step_by_step_analysis'):
@@ -598,7 +624,7 @@ def generate_structured_response(
                 {"step": step.step, "finding": step.finding}
                 for step in parsed.step_by_step_analysis
             ]
-        
+
         result = {
             "reasoning": reasoning_steps,
             "reasoning_summary": getattr(parsed, 'reasoning_summary', ''),
@@ -608,24 +634,19 @@ def generate_structured_response(
             "query_type": query_type,
             "raw_response": parsed.model_dump() if hasattr(parsed, 'model_dump') else None,
         }
-        
+
         # Add numeric-specific fields
         if query_type == "numeric" and hasattr(parsed, 'normalized_value'):
             result["numeric_value"] = parsed.normalized_value
             result["fiscal_period"] = parsed.fiscal_period
             result["unit"] = parsed.unit_in_source
             result["raw_value"] = parsed.raw_value_found
-        
+
         # Add comparison-specific fields
         if query_type == "comparison" and hasattr(parsed, 'company_data'):
             result["company_data"] = parsed.company_data
             result["comparison_result"] = parsed.comparison_result
 
-        # Add historical-specific fields
-        if query_type == "historical" and hasattr(parsed, 'quarters'):
-            result["quarters"] = [q.model_dump() for q in parsed.quarters]
-            result["opening"] = getattr(parsed, 'opening', '')
-        
         return result
         
     except Exception as e:

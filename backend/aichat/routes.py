@@ -30,7 +30,7 @@ from backend.aichat.memory import (
 )
 from backend.rag.web_search import search_web, format_web_results_for_context, enrich_web_results
 from backend.core.config import COMPANIES
-from backend.core.config import OPENAI_API_KEY, ANTHROPIC_API_KEY, LLM_MODEL, ANTHROPIC_MODEL
+from backend.core.config import OPENAI_API_KEY, ANTHROPIC_API_KEY, LLM_MODEL, ANTHROPIC_MODEL, GOOGLE_API_KEY, GEMINI_MODEL
 from backend.core.config import DATA_DIR
 from backend.core.llm_client import llm_complete
 
@@ -67,7 +67,7 @@ class ChatRequest(BaseModel):
     company_filter: Optional[str] = None
     retrieval_strategy: str = "auto"  # For assembled mode: "auto" | "vector" | "bm25" | "hybrid" | "table"
     use_reranking: bool = True
-    answer_provider: str = "openai"  # "openai" | "claude"
+    answer_provider: str = "openai"  # "openai" | "claude" | "gemini"
     fallback_to_general_llm: bool = False
     strict_grounding: bool = True
     hybrid_multi_output: bool = True
@@ -109,10 +109,10 @@ def _fallback_enabled(request: ChatRequest) -> bool:
     """
     Product rule:
     - Fallback only allowed in Hybrid mode
-    - User must explicitly enable provider (openai/claude)
+    - User must explicitly enable provider (openai/claude/gemini)
     """
     provider = _provider_value(request.answer_provider)
-    return request.mode == "hybrid" and request.fallback_to_general_llm and provider in {"openai", "claude"}
+    return request.mode == "hybrid" and request.fallback_to_general_llm and provider in {"openai", "claude", "gemini"}
 
 
 _TABLE_PATTERNS = re.compile(
@@ -392,10 +392,36 @@ def _general_fallback_answer(
             return None
         return None
 
-    # Preferred provider, then automatic fallback to the other
-    provider_order = ["openai", "claude"] if selected == "openai" else ["claude", "openai"]
+    def _try_gemini() -> tuple[str, str] | None:
+        if not GOOGLE_API_KEY:
+            return None
+        try:
+            import google.generativeai as genai
+            genai.configure(api_key=GOOGLE_API_KEY)
+            model = genai.GenerativeModel(
+                model_name=GEMINI_MODEL,
+                system_instruction=system,
+            )
+            resp = model.generate_content(
+                [{"role": "user", "parts": [{"text": query}]}],
+                generation_config={"max_output_tokens": 1200},
+            )
+            text = (resp.text or "").strip()
+            if text:
+                return text, "gemini"
+        except Exception:
+            return None
+        return None
+
+    # Preferred provider first, then fall back to the others
+    all_providers = ["openai", "claude", "gemini"]
+    provider_order = [selected] + [p for p in all_providers if p != selected]
+    tryers = {"openai": _try_openai, "claude": _try_claude, "gemini": _try_gemini}
     for p in provider_order:
-        result = _try_openai() if p == "openai" else _try_claude()
+        fn = tryers.get(p)
+        if not fn:
+            continue
+        result = fn()
         if result:
             return result
 
@@ -566,6 +592,148 @@ def _search_historical_docs(
     return merged
 
 
+def _extract_calendar_year(query: str) -> Optional[int]:
+    """Detect a calendar-year reference like 'in 2025' / 'during 2024' / 'throughout 2023'.
+    Excludes 'FY2025' / 'fiscal 2025' which refer to a fiscal year, not calendar."""
+    q = query.lower()
+    # Reject FY forms
+    if re.search(r"\bfy\s*\d{2,4}\b", q) or re.search(r"\bfiscal\s+(?:year\s+)?\d{2,4}\b", q):
+        return None
+    m = re.search(r"\b(?:in|during|throughout|for|across|over)\s+(20\d{2})\b", q)
+    if m:
+        return int(m.group(1))
+    return None
+
+
+def _calendar_year_to_fiscal_periods(calendar_year: int, company: str) -> list[tuple[str, str]]:
+    """Return list of (fiscal_year_label, quarter_label) whose calendar months overlap
+    with the given calendar year for the company. Uses COMPANY_FY_START from retriever."""
+    from backend.rag.retriever import COMPANY_FY_START
+    fy_start_month = COMPANY_FY_START.get(company, 1)
+    periods: list[tuple[str, str]] = []
+    # Check fiscal years that could overlap: the FY whose end falls in calendar_year,
+    # plus the one whose start falls in calendar_year. Walk a generous range.
+    for fy_actual in range(calendar_year - 1, calendar_year + 2):
+        # FY starts in month fy_start_month of fy_actual (if fy_start_month==1)
+        # or (fy_actual - 1) if fy_start_month > 1? Convention varies. We use:
+        #   FY label year = actual calendar year the fiscal year ENDS in for most EMS companies,
+        # but Jabil labels FY by the year it starts (FY2025 = Sept 2024 - Aug 2025 per user note above).
+        # Safer: for each candidate fiscal period, compute its calendar (year, month) range
+        # directly from fy_start_month and the FY-label convention used in the DB.
+        # The DB stores fiscal_year like "FY25". For Jabil: FY25 Q1 = Sept 2024. For Flex: FY25 Q1 = Apr 2024.
+        # So: FY_label_year (2 digits) = 2000 + yy; FY Q1 starts month fy_start_month of year:
+        #   (fy_label_year - 1) if fy_start_month > 1 else fy_label_year.
+        fy_label_year = fy_actual
+        q1_start_cal_year = (fy_label_year - 1) if fy_start_month > 1 else fy_label_year
+        for qi, q_label in enumerate(["Q1", "Q2", "Q3", "Q4"], start=0):
+            start_month_idx = fy_start_month + qi * 3
+            start_year = q1_start_cal_year + (start_month_idx - 1) // 12
+            start_month = ((start_month_idx - 1) % 12) + 1
+            # End month (inclusive) = start + 2
+            end_month_idx = start_month_idx + 2
+            end_year = q1_start_cal_year + (end_month_idx - 1) // 12
+            end_month = ((end_month_idx - 1) % 12) + 1
+            # Overlap with calendar_year: any month in [start..end] that is in calendar_year
+            overlaps = False
+            cur_y, cur_m = start_year, start_month
+            for _ in range(3):
+                if cur_y == calendar_year:
+                    overlaps = True
+                    break
+                cur_m += 1
+                if cur_m > 12:
+                    cur_m = 1
+                    cur_y += 1
+            if overlaps:
+                fy_label = f"FY{fy_label_year % 100:02d}"
+                periods.append((fy_label, q_label))
+    return periods
+
+
+def _search_historical_docs_by_periods(
+    query: str,
+    company: str,
+    periods: list[tuple[str, str]],
+    per_quarter_n: int = 8,
+) -> list[dict]:
+    """Retrieve docs for an explicit list of (fy, q) periods for a single company."""
+    from backend.core.database import get_company_collection, embed_text, has_company_collections, get_collection
+    merged: list[dict] = []
+    seen: set = set()
+    try:
+        col = get_company_collection(company) if has_company_collections() else get_collection()
+        if col.count() == 0:
+            return []
+        query_embedding = embed_text(query)
+    except Exception:
+        return []
+    for fy, q in periods:
+        try:
+            results = col.query(
+                query_embeddings=[query_embedding],
+                n_results=min(per_quarter_n, col.count()),
+                where={"$and": [{"fiscal_year": fy}, {"quarter": q}]},
+                include=["documents", "metadatas", "distances"],
+            )
+        except Exception:
+            continue
+        if not results or not results["documents"] or not results["documents"][0]:
+            continue
+        for doc_text, metadata, distance in zip(
+            results["documents"][0], results["metadatas"][0], results["distances"][0]
+        ):
+            key = (
+                metadata.get("source_file", metadata.get("source", "")),
+                metadata.get("page_num", 0),
+                doc_text[:120],
+            )
+            if key in seen:
+                continue
+            seen.add(key)
+            merged.append({
+                "content": doc_text,
+                "company": metadata.get("company", company),
+                "source": metadata.get("source_file", metadata.get("source", "")),
+                "filing_type": metadata.get("filing_type", ""),
+                "fiscal_year": metadata.get("fiscal_year", fy),
+                "quarter": metadata.get("quarter", q),
+                "similarity": round(1 - distance, 4),
+                "section_header": metadata.get("section_header", ""),
+                "page_num": metadata.get("page_num", 0),
+            })
+    merged.sort(key=lambda x: float(x.get("similarity", 0) or 0), reverse=True)
+    return merged
+
+
+def _build_calendar_year_note_doc(company: str, calendar_year: int, periods: list[tuple[str, str]]) -> dict:
+    """Build a synthetic doc injected at the top of the context warning the LLM
+    to restrict coverage to the given fiscal periods."""
+    if periods:
+        period_str = ", ".join(f"{fy} {q}" for fy, q in periods)
+        body = (
+            f"[CALENDAR YEAR NOTE] The user asked about CALENDAR {calendar_year}. "
+            f"{company}'s fiscal quarters that overlap with calendar {calendar_year} and have data are: "
+            f"{period_str}. Cover ONLY these quarters in your response. Do not include other quarters, "
+            f"and make the Overview's quarter count and range string exactly describe this set."
+        )
+    else:
+        body = (
+            f"[CALENDAR YEAR NOTE] The user asked about CALENDAR {calendar_year}, but no "
+            f"{company} fiscal quarters with data overlap that calendar year."
+        )
+    return {
+        "content": body,
+        "company": company,
+        "source": "calendar_year_note",
+        "filing_type": "Note",
+        "fiscal_year": "",
+        "quarter": "",
+        "similarity": 1.0,
+        "section_header": "CALENDAR YEAR NOTE",
+        "page_num": 0,
+    }
+
+
 def _search_docs_for_scope(
     query: str,
     scope: list[str],
@@ -708,7 +876,7 @@ def _format_historical_response(result: dict) -> str:
 
         bullet_points = [bp for bp in (q.get("bullet_points") or []) if str(bp).strip()]
         if bullet_points:
-            sections.append("### Key Points\n" + "\n".join(f"· {bp}" for bp in bullet_points))
+            sections.append("**Key Points**\n\n" + "\n".join(f"- {bp}" for bp in bullet_points))
 
     formatted = "\n\n".join(s for s in sections if s.strip()).strip()
     if not formatted:
@@ -718,10 +886,11 @@ def _format_historical_response(result: dict) -> str:
         fallback_answer = re.sub(r"\s+(\d+\.\s*(?:FY\d{2,4}\s+Q[1-4]|Q[1-4]\s+FY\d{2,4})\b)", r"\n\1", fallback_answer)
         fallback_answer = re.sub(r"\s+(###\s*(?:FY\d{2,4}\s+Q[1-4]|Q[1-4]\s+FY\d{2,4})\b)", r"\n\1", fallback_answer)
         fallback_answer = re.sub(r"\s+([A-Za-z][A-Za-z'\-\s]+\bFY\d{2,4}\s+Q[1-4]\b[^\n:]*:)\s*", r"\n\1\n", fallback_answer)
-        fallback_answer = re.sub(r"\s*·\s*", "\n· ", fallback_answer)
+        fallback_answer = re.sub(r"\s*[·•]\s*", "\n- ", fallback_answer)
 
         lines = [ln.rstrip() for ln in fallback_answer.split("\n")]
-        numbered_lines: list[str] = []
+        # Group into blocks: preamble (overview), then one block per quarter heading + its bullets.
+        blocks: list[list[str]] = [[]]  # start with preamble block
         seq = 1
         in_quarter_section = False
         quarter_ref_pattern = r"(?:FY\d{2,4}\s+Q[1-4]|Q[1-4]\s+FY\d{2,4})"
@@ -736,21 +905,22 @@ def _format_historical_response(result: dict) -> str:
             if re.match(quarter_heading_pattern, line) or is_single_quarter_subtitle:
                 clean_line = re.sub(r"^#{1,6}\s*", "", line)
                 clean_line = re.sub(r"^\d+\.\s*", "", clean_line)
-                numbered_lines.append(f"**{seq}. {clean_line}**")
+                blocks.append([f"**{seq}. {clean_line}**"])
                 seq += 1
                 in_quarter_section = True
             elif in_quarter_section and line:
                 if line.startswith("- "):
-                    numbered_lines.append(f"· {line[2:].strip()}")
+                    blocks[-1].append(line)
                 elif line.startswith("•") or line.startswith("·"):
-                    numbered_lines.append(line)
+                    blocks[-1].append(f"- {line.lstrip('·•').strip()}")
                 else:
-                    numbered_lines.append(f"· {line}")
+                    blocks[-1].append(f"- {line}")
             else:
-                numbered_lines.append(raw_line)
+                blocks[-1].append(raw_line)
 
-        content = "\n".join(numbered_lines).strip()
-        content = re.sub(r"^(?:\*\*Overview\*\*|Overview)\s*", "", content, flags=re.IGNORECASE)
+        rendered_blocks = ["\n".join(b).strip() for b in blocks if any(x.strip() for x in b)]
+        content = "\n\n".join(rendered_blocks).strip()
+        content = re.sub(r"^(?:\*\*Overview\*\*|Overview)\s*", "", content, flags=re.IGNORECASE).strip()
         return f"**Overview**\n\n{content}" if content else "**Overview**\n\nNot found in provided sources."
     return formatted
 
@@ -899,6 +1069,27 @@ async def _stream_response(request: ChatRequest):
                 if key not in existing_keys:
                     existing_keys.add(key)
                     docs.append(d)
+
+    # Calendar-year historical queries (e.g. "in 2025"): restrict to fiscal quarters
+    # whose months actually overlap with that calendar year.
+    calendar_year = _extract_calendar_year(query)
+    if is_historical and calendar_year and not is_comparison and len(effective_companies) == 1:
+        company = effective_companies[0]
+        candidate_periods = _calendar_year_to_fiscal_periods(calendar_year, company)
+        available = set(_get_available_et_periods(company, n_recent=50))
+        target_periods = [p for p in candidate_periods if p in available]
+        cy_docs = _search_historical_docs_by_periods(query, company, target_periods) if target_periods else []
+        note_doc = _build_calendar_year_note_doc(company, calendar_year, target_periods)
+        # Prepend the note so it appears first in context
+        docs = [note_doc] + cy_docs + [
+            d for d in docs
+            if (d.get("fiscal_year", ""), d.get("quarter", "")) in set(target_periods)
+        ]
+        yield _sse_event("step", {
+            "icon": "🗓",
+            "label": "Calendar Year Filter",
+            "detail": f"Calendar {calendar_year} → {company} quarters: " + (", ".join(f"{fy} {q}" for fy, q in target_periods) or "none"),
+        })
 
     # For historical queries in web mode, supplement with filing database results
     # so quarterly-specific transcript content is available to the LLM
@@ -1155,6 +1346,21 @@ async def chat(request: ChatRequest):
                     existing_keys.add(key)
                     docs.append(d)
             context = _build_context(docs)
+
+    # Calendar-year historical queries: restrict to fiscal quarters that overlap.
+    calendar_year = _extract_calendar_year(query)
+    if is_historical and calendar_year and not is_comparison and len(effective_companies) == 1:
+        company = effective_companies[0]
+        candidate_periods = _calendar_year_to_fiscal_periods(calendar_year, company)
+        available = set(_get_available_et_periods(company, n_recent=50))
+        target_periods = [p for p in candidate_periods if p in available]
+        cy_docs = _search_historical_docs_by_periods(query, company, target_periods) if target_periods else []
+        note_doc = _build_calendar_year_note_doc(company, calendar_year, target_periods)
+        docs = [note_doc] + cy_docs + [
+            d for d in docs
+            if (d.get("fiscal_year", ""), d.get("quarter", "")) in set(target_periods)
+        ]
+        context = _build_context(docs)
 
     # For historical queries in web mode, also search filing database.
     # Web search returns general articles; actual quarterly transcripts live in ChromaDB.
