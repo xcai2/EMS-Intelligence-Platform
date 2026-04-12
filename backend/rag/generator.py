@@ -96,6 +96,34 @@ class ComparisonAnswer(BaseModel):
     )
 
 
+class QuarterDetail(BaseModel):
+    """Detailed breakdown for a single quarter in the new display format."""
+    quarter: str = Field(description="Quarter label, e.g. 'Q2 FY2026'")
+    date: str = Field(description="Earnings call date if available, e.g. 'March 18, 2026'. Empty string if unknown.")
+    tone_label: str = Field(description="2-3 word tone label capturing the essence of this quarter, e.g. 'strategic insulation', 'cautious navigation'")
+    summary: str = Field(description="3-5 sentence paragraph describing the company's overall stance this quarter")
+    bullet_points: list[str] = Field(description="3 bullet points with concrete details, numbers, or quotes. Format: '**Theme Title:** Detail...'")
+
+
+class HistoricalAnswer(BaseModel):
+    """Schema for historical/trend questions — matches the structured display format."""
+    opening: str = Field(
+        description=(
+            "Opening paragraph starting with: 'Over the last N quarters (Q? FY???? through Q? FY????), "
+            "[Company]'s narrative has...' Summarize the overall trend in 2-3 sentences."
+        )
+    )
+    quarters: list[QuarterDetail] = Field(
+        description="Each quarter's detail, ordered from MOST RECENT to OLDEST."
+    )
+    confidence: str = Field(
+        description="'high' if data found for all quarters, 'medium' if some gaps, 'low' if data is sparse"
+    )
+    relevant_sources: list[str] = Field(
+        description="Source files or transcript sections that support the answer"
+    )
+
+
 class TablePayloadSchema(BaseModel):
     """Structured table data for frontend rendering."""
     title: str = Field(description="Short table title including units, e.g. 'Annual CapEx (USD Millions)'")
@@ -150,7 +178,14 @@ Check the unit header at the top of financial statements:
   * "(in millions)" → values are already in millions
   * "(in billions)" → values are already in billions
 Benchmark and Sanmina typically report in thousands.
-Flex, Jabil, and Celestica typically report in millions."""
+Flex, Jabil, and Celestica typically report in millions.
+
+=== Required Response Structure ===
+Structure every response with exactly three sections:
+
+1. KEY CONCLUSION: 2-3 sentences ranking companies or stating the main finding
+2. SUPPORTING EVIDENCE: 3-5 bullet points with specific data points
+3. IMPLICATION FOR FLEX: 1-2 sentences on what Flex should do or watch"""
 
 
 COT_SYSTEM_PROMPT = BASE_SYSTEM_PROMPT + """
@@ -167,6 +202,20 @@ Rules:
 - If data is not found in the context, say exactly: "Not found in provided sources."
 - Do NOT hallucinate or make up numbers
 - Do NOT show your reasoning process"""
+
+
+WEB_SYSTEM_PROMPT = BASE_SYSTEM_PROMPT + """=== Web Search Answer Instructions ===
+You are answering based on web search results that include page content from financial news, filings, and analyst reports.
+
+Rules:
+- Synthesize information from the provided "Web Search Results" (including any page content).
+- Cite sources using the format (Web N: Article Title) — e.g., (Web 1: Jabil Q2 2025 Earnings). Always use this exact format so citations become clickable links.
+- If the web results contain relevant data, extract and present it clearly, including executive names and direct quotes when available.
+- You may make reasonable inferences from the web content, but clearly distinguish between stated facts and inferences.
+- If no relevant information is found in any web result, say: "No relevant information found in web search results."
+- Do NOT hallucinate numbers — only report figures explicitly found in the web content.
+- Give the answer directly without describing your search process.
+- Follow the Required Response Structure (KEY CONCLUSION / SUPPORTING EVIDENCE / IMPLICATION FOR FLEX) defined above."""
 
 
 NUMERIC_SYSTEM_PROMPT = BASE_SYSTEM_PROMPT + """
@@ -224,6 +273,83 @@ CRITICAL - HANDLING MISSING DATA:
    - If some companies have data and others don't, compare those that have data and note the gaps"""
 
 
+HISTORICAL_BASE_PROMPT = """You are an expert competitive intelligence analyst specializing in the Electronics Manufacturing Services (EMS) industry. You analyze SEC filings, earnings transcripts, news, and financial data for Flex, Jabil, Celestica, Benchmark Electronics, and Sanmina.
+
+Use ONLY facts present in the provided Retrieved Documents and/or Web Search Results. Never fabricate quotes, dates, or numbers."""
+
+HISTORICAL_SYSTEM_PROMPT = HISTORICAL_BASE_PROMPT + """
+
+=== Historical Stance Analysis Instructions ===
+
+The user wants to understand how a company's position on a specific topic has changed over multiple quarters.
+
+You MUST respond in this EXACT format:
+
+---
+
+**Overview**
+[2-3 sentences summarizing the overall trend across all quarters. Start with: "Over the [N] quarters covered (Q? FY???? through Q? FY????), [Company]'s stance on [topic] has..."]
+
+**1. [Quarter Label] ([Earnings Call Date if available])**
+[**Tone label in bold, 2-3 words e.g. "Cautious Optimism"**]. [3-5 sentence paragraph describing the company's stance this quarter.]
+
+- **[Key Theme 1]:** [Specific detail, number, or quote]
+- **[Key Theme 2]:** [Specific detail, number, or quote]
+- **[Key Theme 3]:** [Specific detail, number, or quote]
+
+**2. [Quarter Label] ([Earnings Call Date if available])**
+[**Tone label**]. [3-5 sentence paragraph.]
+
+- **[Key Theme 1]:** [Detail]
+- **[Key Theme 2]:** [Detail]
+- **[Key Theme 3]:** [Detail]
+
+[Continue for each quarter, MOST RECENT first, OLDEST last]
+
+---
+
+EXAMPLE OUTPUT (follow this structure exactly):
+
+**Overview**
+Over the 2 quarters covered (Q2 FY2025 through Q3 FY2025), Jabil's stance on tariffs shifted from cautious optimism to confident stability as the company leveraged its global manufacturing footprint.
+
+**1. Q3 FY2025** (June 2025)
+**Confident Stability**. Jabil reported minimal tariff impact on its US-centric segments including capital equipment and cloud infrastructure. The company emphasized no significant pull-in orders were observed and reiterated its strong positioning as a US-domiciled manufacturer.
+
+- **Geographic Advantage:** Americas footprint now accounts for 46% of revenue, up from 25% in 2018.
+- **No Pull-in Behavior:** Management confirmed customers were not accelerating orders due to tariff uncertainty.
+- **US Expansion:** Announced new US investment to broaden customer base beyond existing clients.
+
+**2. Q2 FY2025** (March 2025)
+**Cautious Optimism**. Jabil acknowledged the fluid tariff environment involving Canada, Mexico, and China while maintaining confidence in its pass-through cost model. Management viewed reciprocal tariffs as potentially leveling the manufacturing playing field.
+
+- **Minimal Direct Exposure:** Canada, Mexico, China tariff exposure described as minimal for Jabil's business.
+- **Pass-Through Model:** Tariff costs seen as pass-through, not expected to impact margins directly.
+- **Manufacturing Flexibility:** Highlighted ability to support customers across 30 countries as a key differentiator.
+
+CRITICAL RULES:
+- Always start with **Overview** section
+- Number each quarter section starting from 1 (most recent)
+- Bold the quarter label and number: **1. Q2 FY2026**
+- Bold the tone label inside the paragraph
+- Use bullet points with **bold theme titles** for key details
+- Each bullet MUST be on its own line, starting with "- " (a hyphen and a space)
+- Leave a BLANK LINE between the paragraph and the bullet list
+- Only use information from Retrieved Documents. Never fabricate.
+- If a quarter has no data, write: "No direct statement found for this quarter."
+- Always order quarters from MOST RECENT to OLDEST
+- COUNTING RULE: Only count actual fiscal QUARTERS (Q1/Q2/Q3/Q4) in the Overview's quarter count.
+  Annual 10-K filings are NOT a quarter — do not include them as a numbered section, and do not count them.
+  If the only document for a fiscal year is the annual 10-K, omit that year entirely from the quarter list.
+- The number stated in "Over the N quarters covered" MUST exactly equal the number of numbered quarter sections that follow.
+- The Overview's quarter range string MUST exactly describe the set of quarters you actually list.
+  If the quarters are contiguous (e.g. Q1, Q2, Q3 FY2025), you MAY write "Q1 FY2025 through Q3 FY2025".
+  If they are NOT contiguous (e.g. you list only Q1 and Q3 FY2025, skipping Q2), you MUST write them
+  explicitly, e.g. "Q1 FY2025 and Q3 FY2025" — NEVER imply a continuous range you did not cover.
+- If a [CALENDAR YEAR NOTE] is present in the Retrieved Documents, restrict your coverage to the fiscal
+  quarters listed there. Do not invent extra quarters, and do not omit any that the note lists as having data."""
+
+
 # Legacy prompt for backward compatibility
 SYSTEM_PROMPT = COT_SYSTEM_PROMPT
 
@@ -263,6 +389,21 @@ def detect_query_type(query: str) -> str:
     Returns: "numeric", "comparison", "descriptive"
     """
     query_lower = query.lower()
+
+    # Historical indicators — check FIRST (before comparison) to avoid misclassification
+    historical_keywords = [
+        "quarters ago", "quarter ago", "last quarter", "previous quarter",
+        "historically", "over time", "trend", "shift", "changed",
+        "used to say", "said before", "position evolved", "stance evolved",
+        "q1 to q", "q2 to q", "q3 to q", "q4 to q",
+        "earnings ago", "what did", "what has", "how has",
+        "q1 and q", "q2 and q", "q3 and q",  # 新增：覆盖 "Q2 and Q3" 这类问题
+        "q1, q", "q2, q", "q3, q",            # 新增：覆盖 "Q1, Q2, Q3" 这类问题
+        "last 2 quarters", "last 3 quarters", "last two", "last three",
+        "past quarter", "past 2", "past 3",
+    ]
+    if any(kw in query_lower for kw in historical_keywords):
+        return "historical"
     
     # Comparison indicators
     comparison_keywords = [
@@ -302,6 +443,13 @@ def _active_api_key() -> str:
     return ANTHROPIC_API_KEY if LLM_PROVIDER == "anthropic" else OPENAI_API_KEY
 
 
+def _select_system_prompt(context: str, web_context: str) -> str:
+    """Pick the right system prompt: web-specific when only web context is present."""
+    if web_context and not context:
+        return WEB_SYSTEM_PROMPT
+    return SYSTEM_PROMPT
+
+
 def generate_response(
     query: str,
     context: str,
@@ -312,10 +460,11 @@ def generate_response(
         return f"Error: {LLM_PROVIDER.upper()}_API_KEY is not configured. Please set it in backend/.env"
 
     user_prompt = _build_prompt(query, context, web_context)
+    system = _select_system_prompt(context, web_context)
     try:
         return llm_complete(
             messages=[{"role": "user", "content": user_prompt}],
-            system=SYSTEM_PROMPT,
+            system=system,
             model_key="main",
             max_tokens=2000,
         )
@@ -334,10 +483,11 @@ def generate_response_streaming(
         return
 
     user_prompt = _build_prompt(query, context, web_context)
+    system = _select_system_prompt(context, web_context)
     try:
         gen = llm_complete(
             messages=[{"role": "user", "content": user_prompt}],
-            system=SYSTEM_PROMPT,
+            system=system,
             model_key="main",
             max_tokens=2000,
             stream=True,
@@ -402,10 +552,28 @@ def generate_structured_response(
             "raw_response": None,
         }
 
-    user_prompt = _build_prompt(query, context, web_context)
-
     # Select schema and prompt based on query type
     query_type = force_query_type or detect_query_type(query)
+
+    # For historical queries, inject current date + fiscal year context so the LLM
+    # can correctly resolve relative time expressions like "last 3 quarters".
+    if query_type == "historical":
+        from datetime import date as _date
+        today = _date.today()
+        date_note = (
+            f"[TODAY: {today.strftime('%B %d, %Y')}]\n"
+            f"[FISCAL YEAR REFERENCE: Jabil FY starts Sep 1 | Flex FY starts Apr 1 | "
+            f"Sanmina FY starts Oct 1 | Celestica & Benchmark use calendar year]\n"
+            f"IMPORTANT: When the user says 'last N quarters', find the N most recent quarters "
+            f"for which actual data EXISTS in the Retrieved Documents or Web Search Results. "
+            f"Do NOT output a quarter just because it should exist — only include it if evidence "
+            f"is actually present. If fewer than N quarters have evidence, cover only those that do.\n\n"
+        )
+        augmented_query = date_note + query
+    else:
+        augmented_query = query
+
+    user_prompt = _build_prompt(augmented_query, context, web_context)
 
     if query_type == "numeric":
         system_prompt = NUMERIC_SYSTEM_PROMPT
@@ -413,9 +581,15 @@ def generate_structured_response(
     elif query_type == "comparison":
         system_prompt = COMPARISON_SYSTEM_PROMPT
         response_schema = ComparisonAnswer
+    elif query_type == "historical":
+        system_prompt = HISTORICAL_SYSTEM_PROMPT
+        response_schema = HistoricalAnswer
     else:
         system_prompt = COT_SYSTEM_PROMPT
         response_schema = StructuredAnswer
+
+    # Historical responses covering multiple quarters need more tokens
+    max_tok = 4000 if query_type == "historical" else 2000
 
     try:
         parsed = llm_structured(
@@ -423,11 +597,25 @@ def generate_structured_response(
             system=system_prompt,
             model_key="main",
             schema=response_schema,
-            max_tokens=2000,
+            max_tokens=max_tok,
         )
 
         if parsed is None:
             raise ValueError("llm_structured returned None")
+
+        # Historical has a different schema (no final_answer) — handle it before the common path
+        if query_type == "historical":
+            return {
+                "reasoning": [],
+                "reasoning_summary": "",
+                "answer": "",
+                "confidence": getattr(parsed, "confidence", "medium"),
+                "sources": getattr(parsed, "relevant_sources", []),
+                "query_type": "historical",
+                "quarters": [q.model_dump() for q in getattr(parsed, "quarters", []) or []],
+                "opening": getattr(parsed, "opening", ""),
+                "raw_response": parsed.model_dump() if hasattr(parsed, "model_dump") else None,
+            }
 
         # Extract common fields
         reasoning_steps = []
@@ -436,7 +624,7 @@ def generate_structured_response(
                 {"step": step.step, "finding": step.finding}
                 for step in parsed.step_by_step_analysis
             ]
-        
+
         result = {
             "reasoning": reasoning_steps,
             "reasoning_summary": getattr(parsed, 'reasoning_summary', ''),
@@ -446,24 +634,32 @@ def generate_structured_response(
             "query_type": query_type,
             "raw_response": parsed.model_dump() if hasattr(parsed, 'model_dump') else None,
         }
-        
+
         # Add numeric-specific fields
         if query_type == "numeric" and hasattr(parsed, 'normalized_value'):
             result["numeric_value"] = parsed.normalized_value
             result["fiscal_period"] = parsed.fiscal_period
             result["unit"] = parsed.unit_in_source
             result["raw_value"] = parsed.raw_value_found
-        
+
         # Add comparison-specific fields
         if query_type == "comparison" and hasattr(parsed, 'company_data'):
             result["company_data"] = parsed.company_data
             result["comparison_result"] = parsed.comparison_result
-        
+
         return result
         
     except Exception as e:
-        # Fallback to regular generation if structured output fails
-        fallback_response = generate_response(query, context, web_context)
+        # Fallback: use query-type-specific system prompt so format stays correct
+        if query_type == "historical":
+            fallback_response = llm_complete(
+                messages=[{"role": "user", "content": user_prompt}],
+                system=HISTORICAL_SYSTEM_PROMPT,
+                model_key="main",
+                max_tokens=max_tok,
+            )
+        else:
+            fallback_response = generate_response(query, context, web_context)
         return {
             "reasoning": [],
             "answer": fallback_response,

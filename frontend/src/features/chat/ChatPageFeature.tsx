@@ -32,8 +32,9 @@ import { createCustomQuestion, deleteCustomQuestion, fetchCustomQuestions, reque
 import { TableAnswer, type TablePayload } from './TableAnswer';
 
 type SearchMode = 'rag' | 'web' | 'hybrid';
-type CompanyFilter = 'Flex' | 'Jabil' | 'Celestica' | 'Benchmark' | 'Sanmina';
-type AnswerProvider = 'openai' | 'claude' | 'none';
+type CompanyFilter = 'Flex' | 'Jabil' | 'Celestica' | 'Benchmark' | 'Sanmina' | 'Plexus';
+type AnswerProvider = 'openai' | 'claude' | 'gemini' | 'none';
+type TimeFocus = 'any' | 'fy2026' | 'fy2025' | 'last12m';
 
 interface Message {
   id: string;
@@ -42,7 +43,7 @@ interface Message {
   narrative_text?: string;
   table_payload?: TablePayload;
   sources?: Source[];
-  mode?: SearchMode;
+  webSources?: WebSource[];
   timestamp: Date;
 }
 
@@ -52,6 +53,12 @@ interface Source {
   filing_type?: string;
   fiscal_year?: string;
   similarity?: number;
+}
+
+interface WebSource {
+  index: number;
+  title: string;
+  url: string;
 }
 
 interface CustomPresetQuestion {
@@ -196,7 +203,7 @@ const QUICK_QUESTIONS = [
   },
   {
     label: 'CapEx Guidance',
-    query: 'Compare CapEx guidance across all 5 EMS companies for the current fiscal year.',
+    query: 'Compare CapEx guidance across all 6 EMS companies for the current fiscal year.',
   },
   {
     label: 'Liquid Cooling',
@@ -216,7 +223,7 @@ const QUICK_QUESTIONS = [
   },
 ];
 
-const COMPANY_FILTERS: CompanyFilter[] = ['Flex', 'Jabil', 'Celestica', 'Benchmark', 'Sanmina'];
+const COMPANY_FILTERS: CompanyFilter[] = ['Flex', 'Jabil', 'Celestica', 'Benchmark', 'Sanmina', 'Plexus'];
 
 const modeConfig = {
   rag: {
@@ -248,10 +255,8 @@ export default function ChatPageFeature() {
   const [isLoading, setIsLoading] = useState(false);
   const [mode, setMode] = useState<SearchMode>('rag');
   const [selectedCompanies, setSelectedCompanies] = useState<CompanyFilter[]>([]);
+  const [timeFocus, setTimeFocus] = useState<TimeFocus>('any');
   const [answerProvider, setAnswerProvider] = useState<AnswerProvider>('none');
-  const [enableFallback, setEnableFallback] = useState(false);
-  const [strictGrounding, setStrictGrounding] = useState(true);
-  const [maxResponseWords, setMaxResponseWords] = useState('200');
   const [openPrimary, setOpenPrimary] = useState<Record<string, boolean>>(
     () =>
       QUESTION_BANK.reduce<Record<string, boolean>>((acc, item) => {
@@ -299,20 +304,6 @@ export default function ChatPageFeature() {
     };
     loadCustomQuestions();
   }, []);
-
-  // Product rule:
-  // - Entering Hybrid: auto-enable OpenAI if provider is currently off
-  // - Switching to Filing/Web: provider turns off (button remains visible)
-  useEffect(() => {
-    if (mode === 'hybrid') {
-      setAnswerProvider((prev) => (prev === 'none' ? 'openai' : prev));
-      setEnableFallback(true);
-    } else {
-      setAnswerProvider('none');
-      setEnableFallback(false);
-      setStrictGrounding(true);
-    }
-  }, [mode]);
 
   const togglePrimary = (id: string) => {
     setOpenPrimary((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -370,7 +361,8 @@ export default function ChatPageFeature() {
 
   const isAllCompanies = selectedCompanies.length === 0;
   const companyScopeLabel = isAllCompanies ? 'All' : selectedCompanies.join(', ');
-  const isLengthCapActive = mode === 'hybrid' && enableFallback && !strictGrounding;
+  const timeFocusLabel =
+    timeFocus === 'fy2026' ? 'FY2026' : timeFocus === 'fy2025' ? 'FY2025' : timeFocus === 'last12m' ? 'Last 12 Months' : 'Any Time';
 
   const toggleCompany = (company: CompanyFilter | 'All') => {
     if (company === 'All') {
@@ -387,10 +379,18 @@ export default function ChatPageFeature() {
   };
 
   const buildQuery = (query: string) => {
-    const constraints = [];
+    const constraints: string[] = [];
 
     if (selectedCompanies.length > 0) {
       constraints.push(`Focus on these companies only: ${selectedCompanies.join(', ')}.`);
+    }
+
+    if (timeFocus === 'fy2026') {
+      constraints.push('Prioritize FY2026.');
+    } else if (timeFocus === 'fy2025') {
+      constraints.push('Prioritize FY2025.');
+    } else if (timeFocus === 'last12m') {
+      constraints.push('Focus on the last 12 months.');
     }
 
     return constraints.length > 0 ? `${query}\n\nConstraints: ${constraints.join(' ')}` : query;
@@ -399,18 +399,6 @@ export default function ChatPageFeature() {
   const sendMessage = async (query?: string) => {
     const rawText = query || input.trim();
     if (!rawText || isLoading) return;
-
-    if (mode === 'hybrid' && enableFallback && answerProvider === 'none') {
-      const warningMsg: Message = {
-        id: `warning_${Date.now()}`,
-        role: 'assistant',
-        content: 'Hybrid mode fallback is OFF. Please select a model in the top-right (OpenAI or Claude) before continuing.',
-        timestamp: new Date(),
-      };
-      setMessages((prev) => [...prev, warningMsg]);
-      inputRef.current?.focus();
-      return;
-    }
 
     const userMsg: Message = {
       id: `user_${Date.now()}`,
@@ -430,9 +418,9 @@ export default function ChatPageFeature() {
         session_id: sessionId,
         company_filter: selectedCompanies.length > 0 ? selectedCompanies.join(',') : null,
         answer_provider: answerProvider === 'none' ? 'openai' : answerProvider,
-        fallback_to_general_llm: mode === 'hybrid' && enableFallback && answerProvider !== 'none',
-        strict_grounding: mode === 'hybrid' ? strictGrounding : true,
-        max_response_words: isLengthCapActive && Number(maxResponseWords) > 0 ? Number(maxResponseWords) : null,
+        fallback_to_general_llm: mode === 'hybrid' && answerProvider !== 'none',
+        strict_grounding: true,
+        max_response_words: null,
       });
 
       const assistantMsg: Message = {
@@ -442,7 +430,7 @@ export default function ChatPageFeature() {
         narrative_text: data.narrative_text ?? undefined,
         table_payload: data.table_payload ?? undefined,
         sources: data.sources || [],
-        mode,
+        webSources: data.web_sources || [],
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, assistantMsg]);
@@ -501,7 +489,7 @@ export default function ChatPageFeature() {
                 <Settings className="h-3.5 w-3.5" />
                 <span className="hidden sm:inline">Settings</span>
                 {/* Active indicators */}
-                {(mode !== 'rag' || !isAllCompanies) && (
+                {(mode !== 'rag' || !isAllCompanies || timeFocus !== 'any') && (
                   <span className="ml-0.5 h-1.5 w-1.5 rounded-full bg-blue-500" />
                 )}
               </button>
@@ -525,127 +513,78 @@ export default function ChatPageFeature() {
           {/* Collapsible settings panel */}
           {showSettings && (
             <div className="mt-2.5 flex flex-col gap-2">
-              {/* Model / fallback / guardrails row */}
+              {/* Retrieval mode selector in settings */}
+              <Card className="gap-2 border-slate-200 bg-white/95 p-2.5 shadow-sm dark:border-slate-700 dark:bg-slate-900/90">
+                <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                  <Database className="h-4 w-4 text-blue-600" />
+                  Retrieval Mode
+                </div>
+                <div className="grid gap-1.5 md:grid-cols-3">
+                  {(Object.keys(modeConfig) as SearchMode[]).map((m) => {
+                    const config = modeConfig[m];
+                    const Icon = config.icon;
+                    return (
+                      <button
+                        key={m}
+                        title={config.desc}
+                        onClick={() => setMode(m)}
+                        className={`rounded-xl border px-2.5 py-1.5 text-left transition-all ${
+                          mode === m
+                            ? `${config.activeClass} dark:border-blue-800 dark:bg-slate-800 dark:text-slate-100`
+                            : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-800'
+                        }`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Icon className="h-4 w-4" />
+                          <span className="text-sm font-semibold leading-5">{config.label}</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </Card>
+
+              {/* Model selector in settings */}
               <div className="flex flex-wrap items-center gap-3">
-                <div
-                  className={`inline-flex items-center gap-1 rounded-full border p-1 text-xs ${
-                    mode === 'hybrid'
-                      ? 'border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800'
-                      : 'border-slate-200/70 bg-slate-100/60 opacity-60 dark:border-slate-700/70 dark:bg-slate-800/50 dark:opacity-60'
-                  }`}
-                >
+                <div className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 p-1 text-xs dark:border-slate-700 dark:bg-slate-800">
                   <button
                     type="button"
                     onClick={() => toggleAnswerProvider('openai')}
-                    disabled={mode !== 'hybrid'}
                     className={`rounded-full px-2.5 py-1 transition ${
                       answerProvider === 'openai'
                         ? 'bg-blue-600 text-white'
                         : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
-                    } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
+                    }`}
                   >
                     OpenAI
                   </button>
                   <button
                     type="button"
                     onClick={() => toggleAnswerProvider('claude')}
-                    disabled={mode !== 'hybrid'}
                     className={`rounded-full px-2.5 py-1 transition ${
                       answerProvider === 'claude'
                         ? 'bg-blue-600 text-white'
                         : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
-                    } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
+                    }`}
                   >
                     Claude
                   </button>
-                </div>
-                <div
-                  className={`inline-flex items-center gap-1 rounded-full border p-1 text-xs ${
-                    mode === 'hybrid'
-                      ? 'border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800'
-                      : 'border-slate-200/70 bg-slate-100/60 opacity-60 dark:border-slate-700/70 dark:bg-slate-800/50 dark:opacity-60'
-                  }`}
-                >
                   <button
                     type="button"
-                    onClick={() => setEnableFallback((prev) => !prev)}
-                    disabled={mode !== 'hybrid'}
+                    onClick={() => toggleAnswerProvider('gemini')}
                     className={`rounded-full px-2.5 py-1 transition ${
-                      enableFallback
+                      answerProvider === 'gemini'
                         ? 'bg-blue-600 text-white'
                         : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
-                    } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
-                  >
-                    Fallback {enableFallback ? 'On' : 'Off'}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setStrictGrounding((prev) => !prev)}
-                    disabled={mode !== 'hybrid'}
-                    className={`rounded-full px-2.5 py-1 transition ${
-                      strictGrounding
-                        ? 'bg-blue-600 text-white'
-                        : 'text-slate-600 hover:bg-white dark:text-slate-300 dark:hover:bg-slate-700'
-                    } ${mode !== 'hybrid' ? 'cursor-not-allowed' : ''}`}
-                  >
-                    Guardrails {strictGrounding ? 'On' : 'Off'}
-                  </button>
-                  <span className="mx-1 h-4 w-px bg-slate-300 dark:bg-slate-600" />
-                  <span className="px-1.5 text-slate-600 dark:text-slate-300">Max Words</span>
-                  <span
-                    className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
-                      isLengthCapActive
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-slate-200 text-slate-500 dark:bg-slate-700 dark:text-slate-300'
                     }`}
                   >
-                    {isLengthCapActive ? 'On' : 'Off'}
-                  </span>
-                  <Input
-                    value={maxResponseWords}
-                    onChange={(e) => {
-                      const v = e.target.value.replace(/[^\d]/g, '').slice(0, 4);
-                      setMaxResponseWords(v);
-                    }}
-                    disabled={!isLengthCapActive}
-                    className="h-7 w-16 border-slate-300 bg-white px-2 py-1 text-xs dark:border-slate-600 dark:bg-slate-900"
-                    placeholder="200"
-                  />
+                    Gemini
+                  </button>
                 </div>
               </div>
 
-              {/* Retrieval Mode + Company Filter */}
-              <div className="grid gap-2 lg:grid-cols-[1.55fr_1fr]">
-                <Card className="gap-2 border-slate-200 bg-white/95 p-2.5 shadow-sm dark:border-slate-700 dark:bg-slate-900/90">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
-                    <Database className="h-4 w-4 text-blue-600" />
-                    Retrieval Mode
-                  </div>
-                  <div className="grid gap-1.5 md:grid-cols-3">
-                    {(Object.keys(modeConfig) as SearchMode[]).map((m) => {
-                      const config = modeConfig[m];
-                      const Icon = config.icon;
-                      return (
-                        <button
-                          key={m}
-                          title={config.desc}
-                          onClick={() => setMode(m)}
-                          className={`rounded-xl border px-2.5 py-1.5 text-left transition-all ${
-                            mode === m
-                              ? `${config.activeClass} dark:border-blue-800 dark:bg-slate-800 dark:text-slate-100`
-                              : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-800'
-                          }`}
-                        >
-                          <div className="flex items-center gap-2">
-                            <Icon className="h-4 w-4" />
-                            <span className="text-sm font-semibold leading-5">{config.label}</span>
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </Card>
-
+              {/* Company Filter + Time Focus */}
+              <div className="grid gap-2 lg:grid-cols-2">
                 <Card className="gap-2 border-slate-200 bg-white/95 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900/90">
                   <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
                     <Building2 className="h-4 w-4 text-slate-600" />
@@ -678,6 +617,54 @@ export default function ChatPageFeature() {
                         </button>
                       );
                     })}
+                  </div>
+                </Card>
+
+                <Card className="gap-2 border-slate-200 bg-white/95 p-3 shadow-sm dark:border-slate-700 dark:bg-slate-900/90">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-slate-700 dark:text-slate-200">
+                    Time Focus
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    <button
+                      onClick={() => setTimeFocus('any')}
+                      className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                        timeFocus === 'any'
+                          ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-300'
+                          : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-900'
+                      }`}
+                    >
+                      Any Time
+                    </button>
+                    <button
+                      onClick={() => setTimeFocus('fy2026')}
+                      className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                        timeFocus === 'fy2026'
+                          ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-300'
+                          : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-900'
+                      }`}
+                    >
+                      FY2026
+                    </button>
+                    <button
+                      onClick={() => setTimeFocus('fy2025')}
+                      className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                        timeFocus === 'fy2025'
+                          ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-300'
+                          : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-900'
+                      }`}
+                    >
+                      FY2025
+                    </button>
+                    <button
+                      onClick={() => setTimeFocus('last12m')}
+                      className={`rounded-full border px-3 py-1 text-xs font-medium transition-colors ${
+                        timeFocus === 'last12m'
+                          ? 'border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/40 dark:text-blue-300'
+                          : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-900'
+                      }`}
+                    >
+                      Last 12 Months
+                    </button>
                   </div>
                 </Card>
               </div>
@@ -918,10 +905,10 @@ export default function ChatPageFeature() {
 
                   <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
                     <Badge variant="outline" className="border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                      Active Mode: {modeConfig[mode].label}
+                      Company: {companyScopeLabel}
                     </Badge>
                     <Badge variant="outline" className="border-slate-200 bg-slate-50 text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                      Company: {companyScopeLabel}
+                      Time: {timeFocusLabel}
                     </Badge>
                   </div>
 
@@ -989,12 +976,27 @@ export default function ChatPageFeature() {
                                   {src.company} · {src.filing_type} · {src.fiscal_year}
                                 </Badge>
                               ))}
-                              {msg.mode && (
-                                <Badge className={`border text-xs ${modeConfig[msg.mode].color}`}>
-                                  {modeConfig[msg.mode].label}
-                                </Badge>
-                              )}
                             </>
+                          )}
+
+                          {msg.webSources && msg.webSources.length > 0 && (
+                            <div className="mt-1 w-full">
+                              <p className="mb-1 text-[10px] font-medium uppercase tracking-wide text-slate-400 dark:text-slate-500">Web Sources</p>
+                              <div className="flex flex-wrap gap-1.5">
+                                {msg.webSources.map((ws) => (
+                                  <a
+                                    key={ws.index}
+                                    href={ws.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1 rounded-md border border-emerald-200 bg-emerald-50 px-2 py-0.5 text-[11px] text-emerald-700 hover:bg-emerald-100 dark:border-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400 dark:hover:bg-emerald-900/50"
+                                  >
+                                    <span className="font-semibold">Web {ws.index}</span>
+                                    <span className="max-w-[200px] truncate">{ws.title}</span>
+                                  </a>
+                                ))}
+                              </div>
+                            </div>
                           )}
 
                           {msg.role === 'assistant' && (
@@ -1095,11 +1097,10 @@ export default function ChatPageFeature() {
               </form>
               <div className="mx-auto mt-3 flex max-w-4xl flex-wrap items-center justify-between gap-2 text-xs text-slate-400 dark:text-slate-500">
                 <p>
-                  Using {modeConfig[mode].desc} · Powered by Claude + ChromaDB (
-                  {mode === 'rag' ? '19K+ document chunks' : mode === 'web' ? 'Brave Search' : 'Documents + Web'})
+                  Using SEC docs · Powered by Claude + ChromaDB
                 </p>
                 <p>
-                  Scope: {companyScopeLabel}
+                  Scope: {companyScopeLabel} · Time: {timeFocusLabel}
                 </p>
               </div>
             </div>

@@ -23,7 +23,7 @@ import {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
-const COMPANIES = ['Flex', 'Jabil', 'Celestica', 'Benchmark', 'Sanmina'];
+const COMPANIES = ['Flex', 'Jabil', 'Celestica', 'Benchmark', 'Sanmina', 'Plexus'];
 
 interface ExportFormat {
   id: string;

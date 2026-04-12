@@ -7,8 +7,8 @@ from typing import Optional
 from collections import defaultdict
 from statistics import mean, stdev
 
+from backend.core.config import ANOMALY_THRESHOLD, TRACKED_COMPANY_NAMES
 from backend.rag.retriever import search_documents, get_company_documents
-from backend.core.config import ANOMALY_THRESHOLD
 
 
 def extract_dollar_amounts(text: str) -> list[float]:
@@ -254,7 +254,7 @@ def get_all_anomalies() -> dict:
     """
     Detect anomalies across all tracked companies.
     """
-    companies = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+    companies = list(TRACKED_COMPANY_NAMES)
     
     results = {
         "capex_anomalies": [],

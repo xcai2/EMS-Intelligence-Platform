@@ -2,7 +2,7 @@
 Analysis API endpoints for dashboard data.
 """
 from fastapi import APIRouter, HTTPException
-from backend.core.config import COMPANIES
+from backend.core.config import COMPANIES, TRACKED_COMPANY_NAMES
 from backend.core.database import get_collection_stats, get_collection
 from backend.rag.retriever import search_documents
 
@@ -112,7 +112,7 @@ async def get_company_data_summary():
     """
     Get a summary of what data is available for each company.
     """
-    companies = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+    companies = list(TRACKED_COMPANY_NAMES)
     
     data_categories = {
         "capex": "capital expenditure CapEx million billion investment spending",

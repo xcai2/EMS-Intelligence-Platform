@@ -70,6 +70,7 @@ const COMPANY_COLORS: Record<string, string> = {
   Celestica: '#6366F1',
   Benchmark: '#F59E0B',
   Sanmina: '#EF4444',
+  Plexus: '#14B8A6',
 };
 
 const SEVERITY_COLORS: Record<string, string> = {

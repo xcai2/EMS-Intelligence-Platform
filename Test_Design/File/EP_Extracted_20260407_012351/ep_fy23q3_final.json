@@ -1,0 +1,425 @@
+{
+  "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+  "output_mode": "chunk_ready_high_fidelity",
+  "document_type": "Earnings Presentation",
+  "company": "Flex Ltd.",
+  "period": "Q3 Fiscal 2023",
+  "quarter_end": "2022-12-31",
+  "earnings_announcement": "2023-01-25",
+  "chunks": [
+    {
+      "chunk_id": "fy23q3_01_overview",
+      "section_title": "Results for Q3 Fiscal 2023 – Title Slide",
+      "page_range": [
+        1,
+        1
+      ],
+      "chunk_type": "overview",
+      "content": "Flex Ltd. presents Results for Q3 Fiscal 2023. Quarter End: December 31, 2022. Earnings Announcement: January 25, 2023.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_01_overview",
+        "section_title": "Results for Q3 Fiscal 2023 – Title Slide",
+        "page_range": [
+          1,
+          1
+        ],
+        "chunk_type": "overview"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_02_disclosure",
+      "section_title": "Risks and Non-GAAP Disclosures",
+      "page_range": [
+        2,
+        2
+      ],
+      "chunk_type": "disclosure",
+      "content": "This presentation contains forward-looking statements within the meaning of U.S. securities laws, including: statements related to future expected revenues and earnings per share. These forward-looking statements involve risks and uncertainties that could cause the actual results to differ materially from those anticipated by these forward-looking statements. Readers are cautioned not to place undue reliance on these forward-looking statements. These risks include: that we may not achieve our expected future operating results, including margins; the effects that the current and future macroeconomic environment, including inflation, rising interest rates, and currency exchange rate fluctuations, could have on our business and demand for our products; the impact of component shortages, fluctuations in the pricing or availability of raw materials, labor and energy, and logistical constraints, including their impact on our revenues and margins; uncertainties and risks relating to our ability to successfully complete a transaction for our Nextracker business, including the proposed initial public offering of our Nextracker business, including the possibility that we may not be able to consummate the transaction on the expected timeline or at all, or that we will achieve the anticipated benefits of the transaction; the possibility that we may not fully realize the projected benefits of the Anord Mardix acquisition, including our expectation that the acquisition will be accretive to our fiscal year 2023 adjusted earnings per share; geopolitical risk, including the termination and renegotiation of international trade agreements and trade policies, including the impact of tariffs and related regulatory actions; the war in Ukraine and escalating geopolitical tensions as a result of Russia's invasion of Ukraine, including the imposition of economic sanctions on Russia which could lead to disruption, instability, and volatility in global markets and negatively impact our operations and financial performance; the scope and duration of the COVID-19 pandemic and its effects on our business, results of operations and financial condition; the effects that current and future credit and market conditions could have on the liquidity and financial condition of our customers and suppliers, including any impact on their ability to meet their contractual obligations to us and our ability to pass through costs to our customers; the challenges of effectively managing our operations, including our ability to control costs and manage changes in our operations; retaining key personnel; litigation and regulatory investigations and proceedings; our compliance with legal and regulatory requirements; changes in laws, regulations, or policies that may impact our business, including those related to climate change; the possibility that benefits of the Company's restructuring actions may not materialize as expected; that the expected revenue and margins from recently launched programs may not be realized; our dependence on industries that continually produce technologically advanced products with short product life cycles; the short-term nature of our customers' commitments and rapid changes in demand may cause supply chain issues, excess and obsolete inventory, and other issues which adversely affect our operating results; our dependence on a small number of customers; our industry is extremely competitive; we may be exposed to financially troubled customers or suppliers; the success of certain of our activities depends on our ability to protect our intellectual property rights and we may be exposed to claims of infringement or breach of license agreements; a breach of our IT or physical security systems, or violation of data privacy laws, may cause us to incur significant legal and financial exposure and disrupt our operations; physical and operational risks from natural disasters, severe weather events, or climate change; our ability to achieve sustainability goals; we may be exposed to product liability and product warranty liability; and that recently proposed changes or future changes in tax laws in certain jurisdictions where we operate could materially impact our tax expense. In addition, the COVID-19 pandemic increases the likelihood and potential severity of many of the foregoing risks.\n\nAdditional information concerning these, and other risks is described under 'Risk Factors' and 'Management's Discussion and Analysis of Financial Condition and Results of Operations' in our annual report on Form 10-K for the fiscal year ended March 31, 2022 and in subsequent quarterly reports on Form 10-Q. The forward-looking statements in this presentation are based on current expectations and Flex assumes no obligation to update these forward-looking statements. Our share repurchase program does not obligate the Company to repurchase a specific number of shares and may be suspended or terminated at any time without prior notice.\n\nPlease refer to the appendix section of this presentation for reconciliation of the non-GAAP financial measures to the most directly comparable GAAP measures. If this presentation references historical non-GAAP financial measures, these measures are located on the 'Investor Relations' section of our website, www.flex.com along with the required reconciliation to the most comparable GAAP financial measures. Certain forward-looking non-GAAP financial measures are not reconciled to the most directly comparable GAAP measures as the reconciling information is not available without an unreasonable effort.\n\nThe figures presented in this presentation have been rounded. This may lead to individual values not adding up to the totals presented.\n\nThe following business segment acronyms will be used throughout this presentation:\n\nFLEX RELIABILITY SOLUTIONS:\n- Automotive: next generation mobility, autonomous, connectivity, electrification, and smart technologies.\n- Health Solutions: medical devices, medical equipment, and drug delivery.\n- Industrial: capital equipment, industrial devices, renewables, and grid edge.\n\nFLEX AGILITY SOLUTIONS:\n- Communications, Enterprise and Cloud (CEC): data infrastructure, edge infrastructure, and communications infrastructure.\n- Lifestyle: appliances, consumer packaging, floorcare, micro mobility, and audio.\n- Consumer Devices: mobile and high velocity consumer devices.\n\nNEXTRACKER",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_02_disclosure",
+        "section_title": "Risks and Non-GAAP Disclosures",
+        "page_range": [
+          2,
+          2
+        ],
+        "chunk_type": "disclosure"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_03_summary",
+      "section_title": "Executive Summary – Q3F23 Financial Performance",
+      "page_range": [
+        3,
+        4
+      ],
+      "chunk_type": "summary",
+      "content": "Business update presented by Revathi Advaithi, Chief Executive Officer.\n\nQ3F23 FINANCIAL PERFORMANCE:\n- Revenue: $7.8B\n- Adj. Operating Income: $372M\n- Adj. Net Income: $285M\n- Adj. Earnings Per Share: $0.62\n\nTHIRD QUARTER RECAP:\n- Revenue growth of 17% year-over-year\n- Returned $40 million to shareholders in the form of share repurchases\n- Publicly filed Form S-1 with the SEC for Nextracker IPO\n\nSee Appendix for GAAP to non-GAAP reconciliations.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_03_summary",
+        "section_title": "Executive Summary – Q3F23 Financial Performance",
+        "page_range": [
+          3,
+          4
+        ],
+        "chunk_type": "summary"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_04_business_update",
+      "section_title": "Fiscal Third Quarter Trends",
+      "page_range": [
+        5,
+        5
+      ],
+      "chunk_type": "business_update",
+      "content": "Fiscal third quarter trends across three key dimensions:\n\nDEMAND:\n- Reliability: robust demand in industrial and automotive, healthcare remains steady\n- Agility: strong demand across CEC, consumer-end market weakness continues\n\nSUPPLY CHAIN:\n- Reliability: larger node semis remain a gating factor; impacting growth and efficiency\n- Agility: broad improvement; not yet fully back to normal\n\nSECULAR TRENDS:\n- Reliability: EV/ADAS, Renewables, factory automation, healthcare outsourcing remain strong\n- Agility: heightened demand in cloud expansion, comms infrastructure and network security",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_04_business_update",
+        "section_title": "Fiscal Third Quarter Trends",
+        "page_range": [
+          5,
+          5
+        ],
+        "chunk_type": "business_update"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_05_strategy",
+      "section_title": "Strong FY23…Expect Continued Growth in FY24",
+      "page_range": [
+        6,
+        6
+      ],
+      "chunk_type": "strategy",
+      "content": "Revenue and Adj. Operating Margin trend (in $M):\n- FY19: $26,211 revenue, 3.3% adj. operating margin\n- FY20: $24,210 revenue, 3.7% adj. operating margin\n- FY21: $24,124 revenue, 4.3% adj. operating margin\n- FY22: $26,041 revenue, 4.5% adj. operating margin\n- FY23E: $30,100 revenue (mid-point), 4.7% adj. operating margin\n\nNote: FY23E revenue is based on the mid-point of the FY23 guidance, and adjusted operating margin does not include the impact of approximately 0.4% for stock-based compensation, and 0.3% for intangible amortization when compared to GAAP operating margin.\n\nCaption: Improved operations and diverse portfolio supporting strategic growth\n\nOpportunities throughout FY24:\n- Core portfolio aligned to long-term growth trends and higher-value business\n- Favorable secular growth drivers including renewables, next gen mobility, and cloud expansion\n- Improving Reliability adjusted operating margins\n- Inventory normalization / cash generation\n\nChallenges:\n- Near-term macro pressures\n- Risk of slow, larger-node semiconductor recovery\n- Difficult revenue comp from atypical inflation recoveries",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_05_strategy",
+        "section_title": "Strong FY23…Expect Continued Growth in FY24",
+        "page_range": [
+          6,
+          6
+        ],
+        "chunk_type": "strategy"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_06_strategy",
+      "section_title": "Revisiting Investor Day 2022: Long-Term Targets Intact",
+      "page_range": [
+        7,
+        7
+      ],
+      "chunk_type": "strategy",
+      "content": "Flex reaffirms its Investor Day 2022 long-term financial framework for Core Flex (excluding Nextracker):\n\nNew long-term financial framework – Core Flex:\n- High single-digit growth revenue\n- 5%+ adj. operating margins\n- Mid-teens growth adj. earnings per share\n- ~80% adj. free cash flow conversion\n\nAdj. EPS Growth chart shows:\n- FY22E: $1.73 (Core Flex)\n- FY25E: $2.65 (Core Flex), with mid-teens growth trajectory\n- Nextracker contribution shown incrementally above Core Flex in FY25E\n\nBased on Core Flex, excluding Nextracker. See Risks and Non-GAAP Disclosures for additional information regarding non-GAAP measures.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_06_strategy",
+        "section_title": "Revisiting Investor Day 2022: Long-Term Targets Intact",
+        "page_range": [
+          7,
+          7
+        ],
+        "chunk_type": "strategy"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_07_financials",
+      "section_title": "Key Financials",
+      "page_range": [
+        8,
+        9
+      ],
+      "chunk_type": "financials",
+      "content": "Financial results presented by Paul Lundstrom, Chief Financial Officer.\n\nKey Financials for Q3F23 (quarter ended December 31, 2022) vs. prior periods:\n\nRevenue ($M):\n- Q2F22: $6,229\n- Q2F23: $7,766\n- Q3F22: $6,619\n- Q3F23: $7,756 (+17% year-over-year)\n\nAdj. Gross Profit ($M) and Adj. Gross Margin:\n- Q2F22: $481, 7.7%\n- Q2F23: $599, 7.7%\n- Q3F22: $498, 7.5%\n- Q3F23: $595, 7.7%\n\nAdj. Operating Income ($M) and Adj. Operating Margin:\n- Q2F22: $286, 4.6%\n- Q2F23: $375, 4.8%\n- Q3F22: $298, 4.5%\n- Q3F23: $372, 4.8%\n\nAdj. Earnings Per Share:\n- Q2F22: $0.48\n- Q2F23: $0.63\n- Q3F22: $0.50\n- Q3F23: $0.62\n\nSee Appendix for GAAP to non-GAAP reconciliations.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_07_financials",
+        "section_title": "Key Financials",
+        "page_range": [
+          8,
+          9
+        ],
+        "chunk_type": "financials"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_08_segment",
+      "section_title": "Segment Performance – Q3F23",
+      "page_range": [
+        10,
+        10
+      ],
+      "chunk_type": "segment",
+      "content": "Segment Performance for Q3F23 (quarter ended December 31, 2022):\n\nRELIABILITY:\n- Revenue: $3.2B, Y/Y Growth: 19%\n- Adj. Operating Income: $143M, Y/Y Growth: 6%\n- Adj. Operating Margin: 4.4%, Y/Y Growth: (55bps)\n- Overview: Strong demand across the portfolio; semiconductor constraints and operational investments continue\n\nAGILITY:\n- Revenue: $4.0B, Y/Y Growth: 13%\n- Adj. Operating Income: $181M, Y/Y Growth: 11%\n- Adj. Operating Margin: 4.5%, Y/Y Growth: (5bps)\n- Overview: CEC again drove strong segment growth; Lifestyle share gains offset macro weakness\n\nNEXTRACKER:\n- Revenue: $0.5B, Y/Y Growth: 53%\n- Adj. Operating Income: $60M, Y/Y Growth: 225%\n- Adj. Operating Margin: 11.7%, Y/Y Growth: 620bps\n- Overview: Growth accelerated again this quarter, margins continue to recover\n\nCORPORATE SERVICES AND OTHER:\n- Revenue: --\n- Adj. Operating Income: ($12M)\n- Adj. Operating Margin: --\n\nTOTAL:\n- Revenue: $7.8B, Y/Y Growth: 17%\n- Adj. Operating Income: $372M, Y/Y Growth: 25%\n- Adj. Operating Margin: 4.8%, Y/Y Growth: 30bps\n\nNotes:\nA. Amounts may not sum due to immaterial intersegment eliminations not presented separately.\nB. Corporate Services and Other includes centralized administrative costs that are not included in the assessment of the performance of each of the identified segments.\nSee Appendix for GAAP to non-GAAP reconciliations.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_08_segment",
+        "section_title": "Segment Performance – Q3F23",
+        "page_range": [
+          10,
+          10
+        ],
+        "chunk_type": "segment"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_09_cash_flow",
+      "section_title": "Cash Flow Overview",
+      "page_range": [
+        11,
+        11
+      ],
+      "chunk_type": "cash_flow",
+      "content": "Cash Flow Overview for Q3F23 and Fiscal Year 2023 YTD (nine months ended December 31, 2022):\n\n($M)                                              Q3F23    F23 YTD\nGAAP Net Income                                   $237     $670\nDepreciation, Amortization and other\n  Impairment Charges                               124      371\nChange in Working Capital and other, net            (2)    (541)\nOperating Cash Flow                                359      500\nCapital Expenditures, net (A)                     (157)    (435)\nAdjusted Free Cash Flow (B)                        202       65\nPayments for Share Repurchases                     (40)    (293)\nOther Investing, Financing, and FX, net            (50)    (171)\nNet Change in Cash and Cash Equivalents           $112    ($399)\n\nCapital Expenditures, net ($M) by quarter:\n- Q3F22: $119\n- Q4F22: $108\n- Q1F23: $91\n- Q2F23: $187\n- Q3F23: $157\n\nAdj. Free Cash Flow ($M) by quarter:\n- Q3F22: $31\n- Q4F22: $252\n- Q1F23: -$53\n- Q2F23: -$84\n- Q3F23: $202\n\nNotes:\nA. Capital Expenditures, net is calculated as purchases of property and equipment minus proceeds from the disposition of property and equipment.\nB. Amounts may not sum due to rounding.\nSee Appendix for GAAP to non-GAAP reconciliations.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_09_cash_flow",
+        "section_title": "Cash Flow Overview",
+        "page_range": [
+          11,
+          11
+        ],
+        "chunk_type": "cash_flow"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_10_outlook",
+      "section_title": "Q4 FY23 Segment Outlook",
+      "page_range": [
+        12,
+        12
+      ],
+      "chunk_type": "outlook",
+      "content": "Q4 FY23 Segment Outlook:\n\nFLEX RELIABILITY SOLUTIONS:\n\nAutomotive:\n- Next-Gen Mobility: EV and compute growth accelerating, strong bookings\n- Semi shortages expected to continue\n\nHealth Solutions:\n- Continued capital spending shows industry resilience\n- Large medical device program ramps continue\n\nIndustrial:\n- Broad-based strength across the portfolio\n- Material tightness remains a limiting factor\n- Secular trends, such as renewables and automation remain intact\n\nFLEX AGILITY SOLUTIONS:\n\nCEC:\n- Demand across Cloud and Comms remains robust\n- Strong growth continues at a more moderate pace\n\nLifestyle:\n- Consumer product end market remains soft\n\nConsumer Devices:\n- End market weakness persists; remains in-line with expectations\n\nNEXTRACKER:\n- Record backlog continues to grow\n- Panel availability remains an industry-wide headwind",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_10_outlook",
+        "section_title": "Q4 FY23 Segment Outlook",
+        "page_range": [
+          12,
+          12
+        ],
+        "chunk_type": "outlook"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_11_guidance_q4",
+      "section_title": "Q4 FY23 Financial Guidance",
+      "page_range": [
+        13,
+        13
+      ],
+      "chunk_type": "guidance",
+      "content": "Q4 FY23 Financial Guidance:\n\nRevenue: $7.0B - $7.4B\n\nAdj. Operating Income (A): $315M - $345M\n  GAAP Operating Income: $268M - $298M\n\nAdj. Earnings per Share (B): $0.48 - $0.54\n  GAAP EPS: $0.37 - $0.43\n\nInterest Expense: ~$60M\nAdj. Income Tax Rate: ~14%\nWeighted Avg. Shares Outstanding: ~460M\n\nFootnotes:\nA. Adjusted operating income excludes approximately $26 million for stock-based compensation, and $21 million for intangible amortization from GAAP operating income.\nB. Adjusted earnings per share excludes $0.06 for stock-based compensation expense, $0.04 for net intangible amortization, and $0.01 for Nextracker LLC series A redeemable preferred units dividends payable in kind included in GAAP earnings per share.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_11_guidance_q4",
+        "section_title": "Q4 FY23 Financial Guidance",
+        "page_range": [
+          13,
+          13
+        ],
+        "chunk_type": "guidance"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_12_guidance_fy23",
+      "section_title": "FY23 Financial Guidance",
+      "page_range": [
+        14,
+        14
+      ],
+      "chunk_type": "guidance",
+      "content": "FY23 Full-Year Financial Guidance:\n\nRevenue: $29.9B - $30.3B\n\nAdj. Operating Margin (A): ~4.7%\n\nAdj. Earnings per Share (B): $2.27 - $2.33\n  GAAP EPS: $1.78 - $1.84\n\nFootnotes:\nA. Adjusted operating margin does not include the impact of approximately 0.4% for stock-based compensation, and 0.3% for intangible amortization when compared to GAAP operating margin.\nB. Adjusted earnings per share excludes $0.23 for stock-based compensation expense, $0.15 for net intangible amortization, $0.06 for other charges, and $0.05 for Nextracker LLC series A redeemable preferred units dividends payable in kind, included in GAAP earnings per share.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_12_guidance_fy23",
+        "section_title": "FY23 Financial Guidance",
+        "page_range": [
+          14,
+          14
+        ],
+        "chunk_type": "guidance"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_13_strategy",
+      "section_title": "Executing Toward Our Targets – Key Takeaways",
+      "page_range": [
+        15,
+        15
+      ],
+      "chunk_type": "strategy",
+      "content": "Flex is continuing to deliver long-term growth.\n\nExecuting toward our targets:\n\n1. Resilient portfolio – supporting revenue growth and driving continued margin expansion\n\n2. Balanced investments – to support growth opportunities\n\n3. Leveraging operational initiatives – to drive efficiency and improve productivity",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_13_strategy",
+        "section_title": "Executing Toward Our Targets – Key Takeaways",
+        "page_range": [
+          15,
+          15
+        ],
+        "chunk_type": "strategy"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_14_appendix_operating_income",
+      "section_title": "Appendix: Reconciliation of GAAP to Non-GAAP Operating Income",
+      "page_range": [
+        17,
+        18
+      ],
+      "chunk_type": "appendix_table",
+      "content": "Appendix: Reconciliation of GAAP to Non-GAAP Operating Income Measures\n($ in Millions)\n\n                                    Quarter-ended     Quarter-ended      Quarter-ended     Quarter-ended\n                                    Dec 31, 2022      Sep 30, 2022       Dec 31, 2021      Oct 01, 2021\nGAAP operating income               $321              $325               $251              $237\n  Intangible Amortization             19                21                 15                15\n  Stock-based compensation expense    27                27                 25                24\n  Restructuring charges                5                 -                  2                 9\n  Legal and other                      -                 2                  5                 1\nNon-GAAP operating income           $372              $375               $298              $286\n\nGAAP operating margin               4.1%              4.2%               3.8%              3.8%\nNon-GAAP operating margin**         4.8%              4.8%               4.5%              4.6%\n\n**We calculate our Non-GAAP operating margin as non-GAAP operating income divided by revenue for the respective periods.\n\nFor more details on the GAAP to Non-GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_14_appendix_operating_income",
+        "section_title": "Appendix: Reconciliation of GAAP to Non-GAAP Operating Income",
+        "page_range": [
+          17,
+          18
+        ],
+        "chunk_type": "appendix_table"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_15_appendix_gross_profit",
+      "section_title": "Appendix: Reconciliation of GAAP to Non-GAAP Gross Profit",
+      "page_range": [
+        19,
+        19
+      ],
+      "chunk_type": "appendix_table",
+      "content": "Appendix: Reconciliation of GAAP to Non-GAAP Gross Profit Measures\n($ in Millions)*\n\n                                    Quarter-ended          Quarter-ended          Quarter-ended          Quarter-ended\n                                    Dec 31, 2022           Sep 30, 2022           Dec 31, 2021           Oct 01, 2021\n                                    $        % of rev      $        % of rev      $        % of rev      $        % of rev\nGAAP gross profit                   $583     7.5%          $591     7.6%          $491     7.4%          $465     7.5%\n  Stock-based compensation expense     7                      7                      6                      6\n  Restructuring charges                5                      -                      2                      9\n  Legal and Other                      -                      2                     (1)                     -\nNon-GAAP gross profit               $595     7.7%          $599     7.7%          $498     7.5%          $481     7.7%\n\n*Amounts may not sum due to rounding.\n\nFor more details on the GAAP to Non-GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_15_appendix_gross_profit",
+        "section_title": "Appendix: Reconciliation of GAAP to Non-GAAP Gross Profit",
+        "page_range": [
+          19,
+          19
+        ],
+        "chunk_type": "appendix_table"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_16_appendix_net_income_eps",
+      "section_title": "Appendix: Reconciliation of GAAP to Non-GAAP Net Income and EPS",
+      "page_range": [
+        20,
+        20
+      ],
+      "chunk_type": "appendix_table",
+      "content": "Appendix: Reconciliation of GAAP to Non-GAAP Net Income and Earnings Per Share\n($ in Millions, except for EPS)*\n\n                                                      Quarter-ended    Quarter-ended    Quarter-ended    Quarter-ended\n                                                      Dec 31, 2022     Sep 30, 2022     Dec 31, 2021     Oct 01, 2021\nGAAP net income attributable to Flex Ltd.             $230             $232             $227             $336\n  Intangible amortization                               19               21               15               15\n  Stock-based compensation expense                      27               27               25               24\n  Restructuring charges                                  5                -                2                9\n  Legal and other                                        -                2                5                1\n  Interest and other, net                                -                3              (18)            (152)\n  Payable-in-kind dividend for subsidiary's\n    redeemable preferred units                           7                6                -                -\n  Adjustments for taxes                                 (3)              (2)             (17)               1\nNon-GAAP net income                                   $285             $289             $238             $233\n\nDiluted earnings per share:\n  GAAP                                                $0.50            $0.50            $0.48            $0.69\n  Non-GAAP                                            $0.62            $0.63            $0.50            $0.48\n\nDiluted shares used in computing per share amounts      459              460              474              487\n\n*Amounts may not sum due to rounding.\n\nFor more details on the GAAP to Non-GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_16_appendix_net_income_eps",
+        "section_title": "Appendix: Reconciliation of GAAP to Non-GAAP Net Income and EPS",
+        "page_range": [
+          20,
+          20
+        ],
+        "chunk_type": "appendix_table"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_17_appendix_segment_income",
+      "section_title": "Appendix: Reconciliation of GAAP to Non-GAAP Segment Operating Income",
+      "page_range": [
+        21,
+        21
+      ],
+      "chunk_type": "appendix_table",
+      "content": "Appendix: Reconciliation of GAAP to Non-GAAP Segment Operating Income\nQuarter-ended December 31, 2022\n($ in Millions)\n\nSegment operating income:\n  Flex Agility Solutions:       $181\n  Flex Reliability Solutions:    143\n  Nextracker:                     60\n  Corporate and Other*:          (12)\nTotal segment operating income: $372\n\nOperating margin**:\n  Flex Agility Solutions:       4.5%\n  Flex Reliability Solutions:   4.4%\n  Nextracker:                  11.7%\n\nReconciliation of segment operating income to GAAP operating income:\n  Total segment operating income:       $372\n  Intangible Amortization:               19\n  Stock-based compensation expense:      27\n  Restructuring charges:                  5\n  Operating income (GAAP):             $321\n\n*Corporate and Other includes centralized administrative costs that are not included in the assessment of the performance of each of the identified segments.\n**We calculate our segment operating margin as segment income divided by revenue for respective periods.\n\nFor more details on the GAAP to Non-GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_17_appendix_segment_income",
+        "section_title": "Appendix: Reconciliation of GAAP to Non-GAAP Segment Operating Income",
+        "page_range": [
+          21,
+          21
+        ],
+        "chunk_type": "appendix_table"
+      }
+    },
+    {
+      "chunk_id": "fy23q3_18_appendix_free_cash_flow",
+      "section_title": "Appendix: Reconciliation of GAAP to Non-GAAP Free Cash Flow",
+      "page_range": [
+        22,
+        22
+      ],
+      "chunk_type": "appendix_table",
+      "content": "Appendix: Reconciliation of GAAP to Non-GAAP Adjusted Free Cash Flow\n($ in Millions)\n\nQuarterly data:\n                                            Quarter-ended    Quarter-ended    Quarter-ended    Quarter-ended    Quarter-ended\n                                            Dec 31, 2022     Sep 30, 2022     Jul 01, 2022     Mar 31, 2022     Dec 31, 2021\nNet cash provided by operating activities  $359             $103             $38              $360             $150\nNet capital expenditures                   (157)            (187)            (91)             (108)            (119)\nAdjusted free cash flow                    $202             $(84)            $(53)            $252             $31\n\nNine-months ended December 31, 2022:\nNet cash provided by operating activities:  $500\nNet capital expenditures:                   (435)\nAdjusted free cash flow:                     $65\n\nAdjusted free cash flow is calculated as operating cash flow for the quarter less net capital expenditures. Adjusted free cash flow is a non-GAAP financial measure and may not be defined and calculated by other companies in the same manner.\n\nFor more details on the GAAP to Non-GAAP adjustments for current and historical periods, please refer to the Investor Relations section of our website which includes press releases and summary financials of the respective periods.",
+      "metadata": {
+        "source_file": "Flex_Q3FY23_Earnings_Presentation.pdf",
+        "document_type": "Earnings Presentation",
+        "company": "Flex Ltd.",
+        "period": "Q3 Fiscal 2023",
+        "chunk_id": "fy23q3_18_appendix_free_cash_flow",
+        "section_title": "Appendix: Reconciliation of GAAP to Non-GAAP Free Cash Flow",
+        "page_range": [
+          22,
+          22
+        ],
+        "chunk_type": "appendix_table"
+      }
+    }
+  ]
+}

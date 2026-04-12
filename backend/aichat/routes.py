@@ -12,7 +12,12 @@ from fastapi import APIRouter, HTTPException
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from backend.rag.retriever import search_documents, search_cross_company
+from backend.rag.retriever import (
+    search_documents,
+    search_cross_company,
+    search_multi_company_by_periods,
+    _extract_quarter_range,
+)
 from backend.rag.generator import generate_response_streaming
 from backend.rag.assembled_retriever import get_assembled_retriever
 from backend.aichat.memory import (
@@ -23,9 +28,9 @@ from backend.aichat.memory import (
     get_all_sessions,
     cleanup_expired_sessions,
 )
-from backend.rag.web_search import search_web, format_web_results_for_context
+from backend.rag.web_search import search_web, format_web_results_for_context, enrich_web_results
 from backend.core.config import COMPANIES
-from backend.core.config import OPENAI_API_KEY, ANTHROPIC_API_KEY, LLM_MODEL, ANTHROPIC_MODEL
+from backend.core.config import OPENAI_API_KEY, ANTHROPIC_API_KEY, LLM_MODEL, ANTHROPIC_MODEL, GOOGLE_API_KEY, GEMINI_MODEL
 from backend.core.config import DATA_DIR
 from backend.core.llm_client import llm_complete
 
@@ -62,7 +67,7 @@ class ChatRequest(BaseModel):
     company_filter: Optional[str] = None
     retrieval_strategy: str = "auto"  # For assembled mode: "auto" | "vector" | "bm25" | "hybrid" | "table"
     use_reranking: bool = True
-    answer_provider: str = "openai"  # "openai" | "claude"
+    answer_provider: str = "openai"  # "openai" | "claude" | "gemini"
     fallback_to_general_llm: bool = False
     strict_grounding: bool = True
     hybrid_multi_output: bool = True
@@ -104,10 +109,10 @@ def _fallback_enabled(request: ChatRequest) -> bool:
     """
     Product rule:
     - Fallback only allowed in Hybrid mode
-    - User must explicitly enable provider (openai/claude)
+    - User must explicitly enable provider (openai/claude/gemini)
     """
     provider = _provider_value(request.answer_provider)
-    return request.mode == "hybrid" and request.fallback_to_general_llm and provider in {"openai", "claude"}
+    return request.mode == "hybrid" and request.fallback_to_general_llm and provider in {"openai", "claude", "gemini"}
 
 
 _TABLE_PATTERNS = re.compile(
@@ -121,6 +126,38 @@ _TABLE_PATTERNS = re.compile(
 def is_table_query(query: str) -> bool:
     """Return True when the user explicitly asks for a table layout."""
     return bool(_TABLE_PATTERNS.search(query))
+
+
+def _inject_web_links(text: str, web_results: list[dict]) -> str:
+    """Replace 'Web N' references in LLM output with markdown hyperlinks."""
+    url_map = {i + 1: r.get("url", "") for i, r in enumerate(web_results)}
+
+    def _replace(m):
+        idx = int(m.group(1))
+        url = url_map.get(idx)
+        if not url:
+            return m.group(0)
+        return f"[Web {idx}]({url})"
+
+    text = re.sub(r"Web\s+(\d+)", _replace, text)
+    # Clean up leftover parens: ([Web 1](url)) -> [Web 1](url)
+    text = re.sub(r"\((\[Web \d+\]\([^)]+\))\)", r"\1", text)
+    return text
+
+
+def _clean_query_for_web_search(query: str) -> str:
+    """
+    Strip prompt instructions and constraints from the query,
+    leaving only the user's actual question for web search.
+    """
+    text = query
+    marker = re.search(r"(?i)^structure every response.+?\n\n", text, re.DOTALL)
+    if marker:
+        text = text[marker.end():]
+    text = re.split(r"\n\nConstraints:", text, maxsplit=1)[0]
+    text = re.sub(r"(?i)focus on these companies only:[^\n]*", "", text)
+    text = re.sub(r"(?i)prioritize\s+FY\d{4}\.", "", text)
+    return text.strip()
 
 
 def _extract_query_terms(query: str) -> list[str]:
@@ -161,7 +198,7 @@ def _has_sufficient_document_evidence(query: str, docs: list[dict], min_docs: in
                 (d.get("source") or "")
             ).lower()
             matches = sum(1 for t in query_terms[:12] if t in text)
-            if matches >= 2:
+            if matches >= 1:
                 overlap_hits += 1
         has_overlap = overlap_hits >= 1
     else:
@@ -355,10 +392,36 @@ def _general_fallback_answer(
             return None
         return None
 
-    # Preferred provider, then automatic fallback to the other
-    provider_order = ["openai", "claude"] if selected == "openai" else ["claude", "openai"]
+    def _try_gemini() -> tuple[str, str] | None:
+        if not GOOGLE_API_KEY:
+            return None
+        try:
+            import google.generativeai as genai
+            genai.configure(api_key=GOOGLE_API_KEY)
+            model = genai.GenerativeModel(
+                model_name=GEMINI_MODEL,
+                system_instruction=system,
+            )
+            resp = model.generate_content(
+                [{"role": "user", "parts": [{"text": query}]}],
+                generation_config={"max_output_tokens": 1200},
+            )
+            text = (resp.text or "").strip()
+            if text:
+                return text, "gemini"
+        except Exception:
+            return None
+        return None
+
+    # Preferred provider first, then fall back to the others
+    all_providers = ["openai", "claude", "gemini"]
+    provider_order = [selected] + [p for p in all_providers if p != selected]
+    tryers = {"openai": _try_openai, "claude": _try_claude, "gemini": _try_gemini}
     for p in provider_order:
-        result = _try_openai() if p == "openai" else _try_claude()
+        fn = tryers.get(p)
+        if not fn:
+            continue
+        result = fn()
         if result:
             return result
 
@@ -400,6 +463,275 @@ def _parse_company_scope(raw_filter: Optional[str]) -> list[str]:
             seen.add(canonical)
             scoped.append(canonical)
     return scoped
+
+
+def _get_available_et_periods(company: str, n_recent: int) -> list[tuple[str, str]]:
+    """
+    Query ChromaDB to find the N most recent (fiscal_year, quarter) pairs that have
+    Earnings Transcript documents for the given company.
+    Returns periods sorted most-recent-first.
+    """
+    from backend.core.database import get_company_collection, has_company_collections, get_collection
+
+    try:
+        if has_company_collections() and company:
+            col = get_company_collection(company)
+        else:
+            col = get_collection()
+        if col.count() == 0:
+            return []
+        results = col.get(where={"filing_type": "Earnings Transcript"}, limit=5000)
+        metas = results.get("metadatas", [])
+    except Exception:
+        return []
+
+    # Collect unique (fy, q) pairs with data
+    seen: set = set()
+    for m in metas:
+        fy = m.get("fiscal_year", "")
+        q = m.get("quarter", "")
+        if fy and q and fy not in ("Unknown", ""):
+            seen.add((fy, q))
+
+    # Sort: FY descending, then Q descending within each FY
+    def sort_key(p):
+        fy_str, q_str = p
+        # Extract year number from "FY26" → 26
+        try:
+            fy_num = int(fy_str.replace("FY", ""))
+        except ValueError:
+            fy_num = 0
+        try:
+            q_num = int(q_str.replace("Q", ""))
+        except ValueError:
+            q_num = 0
+        return (fy_num, q_num)
+
+    sorted_periods = sorted(seen, key=sort_key, reverse=True)
+    return sorted_periods[:n_recent]
+
+
+def _search_historical_docs(
+    query: str,
+    scope: list[str],
+    n_quarters: int,
+    use_reranking: bool,
+) -> list[dict]:
+    """
+    For historical (last N quarters) queries: retrieve docs per target quarter directly
+    from ChromaDB with fiscal_year+quarter filters. Uses actual Earnings Transcript
+    quarters in the DB (most recent N), not computed fiscal calendar quarters.
+    """
+    from backend.core.database import get_company_collection, embed_text, has_company_collections, get_collection
+
+    per_quarter_n = 8  # docs per quarter
+    merged: list[dict] = []
+    seen: set = set()
+
+    companies = scope if scope else []
+
+    for company in (companies or [None]):
+        # Find the N most recent quarters with actual Earnings Transcript data
+        target_periods = _get_available_et_periods(company or "", n_quarters)
+        if not target_periods:
+            continue
+
+        try:
+            if has_company_collections() and company:
+                col = get_company_collection(company)
+            else:
+                col = get_collection()
+            if col.count() == 0:
+                continue
+
+            query_embedding = embed_text(query)
+
+            for fy, q in target_periods:
+                where_filter = {"$and": [{"fiscal_year": fy}, {"quarter": q}]}
+                try:
+                    results = col.query(
+                        query_embeddings=[query_embedding],
+                        n_results=min(per_quarter_n, col.count()),
+                        where=where_filter,
+                        include=["documents", "metadatas", "distances"],
+                    )
+                except Exception:
+                    continue
+
+                if not results or not results["documents"] or not results["documents"][0]:
+                    continue
+
+                for doc_text, metadata, distance in zip(
+                    results["documents"][0],
+                    results["metadatas"][0],
+                    results["distances"][0],
+                ):
+                    key = (
+                        metadata.get("company", company or ""),
+                        metadata.get("source_file", metadata.get("source", "")),
+                        metadata.get("page_num", 0),
+                        doc_text[:120],
+                    )
+                    if key not in seen:
+                        seen.add(key)
+                        merged.append({
+                            "content": doc_text,
+                            "company": metadata.get("company", company or ""),
+                            "source": metadata.get("source_file", metadata.get("source", "")),
+                            "filing_type": metadata.get("filing_type", ""),
+                            "fiscal_year": metadata.get("fiscal_year", fy),
+                            "quarter": metadata.get("quarter", q),
+                            "similarity": round(1 - distance, 4),
+                            "section_header": metadata.get("section_header", ""),
+                            "page_num": metadata.get("page_num", 0),
+                        })
+        except Exception:
+            continue
+
+    merged.sort(key=lambda x: float(x.get("similarity", 0) or 0), reverse=True)
+    return merged
+
+
+def _extract_calendar_year(query: str) -> Optional[int]:
+    """Detect a calendar-year reference like 'in 2025' / 'during 2024' / 'throughout 2023'.
+    Excludes 'FY2025' / 'fiscal 2025' which refer to a fiscal year, not calendar."""
+    q = query.lower()
+    # Reject FY forms
+    if re.search(r"\bfy\s*\d{2,4}\b", q) or re.search(r"\bfiscal\s+(?:year\s+)?\d{2,4}\b", q):
+        return None
+    m = re.search(r"\b(?:in|during|throughout|for|across|over)\s+(20\d{2})\b", q)
+    if m:
+        return int(m.group(1))
+    return None
+
+
+def _calendar_year_to_fiscal_periods(calendar_year: int, company: str) -> list[tuple[str, str]]:
+    """Return list of (fiscal_year_label, quarter_label) whose calendar months overlap
+    with the given calendar year for the company. Uses COMPANY_FY_START from retriever."""
+    from backend.rag.retriever import COMPANY_FY_START
+    fy_start_month = COMPANY_FY_START.get(company, 1)
+    periods: list[tuple[str, str]] = []
+    # Check fiscal years that could overlap: the FY whose end falls in calendar_year,
+    # plus the one whose start falls in calendar_year. Walk a generous range.
+    for fy_actual in range(calendar_year - 1, calendar_year + 2):
+        # FY starts in month fy_start_month of fy_actual (if fy_start_month==1)
+        # or (fy_actual - 1) if fy_start_month > 1? Convention varies. We use:
+        #   FY label year = actual calendar year the fiscal year ENDS in for most EMS companies,
+        # but Jabil labels FY by the year it starts (FY2025 = Sept 2024 - Aug 2025 per user note above).
+        # Safer: for each candidate fiscal period, compute its calendar (year, month) range
+        # directly from fy_start_month and the FY-label convention used in the DB.
+        # The DB stores fiscal_year like "FY25". For Jabil: FY25 Q1 = Sept 2024. For Flex: FY25 Q1 = Apr 2024.
+        # So: FY_label_year (2 digits) = 2000 + yy; FY Q1 starts month fy_start_month of year:
+        #   (fy_label_year - 1) if fy_start_month > 1 else fy_label_year.
+        fy_label_year = fy_actual
+        q1_start_cal_year = (fy_label_year - 1) if fy_start_month > 1 else fy_label_year
+        for qi, q_label in enumerate(["Q1", "Q2", "Q3", "Q4"], start=0):
+            start_month_idx = fy_start_month + qi * 3
+            start_year = q1_start_cal_year + (start_month_idx - 1) // 12
+            start_month = ((start_month_idx - 1) % 12) + 1
+            # End month (inclusive) = start + 2
+            end_month_idx = start_month_idx + 2
+            end_year = q1_start_cal_year + (end_month_idx - 1) // 12
+            end_month = ((end_month_idx - 1) % 12) + 1
+            # Overlap with calendar_year: any month in [start..end] that is in calendar_year
+            overlaps = False
+            cur_y, cur_m = start_year, start_month
+            for _ in range(3):
+                if cur_y == calendar_year:
+                    overlaps = True
+                    break
+                cur_m += 1
+                if cur_m > 12:
+                    cur_m = 1
+                    cur_y += 1
+            if overlaps:
+                fy_label = f"FY{fy_label_year % 100:02d}"
+                periods.append((fy_label, q_label))
+    return periods
+
+
+def _search_historical_docs_by_periods(
+    query: str,
+    company: str,
+    periods: list[tuple[str, str]],
+    per_quarter_n: int = 8,
+) -> list[dict]:
+    """Retrieve docs for an explicit list of (fy, q) periods for a single company."""
+    from backend.core.database import get_company_collection, embed_text, has_company_collections, get_collection
+    merged: list[dict] = []
+    seen: set = set()
+    try:
+        col = get_company_collection(company) if has_company_collections() else get_collection()
+        if col.count() == 0:
+            return []
+        query_embedding = embed_text(query)
+    except Exception:
+        return []
+    for fy, q in periods:
+        try:
+            results = col.query(
+                query_embeddings=[query_embedding],
+                n_results=min(per_quarter_n, col.count()),
+                where={"$and": [{"fiscal_year": fy}, {"quarter": q}]},
+                include=["documents", "metadatas", "distances"],
+            )
+        except Exception:
+            continue
+        if not results or not results["documents"] or not results["documents"][0]:
+            continue
+        for doc_text, metadata, distance in zip(
+            results["documents"][0], results["metadatas"][0], results["distances"][0]
+        ):
+            key = (
+                metadata.get("source_file", metadata.get("source", "")),
+                metadata.get("page_num", 0),
+                doc_text[:120],
+            )
+            if key in seen:
+                continue
+            seen.add(key)
+            merged.append({
+                "content": doc_text,
+                "company": metadata.get("company", company),
+                "source": metadata.get("source_file", metadata.get("source", "")),
+                "filing_type": metadata.get("filing_type", ""),
+                "fiscal_year": metadata.get("fiscal_year", fy),
+                "quarter": metadata.get("quarter", q),
+                "similarity": round(1 - distance, 4),
+                "section_header": metadata.get("section_header", ""),
+                "page_num": metadata.get("page_num", 0),
+            })
+    merged.sort(key=lambda x: float(x.get("similarity", 0) or 0), reverse=True)
+    return merged
+
+
+def _build_calendar_year_note_doc(company: str, calendar_year: int, periods: list[tuple[str, str]]) -> dict:
+    """Build a synthetic doc injected at the top of the context warning the LLM
+    to restrict coverage to the given fiscal periods."""
+    if periods:
+        period_str = ", ".join(f"{fy} {q}" for fy, q in periods)
+        body = (
+            f"[CALENDAR YEAR NOTE] The user asked about CALENDAR {calendar_year}. "
+            f"{company}'s fiscal quarters that overlap with calendar {calendar_year} and have data are: "
+            f"{period_str}. Cover ONLY these quarters in your response. Do not include other quarters, "
+            f"and make the Overview's quarter count and range string exactly describe this set."
+        )
+    else:
+        body = (
+            f"[CALENDAR YEAR NOTE] The user asked about CALENDAR {calendar_year}, but no "
+            f"{company} fiscal quarters with data overlap that calendar year."
+        )
+    return {
+        "content": body,
+        "company": company,
+        "source": "calendar_year_note",
+        "filing_type": "Note",
+        "fiscal_year": "",
+        "quarter": "",
+        "similarity": 1.0,
+        "section_header": "CALENDAR YEAR NOTE",
+        "page_num": 0,
+    }
 
 
 def _search_docs_for_scope(
@@ -477,6 +809,27 @@ def _is_comparison_query(query: str, companies: list[str]) -> bool:
     return any(trigger in q_lower for trigger in COMPARISON_TRIGGERS)
 
 
+def _should_force_historical_format(query: str) -> bool:
+    """Heuristic fallback for historical questions when query-type detection is inconsistent."""
+    q = (query or "").lower()
+
+    # Explicit multi-quarter references like "FY2025 Q2 and Q3", "Q1-Q3", "Q2 to Q4".
+    if re.search(r"\bfy\d{2,4}\s*q[1-4]\b", q) and re.search(r"\b(and|to|through|-)\b|,", q):
+        return True
+    if re.search(r"\bq[1-4]\s*(?:and|to|through|-|,)\s*q[1-4]\b", q):
+        return True
+
+    # Relative quarter windows.
+    if re.search(r"\b(last|past|previous|prior|recent)\s+(?:\w+|\d+)\s+quarters?\b", q):
+        return True
+
+    # Historical stance phrasing.
+    if any(k in q for k in ["what did", "how has", "over time", "trend", "shift", "changed"]):
+        return True
+
+    return False
+
+
 def _build_context(docs: list[dict]) -> str:
     """Format retrieved documents into a context string for the LLM."""
     if not docs:
@@ -494,6 +847,82 @@ def _build_context(docs: list[dict]) -> str:
             content = content[:3000] + "..."
         parts.append(f"{header}\n{content}")
     return "\n\n---\n\n".join(parts)
+
+
+def _format_historical_response(result: dict) -> str:
+    """Render historical structured output with clear section headings and line breaks."""
+    sections: list[str] = []
+
+    opening = (result.get("opening") or "").strip()
+    if opening:
+        sections.append(f"**Overview**\n{opening}")
+
+    for idx, q in enumerate(result.get("quarters", []) or [], 1):
+        quarter = (q.get("quarter") or f"Quarter {idx}").strip()
+        date_label = (q.get("date") or "").strip()
+        title = f"**{idx}. {quarter}**"
+        if date_label:
+            title += f" ({date_label})"
+        sections.append(title)
+
+        tone_label = (q.get("tone_label") or "").strip()
+        summary = (q.get("summary") or "").strip()
+        if tone_label and summary:
+            sections.append(f"**{tone_label}**\n{summary}")
+        elif summary:
+            sections.append(summary)
+        elif tone_label:
+            sections.append(f"**{tone_label}**")
+
+        bullet_points = [bp for bp in (q.get("bullet_points") or []) if str(bp).strip()]
+        if bullet_points:
+            sections.append("**Key Points**\n\n" + "\n".join(f"- {bp}" for bp in bullet_points))
+
+    formatted = "\n\n".join(s for s in sections if s.strip()).strip()
+    if not formatted:
+        fallback_answer = (result.get("answer") or "Not found in provided sources.").strip()
+        fallback_answer = re.sub(r"\r\n?", "\n", fallback_answer)
+        # Normalize single-line fallback text into sectioned lines.
+        fallback_answer = re.sub(r"\s+(\d+\.\s*(?:FY\d{2,4}\s+Q[1-4]|Q[1-4]\s+FY\d{2,4})\b)", r"\n\1", fallback_answer)
+        fallback_answer = re.sub(r"\s+(###\s*(?:FY\d{2,4}\s+Q[1-4]|Q[1-4]\s+FY\d{2,4})\b)", r"\n\1", fallback_answer)
+        fallback_answer = re.sub(r"\s+([A-Za-z][A-Za-z'\-\s]+\bFY\d{2,4}\s+Q[1-4]\b[^\n:]*:)\s*", r"\n\1\n", fallback_answer)
+        fallback_answer = re.sub(r"\s*[·•]\s*", "\n- ", fallback_answer)
+
+        lines = [ln.rstrip() for ln in fallback_answer.split("\n")]
+        # Group into blocks: preamble (overview), then one block per quarter heading + its bullets.
+        blocks: list[list[str]] = [[]]  # start with preamble block
+        seq = 1
+        in_quarter_section = False
+        quarter_ref_pattern = r"(?:FY\d{2,4}\s+Q[1-4]|Q[1-4]\s+FY\d{2,4})"
+        quarter_heading_pattern = r"^(?:#{1,6}\s*)?(?:FY\d{2,4}\s+Q[1-4]|Q[1-4]\s+FY\d{2,4})\b"
+        quarter_subtitle_pattern = r"^(?:#{1,6}\s*)?.*\b(?:FY\d{2,4}\s+Q[1-4]|Q[1-4]\s+FY\d{2,4})\b.*:\s*$"
+        for raw_line in lines:
+            line = raw_line.strip()
+            if not line:
+                continue
+            quarter_refs = re.findall(quarter_ref_pattern, line)
+            is_single_quarter_subtitle = re.match(quarter_subtitle_pattern, line) and len(quarter_refs) == 1
+            if re.match(quarter_heading_pattern, line) or is_single_quarter_subtitle:
+                clean_line = re.sub(r"^#{1,6}\s*", "", line)
+                clean_line = re.sub(r"^\d+\.\s*", "", clean_line)
+                blocks.append([f"**{seq}. {clean_line}**"])
+                seq += 1
+                in_quarter_section = True
+            elif in_quarter_section and line:
+                if line.startswith("- "):
+                    blocks[-1].append(line)
+                elif line.startswith("•") or line.startswith("·"):
+                    blocks[-1].append(f"- {line.lstrip('·•').strip()}")
+                else:
+                    blocks[-1].append(f"- {line}")
+            else:
+                blocks[-1].append(raw_line)
+
+        rendered_blocks = ["\n".join(b).strip() for b in blocks if any(x.strip() for x in b)]
+        content = "\n\n".join(rendered_blocks).strip()
+        content = re.sub(r"^(?:\*\*Overview\*\*|Overview)\s*", "", content, flags=re.IGNORECASE).strip()
+        return f"**Overview**\n\n{content}" if content else "**Overview**\n\nNot found in provided sources."
+    return formatted
 
 
 def _sse_event(event: str, data: dict) -> str:
@@ -552,8 +981,27 @@ async def _stream_response(request: ChatRequest):
     docs = []
     assembled_context = ""
     query_analysis = None
-    
-    if request.mode == "assembled":
+    n_quarters = _extract_quarter_range(query)
+
+    if (
+        request.mode in ("rag", "hybrid")
+        and not use_agentic
+        and is_comparison
+        and len(effective_companies) >= 2
+        and n_quarters
+    ):
+        docs = search_multi_company_by_periods(
+            query=query,
+            companies=effective_companies,
+            n_quarters=n_quarters,
+            n_results=15,
+        )
+        yield _sse_event("step", {
+            "icon": "🗓",
+            "label": "Time Alignment",
+            "detail": f"Applied last {n_quarters} completed quarters per company fiscal calendar",
+        })
+    elif request.mode == "assembled":
         retriever = get_assembled_retriever()
         result = retriever.search(
             query=query,
@@ -596,6 +1044,76 @@ async def _stream_response(request: ChatRequest):
             is_comparison=is_comparison,
         )
 
+    # Detect historical query early for routing decisions
+    from backend.rag.generator import detect_query_type as detect_gen_query_type
+    gen_query_type = detect_gen_query_type(query)
+    is_historical = gen_query_type == "historical" or _should_force_historical_format(query)
+
+    # For historical single-company queries: supplement with per-quarter retrieval
+    # to ensure each target quarter is represented in context
+    if is_historical and n_quarters and not is_comparison and len(effective_companies) == 1:
+        hist_docs = _search_historical_docs(
+            query=query,
+            scope=effective_companies,
+            n_quarters=n_quarters,
+            use_reranking=request.use_reranking,
+        )
+        if hist_docs:
+            # Merge with existing docs, dedup, keep all
+            existing_keys = {
+                (d.get("company", ""), d.get("source", ""), d.get("page_num", 0), (d.get("content", "") or "")[:120])
+                for d in docs
+            }
+            for d in hist_docs:
+                key = (d.get("company", ""), d.get("source", ""), d.get("page_num", 0), (d.get("content", "") or "")[:120])
+                if key not in existing_keys:
+                    existing_keys.add(key)
+                    docs.append(d)
+
+    # Calendar-year historical queries (e.g. "in 2025"): restrict to fiscal quarters
+    # whose months actually overlap with that calendar year.
+    calendar_year = _extract_calendar_year(query)
+    if is_historical and calendar_year and not is_comparison and len(effective_companies) == 1:
+        company = effective_companies[0]
+        candidate_periods = _calendar_year_to_fiscal_periods(calendar_year, company)
+        available = set(_get_available_et_periods(company, n_recent=50))
+        target_periods = [p for p in candidate_periods if p in available]
+        cy_docs = _search_historical_docs_by_periods(query, company, target_periods) if target_periods else []
+        note_doc = _build_calendar_year_note_doc(company, calendar_year, target_periods)
+        # Prepend the note so it appears first in context
+        docs = [note_doc] + cy_docs + [
+            d for d in docs
+            if (d.get("fiscal_year", ""), d.get("quarter", "")) in set(target_periods)
+        ]
+        yield _sse_event("step", {
+            "icon": "🗓",
+            "label": "Calendar Year Filter",
+            "detail": f"Calendar {calendar_year} → {company} quarters: " + (", ".join(f"{fy} {q}" for fy, q in target_periods) or "none"),
+        })
+
+    # For historical queries in web mode, supplement with filing database results
+    # so quarterly-specific transcript content is available to the LLM
+    if is_historical and request.mode == "web" and not docs:
+        filing_docs = (
+            _search_historical_docs(
+                query=query,
+                scope=effective_companies,
+                n_quarters=n_quarters,
+                use_reranking=request.use_reranking,
+            ) if (n_quarters and len(effective_companies) == 1) else _search_docs_for_scope(
+                query=query, scope=effective_companies,
+                n_results=30, use_reranking=request.use_reranking,
+                is_comparison=is_comparison,
+            )
+        )
+        if filing_docs:
+            docs = filing_docs
+            yield _sse_event("step", {
+                "icon": "📁",
+                "label": "Filing Supplement",
+                "detail": f"Historical query: also searched {len(filing_docs)} filing chunks",
+            })
+
     yield _sse_event("step", {
         "icon": "📚",
         "label": "Retrieved",
@@ -607,11 +1125,13 @@ async def _stream_response(request: ChatRequest):
     web_result_count = 0
     if effective_include_web:
         try:
-            web_query = query
+            clean_q = _clean_query_for_web_search(query)
+            web_query = clean_q
             if effective_companies:
-                web_query = f"{' '.join(effective_companies)} {query}"
+                web_query = f"{' '.join(effective_companies)} {clean_q}"
             web_results = await search_web(web_query)
             if web_results:
+                web_results = await enrich_web_results(web_results, max_pages=3)
                 web_result_count = len(web_results)
                 web_context = format_web_results_for_context(web_results)
                 yield _sse_event("step", {
@@ -632,9 +1152,21 @@ async def _stream_response(request: ChatRequest):
     has_doc_evidence = _has_sufficient_document_evidence(query, docs) if request.mode in ("rag", "assembled") else True
 
     if (request.strict_grounding and request.mode in ("rag", "assembled") and not has_doc_evidence):
-        yield _sse_event("token", {"text": "No sufficiently relevant filing evidence found for this question in current documents. Please refine the query or switch to Web/Hybrid mode."})
-        yield _sse_event("done", {"session_id": session_id})
-        return
+        if is_historical:
+            try:
+                web_query = f"{' '.join(effective_companies)} {query}" if effective_companies else query
+                web_results = await search_web(web_query)
+                if web_results:
+                    web_result_count = len(web_results)
+                    web_context = format_web_results_for_context(web_results)
+                    has_doc_evidence = True
+                    context = web_context
+            except Exception:
+                pass
+        if not has_doc_evidence:
+            yield _sse_event("token", {"text": "No sufficiently relevant filing evidence found for this question in current documents. Please refine the query or switch to Web/Hybrid mode."})
+            yield _sse_event("done", {"session_id": session_id})
+            return
 
     if not context and not web_context:
         fallback_allowed = _fallback_enabled(request)
@@ -681,9 +1213,21 @@ async def _stream_response(request: ChatRequest):
 
     # Stream tokens
     full_response = ""
-    for chunk in generate_response_streaming(query, context, web_context):
-        full_response += chunk
-        yield _sse_event("token", {"text": chunk})
+    
+    # Check if this is a historical query — use structured response instead
+    from backend.rag.generator import generate_structured_response, detect_query_type as detect_gen_query_type
+    gen_query_type = detect_gen_query_type(query)
+    use_historical = (gen_query_type == "historical" or _should_force_historical_format(query)) and not is_comparison
+    
+    if use_historical:
+        result = generate_structured_response(query, context, web_context, force_query_type="historical")
+
+        full_response = _format_historical_response(result)
+        yield _sse_event("token", {"text": full_response})
+    else:
+        for chunk in generate_response_streaming(query, context, web_context):
+            full_response += chunk
+            yield _sse_event("token", {"text": chunk})
 
     # Secondary fallback for streaming if generated text indicates no retrieval hit
     if _fallback_enabled(request) and _looks_like_no_hit(full_response):
@@ -735,6 +1279,12 @@ async def chat(request: ChatRequest):
     strategy_used = None
     effective_include_web = request.include_web or request.mode in ("web", "hybrid")
     is_comparison = _is_comparison_query(query, effective_companies)
+    n_quarters = _extract_quarter_range(query)
+
+    # Detect historical query early so we can choose optimal retrieval strategy
+    from backend.rag.generator import detect_query_type as detect_gen_query_type
+    gen_query_type = detect_gen_query_type(query)
+    is_historical = gen_query_type == "historical" or _should_force_historical_format(query)
 
     # NEW: Use AssembledRetriever for "assembled" mode
     if request.mode == "assembled":
@@ -776,13 +1326,72 @@ async def chat(request: ChatRequest):
         docs = []
         context = ""
 
+    # For historical single-company queries: supplement with per-quarter retrieval
+    # to ensure each target quarter is represented in context
+    if is_historical and n_quarters and not is_comparison and len(effective_companies) == 1:
+        hist_docs = _search_historical_docs(
+            query=query,
+            scope=effective_companies,
+            n_quarters=n_quarters,
+            use_reranking=request.use_reranking,
+        )
+        if hist_docs:
+            existing_keys = {
+                (d.get("company", ""), d.get("source", ""), d.get("page_num", 0), (d.get("content", "") or "")[:120])
+                for d in docs
+            }
+            for d in hist_docs:
+                key = (d.get("company", ""), d.get("source", ""), d.get("page_num", 0), (d.get("content", "") or "")[:120])
+                if key not in existing_keys:
+                    existing_keys.add(key)
+                    docs.append(d)
+            context = _build_context(docs)
+
+    # Calendar-year historical queries: restrict to fiscal quarters that overlap.
+    calendar_year = _extract_calendar_year(query)
+    if is_historical and calendar_year and not is_comparison and len(effective_companies) == 1:
+        company = effective_companies[0]
+        candidate_periods = _calendar_year_to_fiscal_periods(calendar_year, company)
+        available = set(_get_available_et_periods(company, n_recent=50))
+        target_periods = [p for p in candidate_periods if p in available]
+        cy_docs = _search_historical_docs_by_periods(query, company, target_periods) if target_periods else []
+        note_doc = _build_calendar_year_note_doc(company, calendar_year, target_periods)
+        docs = [note_doc] + cy_docs + [
+            d for d in docs
+            if (d.get("fiscal_year", ""), d.get("quarter", "")) in set(target_periods)
+        ]
+        context = _build_context(docs)
+
+    # For historical queries in web mode, also search filing database.
+    # Web search returns general articles; actual quarterly transcripts live in ChromaDB.
+    if is_historical and request.mode == "web" and not docs:
+        filing_docs = (
+            _search_historical_docs(
+                query=query,
+                scope=effective_companies,
+                n_quarters=n_quarters,
+                use_reranking=request.use_reranking,
+            ) if (n_quarters and len(effective_companies) == 1) else _search_docs_for_scope(
+                query=query, scope=effective_companies,
+                n_results=30, use_reranking=request.use_reranking,
+                is_comparison=is_comparison,
+            )
+        )
+        if filing_docs:
+            docs = filing_docs
+            context = _build_context(filing_docs)
+
     web_context = ""
     web_result_count = 0
+    web_results_list = []
     if effective_include_web:
         try:
-            web_query = f"{' '.join(effective_companies)} {query}" if effective_companies else query
+            clean_q = _clean_query_for_web_search(query)
+            web_query = f"{' '.join(effective_companies)} {clean_q}" if effective_companies else clean_q
             web_results = await search_web(web_query)
             if web_results:
+                web_results = await enrich_web_results(web_results, max_pages=3)
+                web_results_list = web_results
                 web_result_count = len(web_results)
                 web_context = format_web_results_for_context(web_results)
         except Exception:
@@ -797,11 +1406,31 @@ async def chat(request: ChatRequest):
     fallback_allowed = _fallback_enabled(request)
 
     has_doc_evidence = _has_sufficient_document_evidence(query, docs) if request.mode in ("rag", "assembled") else True
+
     if request.strict_grounding and request.mode in ("rag", "assembled") and not has_doc_evidence:
-        response_text = "No sufficiently relevant filing evidence found for this question in current documents. Please refine the query or switch to Web/Hybrid mode."
+        if is_historical:
+            # Auto trigger web search for historical queries
+            try:
+                web_query = f"{' '.join(effective_companies)} {query}" if effective_companies else query
+                import asyncio
+                web_results = asyncio.get_event_loop().run_until_complete(search_web(web_query))
+                if web_results:
+                    web_result_count = len(web_results)
+                    web_context = format_web_results_for_context(web_results)
+                    has_doc_evidence = True  # allow answer generation with web context
+            except Exception:
+                pass
+        if not has_doc_evidence:
+            response_text = "No sufficiently relevant filing evidence found for this question in current documents. Please refine the query or switch to Web/Hybrid mode."
     elif request.mode == "hybrid" and request.hybrid_multi_output:
+        # For historical queries, use structured quarter-by-quarter format instead of
+        # the 3-part file/web/synthesis split (web articles never contain transcript detail)
+        if is_historical and not is_comparison and (context or web_context):
+            from backend.rag.generator import generate_structured_response
+            result = generate_structured_response(query, context, web_context, force_query_type="historical")
+            response_text = _format_historical_response(result)
         # Case A: no evidence in both retrieval channels
-        if not has_file_evidence and not has_web_evidence:
+        elif not has_file_evidence and not has_web_evidence:
             if fallback_allowed:
                 fallback_text, provider_used = _general_fallback_answer(
                     query,
@@ -878,7 +1507,15 @@ async def chat(request: ChatRequest):
         else:
             response_text = NO_HIT_MESSAGE
     else:
-        response_text = generate_response(query, context, web_context)
+        from backend.rag.generator import generate_structured_response, detect_query_type as detect_gen_query_type
+        gen_query_type = detect_gen_query_type(query)
+        use_historical = (gen_query_type == "historical" or _should_force_historical_format(query)) and not is_comparison
+
+        if use_historical:
+            result = generate_structured_response(query, context, web_context, force_query_type="historical")
+            response_text = _format_historical_response(result)
+        else:
+            response_text = generate_response(query, context, web_context)
 
         # Secondary fallback if generated answer clearly indicates no retrieval hit
         if _fallback_enabled(request) and _looks_like_no_hit(response_text):
@@ -893,6 +1530,9 @@ async def chat(request: ChatRequest):
         response_text = _truncate_hybrid_ai_section_only(response_text, request.max_response_words)
     else:
         response_text = _truncate_by_max_words(response_text, request.max_response_words)
+
+    if web_results_list:
+        response_text = _inject_web_links(response_text, web_results_list)
 
     # --- Structured table payload (for table-intent queries) ---
     table_payload_out = None
@@ -924,6 +1564,10 @@ async def chat(request: ChatRequest):
         ],
         "fallback_used": fallback_used,
         "provider_used": provider_used,
+        "web_sources": [
+            {"index": i + 1, "title": r.get("title", ""), "url": r.get("url", "")}
+            for i, r in enumerate(web_results_list)
+        ],
         "retrieval_summary": {
             "filing_hits": len(docs),
             "web_hits": web_result_count,

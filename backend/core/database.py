@@ -9,13 +9,13 @@ Per-Company Collections (RAG-Challenge-2 style):
 """
 import chromadb
 from sentence_transformers import SentenceTransformer
-from .config import CHROMADB_PATH, EMBEDDING_MODEL
+from .config import CHROMADB_PATH, EMBEDDING_MODEL, TRACKED_COMPANY_NAMES
 
 # ---------------------------------------------------------------------------
 # CONSTANTS
 # ---------------------------------------------------------------------------
 # Known companies (used for collection naming)
-KNOWN_COMPANIES = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+KNOWN_COMPANIES = list(TRACKED_COMPANY_NAMES)
 
 # Collection naming
 MAIN_COLLECTION_NAME = "capex_docs"

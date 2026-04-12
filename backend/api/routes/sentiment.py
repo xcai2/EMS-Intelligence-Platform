@@ -5,6 +5,7 @@ from fastapi import APIRouter, HTTPException, BackgroundTasks
 from typing import Optional
 from pydantic import BaseModel
 
+from backend.core.config import TRACKED_COMPANY_NAMES
 from backend.analytics.sentiment import (
     analyze_company_sentiment,
     compare_company_sentiments,
@@ -61,6 +62,7 @@ async def compare_sentiments(
     results = compare_company_sentiments(company_list)
     
     return {
+        "companies": results,
         "comparison": results,
         "most_positive": results[0].get("company") if results else None,
         "most_negative": results[-1].get("company") if results else None,
@@ -109,7 +111,7 @@ async def get_ai_focus_by_company():
     """
     Get AI focus intensity for each company based on mentions.
     """
-    companies = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+    companies = list(TRACKED_COMPANY_NAMES)
     
     results = []
     for company in companies:
@@ -148,7 +150,7 @@ async def get_sentiment_dashboard():
     """
     Get a complete sentiment dashboard for all companies.
     """
-    companies = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+    companies = list(TRACKED_COMPANY_NAMES)
     
     dashboard = {
         "companies": [],

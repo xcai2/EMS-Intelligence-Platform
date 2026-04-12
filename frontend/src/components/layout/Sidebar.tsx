@@ -87,11 +87,8 @@ const navGroups: NavGroup[] = [
 export function Sidebar() {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return true;
-    const savedTheme = localStorage.getItem('theme-mode');
-    return savedTheme ? savedTheme === 'dark' : true;
-  });
+  const [isDark, setIsDark] = useState<boolean>(true);
+  const [hydrated, setHydrated] = useState(false);
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     'news-desk': true,
     'ai-research-chat': true,
@@ -105,10 +102,17 @@ export function Sidebar() {
   };
 
   useEffect(() => {
+    const savedTheme = localStorage.getItem('theme-mode');
+    if (savedTheme) setIsDark(savedTheme === 'dark');
+    setHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
     const root = document.documentElement;
     root.classList.toggle('dark', isDark);
     localStorage.setItem('theme-mode', isDark ? 'dark' : 'light');
-  }, [isDark]);
+  }, [isDark, hydrated]);
 
   const toggleTheme = () => {
     const nextDark = !isDark;

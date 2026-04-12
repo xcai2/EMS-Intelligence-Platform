@@ -55,7 +55,7 @@ from backend.core.database import (
     embed_text,
     embed_texts,
 )
-from backend.core.config import OPENAI_API_KEY, RERANK_MODEL
+from backend.core.config import OPENAI_API_KEY, RERANK_MODEL, TRACKED_COMPANY_NAMES
 
 
 # ---------------------------------------------------------------------------
@@ -533,7 +533,7 @@ class TableRetriever(BaseRetriever):
 # QUERY ROUTER
 # ---------------------------------------------------------------------------
 
-KNOWN_COMPANIES = ["Flex", "Jabil", "Celestica", "Benchmark", "Sanmina"]
+KNOWN_COMPANIES = list(TRACKED_COMPANY_NAMES)
 
 CAPEX_TRIGGERS = {
     "capex", "cap ex", "capital expenditure", "capital expenditures",

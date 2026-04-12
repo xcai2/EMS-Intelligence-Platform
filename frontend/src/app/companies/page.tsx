@@ -46,6 +46,7 @@ const COMPANY_DISPLAY_NAMES: Record<string, string> = {
   'CLS': 'Celestica',
   'BHE': 'Benchmark',
   'SANM': 'Sanmina',
+  'PLXS': 'Plexus',
 };
 
 export default function CompaniesPage() {

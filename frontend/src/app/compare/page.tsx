@@ -33,7 +33,7 @@ import {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
-const COMPANIES = ['Flex', 'Jabil', 'Celestica', 'Benchmark', 'Sanmina'];
+const COMPANIES = ['Flex', 'Jabil', 'Celestica', 'Benchmark', 'Sanmina', 'Plexus'];
 
 const COMPANY_COLORS: Record<string, string> = {
   'Flex': '#3B82F6',
@@ -41,6 +41,7 @@ const COMPANY_COLORS: Record<string, string> = {
   'Celestica': '#6366F1',
   'Benchmark': '#F59E0B',
   'Sanmina': '#EF4444',
+  'Plexus': '#14B8A6',
 };
 
 export default function ComparePage() {

@@ -52,6 +52,7 @@ const COMPANY_COLORS: Record<string, string> = {
   'Celestica': '#003366',
   'Benchmark': '#B8860B',
   'Sanmina': '#C41E3A',
+  'Plexus': '#0F766E',
 };
 
 export default function AnalysisPage() {
@@ -223,7 +224,7 @@ export default function AnalysisPage() {
                   <Bar 
                     dataKey="mentions" 
                     radius={[0, 4, 4, 0]}
-                    onClick={(data) => setSelectedCompany(data.name)}
+                    onClick={(data) => setSelectedCompany(data?.name ?? null)}
                     cursor="pointer"
                   >
                     {capexChartData.map((entry, index) => (

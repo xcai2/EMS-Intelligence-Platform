@@ -37,6 +37,7 @@ const COMPANY_COLORS: Record<string, string> = {
   Celestica: '#7C3AED',
   Benchmark: '#F59E0B',
   Sanmina: '#E11D48',
+  Plexus: '#14B8A6',
 };
 
 const SHARED_FILTER = '__shared__';
@@ -47,6 +48,7 @@ const COMPANY_SORT_ORDER: Record<string, number> = {
   Celestica: 2,
   Benchmark: 3,
   Sanmina: 4,
+  Plexus: 5,
 };
 
 const FLEX_REGION_SORT_ORDER: Record<string, number> = {
