@@ -20,8 +20,17 @@ SEC_USER_AGENT = os.getenv("SEC_USER_AGENT", "CapExIntel/1.0 (team@example.com)"
 
 # ---------------------------------------------------------------------------
 # LLM PROVIDER  ("openai" or "anthropic" or "gemini")
+# Auto-detected from available API keys if not explicitly set.
 # ---------------------------------------------------------------------------
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "openai")
+def _default_provider() -> str:
+    explicit = os.getenv("LLM_PROVIDER", "")
+    if explicit:
+        return explicit
+    if os.getenv("ANTHROPIC_API_KEY", ""):
+        return "anthropic"
+    return "openai"
+
+LLM_PROVIDER = _default_provider()
 
 # ---------------------------------------------------------------------------
 # MODEL CONFIG
