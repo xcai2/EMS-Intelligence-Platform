@@ -17,6 +17,7 @@ export default function Home() {
       const minAnimation = sleep(MIN_ANIMATION_MS);
       const preloadWork = Promise.allSettled([
         router.prefetch('/news'),
+        router.prefetch('/analyst-view'),
       ]);
 
       // Wait for both animation floor and preload work, but never exceed max wait.

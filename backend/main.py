@@ -12,6 +12,7 @@ from backend.api.routes import reports as reports_router
 from backend.api.routes import dashboard as dashboard_router
 from backend.api.routes import intelligence as intelligence_router
 from backend.news.routes import router as news_router
+from backend.analyst_view.routes import router as analyst_view_router
 from backend.core.database import get_collection, get_collection_stats, get_embedding_model
 from backend.ingestion.scheduler import start_scheduler, stop_scheduler
 
@@ -84,6 +85,7 @@ app.include_router(financials.router, prefix="/api", tags=["Financials"])
 app.include_router(alerts.router, prefix="/api", tags=["Alerts"])
 app.include_router(company_detail.router, prefix="/api", tags=["Company Detail"])
 app.include_router(news_router, prefix="/api", tags=["News"])
+app.include_router(analyst_view_router, prefix="/api", tags=["Analyst View"])
 app.include_router(exports.router, prefix="/api", tags=["Exports"])
 app.include_router(intelligence_router.router, prefix="/api/intelligence", tags=["Competitive Intelligence"])
 app.include_router(supplemental_data.router, prefix="/api", tags=["Supplemental Data"])

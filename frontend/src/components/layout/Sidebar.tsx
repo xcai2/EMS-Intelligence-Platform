@@ -18,6 +18,7 @@ import {
   GitCompare,
   Bell,
   Newspaper,
+  LineChart,
   CalendarDays,
   ChevronDown,
   PanelLeftClose,
@@ -44,6 +45,7 @@ const navGroups: NavGroup[] = [
     label: 'NEWs',
     items: [
       { href: '/news', label: 'NEWs', icon: Newspaper, badge: 'NEW' },
+      { href: '/analyst-view', label: 'Analyst View', icon: LineChart },
     ],
   },
   {
