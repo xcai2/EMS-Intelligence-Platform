@@ -39,11 +39,11 @@ const TICKER_COLORS: Record<string, string> = {
 };
 
 const CONSENSUS_CONFIG: Record<string, { color: string; bg: string }> = {
-  Bullish: { color: "text-green-400", bg: "bg-green-900/30" },
-  Mixed:   { color: "text-yellow-400", bg: "bg-yellow-900/30" },
-  Neutral: { color: "text-gray-400",  bg: "bg-gray-800/50" },
-  Bearish: { color: "text-red-400",   bg: "bg-red-900/30" },
-  Unknown: { color: "text-gray-500",  bg: "bg-gray-800/30" },
+  Bullish: { color: "text-green-600 dark:text-green-400", bg: "bg-green-100 dark:bg-green-900/30" },
+  Mixed:   { color: "text-yellow-600 dark:text-yellow-400", bg: "bg-yellow-100 dark:bg-yellow-900/30" },
+  Neutral: { color: "text-slate-600 dark:text-gray-400",  bg: "bg-slate-200/50 dark:bg-gray-800/50" },
+  Bearish: { color: "text-red-600 dark:text-red-400",   bg: "bg-red-100 dark:bg-red-900/30" },
+  Unknown: { color: "text-slate-500 dark:text-gray-500",  bg: "bg-slate-200/30 dark:bg-gray-800/30" },
 };
 
 interface CustomTooltipProps {
@@ -55,12 +55,12 @@ interface CustomTooltipProps {
 function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-[#1a1f2e] border border-[#2a3045] rounded-lg p-3 shadow-xl">
-      <p className="text-xs text-gray-400 mb-2">{label}</p>
+    <div className="bg-slate-100 dark:bg-[#1a1f2e] border border-slate-300 dark:border-[#2a3045] rounded-lg p-3 shadow-xl">
+      <p className="text-xs text-slate-600 dark:text-gray-400 mb-2">{label}</p>
       {payload.map((p) => (
         <div key={p.name} className="flex items-center gap-2 text-xs">
           <span style={{ color: p.color }}>●</span>
-          <span className="text-gray-300">{p.name}:</span>
+          <span className="text-slate-700 dark:text-gray-300">{p.name}:</span>
           <span className="font-bold" style={{ color: p.color }}>
             {p.value > 0.5 ? "Bullish" : p.value > -0.2 ? "Neutral" : "Bearish"}
             {" "}({p.value > 0 ? "+" : ""}{p.value.toFixed(2)})
@@ -130,8 +130,8 @@ export default function SentimentTimeline() {
               onClick={() => toggleTicker(t)}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs transition-all ${
                 active
-                  ? "border-transparent text-white"
-                  : "border-[#2a3045] bg-[#1a1f2e] text-gray-500"
+                  ? "border-transparent text-slate-900 dark:text-white"
+                  : "border-slate-300 dark:border-[#2a3045] bg-slate-100 dark:bg-[#1a1f2e] text-slate-500 dark:text-gray-500"
               }`}
               style={active ? { backgroundColor: TICKER_COLORS[t] + "33", borderColor: TICKER_COLORS[t] } : {}}
             >
@@ -143,7 +143,7 @@ export default function SentimentTimeline() {
                 </span>
               )}
               {active && data[t]?.current_pt !== "—" && (
-                <span className="text-gray-400">{data[t]?.current_pt}</span>
+                <span className="text-slate-600 dark:text-gray-400">{data[t]?.current_pt}</span>
               )}
             </button>
           );
@@ -151,13 +151,13 @@ export default function SentimentTimeline() {
       </div>
 
       {/* Chart */}
-      <div className="bg-[#111827] border border-[#1e2535] rounded-xl p-4">
+      <div className="bg-slate-50 dark:bg-[#111827] border border-slate-200 dark:border-[#1e2535] rounded-xl p-4">
         {loading ? (
           <div className="h-64 flex items-center justify-center">
             <div className="animate-spin w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full" />
           </div>
         ) : error ? (
-          <div className="h-64 flex items-center justify-center text-red-400 text-sm">{error}</div>
+          <div className="h-64 flex items-center justify-center text-red-600 dark:text-red-400 text-sm">{error}</div>
         ) : (
           <ResponsiveContainer width="100%" height={280}>
             <LineChart data={chartData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
@@ -215,17 +215,17 @@ export default function SentimentTimeline() {
               ? timeline[timeline.length - 1].consensus_score - timeline[0].consensus_score
               : 0;
             return (
-              <div key={t} className="bg-[#111827] border border-[#1e2535] rounded-lg p-3">
+              <div key={t} className="bg-slate-50 dark:bg-[#111827] border border-slate-200 dark:border-[#1e2535] rounded-lg p-3">
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-mono font-bold text-sm" style={{ color: TICKER_COLORS[t] }}>{t}</span>
                   <span className={`text-xs px-2 py-0.5 rounded ${cfg.bg} ${cfg.color}`}>
                     {d.current_consensus}
                   </span>
                 </div>
-                <div className="text-xs text-gray-500">{d.company}</div>
+                <div className="text-xs text-slate-500 dark:text-gray-500">{d.company}</div>
                 <div className="flex items-center gap-2 mt-2">
-                  <span className="text-xs text-gray-400">PT: {d.current_pt}</span>
-                  <span className={`text-xs ml-auto ${trend >= 0 ? "text-green-400" : "text-red-400"}`}>
+                  <span className="text-xs text-slate-600 dark:text-gray-400">PT: {d.current_pt}</span>
+                  <span className={`text-xs ml-auto ${trend >= 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
                     {trend >= 0 ? "↑" : "↓"} {Math.abs(trend).toFixed(2)} 8Q
                   </span>
                 </div>

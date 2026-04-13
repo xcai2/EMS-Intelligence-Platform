@@ -28,9 +28,9 @@ interface ThemesResponse {
 }
 
 const SEVERITY_CONFIG = {
-  High:   { bg: "bg-red-900/30",    text: "text-red-300",    border: "border-red-700",    dot: "bg-red-500"    },
-  Medium: { bg: "bg-yellow-900/30", text: "text-yellow-300", border: "border-yellow-700", dot: "bg-yellow-500" },
-  Low:    { bg: "bg-green-900/30",  text: "text-green-300",  border: "border-green-700",  dot: "bg-green-500"  },
+  High:   { bg: "bg-red-100 dark:bg-red-900/30",    text: "text-red-700 dark:text-red-300",    border: "border-red-300 dark:border-red-700",    dot: "bg-red-500"    },
+  Medium: { bg: "bg-yellow-100 dark:bg-yellow-900/30", text: "text-yellow-700 dark:text-yellow-300", border: "border-yellow-300 dark:border-yellow-700", dot: "bg-yellow-500" },
+  Low:    { bg: "bg-green-100 dark:bg-green-900/30",  text: "text-green-700 dark:text-green-300",  border: "border-green-300 dark:border-green-700",  dot: "bg-green-500"  },
 };
 
 function ThemeCard({ theme, rank }: { theme: ThemeItem; rank: number }) {
@@ -43,7 +43,7 @@ function ThemeCard({ theme, rank }: { theme: ThemeItem; rank: number }) {
         className="w-full text-left px-4 py-3 flex items-center gap-3"
         onClick={() => setExpanded((v) => !v)}
       >
-        <span className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${sev.dot} text-white`}>
+        <span className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${sev.dot} text-slate-900 dark:text-white`}>
           {rank + 1}
         </span>
         <span className={`text-sm font-semibold flex-1 ${sev.text}`}>{theme.title}</span>
@@ -56,22 +56,22 @@ function ThemeCard({ theme, rank }: { theme: ThemeItem; rank: number }) {
       {expanded && (
         <div className="px-4 pb-4 space-y-3 border-t border-white/5 pt-3">
           {/* Explanation */}
-          <p className="text-sm text-gray-300 leading-relaxed">{theme.explanation}</p>
+          <p className="text-sm text-slate-700 dark:text-gray-300 leading-relaxed">{theme.explanation}</p>
 
           {/* Flex implication */}
-          <div className="flex items-start gap-2 bg-[#0d1117] rounded-lg p-3">
-            <span className="text-yellow-400 text-xs font-bold shrink-0 mt-0.5">⚡ Flex</span>
-            <p className="text-xs text-gray-300 leading-relaxed">{theme.flex_implication}</p>
+          <div className="flex items-start gap-2 bg-slate-50 dark:bg-[#0d1117] rounded-lg p-3">
+            <span className="text-yellow-600 dark:text-yellow-400 text-xs font-bold shrink-0 mt-0.5">⚡ Flex</span>
+            <p className="text-xs text-slate-700 dark:text-gray-300 leading-relaxed">{theme.flex_implication}</p>
           </div>
 
           {/* Supporting data */}
           <div className="grid grid-cols-2 gap-3">
             {theme.supporting_analysts?.length > 0 && (
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-1.5">Analysts</p>
+                <p className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-gray-500 mb-1.5">Analysts</p>
                 <div className="flex flex-wrap gap-1">
                   {theme.supporting_analysts.map((a) => (
-                    <span key={a} className="text-[11px] bg-[#1a1f2e] border border-[#2a3045] text-gray-300 px-2 py-0.5 rounded">
+                    <span key={a} className="text-[11px] bg-slate-100 dark:bg-[#1a1f2e] border border-slate-300 dark:border-[#2a3045] text-slate-700 dark:text-gray-300 px-2 py-0.5 rounded">
                       {a}
                     </span>
                   ))}
@@ -80,10 +80,10 @@ function ThemeCard({ theme, rank }: { theme: ThemeItem; rank: number }) {
             )}
             {theme.supporting_companies?.length > 0 && (
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-1.5">Companies</p>
+                <p className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-gray-500 mb-1.5">Companies</p>
                 <div className="flex flex-wrap gap-1">
                   {theme.supporting_companies.map((c) => (
-                    <span key={c} className="text-[11px] font-mono font-bold text-blue-400 bg-blue-900/30 px-2 py-0.5 rounded">
+                    <span key={c} className="text-[11px] font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30 px-2 py-0.5 rounded">
                       {c}
                     </span>
                   ))}
@@ -145,8 +145,8 @@ export default function WeeklyThemes() {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div>
-          <h3 className="text-sm font-semibold text-white">Strategic Themes</h3>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Strategic Themes</h3>
+          <p className="text-xs text-slate-500 dark:text-gray-500 mt-0.5">
             {data?.source === "cache"
               ? `Cached themes — generated ${timeAgo(data.generated_at)}`
               : data?.source === "generated"
@@ -157,14 +157,14 @@ export default function WeeklyThemes() {
         <div className="flex gap-2">
           <button
             onClick={() => setShowHistory((v) => !v)}
-            className="px-3 py-1.5 text-xs rounded-lg bg-[#1a1f2e] border border-[#2a3045] text-gray-400 hover:text-gray-200 hover:border-gray-500 transition-colors"
+            className="px-3 py-1.5 text-xs rounded-lg bg-slate-100 dark:bg-[#1a1f2e] border border-slate-300 dark:border-[#2a3045] text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-200 hover:border-slate-400 dark:hover:border-gray-500 transition-colors"
           >
             {showHistory ? "Hide History" : "History"}
           </button>
           <button
             onClick={() => loadThemes(true)}
             disabled={regenerating}
-            className="px-3 py-1.5 text-xs rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-wait text-white transition-colors flex items-center gap-2"
+            className="px-3 py-1.5 text-xs rounded-lg bg-blue-600 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-wait text-slate-900 dark:text-white transition-colors flex items-center gap-2"
           >
             {regenerating ? (
               <>
@@ -180,15 +180,15 @@ export default function WeeklyThemes() {
 
       {/* History panel */}
       {showHistory && data?.history && data.history.length > 0 && (
-        <div className="bg-[#111827] border border-[#1e2535] rounded-xl p-4">
-          <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">Past Weeks</p>
+        <div className="bg-slate-50 dark:bg-[#111827] border border-slate-200 dark:border-[#1e2535] rounded-xl p-4">
+          <p className="text-xs font-semibold text-slate-600 dark:text-gray-400 uppercase tracking-wider mb-3">Past Weeks</p>
           <div className="space-y-2">
             {data.history.map((h) => (
-              <div key={h.id} className="flex items-start gap-3 py-2 border-b border-[#1e2535] last:border-0">
-                <span className="text-xs text-gray-500 shrink-0 w-24">{h.week_start}</span>
+              <div key={h.id} className="flex items-start gap-3 py-2 border-b border-slate-200 dark:border-[#1e2535] last:border-0">
+                <span className="text-xs text-slate-500 dark:text-gray-500 shrink-0 w-24">{h.week_start}</span>
                 <div className="flex-1 flex flex-wrap gap-1">
                   {(h.themes || []).map((t, i) => (
-                    <span key={i} className="text-xs text-gray-400 bg-[#1a1f2e] px-2 py-0.5 rounded">
+                    <span key={i} className="text-xs text-slate-600 dark:text-gray-400 bg-slate-100 dark:bg-[#1a1f2e] px-2 py-0.5 rounded">
                       {t.title}
                     </span>
                   ))}
@@ -203,19 +203,19 @@ export default function WeeklyThemes() {
       {loading ? (
         <div className="space-y-3">
           {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-14 bg-[#1a1f2e] rounded-xl animate-pulse" />
+            <div key={i} className="h-14 bg-slate-100 dark:bg-[#1a1f2e] rounded-xl animate-pulse" />
           ))}
         </div>
       ) : error ? (
-        <div className="p-6 bg-[#111827] border border-[#1e2535] rounded-xl text-center">
-          <p className="text-gray-400 text-sm mb-3">{error}</p>
+        <div className="p-6 bg-slate-50 dark:bg-[#111827] border border-slate-200 dark:border-[#1e2535] rounded-xl text-center">
+          <p className="text-slate-600 dark:text-gray-400 text-sm mb-3">{error}</p>
           <p className="text-gray-600 text-xs mb-4">
             Themes are synthesized from company intel and analyst summary caches.
             Make sure those have been populated first (visit Companies and Analysts tabs).
           </p>
           <button
             onClick={() => loadThemes(true)}
-            className="px-4 py-2 text-sm rounded-lg bg-blue-600 hover:bg-blue-500 text-white"
+            className="px-4 py-2 text-sm rounded-lg bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white"
           >
             Try Generating Now
           </button>
@@ -223,10 +223,10 @@ export default function WeeklyThemes() {
       ) : !data?.themes?.length ? (
         <div className="p-8 text-center">
           <div className="text-4xl mb-3">🔍</div>
-          <p className="text-gray-400 text-sm">No themes available yet.</p>
+          <p className="text-slate-600 dark:text-gray-400 text-sm">No themes available yet.</p>
           <button
             onClick={() => loadThemes(true)}
-            className="mt-3 px-4 py-2 text-sm rounded-lg bg-blue-600 hover:bg-blue-500 text-white"
+            className="mt-3 px-4 py-2 text-sm rounded-lg bg-blue-600 hover:bg-blue-500 text-slate-900 dark:text-white"
           >
             Generate Themes
           </button>

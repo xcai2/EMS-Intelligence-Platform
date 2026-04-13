@@ -30,11 +30,11 @@ interface BenchmarkResponse {
 }
 
 const CONSENSUS_CONFIG: Record<string, { bg: string; text: string; bar: string }> = {
-  Bullish: { bg: "bg-green-900/30",  text: "text-green-300",  bar: "#22c55e" },
-  Mixed:   { bg: "bg-yellow-900/30", text: "text-yellow-300", bar: "#f59e0b" },
-  Neutral: { bg: "bg-gray-800/50",   text: "text-gray-300",   bar: "#6b7280" },
-  Bearish: { bg: "bg-red-900/30",    text: "text-red-300",    bar: "#ef4444" },
-  Unknown: { bg: "bg-gray-800/30",   text: "text-gray-500",   bar: "#374151" },
+  Bullish: { bg: "bg-green-100 dark:bg-green-900/30",  text: "text-green-700 dark:text-green-300",  bar: "#22c55e" },
+  Mixed:   { bg: "bg-yellow-100 dark:bg-yellow-900/30", text: "text-yellow-700 dark:text-yellow-300", bar: "#f59e0b" },
+  Neutral: { bg: "bg-slate-200/50 dark:bg-gray-800/50",   text: "text-slate-700 dark:text-gray-300",   bar: "#6b7280" },
+  Bearish: { bg: "bg-red-100 dark:bg-red-900/30",    text: "text-red-700 dark:text-red-300",    bar: "#ef4444" },
+  Unknown: { bg: "bg-slate-200/30 dark:bg-gray-800/30",   text: "text-slate-500 dark:text-gray-500",   bar: "#374151" },
 };
 
 const TICKER_COLORS: Record<string, string> = {
@@ -57,16 +57,16 @@ function CustomTooltip({ active, payload }: TooltipProps) {
   const d = payload[0].payload;
   const cfg = CONSENSUS_CONFIG[d.consensus] ?? CONSENSUS_CONFIG.Unknown;
   return (
-    <div className="bg-[#1a1f2e] border border-[#2a3045] rounded-lg p-3 shadow-xl max-w-xs">
+    <div className="bg-slate-100 dark:bg-[#1a1f2e] border border-slate-300 dark:border-[#2a3045] rounded-lg p-3 shadow-xl max-w-xs">
       <div className="flex items-center gap-2 mb-2">
         <span className="font-mono font-bold text-sm" style={{ color: TICKER_COLORS[d.ticker] ?? "#fff" }}>
           {d.ticker}
         </span>
         <span className={`text-xs px-1.5 py-0.5 rounded ${cfg.bg} ${cfg.text}`}>{d.consensus}</span>
       </div>
-      <p className="text-xs text-gray-400 leading-relaxed">{d.key_view}</p>
+      <p className="text-xs text-slate-600 dark:text-gray-400 leading-relaxed">{d.key_view}</p>
       {d.price_target !== "—" && (
-        <p className="text-xs text-gray-500 mt-1">PT: {d.price_target}</p>
+        <p className="text-xs text-slate-500 dark:text-gray-500 mt-1">PT: {d.price_target}</p>
       )}
     </div>
   );
@@ -98,20 +98,20 @@ export default function FlexBenchmark() {
   if (loading) {
     return (
       <div className="space-y-4">
-        <div className="h-64 bg-[#1a1f2e] rounded-xl animate-pulse" />
+        <div className="h-64 bg-slate-100 dark:bg-[#1a1f2e] rounded-xl animate-pulse" />
         <div className="grid grid-cols-3 gap-3">
-          {[...Array(6)].map((_, i) => <div key={i} className="h-28 bg-[#1a1f2e] rounded-lg animate-pulse" />)}
+          {[...Array(6)].map((_, i) => <div key={i} className="h-28 bg-slate-100 dark:bg-[#1a1f2e] rounded-lg animate-pulse" />)}
         </div>
       </div>
     );
   }
 
   if (error) {
-    return <div className="p-4 bg-red-900/20 border border-red-800 rounded-lg text-red-300 text-sm">{error}</div>;
+    return <div className="p-4 bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg text-red-700 dark:text-red-300 text-sm">{error}</div>;
   }
 
   if (!data?.peers?.length) {
-    return <div className="p-8 text-center text-gray-500 text-sm">No benchmark data available.</div>;
+    return <div className="p-8 text-center text-slate-500 dark:text-gray-500 text-sm">No benchmark data available.</div>;
   }
 
   const flex = data.flex;
@@ -127,29 +127,29 @@ export default function FlexBenchmark() {
     <div className="space-y-5">
       {/* Flex highlight */}
       {flex && (
-        <div className={`rounded-xl border p-4 ${isLeader ? "border-blue-600 bg-blue-900/10" : "border-[#2a3045] bg-[#111827]"}`}>
+        <div className={`rounded-xl border p-4 ${isLeader ? "border-blue-600 bg-blue-100 dark:bg-blue-900/10" : "border-slate-300 dark:border-[#2a3045] bg-slate-50 dark:bg-[#111827]"}`}>
           <div className="flex items-center gap-3 flex-wrap">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xl font-bold text-blue-400">FLEX</span>
+              <span className="font-mono text-xl font-bold text-blue-600 dark:text-blue-400">FLEX</span>
               {isLeader && (
-                <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded-full font-medium">
+                <span className="text-xs bg-blue-600 text-slate-900 dark:text-white px-2 py-0.5 rounded-full font-medium">
                   #1 Leader
                 </span>
               )}
               {!isLeader && (
-                <span className="text-xs text-gray-500">Ranked #{flexRank} of {data.peers.length}</span>
+                <span className="text-xs text-slate-500 dark:text-gray-500">Ranked #{flexRank} of {data.peers.length}</span>
               )}
             </div>
             <span className={`text-sm px-2 py-0.5 rounded font-medium ${CONSENSUS_CONFIG[flex.consensus]?.bg} ${CONSENSUS_CONFIG[flex.consensus]?.text}`}>
               {flex.consensus}
             </span>
             {flex.price_target !== "—" && (
-              <span className="text-sm text-gray-300">PT: {flex.price_target}</span>
+              <span className="text-sm text-slate-700 dark:text-gray-300">PT: {flex.price_target}</span>
             )}
-            <span className="text-xs text-gray-500 ml-auto">{flex.action_count} recent actions</span>
+            <span className="text-xs text-slate-500 dark:text-gray-500 ml-auto">{flex.action_count} recent actions</span>
           </div>
           {flex.key_view && (
-            <p className="text-sm text-gray-400 mt-2 leading-relaxed italic">{flex.key_view}</p>
+            <p className="text-sm text-slate-600 dark:text-gray-400 mt-2 leading-relaxed italic">{flex.key_view}</p>
           )}
         </div>
       )}
@@ -160,8 +160,8 @@ export default function FlexBenchmark() {
           onClick={() => setView("consensus")}
           className={`px-3 py-1.5 text-xs rounded-lg border transition-colors ${
             view === "consensus"
-              ? "bg-blue-600 border-blue-500 text-white"
-              : "bg-[#1a1f2e] border-[#2a3045] text-gray-400 hover:text-gray-200"
+              ? "bg-blue-600 border-blue-500 text-slate-900 dark:text-white"
+              : "bg-slate-100 dark:bg-[#1a1f2e] border-slate-300 dark:border-[#2a3045] text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-200"
           }`}
         >
           Consensus Score
@@ -170,8 +170,8 @@ export default function FlexBenchmark() {
           onClick={() => setView("pt")}
           className={`px-3 py-1.5 text-xs rounded-lg border transition-colors ${
             view === "pt"
-              ? "bg-blue-600 border-blue-500 text-white"
-              : "bg-[#1a1f2e] border-[#2a3045] text-gray-400 hover:text-gray-200"
+              ? "bg-blue-600 border-blue-500 text-slate-900 dark:text-white"
+              : "bg-slate-100 dark:bg-[#1a1f2e] border-slate-300 dark:border-[#2a3045] text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-200"
           }`}
         >
           Price Targets
@@ -179,8 +179,8 @@ export default function FlexBenchmark() {
       </div>
 
       {/* Bar chart */}
-      <div className="bg-[#111827] border border-[#1e2535] rounded-xl p-4">
-        <p className="text-xs text-gray-500 mb-3">
+      <div className="bg-slate-50 dark:bg-[#111827] border border-slate-200 dark:border-[#1e2535] rounded-xl p-4">
+        <p className="text-xs text-slate-500 dark:text-gray-500 mb-3">
           {view === "consensus"
             ? "Analyst consensus score (3=Bullish, 2=Mixed, 1=Neutral, 0=Bearish)"
             : "Consensus price targets (USD)"}
@@ -226,8 +226,8 @@ export default function FlexBenchmark() {
               key={p.ticker}
               className={`rounded-lg border p-3 ${
                 isFlexCard
-                  ? "border-blue-700 bg-blue-900/10"
-                  : "border-[#1e2535] bg-[#111827]"
+                  ? "border-blue-300 dark:border-blue-700 bg-blue-100 dark:bg-blue-900/10"
+                  : "border-slate-200 dark:border-[#1e2535] bg-slate-50 dark:bg-[#111827]"
               }`}
             >
               <div className="flex items-center justify-between mb-1">
@@ -239,12 +239,12 @@ export default function FlexBenchmark() {
                 </span>
                 <span className="text-[10px] text-gray-600">#{i + 1}</span>
               </div>
-              <div className="text-[11px] text-gray-500 mb-2 truncate">{p.company}</div>
+              <div className="text-[11px] text-slate-500 dark:text-gray-500 mb-2 truncate">{p.company}</div>
               <div className={`text-xs px-2 py-0.5 rounded inline-block ${cfg.bg} ${cfg.text}`}>
                 {p.consensus}
               </div>
               {p.price_target !== "—" && (
-                <div className="text-xs text-gray-400 mt-1.5">PT {p.price_target}</div>
+                <div className="text-xs text-slate-600 dark:text-gray-400 mt-1.5">PT {p.price_target}</div>
               )}
               {p.action_count > 0 && (
                 <div className="text-[10px] text-gray-600 mt-1">{p.action_count} actions</div>

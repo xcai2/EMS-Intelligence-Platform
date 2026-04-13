@@ -66,11 +66,11 @@ const CONSENSUS_CONFIG: Record<
   Consensus,
   { bg: string; text: string; border: string; Icon: typeof TrendingUp }
 > = {
-  Bullish: { bg: "bg-green-900/30",  text: "text-green-300",  border: "border-green-700", Icon: TrendingUp  },
-  Mixed:   { bg: "bg-yellow-900/30", text: "text-yellow-300", border: "border-yellow-700", Icon: Minus       },
-  Neutral: { bg: "bg-gray-800/50",   text: "text-gray-300",   border: "border-gray-600",   Icon: Minus       },
-  Bearish: { bg: "bg-red-900/30",    text: "text-red-300",    border: "border-red-700",    Icon: TrendingDown },
-  Unknown: { bg: "bg-gray-800/30",   text: "text-gray-500",   border: "border-gray-700",   Icon: Minus       },
+  Bullish: { bg: "bg-green-100 dark:bg-green-900/30",  text: "text-green-700 dark:text-green-300",  border: "border-green-300 dark:border-green-700", Icon: TrendingUp  },
+  Mixed:   { bg: "bg-yellow-100 dark:bg-yellow-900/30", text: "text-yellow-700 dark:text-yellow-300", border: "border-yellow-300 dark:border-yellow-700", Icon: Minus       },
+  Neutral: { bg: "bg-slate-200/50 dark:bg-gray-800/50",   text: "text-slate-700 dark:text-gray-300",   border: "border-slate-300 dark:border-gray-600",   Icon: Minus       },
+  Bearish: { bg: "bg-red-100 dark:bg-red-900/30",    text: "text-red-700 dark:text-red-300",    border: "border-red-300 dark:border-red-700",    Icon: TrendingDown },
+  Unknown: { bg: "bg-slate-200/30 dark:bg-gray-800/30",   text: "text-slate-500 dark:text-gray-500",   border: "border-slate-200 dark:border-gray-700",   Icon: Minus       },
 };
 
 // ---------------------------------------------------------------------------
@@ -99,11 +99,11 @@ function StatStrip({ intel }: { intel: CompanyIntelResponse | null }) {
   const bearish = ems.filter((c) => c.consensus === "Bearish").length;
 
   return (
-    <div className="flex flex-wrap gap-3 px-4 py-2 bg-[#0d1117] border-b border-[#1e2535] text-xs">
+    <div className="flex flex-wrap gap-3 px-4 py-2 bg-slate-50 dark:bg-[#0d1117] border-b border-slate-200 dark:border-[#1e2535] text-xs">
       {flex && (
         <>
           <div className="flex items-center gap-1.5">
-            <span className="text-gray-500">FLEX</span>
+            <span className="text-slate-500 dark:text-gray-500">FLEX</span>
             {(() => {
               const cfg = CONSENSUS_CONFIG[flex.consensus] ?? CONSENSUS_CONFIG.Unknown;
               return (
@@ -113,21 +113,21 @@ function StatStrip({ intel }: { intel: CompanyIntelResponse | null }) {
               );
             })()}
             {flex.price_target !== "—" && (
-              <span className="text-gray-400">{flex.price_target}</span>
+              <span className="text-slate-600 dark:text-gray-400">{flex.price_target}</span>
             )}
           </div>
-          <span className="text-[#1e2535]">|</span>
+          <span className="text-slate-300 dark:text-[#1e2535]">|</span>
         </>
       )}
-      <div className="flex items-center gap-1.5 text-gray-500">
-        <span className="text-green-400 font-semibold">{bullish}</span> bull
+      <div className="flex items-center gap-1.5 text-slate-500 dark:text-gray-500">
+        <span className="text-green-600 dark:text-green-400 font-semibold">{bullish}</span> bull
         <span className="text-gray-600 mx-1">/</span>
-        <span className="text-red-400 font-semibold">{bearish}</span> bear
+        <span className="text-red-600 dark:text-red-400 font-semibold">{bearish}</span> bear
         <span className="text-gray-600 ml-1">across EMS</span>
       </div>
       {intel.cached_at && (
         <>
-          <span className="text-[#1e2535]">|</span>
+          <span className="text-slate-300 dark:text-[#1e2535]">|</span>
           <span className="text-gray-600">Updated {timeAgo(intel.cached_at)}</span>
         </>
       )}
@@ -169,21 +169,21 @@ export default function AnalystViewPageFeature() {
   }, [fetchIntel]);
 
   return (
-    <div className="flex flex-col h-full bg-[#0a0e1a] text-gray-100">
+    <div className="flex flex-col h-full bg-slate-50 dark:bg-[#0a0e1a] text-slate-900 dark:text-gray-100">
       {/* Page header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[#1e2535]">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-[#1e2535]">
         <div>
-          <h1 className="text-base font-semibold text-white tracking-tight">
+          <h1 className="text-base font-semibold text-slate-900 dark:text-white tracking-tight">
             Analyst Intelligence
           </h1>
-          <p className="text-xs text-gray-500 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-gray-500 mt-0.5">
             EMS &amp; Hyperscaler coverage · auto-refreshes every 5 min
           </p>
         </div>
         <button
           onClick={() => fetchIntel(true)}
           disabled={refreshing}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-[#1a1f2e] border border-[#2a3045] text-gray-400 hover:text-gray-200 hover:border-gray-500 disabled:opacity-50 transition-colors"
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-slate-100 dark:bg-[#1a1f2e] border border-slate-300 dark:border-[#2a3045] text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-200 hover:border-slate-400 dark:hover:border-gray-500 disabled:opacity-50 transition-colors"
         >
           <RefreshCw size={12} className={refreshing ? "animate-spin" : ""} />
           {refreshing ? "Refreshing…" : "Refresh"}
@@ -192,7 +192,7 @@ export default function AnalystViewPageFeature() {
 
       {/* Warning banner */}
       {intelWarning && (
-        <div className="flex items-center gap-2 px-4 py-2 bg-yellow-900/20 border-b border-yellow-800/50 text-yellow-300 text-xs">
+        <div className="flex items-center gap-2 px-4 py-2 bg-yellow-100 dark:bg-yellow-900/20 border-b border-yellow-200 dark:border-yellow-800/50 text-yellow-700 dark:text-yellow-300 text-xs">
           <AlertCircle size={12} className="shrink-0" />
           {intelWarning}
         </div>
@@ -202,15 +202,15 @@ export default function AnalystViewPageFeature() {
       {!intelLoading && <StatStrip intel={intel} />}
 
       {/* Tab bar */}
-      <div className="flex items-center gap-0.5 px-3 pt-2 border-b border-[#1e2535] overflow-x-auto scrollbar-none">
+      <div className="flex items-center gap-0.5 px-3 pt-2 border-b border-slate-200 dark:border-[#1e2535] overflow-x-auto scrollbar-none">
         {TABS.map((tab) => (
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`flex items-center gap-1.5 px-3 py-2 text-xs rounded-t-lg border-b-2 whitespace-nowrap transition-colors ${
               activeTab === tab.id
-                ? "border-blue-500 text-blue-400 bg-blue-900/10"
-                : "border-transparent text-gray-500 hover:text-gray-300 hover:bg-[#1a1f2e]"
+                ? "border-blue-500 text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/10"
+                : "border-transparent text-slate-500 dark:text-gray-500 hover:text-slate-700 dark:hover:text-gray-300 hover:bg-slate-100 dark:hover:bg-[#1a1f2e]"
             }`}
           >
             <span>{tab.icon}</span>
@@ -230,8 +230,8 @@ export default function AnalystViewPageFeature() {
         {activeTab === "companies" && (
           <div className="space-y-6">
             <ConsensusView />
-            <div className="border-t border-[#1e2535] pt-6">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+            <div className="border-t border-slate-200 dark:border-[#1e2535] pt-6">
+              <p className="text-xs font-semibold text-slate-600 dark:text-gray-400 uppercase tracking-wider mb-4">
                 Flex vs EMS Peers
               </p>
               <FlexBenchmark />
@@ -242,8 +242,8 @@ export default function AnalystViewPageFeature() {
         {activeTab === "analysts" && (
           <div className="space-y-6">
             <AnalystCards />
-            <div className="border-t border-[#1e2535] pt-6">
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+            <div className="border-t border-slate-200 dark:border-[#1e2535] pt-6">
+              <p className="text-xs font-semibold text-slate-600 dark:text-gray-400 uppercase tracking-wider mb-4">
                 Coverage Matrix
               </p>
               <CoverageMap />
@@ -266,7 +266,7 @@ export default function AnalystViewPageFeature() {
         {activeTab === "feed" && (
           <div className="space-y-6">
             <div>
-              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+              <p className="text-xs font-semibold text-slate-600 dark:text-gray-400 uppercase tracking-wider mb-4">
                 Ratings &amp; Actions Feed
               </p>
               <RatingsFeed />
