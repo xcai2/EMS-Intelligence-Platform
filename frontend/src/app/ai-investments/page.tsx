@@ -10,10 +10,8 @@ import {
   Building2,
   Cpu,
   Zap,
-  Globe,
   RefreshCw,
   Server,
-  ExternalLink,
 } from 'lucide-react';
 import {
   BarChart,
@@ -194,7 +192,7 @@ export default function AIInvestmentsPage() {
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
-          <div className="grid grid-cols-1 xl:grid-cols-[1.35fr_1fr] gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <div>
               <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-4">
                 {data.companies.map((company) => (
@@ -288,65 +286,6 @@ export default function AIInvestmentsPage() {
               )}
             </div>
 
-            <div className="rounded-xl border border-slate-200 bg-gradient-to-r from-slate-50 to-slate-100 p-4 dark:border-slate-700 dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-800">
-              <h3 className="mb-3 flex items-center gap-2 font-semibold text-slate-900 dark:text-white">
-                <Globe className="h-5 w-5 text-blue-500 dark:text-blue-400" />
-                Stargate Project
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-3">
-                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Total Investment</p>
-                  <p className="text-2xl font-bold text-slate-900 dark:text-white">${data.stargate_project.total_investment_billions}B</p>
-                </div>
-                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Timeline</p>
-                  <p className="text-xl font-bold text-slate-900 dark:text-white">{data.stargate_project.timeline}</p>
-                </div>
-                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Initial Deployment</p>
-                  <p className="text-xl font-bold text-slate-900 dark:text-white">${data.stargate_project.initial_deployment_billions}B</p>
-                </div>
-                <div className="rounded-xl bg-white p-3 ring-1 ring-slate-200 dark:bg-white/10 dark:ring-0">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">Planned Capacity</p>
-                  <p className="text-xl font-bold text-slate-900 dark:text-white">{data.stargate_project.planned_capacity_gw}GW</p>
-                </div>
-              </div>
-              <div className="mt-4 flex flex-wrap gap-3">
-                <div>
-                  <p className="mb-2 text-sm text-slate-500 dark:text-slate-400">Partners</p>
-                  <div className="flex flex-wrap gap-2">
-                    {data.stargate_project.partners.map((partner) => (
-                      <Badge key={partner} className="bg-blue-100 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300">
-                        {partner}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <p className="mb-2 text-sm text-slate-500 dark:text-slate-400">Locations</p>
-                  <div className="flex flex-wrap gap-2">
-                    {data.stargate_project.locations.map((location) => (
-                      <Badge key={location} className="bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-300">
-                        {location}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 border-t border-slate-200 pt-4 dark:border-white/10">
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Source: Futurum Research
-                  <a
-                    href="https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="ml-2 inline-flex items-center gap-1 text-blue-400 hover:text-blue-300"
-                  >
-                    Read Full Report <ExternalLink className="h-3 w-3" />
-                  </a>
-                </p>
-              </div>
-            </div>
           </div>
         </CardContent>
       </Card>
@@ -410,13 +349,13 @@ export default function AIInvestmentsPage() {
             <ResponsiveContainer width="100%" height={220}>
               <BarChart data={chartData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
-                <XAxis type="number" unit="B" />
-                <YAxis type="category" dataKey="name" width={80} />
+                <XAxis type="number" unit="B" tick={{ fontSize: 11 }} />
+                <YAxis type="category" dataKey="name" width={80} tick={{ fontSize: 11 }} />
                 <Tooltip
                   formatter={(value) => [`$${value}B`, '']}
                   contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
                 />
-                <Legend />
+                <Legend wrapperStyle={{ fontSize: 11 }} />
                 <Bar dataKey="capex_2025" name="2025 CapEx" fill="#A78BFA" radius={[0, 4, 4, 0]} />
                 <Bar dataKey="capex_2026" name="2026 CapEx" radius={[0, 4, 4, 0]}>
                   {chartData.map((entry, index) => (
@@ -427,7 +366,8 @@ export default function AIInvestmentsPage() {
             </ResponsiveContainer>
             <ChartDescription
               description="2025 vs 2026 CapEx by company. 2026 projections reflect near-doubling of AI infrastructure investment."
-              source={data.source}
+              source="Financial Statements + Futurum Research"
+              sourceUrl="https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/"
               lastUpdated={data.last_updated}
             />
           </CardContent>
@@ -455,6 +395,8 @@ export default function AIInvestmentsPage() {
                   paddingAngle={2}
                   dataKey="value"
                   label={({ name, percent = 0 }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  labelLine={{ stroke: '#94a3b8', strokeWidth: 1 }}
+                  style={{ fontSize: 10 }}
                 >
                   {pieData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
@@ -465,7 +407,7 @@ export default function AIInvestmentsPage() {
             </ResponsiveContainer>
             <ChartDescription
               description="Share of 2026 AI infrastructure spending by company."
-              source="Company Earnings Reports"
+              source="Financial Statements (SEC Filings)"
             />
           </CardContent>
         </Card>
