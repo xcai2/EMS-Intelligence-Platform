@@ -20,14 +20,18 @@ from backend.reports.scheduler import (
     get_generated_reports,
 )
 from backend.reports.calendar import (
-    get_earnings_calendar,
+    get_earnings_calendar as _legacy_get_earnings_calendar,
     sync_earnings_to_calendar,
-    get_upcoming_events,
-    get_calendar_summary,
+    get_upcoming_events as _legacy_get_upcoming_events,
+    get_calendar_summary as _legacy_get_calendar_summary,
     get_company_calendar,
     add_calendar_event,
     confirm_earnings,
     export_ical,
+)
+from backend.analyst_view.earnings_calendar_service import (
+    get_full_earnings_calendar,
+    sync_confirmed_dates_from_web,
 )
 
 router = APIRouter()
@@ -130,43 +134,45 @@ async def list_generated_reports(limit: int = 10):
     }
 
 
-# ============== Calendar Routes ==============
+# ============== Calendar Routes (powered by earnings_calendar_service) ==============
 
 @router.get("/calendar")
 async def get_calendar(year: Optional[int] = None):
-    """Get earnings calendar for a year."""
+    """Full EMS earnings calendar with structured dates, confidence, and countdown."""
     try:
-        if year is None:
-            year = datetime.now().year
-        events = get_earnings_calendar(year)
-        return {
-            "year": year,
-            "events": events,
-            "total": len(events),
-        }
+        payload = get_full_earnings_calendar(horizon_months=9)
+        return payload
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.post("/calendar/sync")
 async def sync_calendar():
-    """Sync/refresh earnings calendar."""
+    """Search web for confirmed earnings dates and update SQLite."""
     try:
-        result = sync_earnings_to_calendar()
-        return result
+        sync_result = await sync_confirmed_dates_from_web()
+        calendar = get_full_earnings_calendar(horizon_months=9)
+        return {**sync_result, "calendar": calendar}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @router.get("/calendar/upcoming")
-async def get_upcoming(days: int = 30):
-    """Get upcoming calendar events."""
+async def get_upcoming(days: int = 60):
+    """Get upcoming earnings events within N days."""
     try:
-        events = get_upcoming_events(days)
+        from datetime import date, timedelta
+        today = date.today()
+        cutoff = today + timedelta(days=days)
+        payload = get_full_earnings_calendar(horizon_months=9)
+        filtered = [
+            e for e in payload["upcoming"]
+            if e["release_date"] <= cutoff.isoformat()
+        ]
         return {
             "days": days,
-            "events": events,
-            "total": len(events),
+            "events": filtered,
+            "total": len(filtered),
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -174,9 +180,26 @@ async def get_upcoming(days: int = 30):
 
 @router.get("/calendar/summary")
 async def calendar_summary():
-    """Get calendar summary statistics."""
+    """Calendar summary statistics."""
     try:
-        return get_calendar_summary()
+        from datetime import date, timedelta
+        today = date.today()
+        payload = get_full_earnings_calendar(horizon_months=9)
+        upcoming = payload["upcoming"]
+
+        within_7 = [e for e in upcoming if e["release_date"] <= (today + timedelta(days=7)).isoformat()]
+        within_30 = [e for e in upcoming if e["release_date"] <= (today + timedelta(days=30)).isoformat()]
+        confirmed = [e for e in upcoming if e["data_status"] == "confirmed"]
+        next_event = upcoming[0] if upcoming else None
+
+        return {
+            "total_events": payload["total_events"],
+            "confirmed_events": len(confirmed),
+            "upcoming_30_days": len(within_30),
+            "upcoming_7_days": len(within_7),
+            "next_event": next_event,
+            "companies_tracked": len(payload["companies"]),
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

@@ -46,6 +46,18 @@ def init_db() -> None:
                 created_at           TEXT NOT NULL
             );
 
+            CREATE TABLE IF NOT EXISTS confirmed_earnings (
+                ticker        TEXT NOT NULL,
+                quarter       TEXT NOT NULL,
+                fiscal_year   INTEGER NOT NULL,
+                release_date  TEXT NOT NULL,
+                call_date     TEXT,
+                call_time     TEXT,
+                source_url    TEXT,
+                fetched_at    TEXT NOT NULL,
+                PRIMARY KEY (ticker, quarter, fiscal_year)
+            );
+
             CREATE TABLE IF NOT EXISTS sentiment_snaps (
                 id               INTEGER PRIMARY KEY AUTOINCREMENT,
                 ticker           TEXT NOT NULL,
@@ -125,6 +137,47 @@ def get_key_quotes(
             f"SELECT * FROM key_quotes WHERE {where} ORDER BY created_at DESC LIMIT ?",
             params,
         ).fetchall()
+
+
+# ---------------------------------------------------------------------------
+# Confirmed earnings helpers
+# ---------------------------------------------------------------------------
+
+def upsert_confirmed_earning(
+    ticker: str, quarter: str, fiscal_year: int,
+    release_date: str, call_date: str | None, call_time: str | None,
+    source_url: str | None, fetched_at: str,
+) -> None:
+    with _connect() as conn:
+        conn.execute(
+            """INSERT INTO confirmed_earnings
+               (ticker, quarter, fiscal_year, release_date, call_date, call_time, source_url, fetched_at)
+               VALUES (?,?,?,?,?,?,?,?)
+               ON CONFLICT(ticker, quarter, fiscal_year) DO UPDATE SET
+                 release_date=excluded.release_date,
+                 call_date=excluded.call_date,
+                 call_time=excluded.call_time,
+                 source_url=excluded.source_url,
+                 fetched_at=excluded.fetched_at""",
+            (ticker, quarter, fiscal_year, release_date, call_date, call_time, source_url, fetched_at),
+        )
+
+
+def get_all_confirmed_earnings() -> dict[tuple[str, str, int], dict]:
+    """Return {(ticker, quarter, fy): {release_date, call_date, ...}} for all rows."""
+    with _connect() as conn:
+        rows = conn.execute("SELECT * FROM confirmed_earnings").fetchall()
+    result = {}
+    for r in rows:
+        key = (r["ticker"], r["quarter"], r["fiscal_year"])
+        result[key] = {
+            "release_date": r["release_date"],
+            "call_date": r["call_date"],
+            "call_time": r["call_time"],
+            "source_url": r["source_url"],
+            "fetched_at": r["fetched_at"],
+        }
+    return result
 
 
 # ---------------------------------------------------------------------------

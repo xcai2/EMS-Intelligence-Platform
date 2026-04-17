@@ -10,7 +10,6 @@ import {
   RefreshCw,
   ArrowUpRight,
   Cpu,
-  CalendarDays,
 } from 'lucide-react';
 import {
   BarChart,
@@ -26,12 +25,22 @@ import {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
+interface RevenueGrowth {
+  growth_pct: number | null;
+  latest_revenue: string | null;
+  prior_revenue: string | null;
+  years: string | null;
+}
+
 interface CompetitorInvestment {
   company: string;
+  ticker: string;
+  revenue_growth: RevenueGrowth;
   investment_focus: string[];
+  outlook_label: string;
+  sentiment_score: number;
   guidance_outlook: string;
   recent_highlights: string[];
-  ai_growth_pct: number;
 }
 
 interface HyperscalerDemand {
@@ -41,9 +50,8 @@ interface HyperscalerDemand {
 }
 
 interface CompetitorData {
-  as_of?: string;
+  generated_at?: string;
   growth_definition?: string;
-  growth_period?: string;
   competitors: CompetitorInvestment[];
   hyperscaler_demand: HyperscalerDemand;
 }
@@ -53,15 +61,6 @@ interface CompanySentiment {
   documents_analyzed: number;
   sentiment_score: number;
   ai_mentions: number;
-}
-
-interface EarningsCalendarRow {
-  company: string;
-  q1: string;
-  q2: string;
-  q3: string;
-  q4: string;
-  fy: string;
 }
 
 const COMPANY_COLORS: Record<string, string> = {
@@ -81,58 +80,9 @@ const OUTLOOK_COLORS: Record<string, string> = {
   'Cautious': 'border border-amber-300 bg-amber-100 text-amber-700 dark:border-amber-700 dark:bg-amber-900/40 dark:text-amber-200',
 };
 
-const ESTIMATED_EARNINGS_2026: EarningsCalendarRow[] = [
-  {
-    company: 'Flex',
-    q1: '2026/06/28',
-    q2: '2026/09/27',
-    q3: '2026/12/31',
-    q4: '2026/03/31',
-    fy: '2027/03/31',
-  },
-  {
-    company: 'Benchmark',
-    q1: '2026/03/31',
-    q2: '2026/06/30',
-    q3: '2026/09/30',
-    q4: '2026/12/31',
-    fy: '2026/12/31',
-  },
-  {
-    company: 'Jabil',
-    q1: '2026/11/30',
-    q2: '2026/03/18',
-    q3: '2026/05/31',
-    q4: '2026/08/31',
-    fy: '2026/08/31',
-  },
-  {
-    company: 'Celestica',
-    q1: '2026/03/31',
-    q2: '2026/06/30',
-    q3: '2026/09/30',
-    q4: '2026/12/31',
-    fy: '2026/12/31',
-  },
-  {
-    company: 'Sanmina',
-    q1: '2026/12/27',
-    q2: '2026/03/29',
-    q3: '2026/06/28',
-    q4: '2026/09/27',
-    fy: '2026/09/27',
-  },
-  {
-    company: 'Plexus',
-    q1: '—',
-    q2: '—',
-    q3: '—',
-    q4: '—',
-    fy: '—',
-  },
-];
 
-function getOutlookStyle(outlook: string): string {
+function getOutlookStyle(outlook: string | undefined | null): string {
+  if (!outlook) return 'border border-slate-300 bg-slate-100 text-slate-700 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200';
   for (const [key, value] of Object.entries(OUTLOOK_COLORS)) {
     if (outlook.toLowerCase().includes(key.toLowerCase())) {
       return value;
@@ -146,7 +96,6 @@ export default function CompetitorInvestmentsPage() {
   const [sentiment, setSentiment] = useState<CompanySentiment[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCompany, setSelectedCompany] = useState<CompetitorInvestment | null>(null);
-  const [earningsView, setEarningsView] = useState<'next' | 'full'>('next');
 
   useEffect(() => {
     fetchData();
@@ -182,59 +131,6 @@ export default function CompetitorInvestmentsPage() {
     company: row.company,
     sentiment: Math.round((row.sentiment_score || 0) * 100),
   }));
-
-  const parseCalendarDate = (value: string): Date | null => {
-    if (!value || value === '—') return null;
-    const parsed = new Date(value.replace(/\//g, '-') + 'T00:00:00');
-    return Number.isNaN(parsed.getTime()) ? null : parsed;
-  };
-
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  const nextReleaseRows = ESTIMATED_EARNINGS_2026.map((row) => {
-    const rawEvents = [
-      { label: 'Q1', date: row.q1 },
-      { label: 'Q2', date: row.q2 },
-      { label: 'Q3', date: row.q3 },
-      { label: 'Q4', date: row.q4 },
-      { label: 'FY', date: row.fy },
-    ]
-      .map((item) => ({ ...item, parsed: parseCalendarDate(item.date) }))
-      .filter((item) => item.parsed !== null) as Array<{ label: string; date: string; parsed: Date }>;
-
-    rawEvents.sort((a, b) => a.parsed.getTime() - b.parsed.getTime());
-
-    const dedupByDate = new Map<string, { date: string; parsed: Date; labels: string[] }>();
-    for (const event of rawEvents) {
-      const key = event.date;
-      if (!dedupByDate.has(key)) {
-        dedupByDate.set(key, { date: event.date, parsed: event.parsed, labels: [event.label] });
-      } else {
-        dedupByDate.get(key)!.labels.push(event.label);
-      }
-    }
-    const mergedEvents = Array.from(dedupByDate.values()).sort((a, b) => a.parsed.getTime() - b.parsed.getTime());
-
-    const nextEvent = mergedEvents.find((event) => event.parsed.getTime() >= today.getTime()) || mergedEvents[0];
-    const daysLeft = nextEvent
-      ? Math.ceil((nextEvent.parsed.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
-      : null;
-
-    return {
-      company: row.company,
-      nextDate: nextEvent?.date || '—',
-      nextLabel: nextEvent ? nextEvent.labels.join(' + ') : '—',
-      daysLeft,
-    };
-  }).sort((a, b) => {
-    if (a.nextDate === '—' && b.nextDate === '—') return 0;
-    if (a.nextDate === '—') return 1;
-    if (b.nextDate === '—') return -1;
-    const ad = parseCalendarDate(a.nextDate)?.getTime() || Number.MAX_SAFE_INTEGER;
-    const bd = parseCalendarDate(b.nextDate)?.getTime() || Number.MAX_SAFE_INTEGER;
-    return ad - bd;
-  });
 
   if (loading) {
     return (
@@ -287,9 +183,8 @@ export default function CompetitorInvestmentsPage() {
                 Competitive Snapshot
               </h2>
               <p className="mb-2 text-[11px] text-slate-500 dark:text-slate-300">
-                Growth metric: {data.growth_definition || 'Composite'}
-                {data.growth_period ? ` · period ${data.growth_period}` : ''}
-                {data.as_of ? ` · as of ${data.as_of}` : ''}
+                {data.growth_definition || 'Revenue growth'}
+                {data.generated_at ? ` · generated ${new Date(data.generated_at).toLocaleDateString()}` : ''}
               </p>
               <div className="grid grid-cols-[1.4fr_0.7fr_0.7fr_1fr] gap-2 border-b border-slate-200 pb-2 text-[11px] font-semibold uppercase tracking-wide text-slate-500 dark:border-slate-700 dark:text-slate-300">
                 <span>Company</span>
@@ -323,13 +218,21 @@ export default function CompetitorInvestmentsPage() {
                         </div>
                       </div>
                       <div>
-                        <p className="font-semibold text-slate-900 dark:text-slate-100">+{company.ai_growth_pct}%</p>
-                        <p className="text-[10px] text-slate-500 dark:text-slate-300">Composite</p>
+                        {company.revenue_growth?.growth_pct != null ? (
+                          <>
+                            <p className={`font-semibold ${company.revenue_growth.growth_pct >= 0 ? 'text-green-700 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                              {company.revenue_growth.growth_pct >= 0 ? '+' : ''}{company.revenue_growth.growth_pct}%
+                            </p>
+                            <p className="text-[10px] text-slate-500 dark:text-slate-300">{company.revenue_growth.years}</p>
+                          </>
+                        ) : (
+                          <p className="text-xs text-slate-400">—</p>
+                        )}
                       </div>
                       <p className="font-semibold text-slate-900 dark:text-slate-100">{company.investment_focus.length}</p>
                       <div>
-                        <Badge className={getOutlookStyle(company.guidance_outlook)}>
-                          {company.guidance_outlook.split('-')[0].trim()}
+                        <Badge className={getOutlookStyle(company.outlook_label)}>
+                          {company.outlook_label || '—'}
                         </Badge>
                       </div>
                     </button>
@@ -402,14 +305,38 @@ export default function CompetitorInvestmentsPage() {
                 </h2>
 
                 <div className="space-y-3">
+                  {/* Revenue snapshot */}
+                  {selectedCompany.revenue_growth?.latest_revenue && (
+                    <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900">
+                      <h4 className="mb-1 text-sm font-semibold text-slate-700 dark:text-slate-200">Revenue</h4>
+                      <p className="text-lg font-bold text-slate-900 dark:text-white">
+                        {selectedCompany.revenue_growth.latest_revenue}
+                        {selectedCompany.revenue_growth.growth_pct != null && (
+                          <span className={`ml-2 text-sm font-semibold ${selectedCompany.revenue_growth.growth_pct >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+                            {selectedCompany.revenue_growth.growth_pct >= 0 ? '+' : ''}{selectedCompany.revenue_growth.growth_pct}% YoY
+                          </span>
+                        )}
+                      </p>
+                      <p className="text-[10px] text-slate-500 dark:text-slate-400">
+                        {selectedCompany.revenue_growth.years}
+                        {selectedCompany.revenue_growth.prior_revenue && ` · prior: ${selectedCompany.revenue_growth.prior_revenue}`}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Guidance Outlook */}
                   <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900">
                     <h4 className="mb-1 flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
                       <Lightbulb className="h-4 w-4 text-amber-500" />
                       Guidance Outlook
+                      <Badge className={getOutlookStyle(selectedCompany.outlook_label)}>
+                        {selectedCompany.outlook_label}
+                      </Badge>
                     </h4>
-                    <p className="text-sm text-slate-700 dark:text-slate-200">{selectedCompany.guidance_outlook}</p>
+                    <p className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">{selectedCompany.guidance_outlook}</p>
                   </div>
 
+                  {/* Focus Areas */}
                   <div className="rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900">
                     <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
                       <Target className="h-4 w-4 text-indigo-500" />
@@ -424,6 +351,7 @@ export default function CompetitorInvestmentsPage() {
                     </div>
                   </div>
 
+                  {/* Recent Highlights */}
                   <div className="min-h-0 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900">
                     <h4 className="mb-2 flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
                       <ArrowUpRight className="h-4 w-4 text-green-500" />
@@ -436,95 +364,6 @@ export default function CompetitorInvestmentsPage() {
                         </li>
                       ))}
                     </ul>
-                  </div>
-
-                  <div className="min-h-0 rounded-xl border border-slate-200 bg-white p-3 dark:border-slate-700 dark:bg-slate-900">
-                    <div className="mb-2 flex items-center justify-between">
-                      <h4 className="flex items-center gap-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
-                        <CalendarDays className="h-4 w-4 text-indigo-500" />
-                        Earnings Calendar
-                      </h4>
-                      <span className="rounded-full bg-indigo-50 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-200">
-                        2026 (Projected)
-                      </span>
-                    </div>
-                    <div className="mb-2 inline-flex rounded-lg border border-slate-200 bg-slate-50 p-1 dark:border-slate-700 dark:bg-slate-800">
-                      <button
-                        type="button"
-                        onClick={() => setEarningsView('next')}
-                        className={`rounded-md px-2 py-1 text-[11px] font-semibold transition ${
-                          earningsView === 'next'
-                            ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-slate-100'
-                            : 'text-slate-500 dark:text-slate-300'
-                        }`}
-                      >
-                        Next Releases
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setEarningsView('full')}
-                        className={`rounded-md px-2 py-1 text-[11px] font-semibold transition ${
-                          earningsView === 'full'
-                            ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-700 dark:text-slate-100'
-                            : 'text-slate-500 dark:text-slate-300'
-                        }`}
-                      >
-                        Full Schedule
-                      </button>
-                    </div>
-
-                    {earningsView === 'next' ? (
-                      <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
-                        <div className="grid grid-cols-[1.05fr_0.95fr_0.9fr_0.7fr] gap-1 bg-slate-50 px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:bg-slate-800 dark:text-slate-300">
-                          <span>Company</span>
-                          <span>Next Date</span>
-                          <span>Next Event</span>
-                          <span>Days</span>
-                        </div>
-                        <div className="divide-y divide-slate-200 dark:divide-slate-700">
-                          {nextReleaseRows.map((row) => (
-                            <div
-                              key={row.company}
-                              className="grid grid-cols-[1.05fr_0.95fr_0.9fr_0.7fr] gap-1 px-2 py-1.5 text-[11px] text-slate-700 dark:text-slate-200"
-                            >
-                              <span className="font-semibold">{row.company}</span>
-                              <span>{row.nextDate}</span>
-                              <span className="font-medium">{row.nextLabel}</span>
-                              <span>{row.daysLeft === null ? '—' : row.daysLeft <= 0 ? 'Today' : `${row.daysLeft}d`}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
-                        <div className="grid grid-cols-[1.15fr_0.8fr_0.8fr_0.8fr_0.8fr_0.8fr] gap-1 bg-slate-50 px-2 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-slate-500 dark:bg-slate-800 dark:text-slate-300">
-                          <span>Company</span>
-                          <span>Q1</span>
-                          <span>Q2</span>
-                          <span>Q3</span>
-                          <span>Q4</span>
-                          <span>FY</span>
-                        </div>
-                        <div className="divide-y divide-slate-200 dark:divide-slate-700">
-                          {ESTIMATED_EARNINGS_2026.map((row) => (
-                            <div
-                              key={row.company}
-                              className="grid grid-cols-[1.15fr_0.8fr_0.8fr_0.8fr_0.8fr_0.8fr] gap-1 px-2 py-1.5 text-[11px] text-slate-700 dark:text-slate-200"
-                            >
-                              <span className="font-semibold">{row.company}</span>
-                              <span>{row.q1}</span>
-                              <span>{row.q2}</span>
-                              <span>{row.q3}</span>
-                              <span>{row.q4}</span>
-                              <span className="font-medium">{row.fy}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    <p className="mt-2 text-[10px] text-slate-500 dark:text-slate-300">
-                      Projected from the historical quarter-end pattern you provided.
-                    </p>
                   </div>
                 </div>
               </section>

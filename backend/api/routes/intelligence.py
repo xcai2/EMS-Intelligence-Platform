@@ -12,6 +12,7 @@ Features:
 from collections import Counter
 from datetime import datetime
 import json
+import logging
 from pathlib import Path
 from typing import Optional
 
@@ -19,9 +20,14 @@ from fastapi import APIRouter
 from backend.analytics.classifier import classify_company_investments
 from backend.analytics.sentiment import analyze_company_sentiment
 from backend.analytics.trends import analyze_company_trends
-from backend.core.config import TRACKED_COMPANY_NAMES
+from backend.analytics.table_extractor import extract_company_financials
+from backend.core.cache import analytics_cache
+from backend.core.config import TRACKED_COMPANY_NAMES, COMPANY_NAME_TO_TICKER
 from backend.core.database import get_all_collections_stats
+from backend.core.llm_client import llm_complete
 from backend.rag.retriever import search_documents
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
@@ -95,6 +101,133 @@ def _extract_evidence_highlights(company: str) -> list[str]:
             break
 
     return highlights or ["No high-confidence evidence snippet found in current indexed documents."]
+
+
+def _extract_revenue_growth(company: str) -> dict:
+    """
+    Extract YoY revenue growth from SEC filings via regex.
+    Returns {"growth_pct": float | None, "latest_revenue": str, "prior_revenue": str, "years": str}.
+    """
+    financials = extract_company_financials(company)
+    fiscal_years = financials.get("fiscal_years", {})
+
+    # Filter out "Unknown" keys and sort numerically
+    valid_years = sorted(
+        [y for y in fiscal_years if y != "Unknown" and y.isdigit()],
+        key=int,
+    )
+
+    if len(valid_years) >= 2:
+        latest_year = valid_years[-1]
+        prior_year = valid_years[-2]
+        latest_rev = fiscal_years[latest_year].get("revenue")
+        prior_rev = fiscal_years[prior_year].get("revenue")
+
+        if latest_rev and prior_rev and prior_rev > 0:
+            growth = round((latest_rev - prior_rev) / prior_rev * 100, 1)
+            return {
+                "growth_pct": growth,
+                "latest_revenue": f"${latest_rev / 1e9:.1f}B" if latest_rev >= 1e9 else f"${latest_rev / 1e6:.0f}M",
+                "prior_revenue": f"${prior_rev / 1e9:.1f}B" if prior_rev >= 1e9 else f"${prior_rev / 1e6:.0f}M",
+                "years": f"FY{prior_year}→FY{latest_year}",
+            }
+    # Fallback: only one year or no revenue found
+    if valid_years:
+        latest_year = valid_years[-1]
+        rev = fiscal_years[latest_year].get("revenue")
+        if rev:
+            return {
+                "growth_pct": None,
+                "latest_revenue": f"${rev / 1e9:.1f}B" if rev >= 1e9 else f"${rev / 1e6:.0f}M",
+                "prior_revenue": None,
+                "years": f"FY{latest_year}",
+            }
+    return {"growth_pct": None, "latest_revenue": None, "prior_revenue": None, "years": None}
+
+
+def _extract_guidance_outlook_llm(company: str) -> str:
+    """
+    Use LLM to summarise management's forward-looking guidance from MD&A /
+    earnings call transcripts stored in ChromaDB.
+    Falls back to a simple label if the LLM call fails.
+    """
+    cache_key = f"competitor:guidance:{company}"
+    cached = analytics_cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    docs = search_documents(
+        query=f"{company} management guidance outlook expect forecast future revenue growth",
+        company_filter=company,
+        n_results=10,
+    )
+    if not docs:
+        return "No guidance data available."
+
+    context = "\n\n".join(doc["content"][:600] for doc in docs[:6])
+
+    try:
+        result = llm_complete(
+            messages=[{
+                "role": "user",
+                "content": (
+                    f"Based on these excerpts from {company}'s SEC filings and earnings materials, "
+                    f"write a 1–2 sentence summary of management's forward-looking guidance and outlook. "
+                    f"Focus on revenue expectations, growth drivers, and any cautionary notes.\n\n"
+                    f"{context}"
+                ),
+            }],
+            system="You are a concise financial analyst. Return ONLY the 1-2 sentence summary, no preamble.",
+            model_key="fast",
+            max_tokens=200,
+        )
+        summary = result.strip() if isinstance(result, str) else str(result).strip()
+    except Exception as e:
+        logger.warning(f"LLM guidance extraction failed for {company}: {e}")
+        summary = "Guidance extraction unavailable."
+
+    analytics_cache.set(cache_key, summary)
+    return summary
+
+
+def _build_dynamic_competitors() -> list[dict]:
+    """
+    Build fully dynamic competitor data from ChromaDB documents.
+    Replaces the old hardcoded EMS_AI_DYNAMICS.
+    """
+    competitors = []
+    for company in TRACKED_COMPANIES:
+        ticker = COMPANY_NAME_TO_TICKER.get(company, "")
+
+        # 1. Revenue growth (regex from SEC filings)
+        revenue = _extract_revenue_growth(company)
+
+        # 2. Focus areas (keyword extraction from ChromaDB)
+        focus_areas = _extract_focus_areas(company)
+
+        # 3. Outlook (sentiment-based label)
+        sentiment = analyze_company_sentiment(company, n_chunks=30)
+        sentiment_score = float(sentiment.get("sentiment_score", 0))
+        outlook_label = _outlook_from_sentiment(sentiment_score)
+
+        # 4. Recent highlights (evidence snippets from ChromaDB)
+        highlights = _extract_evidence_highlights(company)
+
+        # 5. Guidance (LLM-extracted from MD&A)
+        guidance = _extract_guidance_outlook_llm(company)
+
+        competitors.append({
+            "company": company,
+            "ticker": ticker,
+            "revenue_growth": revenue,
+            "investment_focus": focus_areas,
+            "outlook_label": outlook_label,
+            "sentiment_score": sentiment_score,
+            "guidance_outlook": guidance,
+            "recent_highlights": highlights,
+        })
+
+    return competitors
 
 
 def _build_dynamic_competitor_analysis() -> dict:
@@ -597,22 +730,20 @@ async def get_industry_news():
 
 
 @router.get("/competitor-investments")
-async def get_competitor_investments(mode: str = "hybrid", force_refresh: bool = False):
-    """Get competitor investment plans and guidance."""
+async def get_competitor_investments(force_refresh: bool = False):
+    """Get competitor investment plans and guidance — fully dynamic."""
+    cache_key = "competitor_investments_dynamic"
+    if not force_refresh:
+        cached = analytics_cache.get(cache_key)
+        if cached is not None:
+            return cached
+
+    competitors = _build_dynamic_competitors()
+
     payload = {
-        "as_of": EMS_AI_DYNAMICS.get("last_updated"),
-        "growth_definition": "AI/DC revenue composite growth (proxy)",
-        "growth_period": "FY2025-FY2026",
-        "competitors": [
-            {
-                "company": c["company"],
-                "investment_focus": c["investment_focus"],
-                "guidance_outlook": c["guidance_outlook"],
-                "recent_highlights": c["recent_highlights"],
-                "ai_growth_pct": c["ai_revenue_growth_pct"],
-            }
-            for c in EMS_AI_DYNAMICS["companies"]
-        ],
+        "generated_at": datetime.utcnow().isoformat() + "Z",
+        "growth_definition": "Annual revenue growth (YoY from SEC filings)",
+        "competitors": competitors,
         "hyperscaler_demand": {
             "outlook": "Very Strong",
             "drivers": [
@@ -624,16 +755,5 @@ async def get_competitor_investments(mode: str = "hybrid", force_refresh: bool =
         },
     }
 
-    # Optional dynamic section built from indexed filings/transcripts in Chroma.
-    if mode in {"hybrid", "dynamic"}:
-        try:
-            payload["dynamic_analysis"] = _get_dynamic_analysis_cached(force_refresh=force_refresh)
-        except Exception as e:
-            payload["dynamic_analysis"] = {
-                "mode": "dynamic_from_indexed_documents",
-                "generated_at": datetime.utcnow().isoformat() + "Z",
-                "error": f"Dynamic analysis failed: {e}",
-                "companies": [],
-            }
-
+    analytics_cache.set(cache_key, payload)
     return payload

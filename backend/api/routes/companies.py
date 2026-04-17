@@ -3,7 +3,7 @@ Company API endpoints.
 """
 from fastapi import APIRouter, HTTPException
 from backend.core.config import COMPANIES, COMPANY_NAME_TO_TICKER
-from backend.core.database import get_collection_stats
+from backend.core.database import get_collection_stats, get_all_collections_stats
 
 router = APIRouter()
 
@@ -32,9 +32,9 @@ async def list_companies():
     """
     List all tracked companies with their metadata.
     """
-    stats = get_collection_stats()
+    stats = get_all_collections_stats()
     companies_data = []
-    
+
     for ticker, info in COMPANIES.items():
         company_name = info["name"].split()[0]  # Get first word (Flex, Jabil, etc.)
         doc_count = stats.get("companies", {}).get(company_name, 0)

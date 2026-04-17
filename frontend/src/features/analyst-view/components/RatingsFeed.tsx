@@ -1,10 +1,11 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ExternalLink, RefreshCw, Search } from 'lucide-react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
-const AUTO_REFRESH_MS = 30 * 60 * 1000; // 30 minutes
+// Auto-refresh disabled — manual refresh only (debug mode)
+// const AUTO_REFRESH_MS = 30 * 60 * 1000; // 30 minutes
 
 // ---------------------------------------------------------------------------
 // Types
@@ -129,8 +130,6 @@ export default function RatingsFeed() {
   const [error, setError] = useState<string | null>(null);
   const [tickerFilter, setTickerFilter] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
   const fetchFeed = useCallback(async (isManual = false) => {
     try {
       if (isManual) setRefreshing(true);
@@ -151,10 +150,7 @@ export default function RatingsFeed() {
 
   useEffect(() => {
     fetchFeed();
-    timerRef.current = setInterval(() => fetchFeed(), AUTO_REFRESH_MS);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
+    // Auto-refresh disabled — use the manual Refresh button instead
   }, [fetchFeed]);
 
   const filtered = items.filter((item) => {
