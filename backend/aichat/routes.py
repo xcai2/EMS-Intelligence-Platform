@@ -1679,7 +1679,12 @@ async def chat(request: ChatRequest):
             response_text = narrative_text_out or response_text
 
     add_message(session_id, "assistant", response_text)
-    _save_session_messages(session_id, get_conversation_history(session_id))
+    # 持久化保存，包含 table_payload 和 narrative_text
+    all_messages = get_conversation_history(session_id)
+    if all_messages and (table_payload_out or narrative_text_out):
+        all_messages[-1]["table_payload"] = table_payload_out
+        all_messages[-1]["narrative_text"] = narrative_text_out
+    _save_session_messages(session_id, all_messages)
 
     response_dict = {
         "response": response_text,

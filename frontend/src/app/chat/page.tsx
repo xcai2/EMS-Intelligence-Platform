@@ -392,10 +392,12 @@ export default function ChatPage() {
     try {
       const res = await fetch(`${API_URL}/api/chat/history/${session_id}`);
       const data = await res.json();
-      const msgs: Message[] = (data.messages || []).map((m: { role: string; content: string }, i: number) => ({
+      const msgs: Message[] = (data.messages || []).map((m: any, i: number) => ({
         id: `${m.role}_${i}`,
         role: m.role as 'user' | 'assistant',
         content: m.content,
+        table_payload: m.table_payload ?? undefined,
+        narrative_text: m.narrative_text ?? undefined,
         timestamp: new Date(),
       }));
       setMessages(msgs);
