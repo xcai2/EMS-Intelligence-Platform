@@ -4,7 +4,7 @@ Chat API routes with SSE streaming, query analysis, and smart routing.
 import re
 import json
 import uuid
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
@@ -28,7 +28,7 @@ from backend.aichat.memory import (
     get_all_sessions,
     cleanup_expired_sessions,
 )
-from backend.rag.web_search import search_web, format_web_results_for_context, enrich_web_results
+from backend.rag.web_search import search_web, search_web_with_diagnostics, format_web_results_for_context, enrich_web_results
 from backend.core.config import COMPANIES
 from backend.core.config import OPENAI_API_KEY, ANTHROPIC_API_KEY, LLM_MODEL, ANTHROPIC_MODEL, GOOGLE_API_KEY, GEMINI_MODEL
 from backend.core.config import DATA_DIR
@@ -75,6 +75,16 @@ class ChatRequest(BaseModel):
 
 NO_HIT_MESSAGE = "I couldn't find relevant documents to answer your question. Try rephrasing or check that the data has been ingested."
 CUSTOM_QUESTIONS_FILE = Path(DATA_DIR) / "chat_custom_questions.json"
+PRESET_QUESTIONS_CACHE_FILE = Path(DATA_DIR) / "preset_questions_cache.json"
+PRESET_QUESTIONS_CACHE_TTL_HOURS = 360
+
+COMPANY_FY_START = {
+    "Flex": 4,
+    "Jabil": 9,
+    "Celestica": 1,
+    "Benchmark Electronics": 1,
+    "Sanmina": 10,
+}
 
 
 class CustomQuestionRequest(BaseModel):
@@ -118,7 +128,9 @@ def _fallback_enabled(request: ChatRequest) -> bool:
 _TABLE_PATTERNS = re.compile(
     r"\b(in\s+(?:a\s+)?table(?:\s+format)?|show.*?table|table.*?format|"
     r"compare.*?table|not\s+paragraph|year.over.year\s+change|"
-    r"numbers?\s+in\s+a\s+table|tabular\s+form)\b",
+    r"numbers?\s+in\s+a\s+table|tabular\s+form|"
+    r"give.*?table|as\s+a\s+table|display.*?table|"
+    r"table\s+of|put.*?table|in\s+table)\b",
     re.IGNORECASE | re.DOTALL,
 )
 
@@ -437,8 +449,11 @@ def _general_fallback_answer(
 
 
 def _detect_companies(query: str) -> list[str]:
-    """Detect company names or tickers in the query."""
-    q_lower = query.lower()
+    """Detect company names or tickers in the query.
+    Only scans the actual question part, stripping any instruction prefix
+    that appears before a double newline."""
+    q = query.split("\n\n")[-1] if "\n\n" in query else query
+    q_lower = q.lower()
     found = []
     for key, canonical in COMPANY_NAMES.items():
         if key in q_lower and canonical not in found:
@@ -480,8 +495,16 @@ def _get_available_et_periods(company: str, n_recent: int) -> list[tuple[str, st
             col = get_collection()
         if col.count() == 0:
             return []
+
+        # 先尝试搜 Earnings Transcript
         results = col.get(where={"filing_type": "Earnings Transcript"}, limit=5000)
         metas = results.get("metadatas", [])
+
+        # 没有 transcript，fallback 到所有文档
+        if not metas:
+            results = col.get(limit=5000)
+            metas = results.get("metadatas", [])
+
     except Exception:
         return []
 
@@ -490,7 +513,9 @@ def _get_available_et_periods(company: str, n_recent: int) -> list[tuple[str, st
     for m in metas:
         fy = m.get("fiscal_year", "")
         q = m.get("quarter", "")
-        if fy and q and fy not in ("Unknown", ""):
+        # quarter 为空时用 Q1 占位，保证有数据可以返回
+        if fy and fy not in ("Unknown", ""):
+            q = q if q else "Q1"
             seen.add((fy, q))
 
     # Sort: FY descending, then Q descending within each FY
@@ -547,7 +572,11 @@ def _search_historical_docs(
             query_embedding = embed_text(query)
 
             for fy, q in target_periods:
-                where_filter = {"$and": [{"fiscal_year": fy}, {"quarter": q}]}
+                # quarter 是占位 Q1 时（原始元数据无 quarter 字段）不加 quarter 过滤
+                if q == "Q1" and fy:
+                    where_filter = {"fiscal_year": fy}
+                else:
+                    where_filter = {"$and": [{"fiscal_year": fy}, {"quarter": q}]}
                 try:
                     results = col.query(
                         query_embeddings=[query_embedding],
@@ -593,9 +622,14 @@ def _search_historical_docs(
 
 
 def _extract_calendar_year(query: str) -> Optional[int]:
-    """Detect a calendar-year reference like 'in 2025' / 'during 2024' / 'throughout 2023'.
-    Excludes 'FY2025' / 'fiscal 2025' which refer to a fiscal year, not calendar."""
+    """
+    Disabled: all year references are treated as fiscal years by default.
+    Only activate if user explicitly says 'calendar year'.
+    """
     q = query.lower()
+    # 只有明确说 calendar year 才走日历年逻辑
+    if "calendar year" not in q and "calendar 20" not in q:
+        return None
     # Reject FY forms
     if re.search(r"\bfy\s*\d{2,4}\b", q) or re.search(r"\bfiscal\s+(?:year\s+)?\d{2,4}\b", q):
         return None
@@ -1051,7 +1085,7 @@ async def _stream_response(request: ChatRequest):
 
     # For historical single-company queries: supplement with per-quarter retrieval
     # to ensure each target quarter is represented in context
-    if is_historical and n_quarters and not is_comparison and len(effective_companies) == 1:
+    if is_historical and n_quarters and not is_comparison and len(effective_companies) == 1 and request.mode != "web":
         hist_docs = _search_historical_docs(
             query=query,
             scope=effective_companies,
@@ -1126,14 +1160,45 @@ async def _stream_response(request: ChatRequest):
     if effective_include_web:
         try:
             clean_q = _clean_query_for_web_search(query)
-            web_query = clean_q
-            if effective_companies:
-                web_query = f"{' '.join(effective_companies)} {clean_q}"
-            web_results = await search_web(web_query)
+            web_results: list[dict] = []
+
+            if is_historical and effective_companies and n_quarters and len(effective_companies) == 1:
+                # Per-quarter search: one Brave request per target quarter for full coverage
+                company_name = effective_companies[0]
+                target_periods = _get_available_et_periods(company_name, n_quarters)
+                seen_urls: set[str] = set()
+                for fy, q in (target_periods or []):
+                    q_query = (
+                        f"{company_name} {q} {fy} earnings call transcript tariff "
+                        f"site:fool.com OR site:marketbeat.com OR site:finance.yahoo.com"
+                    )
+                    q_results, _ = await search_web_with_diagnostics(q_query)
+                    for r in q_results:
+                        url = r.get("url", "")
+                        if url not in seen_urls:
+                            seen_urls.add(url)
+                            web_results.append(r)
+                if not web_results:
+                    # Fallback: single broad search
+                    web_results = await search_web(
+                        f"{company_name} {clean_q} "
+                        f"site:fool.com OR site:marketbeat.com OR site:finance.yahoo.com"
+                    )
+            elif is_historical and effective_companies:
+                web_query = (
+                    f"{' '.join(effective_companies)} {clean_q} "
+                    f"site:fool.com OR site:marketbeat.com OR site:seekingalpha.com OR site:finance.yahoo.com"
+                )
+                web_results = await search_web(web_query)
+            else:
+                web_query = f"{' '.join(effective_companies)} {clean_q}" if effective_companies else clean_q
+                web_results = await search_web(web_query)
+
             if web_results:
                 web_results = await enrich_web_results(web_results, max_pages=3)
                 web_result_count = len(web_results)
-                web_context = format_web_results_for_context(web_results)
+                raw_web_context = format_web_results_for_context(web_results)
+                web_context = f"[USE THESE WEB RESULTS AS SOURCE OF TRUTH FOR QUARTER LABELS AND DATES]\n\n{raw_web_context}"
                 yield _sse_event("step", {
                     "icon": "🌐",
                     "label": "Web Search",
@@ -1205,6 +1270,11 @@ async def _stream_response(request: ChatRequest):
     # Save user message to session
     add_message(session_id, "user", query)
 
+    # 保存到对话历史（只在第一条消息时触发）
+    history = get_conversation_history(session_id)
+    if len(history) <= 1:
+        _add_to_chat_history(session_id, query)
+
     yield _sse_event("step", {
         "icon": "✨",
         "label": "Generating",
@@ -1217,13 +1287,24 @@ async def _stream_response(request: ChatRequest):
     # Check if this is a historical query — use structured response instead
     from backend.rag.generator import generate_structured_response, detect_query_type as detect_gen_query_type
     gen_query_type = detect_gen_query_type(query)
-    use_historical = (gen_query_type == "historical" or _should_force_historical_format(query)) and not is_comparison
-    
+    use_table = is_table_query(query) and (context or web_context)
+    use_historical = (gen_query_type == "historical" or _should_force_historical_format(query)) and not is_comparison and not use_table
+
     if use_historical:
         result = generate_structured_response(query, context, web_context, force_query_type="historical")
-
         full_response = _format_historical_response(result)
         yield _sse_event("token", {"text": full_response})
+    elif use_table:
+        from backend.rag.generator import generate_table_response
+        table_result = generate_table_response(query, context, web_context)
+        if table_result:
+            full_response = table_result.get("narrative_text", "") or ""
+            yield _sse_event("token", {"text": full_response})
+            yield _sse_event("table", table_result)
+        else:
+            for chunk in generate_response_streaming(query, context, web_context):
+                full_response += chunk
+                yield _sse_event("token", {"text": chunk})
     else:
         for chunk in generate_response_streaming(query, context, web_context):
             full_response += chunk
@@ -1246,6 +1327,7 @@ async def _stream_response(request: ChatRequest):
 
     # Save assistant response to session
     add_message(session_id, "assistant", full_response)
+    _save_session_messages(session_id, get_conversation_history(session_id))
 
     yield _sse_event("done", {"session_id": session_id})
 
@@ -1387,13 +1469,46 @@ async def chat(request: ChatRequest):
     if effective_include_web:
         try:
             clean_q = _clean_query_for_web_search(query)
-            web_query = f"{' '.join(effective_companies)} {clean_q}" if effective_companies else clean_q
-            web_results = await search_web(web_query)
+            web_results: list[dict] = []
+
+            if is_historical and effective_companies and n_quarters and len(effective_companies) == 1:
+                # Per-quarter search: one Brave request per target quarter for full coverage
+                company_name = effective_companies[0]
+                target_periods = _get_available_et_periods(company_name, n_quarters)
+                seen_urls: set[str] = set()
+                for fy, q in (target_periods or []):
+                    q_query = (
+                        f"{company_name} {q} {fy} earnings call transcript tariff "
+                        f"site:fool.com OR site:marketbeat.com OR site:finance.yahoo.com"
+                    )
+                    q_results, _ = await search_web_with_diagnostics(q_query)
+                    for r in q_results:
+                        url = r.get("url", "")
+                        if url not in seen_urls:
+                            seen_urls.add(url)
+                            web_results.append(r)
+                if not web_results:
+                    # Fallback: single broad search
+                    web_results = await search_web(
+                        f"{company_name} {clean_q} "
+                        f"site:fool.com OR site:marketbeat.com OR site:finance.yahoo.com"
+                    )
+            elif is_historical and effective_companies:
+                web_query = (
+                    f"{' '.join(effective_companies)} {clean_q} "
+                    f"site:fool.com OR site:marketbeat.com OR site:seekingalpha.com OR site:finance.yahoo.com"
+                )
+                web_results = await search_web(web_query)
+            else:
+                web_query = f"{' '.join(effective_companies)} {clean_q}" if effective_companies else clean_q
+                web_results = await search_web(web_query)
+
             if web_results:
                 web_results = await enrich_web_results(web_results, max_pages=3)
                 web_results_list = web_results
                 web_result_count = len(web_results)
-                web_context = format_web_results_for_context(web_results)
+                raw_web_context = format_web_results_for_context(web_results)
+                web_context = f"[USE THESE WEB RESULTS AS SOURCE OF TRUTH FOR QUARTER LABELS AND DATES]\n\n{raw_web_context}"
         except Exception:
             pass
 
@@ -1401,6 +1516,12 @@ async def chat(request: ChatRequest):
     provider_used = None
 
     add_message(session_id, "user", query)
+
+    # 保存到对话历史（只在第一条消息时触发）
+    history = get_conversation_history(session_id)
+    if len(history) <= 1:
+        _add_to_chat_history(session_id, query)
+
     has_file_evidence = _has_sufficient_document_evidence(query, docs) if request.mode in ("rag", "assembled", "hybrid") else True
     has_web_evidence = web_result_count > 0
     fallback_allowed = _fallback_enabled(request)
@@ -1509,11 +1630,21 @@ async def chat(request: ChatRequest):
     else:
         from backend.rag.generator import generate_structured_response, detect_query_type as detect_gen_query_type
         gen_query_type = detect_gen_query_type(query)
-        use_historical = (gen_query_type == "historical" or _should_force_historical_format(query)) and not is_comparison
+        use_table = is_table_query(query) and (context or web_context)
+        use_historical = (gen_query_type == "historical" or _should_force_historical_format(query)) and not is_comparison and not use_table
 
         if use_historical:
             result = generate_structured_response(query, context, web_context, force_query_type="historical")
             response_text = _format_historical_response(result)
+        elif use_table:
+            from backend.rag.generator import generate_table_response
+            table_result = generate_table_response(query, context, web_context)
+            if table_result:
+                table_payload_out = table_result["table_payload"]
+                narrative_text_out = table_result["narrative_text"]
+                response_text = narrative_text_out or ""
+            else:
+                response_text = generate_response(query, context, web_context)
         else:
             response_text = generate_response(query, context, web_context)
 
@@ -1548,6 +1679,7 @@ async def chat(request: ChatRequest):
             response_text = narrative_text_out or response_text
 
     add_message(session_id, "assistant", response_text)
+    _save_session_messages(session_id, get_conversation_history(session_id))
 
     response_dict = {
         "response": response_text,
@@ -1656,3 +1788,318 @@ async def delete_session(session_id: str):
     """Delete a chat session."""
     clear_session(session_id)
     return {"status": "deleted", "session_id": session_id}
+
+
+# ---------------------------------------------------------------------------
+# Chat history — persistent across sessions (max 5 recent conversations)
+# ---------------------------------------------------------------------------
+
+CHAT_HISTORY_FILE = Path(DATA_DIR) / "chat_history.json"
+
+
+def _load_chat_history() -> list[dict]:
+    if not CHAT_HISTORY_FILE.exists():
+        return []
+    try:
+        with open(CHAT_HISTORY_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return []
+
+
+def _save_chat_history(history: list[dict]) -> None:
+    CHAT_HISTORY_FILE.parent.mkdir(parents=True, exist_ok=True)
+    with open(CHAT_HISTORY_FILE, "w", encoding="utf-8") as f:
+        json.dump(history, f, ensure_ascii=False, indent=2)
+
+
+def _add_to_chat_history(session_id: str, first_message: str) -> None:
+    """保存对话到历史记录，最多保留10条。"""
+    history = _load_chat_history()
+    if any(h["session_id"] == session_id for h in history):
+        return
+
+    # 去掉 STRUCTURED_RESPONSE_INSTRUCTION prefix
+    clean_message = first_message
+    if "\n\nConstraints:" in clean_message:
+        clean_message = clean_message.split("\n\nConstraints:")[0]
+    if "Structure every response" in clean_message:
+        parts = clean_message.strip().split("\n\n")
+        clean_message = parts[-1].strip()
+
+    title = clean_message[:40] + ("..." if len(clean_message) > 40 else "")
+    history.insert(0, {
+        "session_id": session_id,
+        "title": title,
+        "created_at": datetime.utcnow().isoformat(),
+    })
+    history = history[:10]
+    _save_chat_history(history)
+
+
+@router.get("/chat/history")
+async def get_chat_history():
+    """获取最近5条对话记录。"""
+    history = _load_chat_history()
+    return {"history": history}
+
+
+# 对话消息持久化文件目录
+CHAT_MESSAGES_DIR = Path(DATA_DIR) / "chat_messages"
+
+
+def _save_session_messages(session_id: str, messages: list[dict]) -> None:
+    """持久化保存 session 消息到文件。"""
+    CHAT_MESSAGES_DIR.mkdir(parents=True, exist_ok=True)
+    file_path = CHAT_MESSAGES_DIR / f"{session_id}.json"
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump(messages, f, ensure_ascii=False, indent=2)
+
+
+def _load_session_messages(session_id: str) -> list[dict]:
+    """从文件读取 session 消息。"""
+    file_path = CHAT_MESSAGES_DIR / f"{session_id}.json"
+    if not file_path.exists():
+        return []
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return []
+
+
+@router.get("/chat/history/{session_id}")
+async def get_chat_session_history(session_id: str):
+    """获取某个对话的完整消息记录。先从文件读，文件没有再从内存读。"""
+    messages = _load_session_messages(session_id)
+    if not messages:
+        messages = get_conversation_history(session_id)
+    return {"session_id": session_id, "messages": messages}
+
+
+# ---------------------------------------------------------------------------
+# Preset questions — dynamically generated from latest earnings transcripts
+# ---------------------------------------------------------------------------
+
+CATEGORY_DEFINITIONS = {
+    "ai-infra": {
+        "label": "AI Infrastructure Leadership",
+        "focus": "AI data center infrastructure, hyperscaler customers, AI server manufacturing, GPU/compute hardware ramps",
+    },
+    "capacity": {
+        "label": "Capacity & Footprint",
+        "focus": "manufacturing capacity expansion, geographic footprint, nearshoring, Mexico/India/Southeast Asia strategies, liquid cooling",
+    },
+    "financial": {
+        "label": "Financial Performance",
+        "focus": "revenue growth, gross margin, CapEx, backlog, cash flow, guidance",
+    },
+    "risks": {
+        "label": "Risks & External Factors",
+        "focus": "tariffs, geopolitical risks, supply chain, customer concentration, trade policy",
+    },
+}
+
+
+def _load_preset_questions_cache() -> dict | None:
+    """Load cached preset questions if still valid."""
+    if not PRESET_QUESTIONS_CACHE_FILE.exists():
+        return None
+    try:
+        with open(PRESET_QUESTIONS_CACHE_FILE, "r") as f:
+            cache = json.load(f)
+        cached_at = datetime.fromisoformat(cache.get("cached_at", "2000-01-01"))
+        if datetime.now() - cached_at < timedelta(hours=PRESET_QUESTIONS_CACHE_TTL_HOURS):
+            return cache
+    except Exception:
+        pass
+    return None
+
+
+def _save_preset_questions_cache(data: dict) -> None:
+    """Save preset questions to cache."""
+    PRESET_QUESTIONS_CACHE_FILE.parent.mkdir(parents=True, exist_ok=True)
+    data["cached_at"] = datetime.now().isoformat()
+    with open(PRESET_QUESTIONS_CACHE_FILE, "w") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+
+def _get_latest_transcript_quarter(company: str) -> str:
+    """
+    计算该公司上一个已完结季度的标签（排除当前进行中的季度）。
+    返回如 'Q2 FY2026' 的字符串。
+    """
+    from datetime import date
+    today = date.today()
+    fy_start = COMPANY_FY_START.get(company, 1)
+
+    month_in_fy = (today.month - fy_start) % 12
+    current_q = month_in_fy // 3 + 1
+
+    prev_q = current_q - 1
+    prev_month = today.month
+    prev_year = today.year
+
+    if prev_q == 0:
+        prev_q = 4
+        prev_month = (today.month - 3 - 1) % 12 + 1
+        if today.month <= 3:
+            prev_year = today.year - 1
+    else:
+        prev_month = today.month - (month_in_fy % 3) - 1
+        if prev_month <= 0:
+            prev_month += 12
+            prev_year = today.year - 1
+
+    if fy_start == 1:
+        fy_year = prev_year
+    else:
+        if prev_month >= fy_start:
+            fy_year = prev_year + 1
+        else:
+            fy_year = prev_year
+
+    fy_label = f"FY{fy_year % 100:02d}"
+    return f"Q{prev_q} {fy_label}"
+
+
+async def _generate_preset_questions_from_transcripts() -> dict:
+    """
+    Generate preset questions by searching latest earnings transcripts from web.
+    """
+    companies = {
+        "Flex": "Flex Ltd",
+        "Jabil": "Jabil",
+        "Celestica": "Celestica",
+        "Benchmark Electronics": "Benchmark Electronics",
+        "Sanmina": "Sanmina",
+    }
+
+    all_context_parts = []
+
+    for company_key, company_name in companies.items():
+        try:
+            latest_q = _get_latest_transcript_quarter(company_key)
+
+            results, _ = await search_web_with_diagnostics(
+                f"{company_name} {latest_q} earnings call transcript",
+                freshness="py",
+            )
+
+            if not results:
+                results, _ = await search_web_with_diagnostics(
+                    f"{company_name} latest earnings call transcript 2026",
+                    freshness="py",
+                )
+
+            if results:
+                enriched = await enrich_web_results(results[:2], max_pages=2)
+                context = format_web_results_for_context(enriched)
+                if context:
+                    all_context_parts.append(
+                        f"=== {company_name} ({latest_q}) ===\n{context[:2000]}"
+                    )
+        except Exception:
+            continue
+
+    if not all_context_parts:
+        return {}
+
+    combined_context = "\n\n".join(all_context_parts)
+
+    system_prompt = """You are generating short analyst questions for a financial research tool.
+
+STRICT RULES — violations will be rejected:
+1. Each question MUST be under 10 words
+2. NO company names (not Flex, Jabil, Celestica, Benchmark, Sanmina)
+3. NO specific numbers, percentages, or dates
+4. Start with: Compare / Analyze / Who is / Which company / How has / What is
+
+Respond with JSON only:
+{
+  "ai-infra": ["Q1?", "Q2?", "Q3?", "Q4?"],
+  "capacity": ["Q1?", "Q2?", "Q3?", "Q4?"],
+  "financial": ["Q1?", "Q2?", "Q3?", "Q4?"],
+  "risks": ["Q1?", "Q2?", "Q3?", "Q4?"]
+}
+
+CORRECT examples (short, cross-company):
+- "Who is gaining share in AI data center?"
+- "Compare gross margin trends across companies"
+- "Which company shows strongest revenue growth?"
+- "Analyze tariff exposure by company"
+- "Compare CapEx intensity across EMS peers"
+
+WRONG examples (too long):
+- "How is Flex positioned to capitalize on increasing AI demand with hyperscaler customers?"
+- "Can Jabil elaborate on how AI server ramps are impacting production schedules?"
+
+Category focus:
+- ai-infra: AI data center, hyperscaler, AI server ramps
+- capacity: manufacturing expansion, nearshoring, liquid cooling
+- financial: revenue, margins, CapEx, backlog
+- risks: tariffs, geopolitics, supply chain
+
+Generate exactly 4 questions per category. Under 10 words each. No company names."""
+
+    user_prompt = f"""Based on these latest EMS earnings transcript excerpts, generate analyst questions:
+
+{combined_context[:8000]}"""
+
+    try:
+        response = llm_complete(
+            messages=[{"role": "user", "content": user_prompt}],
+            system=system_prompt,
+            model_key="main",
+            max_tokens=1500,
+        )
+        clean = response.strip()
+        if clean.startswith("```"):
+            clean = clean.split("```")[1]
+            if clean.startswith("json"):
+                clean = clean[4:]
+        clean = clean.strip()
+        return json.loads(clean)
+    except Exception:
+        return {}
+
+
+@router.get("/chat/preset-questions")
+async def get_preset_questions(force_refresh: bool = False):
+    """
+    Get dynamically generated preset questions from latest earnings transcripts.
+    Cached for 24 hours. Use ?force_refresh=true to regenerate.
+    """
+    if not force_refresh:
+        cache = _load_preset_questions_cache()
+        if cache:
+            return {
+                "categories": cache.get("categories", []),
+                "cached_at": cache.get("cached_at"),
+                "from_cache": True,
+            }
+
+    questions_by_category = await _generate_preset_questions_from_transcripts()
+
+    categories = []
+    for cat_id, cat_def in CATEGORY_DEFINITIONS.items():
+        questions = questions_by_category.get(cat_id, [])
+        if not questions:
+            questions = [
+                f"Analyze {cat_def['label'].lower()} trends across EMS companies",
+                f"Compare {cat_def['label'].lower()} positioning for Flex vs peers",
+            ]
+        categories.append({
+            "id": cat_id,
+            "label": cat_def["label"],
+            "questions": questions,
+        })
+
+    result = {"categories": categories}
+    _save_preset_questions_cache(result)
+
+    return {
+        "categories": categories,
+        "cached_at": datetime.now().isoformat(),
+        "from_cache": False,
+    }

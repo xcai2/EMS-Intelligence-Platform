@@ -347,7 +347,11 @@ CRITICAL RULES:
   If they are NOT contiguous (e.g. you list only Q1 and Q3 FY2025, skipping Q2), you MUST write them
   explicitly, e.g. "Q1 FY2025 and Q3 FY2025" — NEVER imply a continuous range you did not cover.
 - If a [CALENDAR YEAR NOTE] is present in the Retrieved Documents, restrict your coverage to the fiscal
-  quarters listed there. Do not invent extra quarters, and do not omit any that the note lists as having data."""
+  quarters listed there. Do not invent extra quarters, and do not omit any that the note lists as having data.
+- SOURCE OF TRUTH: The Retrieved Documents and Web Search Results are the ONLY source of truth for quarter labels.
+  If web results mention "Third Quarter Fiscal 2026" or "Q3 FY2026", you MUST include that quarter.
+  NEVER use quarters from your training knowledge that are not present in the sources.
+  NEVER skip the most recent quarter found in the sources."""
 
 
 # Legacy prompt for backward compatibility
@@ -375,7 +379,13 @@ STRICT RULES:
 4. Footnotes like "145*" are allowed as cell strings.
 5. ONLY use data verified from the Retrieved Documents / Web Results. Never fabricate numbers.
 6. If almost all cells would be N/A, set table_payload rows to [] and explain in narrative_text.
-7. Do NOT include markdown fences or extra keys — output pure JSON only."""
+7. Do NOT include markdown fences or extra keys — output pure JSON only.
+8. ANNUAL vs QUARTERLY: If the user asks for a fiscal year (e.g. "FY2025"), report the FULL YEAR total,
+   not a single quarter. If the user asks for a specific quarter (e.g. "Q4 FY2025"), report that quarter only.
+9. If full year data is not explicitly stated in the sources, sum up the quarterly figures and note it
+   in narrative_text (e.g. "Full year total derived by summing Q1–Q4 figures from sources.").
+10. Always state the time period clearly in the table title (e.g. "FY2025 Full Year Revenue (USD Millions)"
+    vs "Q4 FY2025 Revenue (USD Millions)")."""
 
 
 # ---------------------------------------------------------------------------

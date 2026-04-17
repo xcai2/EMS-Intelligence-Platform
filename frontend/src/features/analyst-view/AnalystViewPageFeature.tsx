@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { RefreshCw, TrendingUp, TrendingDown, Minus, AlertCircle } from "lucide-react";
+import { RefreshCw, TrendingUp, TrendingDown, Minus, AlertCircle, Clock } from "lucide-react";
 
 // Components
 import AnalystCards from "./components/AnalystCards";
@@ -145,6 +145,7 @@ export default function AnalystViewPageFeature() {
   const [intelLoading, setIntelLoading] = useState(true);
   const [intelWarning, setIntelWarning] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [manualMode, setManualMode] = useState(true);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const fetchIntel = useCallback(async (manual = false) => {
@@ -164,9 +165,16 @@ export default function AnalystViewPageFeature() {
 
   useEffect(() => {
     fetchIntel();
+  }, [fetchIntel]);
+
+  useEffect(() => {
+    if (manualMode) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      return;
+    }
     timerRef.current = setInterval(() => fetchIntel(), REFRESH_INTERVAL_MS);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [fetchIntel]);
+  }, [manualMode, fetchIntel]);
 
   return (
     <div className="flex flex-col h-full bg-slate-50 dark:bg-[#0a0e1a] text-slate-900 dark:text-gray-100">
@@ -177,17 +185,31 @@ export default function AnalystViewPageFeature() {
             Analyst Intelligence
           </h1>
           <p className="text-xs text-slate-500 dark:text-gray-500 mt-0.5">
-            EMS &amp; Hyperscaler coverage · auto-refreshes every 5 min
+            EMS &amp; Hyperscaler coverage · {manualMode ? "manual refresh" : "auto-refreshes every 5 min"}
           </p>
         </div>
-        <button
-          onClick={() => fetchIntel(true)}
-          disabled={refreshing}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-slate-100 dark:bg-[#1a1f2e] border border-slate-300 dark:border-[#2a3045] text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-200 hover:border-slate-400 dark:hover:border-gray-500 disabled:opacity-50 transition-colors"
-        >
-          <RefreshCw size={12} className={refreshing ? "animate-spin" : ""} />
-          {refreshing ? "Refreshing…" : "Refresh"}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setManualMode((m) => !m)}
+            title={manualMode ? "Enable auto-refresh" : "Switch to manual refresh"}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg border transition-colors ${
+              manualMode
+                ? "bg-slate-100 dark:bg-[#1a1f2e] border-slate-300 dark:border-[#2a3045] text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-200"
+                : "bg-blue-50 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30"
+            }`}
+          >
+            <Clock size={12} />
+            {manualMode ? "Manual" : "Auto"}
+          </button>
+          <button
+            onClick={() => fetchIntel(true)}
+            disabled={refreshing}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-slate-100 dark:bg-[#1a1f2e] border border-slate-300 dark:border-[#2a3045] text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-200 hover:border-slate-400 dark:hover:border-gray-500 disabled:opacity-50 transition-colors"
+          >
+            <RefreshCw size={12} className={refreshing ? "animate-spin" : ""} />
+            {refreshing ? "Refreshing…" : "Refresh"}
+          </button>
+        </div>
       </div>
 
       {/* Warning banner */}
