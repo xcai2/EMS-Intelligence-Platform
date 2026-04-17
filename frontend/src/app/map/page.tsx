@@ -15,6 +15,8 @@ import {
   Star,
   Briefcase,
   Loader2,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import {
   BarChart,
@@ -94,6 +96,10 @@ export default function MapPage() {
   const [showSharedOnly, setShowSharedOnly] = useState(false);
   const [marketRegion, setMarketRegion] = useState<MarketRegion>('all');
   const [selectedMapCompany, setSelectedMapCompany] = useState<string | null>(null);
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
+
+  const toggleGroup = (key: string) =>
+    setExpandedGroups(prev => ({ ...prev, [key]: !prev[key] }));
 
   useEffect(() => { loadFromCache(); }, []);
 
@@ -470,37 +476,48 @@ export default function MapPage() {
           {/* By Company View */}
           {facilityView === 'company' && (
             <div className="space-y-4">
-              {companyGroups.map(({ company, facilities: compFacilities }) => (
-                <Card key={company} className="border-0 shadow-xl">
-                  <CardHeader className="pb-2 pt-3">
-                    <CardTitle className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COMPANY_COLORS[company] }} />
-                        <span>{company}</span>
-                        <Badge variant="secondary">{compFacilities.length}</Badge>
-                      </div>
-                      {dataSources[company] && (
-                        <a
-                          href={dataSources[company]}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 hover:underline"
+              {companyGroups.map(({ company, facilities: compFacilities }) => {
+                const isExpanded = !!expandedGroups[company];
+                return (
+                  <Card key={company} className="border-0 shadow-xl">
+                    <CardHeader className="pb-2 pt-3">
+                      <CardTitle className="flex items-center justify-between">
+                        <button
+                          onClick={() => toggleGroup(company)}
+                          className="flex items-center gap-3 hover:opacity-80 transition-opacity text-left"
                         >
-                          <ExternalLink className="h-3 w-3" />
-                          Source
-                        </a>
-                      )}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="pt-0 pb-3">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-2.5">
-                      {compFacilities.map((f, i) => (
-                        <FacilityCard key={`${f.city}-${i}`} facility={f} />
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                          <div className="w-3 h-3 rounded-full shrink-0" style={{ backgroundColor: COMPANY_COLORS[company] }} />
+                          <span>{company}</span>
+                          <Badge variant="secondary">{compFacilities.length}</Badge>
+                          {isExpanded
+                            ? <ChevronUp className="h-4 w-4 text-slate-400" />
+                            : <ChevronDown className="h-4 w-4 text-slate-400" />}
+                        </button>
+                        {dataSources[company] && (
+                          <a
+                            href={dataSources[company]}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 hover:underline"
+                          >
+                            <ExternalLink className="h-3 w-3" />
+                            Source
+                          </a>
+                        )}
+                      </CardTitle>
+                    </CardHeader>
+                    {isExpanded && (
+                      <CardContent className="pt-0 pb-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-2.5">
+                          {compFacilities.map((f, i) => (
+                            <FacilityCard key={`${f.city}-${i}`} facility={f} />
+                          ))}
+                        </div>
+                      </CardContent>
+                    )}
+                  </Card>
+                );
+              })}
             </div>
           )}
 
@@ -510,15 +527,25 @@ export default function MapPage() {
               {continentGroups.map(([region, { countries }]) => {
                 const regionEmoji = region === 'Asia' ? '🌏' : region === 'Americas' ? '🌎' : '🌍';
                 const sortedCountries = Object.entries(countries).sort((a, b) => b[1].length - a[1].length);
+                const groupKey = `continent-${region}`;
+                const isExpanded = !!expandedGroups[groupKey];
                 return (
                   <Card key={region} className="border-0 shadow-xl">
                     <CardHeader className="pb-2 pt-3">
-                      <CardTitle className="flex items-center gap-3">
-                        <span className="text-xl">{regionEmoji}</span>
-                        <span>{region}</span>
-                        <Badge variant="secondary">
-                          {Object.values(countries).reduce((s, arr) => s + arr.length, 0)} facilities
-                        </Badge>
+                      <CardTitle>
+                        <button
+                          onClick={() => toggleGroup(groupKey)}
+                          className="flex items-center gap-3 hover:opacity-80 transition-opacity text-left w-full"
+                        >
+                          <span className="text-xl">{regionEmoji}</span>
+                          <span>{region}</span>
+                          <Badge variant="secondary">
+                            {Object.values(countries).reduce((s, arr) => s + arr.length, 0)} facilities
+                          </Badge>
+                          {isExpanded
+                            ? <ChevronUp className="h-4 w-4 text-slate-400" />
+                            : <ChevronDown className="h-4 w-4 text-slate-400" />}
+                        </button>
                       </CardTitle>
                       <div className="flex items-center gap-2 flex-wrap mt-2">
                         {sortedCountries.map(([country, facs]) => (
@@ -528,15 +555,17 @@ export default function MapPage() {
                         ))}
                       </div>
                     </CardHeader>
-                    <CardContent className="pt-0 pb-3">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-2.5">
-                        {sortedCountries.flatMap(([, facs]) =>
-                          facs.map((f, i) => (
-                            <FacilityCard key={`${f.company}-${f.city}-${i}`} facility={f} />
-                          ))
-                        )}
-                      </div>
-                    </CardContent>
+                    {isExpanded && (
+                      <CardContent className="pt-0 pb-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 gap-2.5">
+                          {sortedCountries.flatMap(([, facs]) =>
+                            facs.map((f, i) => (
+                              <FacilityCard key={`${f.company}-${f.city}-${i}`} facility={f} />
+                            ))
+                          )}
+                        </div>
+                      </CardContent>
+                    )}
                   </Card>
                 );
               })}
