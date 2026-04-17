@@ -118,7 +118,7 @@ def search_web_sync(query: str, count: int = WEB_SEARCH_RESULTS) -> list[dict]:
     return loop.run_until_complete(search_web(query, count))
 
 
-async def fetch_page_text(url: str, max_chars: int = 3000) -> str:
+async def fetch_page_text(url: str, max_chars: int = 20000) -> str:
     """Fetch and extract main text content from a web page."""
     try:
         async with httpx.AsyncClient(follow_redirects=True) as client:
@@ -145,7 +145,7 @@ async def fetch_page_text(url: str, max_chars: int = 3000) -> str:
 
 async def enrich_web_results(results: list[dict], max_pages: int = 3) -> list[dict]:
     """Fetch full page text for top results to give LLM more context."""
-    tasks = [fetch_page_text(r["url"]) for r in results[:max_pages]]
+    tasks = [fetch_page_text(r["url"], max_chars=20000) for r in results[:max_pages]]
     page_texts = await asyncio.gather(*tasks)
     for r, text in zip(results[:max_pages], page_texts):
         if text:

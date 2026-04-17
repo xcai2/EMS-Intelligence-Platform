@@ -23,8 +23,11 @@ import {
   ChevronDown,
   ChevronUp,
   Settings,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { TableAnswer } from '@/features/chat/TableAnswer';
 import remarkGfm from 'remark-gfm';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
@@ -35,11 +38,20 @@ type TimeHorizon = 'Any Time' | 'FY2026' | 'FY2025' | 'Last 12 Months';
 type AnswerProvider = 'openai' | 'claude' | 'gemini' | 'none';
 type ThreatLevel = 'HIGH' | 'MEDIUM' | 'LOW';
 
+interface TablePayload {
+  title: string;
+  columns: string[];
+  rows: string[][];
+}
+
 interface Message {
   id: string;
   role: 'user' | 'assistant';
   content: string;
   sources?: Source[];
+  webSources?: { index: number; title: string; url: string }[];
+  table_payload?: TablePayload;
+  narrative_text?: string;
   mode?: SearchMode;
   timestamp: Date;
 }
@@ -108,7 +120,9 @@ const SIGNAL_CARDS: SignalCard[] = [
   },
 ];
 
-const STRATEGY_CATEGORIES = [
+type StrategyCategory = { id: string; label: string; questions: string[] };
+
+const DEFAULT_STRATEGY_CATEGORIES: StrategyCategory[] = [
   {
     id: 'ai-infra',
     label: 'AI Infrastructure Leadership',
@@ -217,6 +231,8 @@ function CompactSignalCard({ card }: { card: SignalCard }) {
 // ── Main page ─────────────────────────────────────────────────────────────────
 
 export default function ChatPage() {
+  const [strategyCategories, setStrategyCategories] = useState<StrategyCategory[]>(DEFAULT_STRATEGY_CATEGORIES);
+  const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -228,12 +244,15 @@ export default function ChatPage() {
   const [strictGrounding, setStrictGrounding] = useState(true);
   const [maxResponseWords] = useState('200');
   const [lastCopiedId, setLastCopiedId] = useState<string | null>(null);
-  const [sessionId] = useState(() => `session_${Date.now()}`);
+  const [currentSessionId, setCurrentSessionId] = useState(() => `session_${Date.now()}`);
+  const [chatHistory, setChatHistory] = useState<{ session_id: string; title: string; created_at: string }[]>([]);
   const [showSettings, setShowSettings] = useState(false);
   // Dropdown per category pill (replaces openCategory + expanded section)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   // Signals collapse toggle
   const [signalsCollapsed, setSignalsCollapsed] = useState(false);
+  // Recents sidebar toggle
+  const [recentsOpen, setRecentsOpen] = useState(true);
 
   const messagesAreaRef   = useRef<HTMLDivElement>(null);
   const inputRef          = useRef<HTMLInputElement>(null);
@@ -242,6 +261,37 @@ export default function ChatPage() {
   const settingsPanelRef  = useRef<HTMLDivElement>(null);
   const dropdownBtnRefs   = useRef<Record<string, HTMLButtonElement | null>>({});
   const dropdownPanelRef  = useRef<HTMLDivElement>(null);
+
+  // Load preset questions from backend on mount
+  useEffect(() => {
+    const loadPresetQuestions = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/chat/preset-questions`);
+        if (!res.ok) throw new Error('Failed to fetch');
+        const data = await res.json();
+        if (data.categories && data.categories.length > 0) {
+          setStrategyCategories(data.categories);
+        }
+      } catch {
+        // 加载失败时保留默认问题
+      } finally {
+        setCategoriesLoading(false);
+      }
+    };
+    loadPresetQuestions();
+  }, []);
+
+  // Load chat history on mount
+  useEffect(() => {
+    const loadHistory = async () => {
+      try {
+        const res = await fetch(`${API_URL}/api/chat/history`);
+        const data = await res.json();
+        setChatHistory(data.history || []);
+      } catch {}
+    };
+    loadHistory();
+  }, []);
 
   // Auto-scroll messages to bottom
   useEffect(() => {
@@ -323,17 +373,41 @@ export default function ChatPage() {
     );
   };
 
+  const isHistoricalQuery = (q: string) => {
+    const lower = q.toLowerCase();
+    return /\b(last|past|previous|recent)\s+(one|two|three|four|five|\d+)\s+quarters?\b/.test(lower) ||
+      /\bhow has\b|\bwhat did\b|\bover time\b|\btrend\b/.test(lower);
+  };
+
   const buildQuery = (query: string) => {
     const constraints: string[] = [];
     if (selectedCompanies.length > 0) constraints.push(`Focus on these companies only: ${selectedCompanies.join(', ')}.`);
     if (timeHorizon !== 'Any Time') constraints.push(`Prioritize ${timeHorizon}.`);
     const base = constraints.length > 0 ? `${query}\n\nConstraints: ${constraints.join(' ')}` : query;
+    if (isHistoricalQuery(query)) return base;
     return STRUCTURED_RESPONSE_INSTRUCTION + base;
   };
 
-  const sendMessage = async (query?: string) => {
+  const loadHistorySession = async (session_id: string) => {
+    try {
+      const res = await fetch(`${API_URL}/api/chat/history/${session_id}`);
+      const data = await res.json();
+      const msgs: Message[] = (data.messages || []).map((m: { role: string; content: string }, i: number) => ({
+        id: `${m.role}_${i}`,
+        role: m.role as 'user' | 'assistant',
+        content: m.content,
+        timestamp: new Date(),
+      }));
+      setMessages(msgs);
+      setCurrentSessionId(session_id);
+    } catch {}
+  };
+
+  const sendMessage = async (query?: string, forceMode?: SearchMode) => {
     const rawText = query || input.trim();
     if (!rawText || isLoading) return;
+
+    const activeMode = forceMode || mode;
 
     const userMsg: Message = { id: `user_${Date.now()}`, role: 'user', content: rawText, timestamp: new Date() };
     setMessages((prev) => [...prev, userMsg]);
@@ -346,13 +420,13 @@ export default function ChatPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           query: buildQuery(rawText),
-          mode,
-          include_web: mode === 'web' || mode === 'hybrid',
-          session_id: sessionId,
+          mode: activeMode,
+          include_web: activeMode === 'web' || activeMode === 'hybrid',
+          session_id: currentSessionId,
           company_filter: selectedCompanies.length > 0 ? selectedCompanies.join(',') : null,
           answer_provider: answerProvider === 'none' ? 'openai' : answerProvider,
-          fallback_to_general_llm: mode === 'hybrid' && enableFallback && answerProvider !== 'none',
-          strict_grounding: mode === 'hybrid' ? strictGrounding : true,
+          fallback_to_general_llm: activeMode === 'hybrid' && enableFallback && answerProvider !== 'none',
+          strict_grounding: activeMode === 'hybrid' ? strictGrounding : true,
           max_response_words: isLengthCapActive && Number(maxResponseWords) > 0 ? Number(maxResponseWords) : null,
         }),
       });
@@ -365,10 +439,20 @@ export default function ChatPage() {
         role: 'assistant',
         content: data.response || data.answer || 'No response received.',
         sources: data.sources || [],
-        mode,
+        webSources: data.web_sources || [],
+        table_payload: data.table_payload ?? undefined,
+        narrative_text: data.narrative_text ?? undefined,
+        mode: activeMode,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, assistantMsg]);
+
+      // Refresh history sidebar after first message
+      try {
+        const histRes = await fetch(`${API_URL}/api/chat/history`);
+        const histData = await histRes.json();
+        setChatHistory(histData.history || []);
+      } catch {}
     } catch (err) {
       setMessages((prev) => [...prev, {
         id: `error_${Date.now()}`,
@@ -384,9 +468,10 @@ export default function ChatPage() {
 
   const handleStrategyQuestion = (question: string) => {
     const fullQuery = question + COMPARE_SUFFIX;
+    setMode('web');
     setInput(fullQuery);
     setOpenDropdown(null);
-    sendMessage(fullQuery);
+    sendMessage(fullQuery, 'web');
   };
 
   const clearChat = () => { setMessages([]); setLastCopiedId(null); inputRef.current?.focus(); };
@@ -410,7 +495,7 @@ export default function ChatPage() {
   // ── Render ──────────────────────────────────────────────────────────────────
 
   return (
-    <div className="flex h-screen flex-col bg-gradient-to-br from-slate-100 via-slate-50 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-slate-100 via-slate-50 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
 
       {/* ── PAGE HEADER ─────────────────────────────────────────────────── */}
       <div className="shrink-0 border-b border-slate-200/80 bg-white/90 px-6 py-3 backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/80">
@@ -526,28 +611,99 @@ export default function ChatPage() {
 
         {/* ── SECTION 2: Category pill bar with dropdowns ───────────────── */}
         <div className="mb-2 flex shrink-0 items-center gap-2 overflow-x-auto">
-          {STRATEGY_CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              ref={(el) => { dropdownBtnRefs.current[cat.id] = el; }}
-              onClick={() => setOpenDropdown(openDropdown === cat.id ? null : cat.id)}
-              className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-all ${
-                openDropdown === cat.id
-                  ? 'border-blue-300 bg-blue-50 text-blue-700 dark:border-blue-700 dark:bg-blue-950/40 dark:text-blue-300'
-                  : 'border-slate-200 bg-white/80 text-slate-600 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-900'
-              }`}
-            >
-              {cat.label}
-              <ChevronDown
-                className={`h-3 w-3 transition-transform duration-150 ${openDropdown === cat.id ? 'rotate-180' : ''}`}
+          {categoriesLoading ? (
+            ['AI Infrastructure Leadership', 'Capacity & Footprint', 'Financial Performance', 'Risks & External Factors'].map((label) => (
+              <div
+                key={label}
+                className="h-8 w-40 animate-pulse rounded-full border border-slate-200 bg-slate-100 dark:border-slate-700 dark:bg-slate-800"
               />
-            </button>
-          ))}
+            ))
+          ) : (
+            strategyCategories.map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                ref={(el) => { dropdownBtnRefs.current[cat.id] = el; }}
+                onClick={() => setOpenDropdown(openDropdown === cat.id ? null : cat.id)}
+                className={`flex shrink-0 items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold whitespace-nowrap transition-all ${
+                  openDropdown === cat.id
+                    ? 'border-blue-300 bg-blue-50 text-blue-700 dark:border-blue-700 dark:bg-blue-950/40 dark:text-blue-300'
+                    : 'border-slate-200 bg-white/80 text-slate-600 hover:border-slate-300 hover:bg-white dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-300 dark:hover:border-slate-600 dark:hover:bg-slate-900'
+                }`}
+              >
+                {cat.label}
+                <ChevronDown
+                  className={`h-3 w-3 transition-transform duration-150 ${openDropdown === cat.id ? 'rotate-180' : ''}`}
+                />
+              </button>
+            ))
+          )}
         </div>
 
-        {/* ── SECTION 3 + 4: Chat card (grows to fill remaining space) ──── */}
-        <Card className="flex min-h-0 flex-1 flex-col overflow-hidden border-slate-200 bg-white/95 p-0 shadow-sm dark:border-slate-700 dark:bg-slate-900/90">
+        {/* ── SECTION 3: 历史侧边栏 + 聊天区域 ── */}
+        <div className="flex flex-1 min-h-0 gap-3">
+
+          {/* 左侧历史记录 */}
+          {recentsOpen && (
+            <div className="flex w-44 shrink-0 flex-col rounded-xl border border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-900/50">
+              <div className="flex items-center justify-between px-3 pt-3 pb-2">
+                <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                  Recents
+                </p>
+                <button
+                  onClick={() => setRecentsOpen(false)}
+                  className="flex h-5 w-5 items-center justify-center rounded text-slate-400 hover:bg-slate-200 hover:text-slate-600 dark:hover:bg-slate-700 dark:hover:text-slate-200 transition-colors"
+                  title="Collapse"
+                >
+                  <PanelLeftClose className="h-3.5 w-3.5" />
+                </button>
+              </div>
+              <div className="flex-1 overflow-y-auto">
+                {chatHistory.length === 0 ? (
+                  <p className="px-3 py-2 text-[11px] text-slate-400">No recent chats</p>
+                ) : (
+                  chatHistory.map((h) => (
+                    <button
+                      key={h.session_id}
+                      onClick={() => loadHistorySession(h.session_id)}
+                      className={`w-full text-left px-3 py-2 text-[12px] leading-tight text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 transition-colors rounded-md ${
+                        currentSessionId === h.session_id
+                          ? 'bg-white dark:bg-slate-800 font-medium'
+                          : ''
+                      }`}
+                    >
+                      <p className="truncate">{h.title}</p>
+                    </button>
+                  ))
+                )}
+              </div>
+              <div className="p-3">
+                <button
+                  onClick={() => {
+                    setMessages([]);
+                    setCurrentSessionId(`session_${Date.now()}`);
+                  }}
+                  className="w-full rounded-lg border border-slate-200 dark:border-slate-600 px-3 py-1.5 text-[11px] text-slate-500 hover:bg-white dark:hover:bg-slate-800 transition-colors text-center"
+                >
+                  + New Chat
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* 折叠后显示的展开按钮 */}
+          {!recentsOpen && (
+            <button
+              onClick={() => setRecentsOpen(true)}
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-400 hover:bg-white hover:text-slate-600 dark:border-slate-700 dark:bg-slate-900/50 dark:hover:bg-slate-800 transition-colors self-start mt-1"
+              title="Show Recents"
+            >
+              <PanelLeftOpen className="h-3.5 w-3.5" />
+            </button>
+          )}
+
+          {/* 右侧聊天区域 */}
+          <Card className="flex min-h-0 flex-1 flex-col overflow-hidden border-slate-200 bg-white/95 p-0 shadow-sm dark:border-slate-700 dark:bg-slate-900/90">
 
           {/* Filter bar */}
           <div className="flex shrink-0 flex-wrap items-center gap-4 border-b border-slate-200 px-4 py-2 dark:border-slate-700">
@@ -648,9 +804,16 @@ export default function ChatPage() {
                         }`}
                       >
                         {msg.role === 'assistant' ? (
-                          <div className="prose prose-sm max-w-none prose-slate dark:prose-invert">
-                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
-                          </div>
+                          msg.table_payload ? (
+                            <TableAnswer
+                              narrativeText={msg.narrative_text}
+                              tablePayload={msg.table_payload}
+                            />
+                          ) : (
+                            <div className="prose prose-sm max-w-none prose-slate dark:prose-invert">
+                              <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                            </div>
+                          )
                         ) : (
                           <p className="text-sm leading-5">{msg.content}</p>
                         )}
@@ -661,19 +824,22 @@ export default function ChatPage() {
                         <span className="text-[10px] text-slate-400 dark:text-slate-500">
                           {fmtTime(msg.timestamp)}
                         </span>
-                        {msg.sources && msg.sources.length > 0 && (
-                          <>
-                            {msg.sources.slice(0, 3).map((src, i) => (
-                              <Badge key={i} variant="outline" className="text-[10px] font-normal">
-                                {src.company} · {src.filing_type} · {src.fiscal_year}
-                              </Badge>
-                            ))}
-                            {msg.mode && (
-                              <Badge className={`border text-[10px] ${modeConfig[msg.mode].color}`}>
-                                {modeConfig[msg.mode].label}
-                              </Badge>
-                            )}
-                          </>
+                        {msg.webSources && msg.webSources.length > 0 && msg.webSources.map((ws) => (
+                          <a
+                            key={ws.index}
+                            href={ws.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-2 py-0.5 text-[10px] font-normal text-slate-600 hover:border-slate-400 hover:bg-slate-50 hover:text-slate-900 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300 dark:hover:border-slate-500 dark:hover:text-slate-100"
+                          >
+                            <ArrowUpRight className="h-2.5 w-2.5 shrink-0" />
+                            <span className="max-w-[140px] truncate">{ws.title || ws.url}</span>
+                          </a>
+                        ))}
+                        {msg.mode && (
+                          <Badge className={`border text-[10px] ${modeConfig[msg.mode].color}`}>
+                            {modeConfig[msg.mode].label}
+                          </Badge>
                         )}
                         {msg.role === 'assistant' && (
                           <>
@@ -755,6 +921,7 @@ export default function ChatPage() {
             </div>
           </div>
         </Card>
+        </div>{/* end sidebar+chat flex row */}
       </div>
 
       {/* ── Question dropdown portal ─────────────────────────────────────── */}
@@ -764,7 +931,7 @@ export default function ChatPage() {
           style={getDropdownStyle(openDropdown)}
           className="w-72 rounded-xl border border-slate-200 bg-white py-1.5 shadow-xl dark:border-slate-700 dark:bg-slate-900"
         >
-          {STRATEGY_CATEGORIES.find((c) => c.id === openDropdown)?.questions.map((q, i) => (
+          {strategyCategories.find((c) => c.id === openDropdown)?.questions.map((q, i) => (
             <button
               key={i}
               type="button"
