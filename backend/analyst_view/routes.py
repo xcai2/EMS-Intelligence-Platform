@@ -18,12 +18,16 @@ GET  /api/analyst-view/flex-benchmark         Flex vs EMS peers comparison
 GET  /api/analyst-view/earnings-calendar      Upcoming/recent earnings via Brave
 GET  /api/analyst-view/sentiment-timeline     Historical consensus score per ticker
 """
+import asyncio
+import json
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Query, Request
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from typing import Optional
 
+from backend.analyst_view.broadcaster import subscribe, unsubscribe, subscriber_count
 from backend.analyst_view.config import ANALYST_SIGNAL_QUERIES
 from backend.analyst_view.db import init_db
 from backend.analyst_view.quotes_service import (
@@ -434,3 +438,51 @@ async def flex_benchmark():
         "leader": peers[0]["ticker"] if peers else "—",
         "cached_at": datetime.now(timezone.utc).isoformat(),
     }
+
+
+# ---------------------------------------------------------------------------
+# SSE push stream — frontend subscribes here; scheduler broadcasts on refresh
+# ---------------------------------------------------------------------------
+
+@router.get("/analyst-view/stream")
+async def analyst_view_stream(request: Request):
+    """
+    Server-Sent Events endpoint.
+
+    Clients connect once and stay connected.  When the background scheduler
+    pre-warms the analyst cache it calls broadcast_update('cache_refreshed', ...)
+    which puts a message into every subscribed queue.  The generator below
+    picks it up and forwards it to the browser so the frontend can silently
+    re-fetch fresh data without polling.
+
+    A 25-second heartbeat keeps the connection alive through proxies/load-balancers.
+    """
+    q = subscribe()
+
+    async def generator():
+        # Handshake — lets the frontend confirm the connection succeeded
+        yield f"event: connected\ndata: {json.dumps({'status': 'ok', 'subscribers': subscriber_count()})}\n\n"
+        try:
+            while True:
+                if await request.is_disconnected():
+                    break
+                try:
+                    msg = await asyncio.wait_for(q.get(), timeout=25.0)
+                    yield f"event: {msg['event']}\ndata: {json.dumps(msg['data'])}\n\n"
+                except asyncio.TimeoutError:
+                    # Keepalive ping so proxies don't close idle connections
+                    yield "event: heartbeat\ndata: {}\n\n"
+        except GeneratorExit:
+            pass
+        finally:
+            unsubscribe(q)
+
+    return StreamingResponse(
+        generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "Connection": "keep-alive",
+            "X-Accel-Buffering": "no",
+        },
+    )

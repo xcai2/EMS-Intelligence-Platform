@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { RefreshCw, TrendingUp, TrendingDown, Minus, AlertCircle } from "lucide-react";
 
 // Components
@@ -14,7 +14,8 @@ import WeeklyThemes from "./components/WeeklyThemes";
 import FlexBenchmark from "./components/FlexBenchmark";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
-const REFRESH_INTERVAL_MS = 5 * 60 * 1000;
+const CACHE_KEY = "analyst_view_intel_cache";
+const CACHE_TTL_MS = 5 * 60 * 1000; // 5 min — revert to auto-refresh before delivery
 
 // ---------------------------------------------------------------------------
 // Types
@@ -145,28 +146,86 @@ export default function AnalystViewPageFeature() {
   const [intelLoading, setIntelLoading] = useState(true);
   const [intelWarning, setIntelWarning] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  const fetchIntel = useCallback(async (manual = false) => {
+  // Core fetch — used by initial load, SWR background revalidation, SSE push, and manual refresh
+  const doFetch = useCallback(async (opts: { manual?: boolean; silent?: boolean } = {}) => {
+    const { manual = false, silent = false } = opts;
     if (manual) setRefreshing(true);
     try {
       const res = await fetch(`${API_URL}/api/analyst-view/company-intel`);
       const data: CompanyIntelResponse = await res.json();
       setIntel(data);
       setIntelWarning(data.warning ?? null);
-    } catch (e) {
-      setIntelWarning("Failed to connect to backend.");
+      try {
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({ payload: data, ts: Date.now() }));
+      } catch { /* storage full — skip */ }
+    } catch {
+      if (!silent) setIntelWarning("Failed to connect to backend.");
     } finally {
       setIntelLoading(false);
-      setRefreshing(false);
+      if (manual) setRefreshing(false);
     }
   }, []);
 
+  // Initial load: serve from sessionStorage if fresh, otherwise fetch.
+  // Stale-while-revalidate: if cache is fresh we still kick off a background
+  // fetch so the next render has the latest data — but we don't block the UI.
   useEffect(() => {
-    fetchIntel();
-    timerRef.current = setInterval(() => fetchIntel(), REFRESH_INTERVAL_MS);
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
-  }, [fetchIntel]);
+    let cacheHit = false;
+    try {
+      const raw = sessionStorage.getItem(CACHE_KEY);
+      if (raw) {
+        const { payload, ts } = JSON.parse(raw) as { payload: CompanyIntelResponse; ts: number };
+        if (Date.now() - ts < CACHE_TTL_MS) {
+          setIntel(payload);
+          setIntelWarning(payload.warning ?? null);
+          setIntelLoading(false);
+          cacheHit = true;
+        }
+      }
+    } catch { /* ignore */ }
+
+    // Always revalidate in background — instant when backend cache is warm
+    doFetch({ silent: cacheHit });
+  }, [doFetch]);
+
+  // SSE: stay connected to the backend event stream.
+  // When the scheduler finishes a cache warm it broadcasts 'cache_refreshed'
+  // and we silently pull the new data without any user interaction.
+  useEffect(() => {
+    let es: EventSource | null = null;
+    let retryTimeout: ReturnType<typeof setTimeout> | null = null;
+    let retryDelay = 3_000;
+
+    const connect = () => {
+      es = new EventSource(`${API_URL}/api/analyst-view/stream`);
+
+      es.addEventListener("connected", () => {
+        retryDelay = 3_000; // reset back-off on successful connect
+      });
+
+      es.addEventListener("cache_refreshed", () => {
+        // Backend just warmed the cache — drop stale sessionStorage and re-fetch silently
+        sessionStorage.removeItem(CACHE_KEY);
+        doFetch({ silent: true });
+      });
+
+      es.onerror = () => {
+        es?.close();
+        // Exponential back-off capped at 60 s
+        retryTimeout = setTimeout(() => {
+          retryDelay = Math.min(retryDelay * 2, 60_000);
+          connect();
+        }, retryDelay);
+      };
+    };
+
+    connect();
+    return () => {
+      es?.close();
+      if (retryTimeout) clearTimeout(retryTimeout);
+    };
+  }, [doFetch]);
 
   return (
     <div className="flex flex-col h-full bg-[#0a0e1a] text-gray-100">
@@ -177,11 +236,11 @@ export default function AnalystViewPageFeature() {
             Analyst Intelligence
           </h1>
           <p className="text-xs text-gray-500 mt-0.5">
-            EMS &amp; Hyperscaler coverage · auto-refreshes every 5 min
+            EMS &amp; Hyperscaler coverage · live via SSE · SWR
           </p>
         </div>
         <button
-          onClick={() => fetchIntel(true)}
+          onClick={() => doFetch({ manual: true })}
           disabled={refreshing}
           className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-[#1a1f2e] border border-[#2a3045] text-gray-400 hover:text-gray-200 hover:border-gray-500 disabled:opacity-50 transition-colors"
         >
