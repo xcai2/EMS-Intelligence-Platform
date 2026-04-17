@@ -1,0 +1,22 @@
+{
+  "last_scraped": "2026-04-17T20:08:14.559165+00:00",
+  "total_facilities": 221,
+  "by_company": {
+    "Flex": 75,
+    "Jabil": 59,
+    "Sanmina": 35,
+    "Celestica": 20,
+    "Plexus": 12,
+    "Benchmark": 20
+  },
+  "shared_locations": 88,
+  "errors": {},
+  "data_sources": {
+    "Flex": "https://flex.com/company/global-locations",
+    "Jabil": "https://www.jabil.com/about-us/global-locations.html",
+    "Sanmina": "https://www.sanmina.com/locations/",
+    "Celestica": "https://www.celestica.com/about-us/locations",
+    "Plexus": "https://www.plexus.com/about/locations/",
+    "Benchmark": "https://www.bench.com/worldwide-locations"
+  }
+}

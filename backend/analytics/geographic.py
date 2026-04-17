@@ -1,136 +1,80 @@
 """
 Geographic analysis for EMS company facilities.
-Provides facility mapping and regional investment analysis.
+Loads facility data from data/ems_facilities.json (populated by the scraper).
+Provides facility mapping, regional distribution, and competitive overlap analysis.
 """
-from typing import Optional
 from collections import defaultdict
 
-from backend.core.config import TRACKED_COMPANY_NAMES
+from backend.core.config import TRACKED_COMPANY_NAMES, BASE_DIR
 from backend.rag.retriever import search_documents
+from backend.scraper.ems_scraper import load_cached_facilities, load_scrape_meta
 
-
-# Known EMS facility locations (from public filings and company information)
-KNOWN_FACILITIES = {
-    "Flex": {
-        "headquarters": {"city": "Singapore", "country": "Singapore", "lat": 1.3521, "lng": 103.8198},
-        "facilities": [
-            {"city": "Guadalajara", "country": "Mexico", "lat": 20.6597, "lng": -103.3496, "type": "Manufacturing"},
-            {"city": "Austin", "country": "USA", "lat": 30.2672, "lng": -97.7431, "type": "Design Center"},
-            {"city": "Memphis", "country": "USA", "lat": 35.1495, "lng": -90.0490, "type": "Manufacturing"},
-            {"city": "Tijuana", "country": "Mexico", "lat": 32.5149, "lng": -117.0382, "type": "Manufacturing"},
-            {"city": "Ciudad Juarez", "country": "Mexico", "lat": 31.6904, "lng": -106.4245, "type": "Manufacturing"},
-            {"city": "Aguascalientes", "country": "Mexico", "lat": 21.8853, "lng": -102.2916, "type": "Manufacturing"},
-            {"city": "Shanghai", "country": "China", "lat": 31.2304, "lng": 121.4737, "type": "Manufacturing"},
-            {"city": "Shenzhen", "country": "China", "lat": 22.5431, "lng": 114.0579, "type": "Manufacturing"},
-            {"city": "Penang", "country": "Malaysia", "lat": 5.4141, "lng": 100.3288, "type": "Manufacturing"},
-            {"city": "Johor", "country": "Malaysia", "lat": 1.4927, "lng": 103.7414, "type": "Manufacturing"},
-            {"city": "Chennai", "country": "India", "lat": 13.0827, "lng": 80.2707, "type": "Design Center"},
-            {"city": "Bangalore", "country": "India", "lat": 12.9716, "lng": 77.5946, "type": "Design Center"},
-            {"city": "Pune", "country": "India", "lat": 18.5204, "lng": 73.8567, "type": "Design Center"},
-            {"city": "Zhuhai", "country": "China", "lat": 22.2769, "lng": 113.5678, "type": "Manufacturing"},
-            {"city": "Sorocaba", "country": "Brazil", "lat": -23.5015, "lng": -47.4526, "type": "Manufacturing"},
-            {"city": "Manaus", "country": "Brazil", "lat": -3.1190, "lng": -60.0217, "type": "Manufacturing"},
-            {"city": "Timisoara", "country": "Romania", "lat": 45.7489, "lng": 21.2087, "type": "Manufacturing"},
-            {"city": "Tczew", "country": "Poland", "lat": 54.0924, "lng": 18.7779, "type": "Manufacturing"},
-            {"city": "Taoyuan", "country": "Taiwan", "lat": 24.9937, "lng": 121.3010, "type": "Manufacturing", "website": "https://en.twf.com.tw"},
-            {"city": "Suzhou", "country": "China", "lat": 31.2989, "lng": 120.5853, "type": "Manufacturing"},
-        ]
-    },
-    "Jabil": {
-        "headquarters": {"city": "St. Petersburg", "country": "USA", "lat": 27.7676, "lng": -82.6403},
-        "facilities": [
-            {"city": "Penang", "country": "Malaysia", "lat": 5.4141, "lng": 100.3288, "type": "Manufacturing"},
-            {"city": "Wuxi", "country": "China", "lat": 31.4912, "lng": 120.3119, "type": "Manufacturing"},
-            {"city": "Chihuahua", "country": "Mexico", "lat": 28.6353, "lng": -106.0889, "type": "Manufacturing"},
-            {"city": "Livingston", "country": "UK", "lat": 55.9024, "lng": -3.5159, "type": "Manufacturing"},
-            {"city": "Budapest", "country": "Hungary", "lat": 47.4979, "lng": 19.0402, "type": "Manufacturing"},
-            {"city": "Guadalajara", "country": "Mexico", "lat": 20.6597, "lng": -103.3496, "type": "Manufacturing"},
-            {"city": "Shenzhen", "country": "China", "lat": 22.5431, "lng": 114.0579, "type": "Manufacturing"},
-            {"city": "San Jose", "country": "USA", "lat": 37.3382, "lng": -121.8863, "type": "Design Center"},
-        ]
-    },
-    "Celestica": {
-        "headquarters": {"city": "Toronto", "country": "Canada", "lat": 43.6532, "lng": -79.3832},
-        "facilities": [
-            {"city": "Monterrey", "country": "Mexico", "lat": 25.6866, "lng": -100.3161, "type": "Manufacturing"},
-            {"city": "Suzhou", "country": "China", "lat": 31.2989, "lng": 120.5853, "type": "Manufacturing"},
-            {"city": "Kulim", "country": "Malaysia", "lat": 5.3717, "lng": 100.5627, "type": "Manufacturing"},
-            {"city": "Valencia", "country": "Spain", "lat": 39.4699, "lng": -0.3763, "type": "Manufacturing"},
-            {"city": "Oradea", "country": "Romania", "lat": 47.0458, "lng": 21.9189, "type": "Manufacturing"},
-            {"city": "Portland", "country": "USA", "lat": 45.5051, "lng": -122.6750, "type": "Design Center"},
-            {"city": "Fremont", "country": "USA", "lat": 37.5485, "lng": -121.9886, "type": "Manufacturing"},
-        ]
-    },
-    "Benchmark": {
-        "headquarters": {"city": "Tempe", "country": "USA", "lat": 33.4255, "lng": -111.9400},
-        "facilities": [
-            {"city": "Rochester", "country": "USA", "lat": 43.1566, "lng": -77.6088, "type": "Manufacturing"},
-            {"city": "Angleton", "country": "USA", "lat": 29.1694, "lng": -95.4316, "type": "Manufacturing"},
-            {"city": "Suzhou", "country": "China", "lat": 31.2989, "lng": 120.5853, "type": "Manufacturing"},
-            {"city": "Penang", "country": "Malaysia", "lat": 5.4141, "lng": 100.3288, "type": "Manufacturing"},
-            {"city": "Guadalajara", "country": "Mexico", "lat": 20.6597, "lng": -103.3496, "type": "Manufacturing"},
-            {"city": "Amsterdam", "country": "Netherlands", "lat": 52.3676, "lng": 4.9041, "type": "Design Center"},
-        ]
-    },
-    "Sanmina": {
-        "headquarters": {"city": "San Jose", "country": "USA", "lat": 37.3382, "lng": -121.8863},
-        "facilities": [
-            {"city": "Guadalajara", "country": "Mexico", "lat": 20.6597, "lng": -103.3496, "type": "Manufacturing"},
-            {"city": "Shenzhen", "country": "China", "lat": 22.5431, "lng": 114.0579, "type": "Manufacturing"},
-            {"city": "Chennai", "country": "India", "lat": 13.0827, "lng": 80.2707, "type": "Manufacturing"},
-            {"city": "Kecskemet", "country": "Hungary", "lat": 46.8963, "lng": 19.6897, "type": "Manufacturing"},
-            {"city": "Wuxi", "country": "China", "lat": 31.4912, "lng": 120.3119, "type": "Manufacturing"},
-            {"city": "Kunshan", "country": "China", "lat": 31.3847, "lng": 120.9837, "type": "Manufacturing"},
-            {"city": "Fremont", "country": "USA", "lat": 37.5485, "lng": -121.9886, "type": "Manufacturing"},
-        ]
-    },
+# --- Region mapping -------------------------------------------------------
+_REGION_COUNTRIES = {
+    "Americas": [
+        "United States", "USA", "Canada", "Mexico", "Brazil",
+    ],
+    "EMEA": [
+        "United Kingdom", "UK", "Hungary", "Romania", "Netherlands",
+        "Spain", "Germany", "Poland", "Ireland",
+    ],
+    "APAC": [
+        "China", "Malaysia", "Singapore", "India", "Japan",
+        "Taiwan", "Thailand", "Vietnam", "Philippines", "Indonesia",
+    ],
 }
 
+_COUNTRY_TO_REGION: dict[str, str] = {}
+for _region, _countries in _REGION_COUNTRIES.items():
+    for _c in _countries:
+        _COUNTRY_TO_REGION[_c] = _region
+
+
+def _market_region(country: str) -> str:
+    return _COUNTRY_TO_REGION.get(country, "Other")
+
+
+# --- Data loading ---------------------------------------------------------
+
+def _load_all() -> list[dict]:
+    """Load all facilities from the JSON cache file."""
+    return load_cached_facilities()
+
+
+# --- Public API -----------------------------------------------------------
 
 def get_company_facilities(company: str, include_extracted: bool = True) -> dict:
-    """Get facility information for a company, optionally including auto-extracted facilities."""
-    
-    if include_extracted:
-        # Use combined facilities (known + extracted from documents)
-        try:
-            from backend.analytics.facility_extractor import get_combined_facilities
-            combined = get_combined_facilities(company)
-            
-            # Find headquarters
-            hq = None
-            facilities = []
-            for f in combined.get("facilities", []):
-                if f.get("type") == "Headquarters":
-                    hq = f
-                else:
-                    facilities.append(f)
-            
-            return {
-                "company": company,
-                "headquarters": hq,
-                "facilities": facilities,
-                "total_facilities": combined.get("total_facilities", 0),
-                "known_count": combined.get("known_count", 0),
-                "extracted_count": combined.get("extracted_count", 0),
-                "new_discoveries": combined.get("new_discoveries", []),
-                "data_source": "combined",
-            }
-        except Exception as e:
-            # Fall back to known facilities
-            pass
-    
-    # Fallback to hardcoded known facilities
-    company_data = KNOWN_FACILITIES.get(company)
-    
-    if not company_data:
+    """Get facility information for a company from the cached JSON data."""
+    all_data = _load_all()
+    company_facilities = [f for f in all_data if f["company"] == company]
+
+    if not company_facilities:
         return {"company": company, "error": "Company not found"}
-    
+
+    hq = None
+    facilities = []
+    for f in company_facilities:
+        entry = {
+            "city": f["city"],
+            "country": f["country"],
+            "lat": f.get("latitude"),
+            "lng": f.get("longitude"),
+            "type": f["facility_type"][0] if f.get("facility_type") else "Manufacturing",
+            "source": "scraped",
+            "confidence": 1.0,
+            "source_url": f.get("source_url", ""),
+        }
+        if "Headquarters" in (f.get("facility_type") or []):
+            hq = entry
+        else:
+            facilities.append(entry)
+
     return {
         "company": company,
-        "headquarters": company_data["headquarters"],
-        "facilities": company_data["facilities"],
-        "total_facilities": len(company_data["facilities"]) + 1,  # +1 for HQ
-        "data_source": "known",
+        "headquarters": hq,
+        "facilities": facilities,
+        "total_facilities": len(company_facilities),
+        "data_source": "ems_facilities.json",
     }
 
 
@@ -140,35 +84,26 @@ def get_regional_distribution(company: str) -> dict:
 
     if "error" in company_data:
         return {"company": company, "error": "Company not found"}
-    
-    regions = {
-        "Americas": ["USA", "Canada", "Mexico", "Brazil"],
-        "EMEA": ["UK", "Hungary", "Romania", "Netherlands", "Spain", "Germany", "Poland"],
-        "APAC": ["China", "Malaysia", "Singapore", "India", "Japan", "Taiwan"],
-    }
-    
+
     distribution = {"Americas": 0, "EMEA": 0, "APAC": 0}
-    
-    # Count HQ
-    headquarters = company_data.get("headquarters")
-    if headquarters:
-        hq_country = headquarters.get("country")
-        for region, countries in regions.items():
-            if hq_country in countries:
-                distribution[region] += 1
-                break
-    
-    # Count facilities
+
+    hq = company_data.get("headquarters")
+    if hq:
+        region = _market_region(hq.get("country", ""))
+        if region in distribution:
+            distribution[region] += 1
+
     for facility in company_data.get("facilities", []):
-        country = facility.get("country")
-        for region, countries in regions.items():
-            if country in countries:
-                distribution[region] += 1
-                break
-    
+        region = _market_region(facility.get("country", ""))
+        if region in distribution:
+            distribution[region] += 1
+
     total = sum(distribution.values())
-    percentages = {k: round(v / total * 100, 1) if total > 0 else 0 for k, v in distribution.items()}
-    
+    percentages = {
+        k: round(v / total * 100, 1) if total > 0 else 0
+        for k, v in distribution.items()
+    }
+
     return {
         "company": company,
         "distribution": distribution,
@@ -178,120 +113,102 @@ def get_regional_distribution(company: str) -> dict:
 
 
 def get_all_facilities_map(include_extracted: bool = True) -> dict:
-    """Get all facilities for map visualization, including auto-extracted ones."""
-    all_facilities = []
-    by_company = {}
-    new_discoveries = []
-    
-    companies = list(TRACKED_COMPANY_NAMES)
-    
-    for company in companies:
-        company_facilities = get_company_facilities(company, include_extracted=include_extracted)
-        
-        if "error" in company_facilities:
-            continue
-        
-        # Add headquarters
-        hq = company_facilities.get("headquarters")
-        if hq:
-            all_facilities.append({
-                "company": company,
-                "city": hq.get("city"),
-                "country": hq.get("country"),
-                "lat": hq.get("lat"),
-                "lng": hq.get("lng"),
-                "type": "Headquarters",
-                "is_headquarters": True,
-                "source": hq.get("source", "known"),
-                "confidence": hq.get("confidence", 1.0),
-            })
-        
-        # Add facilities
-        for facility in company_facilities.get("facilities", []):
-            all_facilities.append({
-                "company": company,
-                "city": facility.get("city"),
-                "country": facility.get("country"),
-                "lat": facility.get("lat"),
-                "lng": facility.get("lng"),
-                "type": facility.get("type", "Manufacturing"),
-                "website": facility.get("website"),
-                "is_headquarters": False,
-                "source": facility.get("source", "known"),
-                "confidence": facility.get("confidence", 1.0),
-            })
-        
-        by_company[company] = company_facilities.get("total_facilities", 0)
-        
-        # Track new discoveries
-        for discovery in company_facilities.get("new_discoveries", []):
-            discovery["company"] = company
-            new_discoveries.append(discovery)
-    
+    """Get all facilities for map visualization from the cached JSON."""
+    all_data = _load_all()
+    meta = load_scrape_meta()
+
+    facilities_out = []
+    by_company: dict[str, int] = defaultdict(int)
+
+    for f in all_data:
+        company = f["company"]
+        facility_types = f.get("facility_type") or ["Manufacturing"]
+        is_hq = "Headquarters" in facility_types
+
+        facilities_out.append({
+            "company": company,
+            "city": f["city"],
+            "country": f["country"],
+            "lat": f.get("latitude"),
+            "lng": f.get("longitude"),
+            "type": facility_types[0],
+            "facility_type": facility_types,
+            "is_headquarters": is_hq,
+            "source": "scraped",
+            "confidence": 1.0,
+            "source_url": f.get("source_url", ""),
+            "source_page_title": f.get("source_page_title", ""),
+            "capabilities": f.get("capabilities", []),
+            "region": f.get("region", _market_region(f.get("country", ""))),
+            "subregion": f.get("subregion", ""),
+            "is_shared_location": f.get("is_shared_location", False),
+            "shared_with": f.get("shared_with", []),
+        })
+        by_company[company] += 1
+
     return {
-        "facilities": all_facilities,
-        "total_count": len(all_facilities),
-        "by_company": by_company,
-        "new_discoveries": new_discoveries,
-        "includes_extracted": include_extracted,
+        "facilities": facilities_out,
+        "total_count": len(facilities_out),
+        "by_company": dict(by_company),
+        "last_scraped": meta.get("last_scraped"),
+        "data_sources": meta.get("data_sources", {}),
     }
 
 
 def analyze_regional_investments(company: str) -> dict:
-    """
-    Analyze regional investment mentions in company filings.
-    """
-    # Search for regional investment content
-    regions_to_search = ["Americas", "Asia", "Europe", "Mexico", "China", "Malaysia", "India"]
-    
+    """Analyze regional investment mentions in company filings."""
+    regions_to_search = [
+        "Americas", "Asia", "Europe", "Mexico", "China", "Malaysia", "India",
+    ]
+
     regional_mentions = {}
-    
+
     for region in regions_to_search:
         docs = search_documents(
             query=f"{company} {region} investment expansion facility manufacturing",
             company_filter=company,
             n_results=20,
         )
-        
+
         regional_mentions[region] = {
             "mentions": len(docs),
             "sample_context": docs[0]["content"][:200] if docs else None,
         }
-    
-    # Determine investment focus
-    sorted_regions = sorted(regional_mentions.items(), key=lambda x: x[1]["mentions"], reverse=True)
+
+    sorted_regions = sorted(
+        regional_mentions.items(), key=lambda x: x[1]["mentions"], reverse=True
+    )
     top_regions = sorted_regions[:3]
-    
+
     return {
         "company": company,
         "regional_mentions": regional_mentions,
-        "investment_focus": [{"region": r, "mentions": m["mentions"]} for r, m in top_regions],
+        "investment_focus": [
+            {"region": r, "mentions": m["mentions"]} for r, m in top_regions
+        ],
         "primary_focus": top_regions[0][0] if top_regions else None,
     }
 
 
 def compare_geographic_footprints() -> dict:
-    """
-    Compare geographic footprints across all companies.
-    """
+    """Compare geographic footprints across all companies."""
+    all_data = _load_all()
     companies = list(TRACKED_COMPANY_NAMES)
-    
-    results = {
+
+    results: dict = {
         "companies": [],
-        "regional_leaders": {
-            "Americas": None,
-            "EMEA": None,
-            "APAC": None,
-        },
+        "regional_leaders": {"Americas": None, "EMEA": None, "APAC": None},
         "overlap_analysis": {},
     }
-    
-    regional_counts = {"Americas": {}, "EMEA": {}, "APAC": {}}
-    
+
+    regional_counts: dict[str, dict[str, int]] = {
+        "Americas": {}, "EMEA": {}, "APAC": {},
+    }
+
     for company in companies:
         distribution = get_regional_distribution(company)
         facilities = get_company_facilities(company)
-        
+
         if "error" not in distribution:
             results["companies"].append({
                 "company": company,
@@ -299,12 +216,10 @@ def compare_geographic_footprints() -> dict:
                 "regional_distribution": distribution["distribution"],
                 "primary_region": distribution["primary_region"],
             })
-            
-            # Track for leaders
+
             for region, count in distribution["distribution"].items():
                 regional_counts[region][company] = count
-    
-    # Determine regional leaders
+
     for region, counts in regional_counts.items():
         if counts:
             leader = max(counts, key=counts.get)
@@ -312,22 +227,24 @@ def compare_geographic_footprints() -> dict:
                 "company": leader,
                 "count": counts[leader],
             }
-    
-    # Analyze overlap (cities with multiple companies)
-    city_companies = defaultdict(list)
-    for company in companies:
-        facilities = get_company_facilities(company)
-        if "error" in facilities:
-            continue
-        for facility in facilities.get("facilities", []):
-            city = facility.get("city")
-            if city:
-                city_companies[city].append(company)
-    
-    overlap_cities = {city: companies for city, companies in city_companies.items() if len(companies) > 1}
+
+    # Overlap analysis from cached data
+    city_companies: dict[str, list[str]] = defaultdict(list)
+    for f in all_data:
+        city = f.get("city", "")
+        if city:
+            city_companies[city].append(f["company"])
+
+    # Deduplicate company names per city
+    for city in city_companies:
+        city_companies[city] = sorted(set(city_companies[city]))
+
+    overlap_cities = {
+        city: comps for city, comps in city_companies.items() if len(comps) > 1
+    }
     results["overlap_analysis"] = {
         "shared_locations": len(overlap_cities),
         "locations": overlap_cities,
     }
-    
+
     return results

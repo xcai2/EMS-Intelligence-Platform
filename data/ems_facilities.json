@@ -1,0 +1,5128 @@
+[
+  {
+    "id": "flex_austin",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Austin",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 30.2672,
+    "longitude": -97.7431,
+    "facility_type": [
+      "Headquarters"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Jabil",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "flex_fontana",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Fontana",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 34.0922,
+    "longitude": -117.435,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_milpitas",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Milpitas",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 37.4323,
+    "longitude": -121.8996,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_san_jose",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "San Jose",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 37.3382,
+    "longitude": -121.8863,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Jabil",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "flex_manchester",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Manchester",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 41.776,
+    "longitude": -72.5218,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "flex_buffalo_grove",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Buffalo Grove",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.1663,
+    "longitude": -87.9631,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_littleton",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Littleton",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.5334,
+    "longitude": -71.457,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_coopersville",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Coopersville",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 43.0775,
+    "longitude": -85.9339,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_farmington_hills",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Farmington Hills",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.4989,
+    "longitude": -83.3677,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_northfield",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Northfield",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 44.4583,
+    "longitude": -93.1614,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_hollis",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Hollis",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.7431,
+    "longitude": -71.5892,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_nashua",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Nashua",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.7654,
+    "longitude": -71.4676,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark"
+    ]
+  },
+  {
+    "id": "flex_orangeburg",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Orangeburg",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 33.4918,
+    "longitude": -80.8556,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_west_columbia",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "West Columbia",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 33.9935,
+    "longitude": -81.074,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_memphis",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Memphis",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 35.1495,
+    "longitude": -90.049,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil"
+    ]
+  },
+  {
+    "id": "flex_dallas",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Dallas",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 32.7767,
+    "longitude": -96.797,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_salt_lake_city",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Salt Lake City",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 40.7608,
+    "longitude": -111.891,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "flex_henrico",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Henrico",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 37.5388,
+    "longitude": -77.3653,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_aguascalientes",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Aguascalientes",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 21.8853,
+    "longitude": -102.2916,
+    "facility_type": [
+      "Logistics/Repair"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_juarez",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Juarez",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 31.6904,
+    "longitude": -106.4245,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_reynosa",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Reynosa",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 26.0508,
+    "longitude": -98.2279,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "flex_san_luis",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "San Luis",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 32.4543,
+    "longitude": -114.722,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_tijuana",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Tijuana",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 32.5149,
+    "longitude": -117.0382,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "flex_manaus",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Manaus",
+    "state_province": "",
+    "country": "Brazil",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": -3.119,
+    "longitude": -60.0217,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil"
+    ]
+  },
+  {
+    "id": "flex_sorocaba",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Sorocaba",
+    "state_province": "",
+    "country": "Brazil",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": -23.5015,
+    "longitude": -47.4526,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_alajuela",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Alajuela",
+    "state_province": "",
+    "country": "Costa Rica",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 10.0167,
+    "longitude": -84.2167,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_vaughan",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Vaughan",
+    "state_province": "",
+    "country": "Canada",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 43.8361,
+    "longitude": -79.4983,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:10.683585+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_althofen",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Althofen",
+    "state_province": "",
+    "country": "Austria",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 46.8744,
+    "longitude": 14.4639,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_vienna",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Vienna",
+    "state_province": "",
+    "country": "Austria",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 48.2082,
+    "longitude": 16.3738,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil"
+    ]
+  },
+  {
+    "id": "flex_pardubice",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Pardubice",
+    "state_province": "",
+    "country": "Czech Republic",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 50.0343,
+    "longitude": 15.7812,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_stuttgart",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Stuttgart",
+    "state_province": "",
+    "country": "Germany",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 48.7758,
+    "longitude": 9.1829,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_budapest",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Budapest",
+    "state_province": "",
+    "country": "Hungary",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 47.4979,
+    "longitude": 19.0402,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_sarvar",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Sarvar",
+    "state_province": "",
+    "country": "Hungary",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 47.254,
+    "longitude": 16.934,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_tab",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Tab",
+    "state_province": "",
+    "country": "Hungary",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 46.7314,
+    "longitude": 18.0305,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_cork",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Cork",
+    "state_province": "",
+    "country": "Ireland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 51.8969,
+    "longitude": -8.4863,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_dundalk",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Dundalk",
+    "state_province": "",
+    "country": "Ireland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 54.0037,
+    "longitude": -6.4025,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_limerick",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Limerick",
+    "state_province": "",
+    "country": "Ireland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 52.6638,
+    "longitude": -8.6267,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_manorhamilton",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Manorhamilton",
+    "state_province": "",
+    "country": "Ireland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 54.3052,
+    "longitude": -8.1792,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_migdal_haemek",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Migdal Haemek",
+    "state_province": "",
+    "country": "Israel",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 32.6713,
+    "longitude": 35.2414,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_ofakim",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Ofakim",
+    "state_province": "",
+    "country": "Israel",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 31.3156,
+    "longitude": 34.6154,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_somaglia",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Somaglia",
+    "state_province": "",
+    "country": "Italy",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 45.15,
+    "longitude": 9.63,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_hoogeveen",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Hoogeveen",
+    "state_province": "",
+    "country": "Netherlands",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 52.7236,
+    "longitude": 6.4764,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_venray",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Venray",
+    "state_province": "",
+    "country": "Netherlands",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 51.5262,
+    "longitude": 5.973,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_woerden",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Woerden",
+    "state_province": "",
+    "country": "Netherlands",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 52.0886,
+    "longitude": 4.8848,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_tczew",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Tczew",
+    "state_province": "",
+    "country": "Poland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 54.0924,
+    "longitude": 18.7779,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_timisoara",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Timisoara",
+    "state_province": "",
+    "country": "Romania",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 45.7489,
+    "longitude": 21.2087,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_pamplona",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Pamplona",
+    "state_province": "",
+    "country": "Spain",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 42.8125,
+    "longitude": -1.6458,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_kalmar",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Kalmar",
+    "state_province": "",
+    "country": "Sweden",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 56.6634,
+    "longitude": 16.3567,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_cumbria",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Cumbria",
+    "state_province": "",
+    "country": "United Kingdom",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 54.328,
+    "longitude": -2.7471,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_kendal",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Kendal",
+    "state_province": "",
+    "country": "United Kingdom",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 54.328,
+    "longitude": -2.7471,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_warrington",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Warrington",
+    "state_province": "",
+    "country": "United Kingdom",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 53.39,
+    "longitude": -2.597,
+    "facility_type": [
+      "Logistics/Repair"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_mukachevo",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Mukachevo",
+    "state_province": "",
+    "country": "Ukraine",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 48.4414,
+    "longitude": 22.7177,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:13.761845+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_changsha",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Changsha",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 28.2282,
+    "longitude": 112.9388,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_dongguan",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Dongguan",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 23.0208,
+    "longitude": 113.7518,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica"
+    ]
+  },
+  {
+    "id": "flex_hong_kong",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Hong Kong",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 22.3193,
+    "longitude": 114.1694,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica"
+    ]
+  },
+  {
+    "id": "flex_kunshan",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Kunshan",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.3847,
+    "longitude": 120.9837,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "flex_nanjing",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Nanjing",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 32.0603,
+    "longitude": 118.7969,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_shanghai",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Shanghai",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.2304,
+    "longitude": 121.4737,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "flex_shenzhen",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Shenzhen",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 22.5431,
+    "longitude": 114.0579,
+    "facility_type": [
+      "Logistics/Repair"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "flex_suzhou",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Suzhou",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.2989,
+    "longitude": 120.5853,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Celestica",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "flex_taipei",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Taipei",
+    "state_province": "",
+    "country": "Taiwan",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 25.033,
+    "longitude": 121.5654,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "flex_zhuhai",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Zhuhai",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 22.2769,
+    "longitude": 113.5678,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_bengaluru",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Bengaluru",
+    "state_province": "",
+    "country": "India",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 12.9716,
+    "longitude": 77.5946,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_chennai",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Chennai",
+    "state_province": "",
+    "country": "India",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 13.0827,
+    "longitude": 80.2707,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "flex_coimbatore",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Coimbatore",
+    "state_province": "",
+    "country": "India",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 11.0168,
+    "longitude": 76.9558,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_pune",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Pune",
+    "state_province": "",
+    "country": "India",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 18.5204,
+    "longitude": 73.8567,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil"
+    ]
+  },
+  {
+    "id": "flex_sriperumbudur",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Sriperumbudur",
+    "state_province": "",
+    "country": "India",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 12.9676,
+    "longitude": 79.9416,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_wallajabad",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Wallajabad",
+    "state_province": "",
+    "country": "India",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 12.8,
+    "longitude": 79.7167,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_batam",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Batam",
+    "state_province": "",
+    "country": "Indonesia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 1.0456,
+    "longitude": 104.0305,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica"
+    ]
+  },
+  {
+    "id": "flex_ibaraki",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Ibaraki",
+    "state_province": "",
+    "country": "Japan",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 36.3418,
+    "longitude": 140.4468,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_johor",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Johor",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 1.4927,
+    "longitude": 103.7414,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica"
+    ]
+  },
+  {
+    "id": "flex_penang",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Penang",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 5.4141,
+    "longitude": 100.3288,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Celestica",
+      "Jabil",
+      "Plexus",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "flex_selangor",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Selangor",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 3.0738,
+    "longitude": 101.5183,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_cebu",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Cebu",
+    "state_province": "",
+    "country": "Philippines",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 10.3157,
+    "longitude": 123.8854,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "flex_singapore",
+    "company": "Flex",
+    "company_color": "#2563EB",
+    "city": "Singapore",
+    "state_province": "",
+    "country": "Singapore",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 1.3521,
+    "longitude": 103.8198,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://flex.com/company/global-locations",
+    "source_page_title": "Global Locations | Flex",
+    "scraped_at": "2026-04-17T20:07:16.862175+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Jabil",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "jabil_albuquerque",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Albuquerque",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 35.0844,
+    "longitude": -106.6504,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_anaheim",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Anaheim",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 33.8366,
+    "longitude": -117.9143,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_asheville",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Asheville",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 35.5951,
+    "longitude": -82.5515,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_auburn_hills",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Auburn Hills",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.6875,
+    "longitude": -83.2341,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_austin",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Austin",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 30.2672,
+    "longitude": -97.7431,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Flex",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "jabil_atlanta",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Atlanta",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 33.749,
+    "longitude": -84.388,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_belo_horizonte",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Belo Horizonte",
+    "state_province": "",
+    "country": "Brazil",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": -19.9191,
+    "longitude": -43.9386,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_brandywine",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Brandywine",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 39.8685,
+    "longitude": -75.546,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_burlington",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Burlington",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.5048,
+    "longitude": -71.1962,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_cayey",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Cayey",
+    "state_province": "",
+    "country": "Puerto Rico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 18.1119,
+    "longitude": -66.166,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_chihuahua",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Chihuahua",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 28.6353,
+    "longitude": -106.0889,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_claremont",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Claremont",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 43.3767,
+    "longitude": -72.3468,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_clearwater",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Clearwater",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 27.9659,
+    "longitude": -82.8001,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_clinton",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Clinton",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.4168,
+    "longitude": -71.6828,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_devens",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Devens",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.5457,
+    "longitude": -71.6123,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_elmira",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Elmira",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.0898,
+    "longitude": -76.8077,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_guadalajara",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Guadalajara",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 20.6597,
+    "longitude": -103.3496,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Plexus",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "jabil_manaus",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Manaus",
+    "state_province": "",
+    "country": "Brazil",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": -3.119,
+    "longitude": -60.0217,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex"
+    ]
+  },
+  {
+    "id": "jabil_memphis",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Memphis",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 35.1495,
+    "longitude": -90.049,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex"
+    ]
+  },
+  {
+    "id": "jabil_monterrey",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Monterrey",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 25.6866,
+    "longitude": -100.3161,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "jabil_ottawa",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Ottawa",
+    "state_province": "",
+    "country": "Canada",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 45.4215,
+    "longitude": -75.6972,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "jabil_salt_lake_city",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Salt Lake City",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 40.7608,
+    "longitude": -111.891,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "jabil_san_jose",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "San Jose",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 37.3382,
+    "longitude": -121.8863,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Flex",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "jabil_st._petersburg",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "St. Petersburg",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 27.7676,
+    "longitude": -82.6403,
+    "facility_type": [
+      "Headquarters"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_tijuana",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Tijuana",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 32.5149,
+    "longitude": -117.0382,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:22.976256+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Flex"
+    ]
+  },
+  {
+    "id": "jabil_bandung",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Bandung",
+    "state_province": "",
+    "country": "Indonesia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": -6.9175,
+    "longitude": 107.6191,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica"
+    ]
+  },
+  {
+    "id": "jabil_batu_kawan",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Batu Kawan",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 5.2551,
+    "longitude": 100.4285,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_beijing",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Beijing",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 39.9042,
+    "longitude": 116.4074,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_changhua",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Changhua",
+    "state_province": "",
+    "country": "Taiwan",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 24.0518,
+    "longitude": 120.5161,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_chuping",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Chuping",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 6.511,
+    "longitude": 100.199,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_gotemba",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Gotemba",
+    "state_province": "",
+    "country": "Japan",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 35.3089,
+    "longitude": 138.9286,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_hachioji",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Hachioji",
+    "state_province": "",
+    "country": "Japan",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 35.6565,
+    "longitude": 139.3239,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_ho_chi_minh_city",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Ho Chi Minh City",
+    "state_province": "",
+    "country": "Vietnam",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 10.8231,
+    "longitude": 106.6297,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_hsinchu",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Hsinchu",
+    "state_province": "",
+    "country": "Taiwan",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 24.8015,
+    "longitude": 120.9718,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_huangpu",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Huangpu",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 23.1066,
+    "longitude": 113.4543,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_guangzhou",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Guangzhou",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 23.1291,
+    "longitude": 113.2644,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_kulim",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Kulim",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 5.3717,
+    "longitude": 100.5627,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica"
+    ]
+  },
+  {
+    "id": "jabil_penang",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Penang",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 5.4141,
+    "longitude": 100.3288,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Celestica",
+      "Flex",
+      "Plexus",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "jabil_pune",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Pune",
+    "state_province": "",
+    "country": "India",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 18.5204,
+    "longitude": 73.8567,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex"
+    ]
+  },
+  {
+    "id": "jabil_shanghai",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Shanghai",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.2304,
+    "longitude": 121.4737,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Flex"
+    ]
+  },
+  {
+    "id": "jabil_shenzhen",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Shenzhen",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 22.5431,
+    "longitude": 114.0579,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "jabil_singapore",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Singapore",
+    "state_province": "",
+    "country": "Singapore",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 1.3521,
+    "longitude": 103.8198,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Flex",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "jabil_suzhou",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Suzhou",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.2989,
+    "longitude": 120.5853,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Celestica",
+      "Flex"
+    ]
+  },
+  {
+    "id": "jabil_taipei",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Taipei",
+    "state_province": "",
+    "country": "Taiwan",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 25.033,
+    "longitude": 121.5654,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Flex"
+    ]
+  },
+  {
+    "id": "jabil_wuxi",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Wuxi",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.4912,
+    "longitude": 120.3119,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:28.651328+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "jabil_balsthal",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Balsthal",
+    "state_province": "",
+    "country": "Switzerland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 47.3156,
+    "longitude": 7.6933,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_bar-lev",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Bar-Lev",
+    "state_province": "",
+    "country": "Israel",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 32.925,
+    "longitude": 35.2817,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_bettlach",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Bettlach",
+    "state_province": "",
+    "country": "Switzerland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 47.2031,
+    "longitude": 7.4261,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_bray",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Bray",
+    "state_province": "",
+    "country": "Ireland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 53.2034,
+    "longitude": -6.0986,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_coatbridge",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Coatbridge",
+    "state_province": "",
+    "country": "United Kingdom",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 55.8622,
+    "longitude": -4.0277,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_dublin",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Dublin",
+    "state_province": "",
+    "country": "Ireland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 53.3498,
+    "longitude": -6.2603,
+    "facility_type": [
+      "Logistics/Repair"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_grenchen",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Grenchen",
+    "state_province": "",
+    "country": "Switzerland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 47.1925,
+    "longitude": 7.3964,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_hasselt",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Hasselt",
+    "state_province": "",
+    "country": "Belgium",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 50.9307,
+    "longitude": 5.3375,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_jena",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Jena",
+    "state_province": "",
+    "country": "Germany",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 50.9271,
+    "longitude": 11.5892,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_kharkiv",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Kharkiv",
+    "state_province": "",
+    "country": "Ukraine",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 49.9935,
+    "longitude": 36.2304,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_kwidzyn",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Kwidzyn",
+    "state_province": "",
+    "country": "Poland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 53.734,
+    "longitude": 18.9309,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_le_locle",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Le Locle",
+    "state_province": "",
+    "country": "Switzerland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 47.0552,
+    "longitude": 6.7513,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "jabil_livingston",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Livingston",
+    "state_province": "",
+    "country": "United Kingdom",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 55.9024,
+    "longitude": -3.5159,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Plexus"
+    ]
+  },
+  {
+    "id": "jabil_vienna",
+    "company": "Jabil",
+    "company_color": "#16A34A",
+    "city": "Vienna",
+    "state_province": "",
+    "country": "Austria",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 48.2082,
+    "longitude": 16.3738,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.jabil.com/about-us/global-locations.html",
+    "source_page_title": "Global Locations | Jabil",
+    "scraped_at": "2026-04-17T20:07:33.595431+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex"
+    ]
+  },
+  {
+    "id": "sanmina_guadalajara",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Guadalajara",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 20.6597,
+    "longitude": -103.3496,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Jabil",
+      "Plexus"
+    ]
+  },
+  {
+    "id": "sanmina_monterrey",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Monterrey",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 25.6866,
+    "longitude": -100.3161,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "sanmina_reynosa",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Reynosa",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 26.0508,
+    "longitude": -98.2279,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex"
+    ]
+  },
+  {
+    "id": "sanmina_ottawa",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Ottawa",
+    "state_province": "",
+    "country": "Canada",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 45.4215,
+    "longitude": -75.6972,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil"
+    ]
+  },
+  {
+    "id": "sanmina_austin",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Austin",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 30.2672,
+    "longitude": -97.7431,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Flex",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "sanmina_carrollton",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Carrollton",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 32.9537,
+    "longitude": -96.8903,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_costa_mesa",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Costa Mesa",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 33.6412,
+    "longitude": -117.9187,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_el_paso",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "El Paso",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 31.7619,
+    "longitude": -106.485,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_fremont",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Fremont",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 37.5485,
+    "longitude": -121.9886,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica"
+    ]
+  },
+  {
+    "id": "sanmina_huntsville",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Huntsville",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 34.7304,
+    "longitude": -86.5861,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark"
+    ]
+  },
+  {
+    "id": "sanmina_kenosha",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Kenosha",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.5847,
+    "longitude": -87.8212,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_manchester",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Manchester",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 41.776,
+    "longitude": -72.5218,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex"
+    ]
+  },
+  {
+    "id": "sanmina_newark",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Newark",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 37.5297,
+    "longitude": -122.0402,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_salt_lake_city",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Salt Lake City",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 40.7608,
+    "longitude": -111.891,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "sanmina_san_jose",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "San Jose",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 37.3382,
+    "longitude": -121.8863,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Flex",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "sanmina_turtle_lake",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Turtle Lake",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 45.3944,
+    "longitude": -92.1413,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_plovdiv",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Plovdiv",
+    "state_province": "",
+    "country": "Bulgaria",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 42.6977,
+    "longitude": 24.7453,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_haukipudas",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Haukipudas",
+    "state_province": "",
+    "country": "Finland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 65.1764,
+    "longitude": 25.354,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_gunzenhausen",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Gunzenhausen",
+    "state_province": "",
+    "country": "Germany",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 49.1157,
+    "longitude": 10.7534,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_tatabánya",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Tatabánya",
+    "state_province": "",
+    "country": "Hungary",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 47.569,
+    "longitude": 18.3948,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_fermoy",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Fermoy",
+    "state_province": "",
+    "country": "Ireland",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 52.1374,
+    "longitude": -8.2742,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_örnsköldsvik",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Örnsköldsvik",
+    "state_province": "",
+    "country": "Sweden",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 63.2909,
+    "longitude": 18.7152,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_basingstoke",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Basingstoke",
+    "state_province": "",
+    "country": "United Kingdom",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 51.2667,
+    "longitude": -1.0876,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_port_glasgow",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Port Glasgow",
+    "state_province": "",
+    "country": "United Kingdom",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 55.9345,
+    "longitude": -4.6893,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_chennai",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Chennai",
+    "state_province": "",
+    "country": "India",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 13.0827,
+    "longitude": 80.2707,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Flex"
+    ]
+  },
+  {
+    "id": "sanmina_penang",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Penang",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 5.4141,
+    "longitude": 100.3288,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Celestica",
+      "Flex",
+      "Jabil",
+      "Plexus"
+    ]
+  },
+  {
+    "id": "sanmina_singapore",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Singapore",
+    "state_province": "",
+    "country": "Singapore",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 1.3521,
+    "longitude": 103.8198,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Flex",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "sanmina_chai_chee",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Chai Chee",
+    "state_province": "",
+    "country": "Singapore",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 1.337,
+    "longitude": 103.94,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_penjuru",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Penjuru",
+    "state_province": "",
+    "country": "Singapore",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 1.303,
+    "longitude": 103.745,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_pathum_thani",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Pathum Thani",
+    "state_province": "",
+    "country": "Thailand",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 14.0208,
+    "longitude": 100.5253,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_kunshan",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Kunshan",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.3847,
+    "longitude": 120.9837,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Flex"
+    ]
+  },
+  {
+    "id": "sanmina_shenzhen",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Shenzhen",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 22.5431,
+    "longitude": 114.0579,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "sanmina_wuxi",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Wuxi",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.4912,
+    "longitude": 120.3119,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil"
+    ]
+  },
+  {
+    "id": "sanmina_yasu",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Yasu",
+    "state_province": "",
+    "country": "Japan",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 35.0678,
+    "longitude": 136.0247,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "sanmina_johannesburg",
+    "company": "Sanmina",
+    "company_color": "#DC2626",
+    "city": "Johannesburg",
+    "state_province": "",
+    "country": "South Africa",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": -26.2041,
+    "longitude": 28.0473,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.sanmina.com/locations/",
+    "source_page_title": "Global Locations | Sanmina",
+    "scraped_at": "2026-04-17T20:07:52.978702+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "celestica_toronto",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Toronto",
+    "state_province": "",
+    "country": "Canada",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 43.6532,
+    "longitude": -79.3832,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "celestica_fremont",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Fremont",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 37.5485,
+    "longitude": -121.9886,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "celestica_portland",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Portland",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 45.5051,
+    "longitude": -122.675,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "celestica_san_jose",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "San Jose",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 37.3382,
+    "longitude": -121.8863,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Jabil",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "celestica_monterrey",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Monterrey",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 25.6866,
+    "longitude": -100.3161,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "celestica_oradea",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Oradea",
+    "state_province": "",
+    "country": "Romania",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 47.0458,
+    "longitude": 21.9189,
+    "facility_type": [
+      "Logistics/Repair"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Plexus"
+    ]
+  },
+  {
+    "id": "celestica_valencia",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Valencia",
+    "state_province": "",
+    "country": "Spain",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 39.4699,
+    "longitude": -0.3763,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "celestica_kunshan",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Kunshan",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.3847,
+    "longitude": 120.9837,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "celestica_dongguan",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Dongguan",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 23.0208,
+    "longitude": 113.7518,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex"
+    ]
+  },
+  {
+    "id": "celestica_shanghai",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Shanghai",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.2304,
+    "longitude": 121.4737,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "celestica_suzhou",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Suzhou",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.2989,
+    "longitude": 120.5853,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Flex",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "celestica_xiamen",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Xiamen",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 24.4798,
+    "longitude": 118.0894,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "celestica_hong_kong",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Hong Kong",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 22.3193,
+    "longitude": 114.1694,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex"
+    ]
+  },
+  {
+    "id": "celestica_chennai",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Chennai",
+    "state_province": "",
+    "country": "India",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 13.0827,
+    "longitude": 80.2707,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "celestica_bandung",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Bandung",
+    "state_province": "",
+    "country": "Indonesia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": -6.9175,
+    "longitude": 107.6191,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil"
+    ]
+  },
+  {
+    "id": "celestica_batam",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Batam",
+    "state_province": "",
+    "country": "Indonesia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 1.0456,
+    "longitude": 104.0305,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex"
+    ]
+  },
+  {
+    "id": "celestica_johor",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Johor",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 1.4927,
+    "longitude": 103.7414,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex"
+    ]
+  },
+  {
+    "id": "celestica_kulim",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Kulim",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 5.3717,
+    "longitude": 100.5627,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil"
+    ]
+  },
+  {
+    "id": "celestica_penang",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Penang",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 5.4141,
+    "longitude": 100.3288,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Flex",
+      "Jabil",
+      "Plexus",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "celestica_taipei",
+    "company": "Celestica",
+    "company_color": "#7C3AED",
+    "city": "Taipei",
+    "state_province": "",
+    "country": "Taiwan",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 25.033,
+    "longitude": 121.5654,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.celestica.com/about-us/locations",
+    "source_page_title": "Global Locations | Celestica",
+    "scraped_at": "2026-04-17T20:07:59.907470+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "plexus_appleton",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Appleton",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 44.2619,
+    "longitude": -88.4154,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "plexus_boise",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Boise",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 43.615,
+    "longitude": -116.2023,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "plexus_chicago",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Chicago",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 41.8781,
+    "longitude": -87.6298,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "plexus_guadalajara",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Guadalajara",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 20.6597,
+    "longitude": -103.3496,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Jabil",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "plexus_neenah",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Neenah",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 44.1858,
+    "longitude": -88.4626,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "plexus_raleigh",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Raleigh",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 35.7796,
+    "longitude": -78.6382,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "plexus_kelso",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Kelso",
+    "state_province": "",
+    "country": "United Kingdom",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 55.5969,
+    "longitude": -2.4341,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "plexus_livingston",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Livingston",
+    "state_province": "",
+    "country": "United Kingdom",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 55.9024,
+    "longitude": -3.5159,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil"
+    ]
+  },
+  {
+    "id": "plexus_oradea",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Oradea",
+    "state_province": "",
+    "country": "Romania",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 47.0458,
+    "longitude": 21.9189,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica"
+    ]
+  },
+  {
+    "id": "plexus_bangkok",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Bangkok",
+    "state_province": "",
+    "country": "Thailand",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 13.7563,
+    "longitude": 100.5018,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "plexus_haining",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Haining",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 30.5097,
+    "longitude": 120.6815,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "plexus_penang",
+    "company": "Plexus",
+    "company_color": "#D97706",
+    "city": "Penang",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 5.4141,
+    "longitude": 100.3288,
+    "facility_type": [
+      "Design Center"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.plexus.com/about/locations/",
+    "source_page_title": "Global Locations | Plexus",
+    "scraped_at": "2026-04-17T20:08:06.441902+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Benchmark",
+      "Celestica",
+      "Flex",
+      "Jabil",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "benchmark_tempe",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Tempe",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 33.4255,
+    "longitude": -111.94,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "benchmark_singapore",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Singapore",
+    "state_province": "",
+    "country": "Singapore",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 1.3521,
+    "longitude": 103.8198,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Jabil",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "benchmark_almelo",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Almelo",
+    "state_province": "",
+    "country": "Netherlands",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 52.357,
+    "longitude": 6.6628,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "benchmark_arden_hills",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Arden Hills",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 45.0505,
+    "longitude": -93.1577,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "benchmark_austin",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Austin",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 30.2672,
+    "longitude": -97.7431,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Jabil",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "benchmark_ayutthaya",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Ayutthaya",
+    "state_province": "",
+    "country": "Thailand",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 14.3532,
+    "longitude": 100.5689,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "benchmark_brasov",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Brasov",
+    "state_province": "",
+    "country": "Romania",
+    "region": "Europe",
+    "subregion": "",
+    "latitude": 45.6427,
+    "longitude": 25.5887,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "benchmark_concord",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Concord",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 37.978,
+    "longitude": -122.0311,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "benchmark_guadalajara",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Guadalajara",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 20.6597,
+    "longitude": -103.3496,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Jabil",
+      "Plexus",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "benchmark_huntsville",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Huntsville",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 34.7304,
+    "longitude": -86.5861,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "benchmark_korat",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Korat",
+    "state_province": "",
+    "country": "Thailand",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 14.9799,
+    "longitude": 102.0978,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "benchmark_mesa",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Mesa",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 33.4152,
+    "longitude": -111.8315,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "benchmark_nashua",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Nashua",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 42.7654,
+    "longitude": -71.4676,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex"
+    ]
+  },
+  {
+    "id": "benchmark_penang",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Penang",
+    "state_province": "",
+    "country": "Malaysia",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 5.4141,
+    "longitude": 100.3288,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Flex",
+      "Jabil",
+      "Plexus",
+      "Sanmina"
+    ]
+  },
+  {
+    "id": "benchmark_phoenix",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Phoenix",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 33.4484,
+    "longitude": -112.074,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "benchmark_rochester",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Rochester",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 44.0234,
+    "longitude": -92.463,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "benchmark_santa_ana",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Santa Ana",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 33.7455,
+    "longitude": -117.8677,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  },
+  {
+    "id": "benchmark_suzhou",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Suzhou",
+    "state_province": "",
+    "country": "China",
+    "region": "Asia",
+    "subregion": "",
+    "latitude": 31.2989,
+    "longitude": 120.5853,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Celestica",
+      "Flex",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "benchmark_tijuana",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Tijuana",
+    "state_province": "",
+    "country": "Mexico",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 32.5149,
+    "longitude": -117.0382,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": true,
+    "shared_with": [
+      "Flex",
+      "Jabil"
+    ]
+  },
+  {
+    "id": "benchmark_winona",
+    "company": "Benchmark",
+    "company_color": "#0891B2",
+    "city": "Winona",
+    "state_province": "",
+    "country": "United States",
+    "region": "Americas",
+    "subregion": "",
+    "latitude": 44.05,
+    "longitude": -91.6393,
+    "facility_type": [
+      "Manufacturing"
+    ],
+    "capabilities": [],
+    "source_url": "https://www.bench.com/worldwide-locations",
+    "source_page_title": "Global Locations | Benchmark",
+    "scraped_at": "2026-04-17T20:08:14.473171+00:00",
+    "notes": "",
+    "is_shared_location": false,
+    "shared_with": []
+  }
+]
