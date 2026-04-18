@@ -253,6 +253,7 @@ export default function ChatPage() {
   const [signalsCollapsed, setSignalsCollapsed] = useState(false);
   // Recents sidebar toggle
   const [recentsOpen, setRecentsOpen] = useState(true);
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   const messagesAreaRef   = useRef<HTMLDivElement>(null);
   const inputRef          = useRef<HTMLInputElement>(null);
@@ -332,6 +333,13 @@ export default function ChatPage() {
 
   // Close question dropdown on outside click or ESC
   useEffect(() => {
+    if (!openMenuId) return;
+    const handleClick = () => setOpenMenuId(null);
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [openMenuId]);
+
+  useEffect(() => {
     if (!openDropdown) return;
     const handleClick = (e: MouseEvent) => {
       if (dropdownBtnRefs.current[openDropdown]?.contains(e.target as Node)) return;
@@ -403,6 +411,19 @@ export default function ChatPage() {
       setMessages(msgs);
       setCurrentSessionId(session_id);
     } catch {}
+  };
+
+  const deleteHistorySession = async (session_id: string) => {
+    try {
+      setChatHistory((prev) => prev.filter((h) => h.session_id !== session_id));
+      if (currentSessionId === session_id) {
+        setMessages([]);
+        setCurrentSessionId(`session_${Date.now()}`);
+      }
+      await fetch(`${API_URL}/api/chat/sessions/${session_id}`, { method: 'DELETE' });
+      await fetch(`${API_URL}/api/chat/history/${session_id}`, { method: 'DELETE' });
+    } catch {}
+    setOpenMenuId(null);
   };
 
   const sendMessage = async (query?: string, forceMode?: SearchMode) => {
@@ -665,17 +686,43 @@ export default function ChatPage() {
                   <p className="px-3 py-2 text-[11px] text-slate-400">No recent chats</p>
                 ) : (
                   chatHistory.map((h) => (
-                    <button
-                      key={h.session_id}
-                      onClick={() => loadHistorySession(h.session_id)}
-                      className={`w-full text-left px-3 py-2 text-[12px] leading-tight text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 transition-colors rounded-md ${
-                        currentSessionId === h.session_id
-                          ? 'bg-white dark:bg-slate-800 font-medium'
-                          : ''
-                      }`}
-                    >
-                      <p className="truncate">{h.title}</p>
-                    </button>
+                    <div key={h.session_id} className="relative group">
+                      <button
+                        onClick={() => loadHistorySession(h.session_id)}
+                        className={`w-full text-left px-3 py-2 text-[12px] leading-tight text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 transition-colors rounded-md pr-8 ${
+                          currentSessionId === h.session_id
+                            ? 'bg-white dark:bg-slate-800 font-medium'
+                            : ''
+                        }`}
+                      >
+                        <p className="truncate">{h.title}</p>
+                      </button>
+
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setOpenMenuId(openMenuId === h.session_id ? null : h.session_id);
+                        }}
+                        className="absolute right-1 top-1/2 -translate-y-1/2 flex h-5 w-5 items-center justify-center rounded text-slate-400 opacity-0 group-hover:opacity-100 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
+                      >
+                        <span className="text-slate-500 text-[10px]">•••</span>
+                      </button>
+
+                      {openMenuId === h.session_id && (
+                        <div className="absolute right-0 top-8 z-50 w-28 rounded-lg border border-slate-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              deleteHistorySession(h.session_id);
+                            }}
+                            className="flex w-full items-center gap-2 px-3 py-2 text-xs text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 rounded-lg"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                            Delete
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   ))
                 )}
               </div>

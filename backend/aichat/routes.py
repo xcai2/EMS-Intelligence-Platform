@@ -1909,6 +1909,20 @@ async def get_chat_session_history(session_id: str):
     return {"session_id": session_id, "messages": messages}
 
 
+@router.delete("/chat/history/{session_id}")
+async def delete_chat_history_session(session_id: str):
+    """删除某个对话的历史记录和消息文件。"""
+    history = _load_chat_history()
+    history = [h for h in history if h["session_id"] != session_id]
+    _save_chat_history(history)
+
+    file_path = CHAT_MESSAGES_DIR / f"{session_id}.json"
+    if file_path.exists():
+        file_path.unlink()
+
+    return {"deleted": session_id}
+
+
 # ---------------------------------------------------------------------------
 # Preset questions — dynamically generated from latest earnings transcripts
 # ---------------------------------------------------------------------------
