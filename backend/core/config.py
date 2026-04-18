@@ -32,6 +32,13 @@ def _default_provider() -> str:
 
 LLM_PROVIDER = _default_provider()
 
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() in {"1", "true", "yes", "on"}
+
 # ---------------------------------------------------------------------------
 # MODEL CONFIG
 # ---------------------------------------------------------------------------
@@ -61,6 +68,7 @@ DATA_DIR = BASE_DIR / "data"
 # ---------------------------------------------------------------------------
 BRAVE_SEARCH_URL = "https://api.search.brave.com/res/v1/web/search"
 WEB_SEARCH_RESULTS = 5
+ANALYST_VIEW_BRAVE_ENABLED = _env_bool("ANALYST_VIEW_BRAVE_ENABLED", default=False)
 
 # ---------------------------------------------------------------------------
 # ANALYTICS THRESHOLDS

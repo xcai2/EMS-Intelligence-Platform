@@ -35,6 +35,12 @@ async def lifespan(app: FastAPI):
         print("✓ Scheduler started for automated SEC filing checks")
     except Exception as e:
         print(f"⚠ Scheduler failed to start: {e}")
+    try:
+        from backend.news.db import init_db
+        init_db()
+        print("✓ News config database ready")
+    except Exception as e:
+        print(f"⚠ News config database init failed: {e}")
 
     import asyncio
     async def warmup_cache_background():

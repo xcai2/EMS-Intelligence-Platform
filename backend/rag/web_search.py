@@ -2,6 +2,7 @@
 Web search integration using Brave Search API.
 """
 import asyncio
+import json
 import httpx
 from typing import Optional
 from backend.core.config import BRAVE_API_KEY, BRAVE_SEARCH_URL, WEB_SEARCH_RESULTS
@@ -21,6 +22,36 @@ def _get_semaphore() -> asyncio.Semaphore:
     if _brave_semaphore is None:
         _brave_semaphore = asyncio.Semaphore(1)
     return _brave_semaphore
+
+
+# Public alias so other Brave callers (e.g. news/fetcher.py) can share this
+# single semaphore.  All Brave calls across the app must go through one queue
+# because Brave rate-limits by API key, not by endpoint.
+get_brave_semaphore = _get_semaphore
+
+
+def _extract_http_error_message(exc: httpx.HTTPStatusError) -> str:
+    """Return the most useful API error detail available from the response body."""
+    status_code = exc.response.status_code
+    try:
+        payload = exc.response.json()
+    except (ValueError, json.JSONDecodeError):
+        payload = None
+
+    if isinstance(payload, dict):
+        error = payload.get("error")
+        if isinstance(error, dict):
+            detail = (error.get("detail") or "").strip()
+            code = (error.get("code") or "").strip()
+            if detail and code:
+                return f"Brave API HTTP {status_code}: {detail} ({code})"
+            if detail:
+                return f"Brave API HTTP {status_code}: {detail}"
+
+    text = exc.response.text.strip()
+    if text:
+        return f"Brave API HTTP {status_code}: {text[:200]}"
+    return f"Brave API HTTP {status_code}"
 
 
 async def search_web(
@@ -94,7 +125,7 @@ async def search_web_with_diagnostics(
             return results, None
 
         except httpx.HTTPStatusError as e:
-            return [], f"Brave API HTTP {e.response.status_code}"
+            return [], _extract_http_error_message(e)
         except httpx.RequestError as e:
             return [], f"Network request error: {e}"
         except Exception as e:

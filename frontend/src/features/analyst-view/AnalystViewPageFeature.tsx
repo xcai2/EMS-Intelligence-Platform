@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { RefreshCw, TrendingUp, TrendingDown, Minus, AlertCircle } from "lucide-react";
+import { RefreshCw, TrendingUp, TrendingDown, Minus, AlertCircle, PauseCircle, PlayCircle } from "lucide-react";
 
 // Components
 import AnalystCards from "./components/AnalystCards";
@@ -145,6 +145,9 @@ export default function AnalystViewPageFeature() {
   const [intelLoading, setIntelLoading] = useState(true);
   const [intelWarning, setIntelWarning] = useState<string | null>(null);
   const [refreshing, setRefreshing] = useState(false);
+  const [isPaused, setIsPaused] = useState(
+    () => typeof window !== 'undefined' && localStorage.getItem('analystView_autoRefreshPaused') === 'true'
+  );
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const fetchIntel = useCallback(async (manual = false) => {
@@ -162,11 +165,34 @@ export default function AnalystViewPageFeature() {
     }
   }, []);
 
+  const togglePause = useCallback(async () => {
+    const next = !isPaused;
+    setIsPaused(next);
+    localStorage.setItem('analystView_autoRefreshPaused', String(next));
+    try {
+      await fetch(`${API_URL}/api/analyst-view/refresh-control`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paused: next }),
+      });
+    } catch {
+      // best-effort; local state still controls the timer
+    }
+  }, [isPaused]);
+
   useEffect(() => {
     fetchIntel();
-    timerRef.current = setInterval(() => fetchIntel(), REFRESH_INTERVAL_MS);
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [fetchIntel]);
+
+  useEffect(() => {
+    if (isPaused) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      timerRef.current = null;
+    } else {
+      timerRef.current = setInterval(() => fetchIntel(), REFRESH_INTERVAL_MS);
+    }
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [isPaused, fetchIntel]);
 
   return (
     <div className="flex flex-col h-full bg-slate-50 dark:bg-[#0a0e1a] text-slate-900 dark:text-gray-100">
@@ -177,17 +203,44 @@ export default function AnalystViewPageFeature() {
             Analyst Intelligence
           </h1>
           <p className="text-xs text-slate-500 dark:text-gray-500 mt-0.5">
-            EMS &amp; Hyperscaler coverage · auto-refreshes every 5 min
+            EMS &amp; Hyperscaler coverage ·{" "}
+            {isPaused ? (
+              <span className="text-amber-500 dark:text-amber-400 font-medium">auto-refresh paused</span>
+            ) : (
+              "auto-refreshes every 5 min"
+            )}
           </p>
         </div>
-        <button
-          onClick={() => fetchIntel(true)}
-          disabled={refreshing}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-slate-100 dark:bg-[#1a1f2e] border border-slate-300 dark:border-[#2a3045] text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-200 hover:border-slate-400 dark:hover:border-gray-500 disabled:opacity-50 transition-colors"
-        >
-          <RefreshCw size={12} className={refreshing ? "animate-spin" : ""} />
-          {refreshing ? "Refreshing…" : "Refresh"}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={togglePause}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg border transition-colors ${
+              isPaused
+                ? "bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700 text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-900/30"
+                : "bg-slate-100 dark:bg-[#1a1f2e] border-slate-300 dark:border-[#2a3045] text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-200 hover:border-slate-400 dark:hover:border-gray-500"
+            }`}
+          >
+            {isPaused ? (
+              <>
+                <PlayCircle size={12} />
+                Resume
+              </>
+            ) : (
+              <>
+                <PauseCircle size={12} />
+                Pause
+              </>
+            )}
+          </button>
+          <button
+            onClick={() => fetchIntel(true)}
+            disabled={refreshing || isPaused}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-lg bg-slate-100 dark:bg-[#1a1f2e] border border-slate-300 dark:border-[#2a3045] text-slate-600 dark:text-gray-400 hover:text-slate-800 dark:hover:text-gray-200 hover:border-slate-400 dark:hover:border-gray-500 disabled:opacity-50 transition-colors"
+          >
+            <RefreshCw size={12} className={refreshing ? "animate-spin" : ""} />
+            {refreshing ? "Refreshing…" : "Refresh"}
+          </button>
+        </div>
       </div>
 
       {/* Warning banner */}

@@ -1,132 +1,77 @@
 # Git 操作指南
 
-适用场景：你平时直接在 `main` 上改代码并推送，不额外创建本地分支。以下内容保留了一些空白位置，方便后续按你的实际使用习惯继续补充。
+git branch
+# 查看本地分支
+# 带 * 的是你当前所在分支
 
-## 1. 先进入项目目录
+git fetch
+# 先更新远程分支信息到本地
+# 不会改你的代码内容，只是让你看到最新远程状态
 
-```bash
-cd 你的项目目录
-```
+git branch -r
+# 查看远程分支
 
-## 2. 查看当前分支和改动
+git branch -a
+# 查看所有分支
+# 包括本地分支 + 远程分支
 
-最常用的就是这几个命令：
+git branch -vv
+# 查看本地分支 + 当前分支 + 每个本地分支跟踪的远程分支
 
-```bash
-git branch --show-current
+git switch 分支名
+# 切换到一个“本地已经存在”的分支
+
+git switch -c 新分支名
+# 创建一个新的本地分支，并立刻切换过去
+
+git switch -c 本地分支名 --track origin/远程分支名
+# 当远程有这个分支、但本地还没有时
+# 在本地创建一个跟踪远程分支的新分支，并切换过去
+
+git pull
+# 拉取并更新当前分支的远程内容
+# 一般是在你已经切到某个分支之后再用
+
 git status -sb
-git diff
-```
+# 查看当前分支状态
+# 包括当前在哪个分支、是否有修改、是否和远程同步
 
-说明：
-- `git branch --show-current`：看你现在在哪个分支
-- `git status -sb`：看当前有哪些改动，格式比较简洁
-- `git diff`：看具体改了什么
 
-如果你只想快速确认自己是不是在 `main`，先跑：
+git log --oneline main..origin/main
+# 看远程 main 比你本地 main 多了哪些提交
+# 如果这里有输出，说明远程 main 变了，你本地还没跟上
 
-```bash
-git branch --show-current
-```
+git log --oneline origin/main..main
+# 看你本地 main 比远程 main 多了哪些提交
+# 如果这里有输出，说明你本地比远程多提交
 
-如果输出是 `main`，就说明你现在就在主分支上。
-
-## 3. 直接在 main 上提交并推送
-
-这是你最常用的流程。
-
-### 第一步：先切到 main
+git diff main origin/main
+# 看本地 main 和远程 main 的代码内容差异
 
 ```bash
-git switch main
+git push
+真正把当前本地分支的提交推到远程
 ```
 
-### 第二步：先同步远端 main
+想要更新最新的 `main`
 
 ```bash
-git pull --ff-only origin main
+git branch          # 查看当前分支
+git status          # 查看当前分支状态（是否有未提交改动）
+
+# 如果有未提交改动，先临时保存
+git stash -u
+
+git fetch origin    # 同步远程信息，不直接改本地代码
+git switch main     # 切换到本地 main
+git pull origin main # 同步远程 main 到本地 main
 ```
 
-### 预留：拉取远程分支
+推送本地更新后的分支 / 新分支
 
 ```bash
-# 后续可补充
-```
-
-### 第三步：改完代码后检查改动
-
-```bash
-git status -sb
-git diff
-```
-
-### 第四步：提交
-
-```bash
-git add 路径1 路径2
-git commit -m "简短说明这次修改"
-```
-
-如果你想一次把当前所有已修改文件都加进去，也可以用：
-
-```bash
-git add .
-git commit -m "简短说明这次修改"
-```
-
-### 第五步：直接推到 main
-
-```bash
-git push origin main
-```
-
-## 4. 如果 push 失败
-
-常见原因是远端 `main` 比你的本地更新。
-
-这时先执行：
-
-```bash
-git pull --rebase origin main
-git push origin main
-```
-
-如果有冲突，就先解决冲突，然后再：
-
-```bash
-git add 冲突文件
-git rebase --continue
-git push origin main
-```
-
-### 预留：查看本地和远程相差多少
-
-```bash
-# 后续可补充
-```
-
-## 预留补充
-
-### 预留：查看远程分支
-
-```bash
-# 后续可补充
-```
-
-### 预留：查看本地和远程提交差异
-
-```bash
-# 后续可补充
-```
-
-## 5. 最简版日常流程
-
-```bash
-git branch --show-current
-git switch main
-git pull --ff-only origin main
-git status -sb
-git add .
-git commit -m "简短说明"
-git push origin main
+git switch -c feature/news-filter-ui-update   # 新建并切换到新分支
+git add .                                     # 添加本次修改
+git commit -m "Update news filtering and news page UI"   # 提交本地修改
+git push -u origin feature/news-filter-ui-update         # 首次推送到远程并建立跟踪关系
 ```

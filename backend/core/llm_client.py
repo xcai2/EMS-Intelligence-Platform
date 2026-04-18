@@ -97,7 +97,17 @@ def llm_complete(
     elif LLM_PROVIDER == "gemini":
         return _gemini_complete(messages, system, model_key, max_tokens, stream)
     else:
-        return _openai_complete(messages, system, model_key, max_tokens, stream)
+        # OpenAI primary; fall back to Anthropic if OpenAI fails
+        try:
+            return _openai_complete(messages, system, model_key, max_tokens, stream)
+        except Exception as e:
+            if ANTHROPIC_API_KEY:
+                import logging
+                logging.getLogger(__name__).warning(
+                    "OpenAI call failed (%s), falling back to Anthropic", e
+                )
+                return _anthropic_complete(messages, system, model_key, max_tokens, stream)
+            raise
 
 
 def llm_structured(
@@ -120,7 +130,17 @@ def llm_structured(
     elif LLM_PROVIDER == "gemini":
         return _gemini_structured(messages, system, model_key, schema, max_tokens)
     else:
-        return _openai_structured(messages, system, model_key, schema, max_tokens)
+        # OpenAI primary; fall back to Anthropic if OpenAI fails
+        try:
+            return _openai_structured(messages, system, model_key, schema, max_tokens)
+        except Exception as e:
+            if ANTHROPIC_API_KEY:
+                import logging
+                logging.getLogger(__name__).warning(
+                    "OpenAI structured call failed (%s), falling back to Anthropic", e
+                )
+                return _anthropic_structured(messages, system, model_key, schema, max_tokens)
+            raise
 
 
 # ---------------------------------------------------------------------------

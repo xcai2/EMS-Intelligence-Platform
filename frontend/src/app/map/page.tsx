@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import type { LatLngExpression } from 'leaflet';
+import dynamic from 'next/dynamic';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -14,7 +14,6 @@ import {
   Users,
   ExternalLink
 } from 'lucide-react';
-import { MapContainer, TileLayer, CircleMarker, Tooltip as LeafletTooltip, useMap } from 'react-leaflet';
 import {
   BarChart,
   Bar,
@@ -27,9 +26,15 @@ import {
   Cell,
   Legend,
 } from 'recharts';
-import 'leaflet/dist/leaflet.css';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
+
+const FactoryFootprintGlobe = dynamic(() => import('@/components/map/FactoryFootprintGlobe'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-full min-h-[440px] w-full animate-pulse bg-slate-100 dark:bg-slate-900" />
+  ),
+});
 
 const COMPANY_COLORS: Record<string, string> = {
   Flex: '#0078FF',
@@ -122,13 +127,6 @@ const MARKET_REGION_LABELS: Record<MarketRegion, string> = {
   asia: 'Asia',
 };
 
-const REGION_VIEW: Record<MarketRegion, { center: LatLngExpression; zoom: number }> = {
-  all: { center: [20, 15], zoom: 2 },
-  americas: { center: [28, -85], zoom: 3 },
-  europe: { center: [50, 12], zoom: 4 },
-  asia: { center: [28, 105], zoom: 4 },
-};
-
 function getCountryFlag(country: string): string {
   return COUNTRY_FLAGS[country] || '🌐';
 }
@@ -198,17 +196,6 @@ interface MapComparison {
     APAC?: { company?: string; count?: number };
     Americas?: { company?: string; count?: number };
   };
-}
-
-function RegionMapController({ region }: { region: MarketRegion }) {
-  const map = useMap();
-
-  useEffect(() => {
-    const view = REGION_VIEW[region];
-    map.flyTo(view.center, view.zoom, { duration: 0.8 });
-  }, [map, region]);
-
-  return null;
 }
 
 export default function MapPage() {
@@ -725,40 +712,11 @@ export default function MapPage() {
         <CardContent className="pt-1 pb-4">
           <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-4">
             <div className="relative h-full min-h-[440px] overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
-              <MapContainer
-                center={REGION_VIEW.all.center}
-                zoom={REGION_VIEW.all.zoom}
-                minZoom={2}
-                maxZoom={7}
-                scrollWheelZoom={false}
-                className="h-full w-full"
-              >
-                <RegionMapController region={marketRegion} />
-                <TileLayer
-                  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                {visibleMapFacilities.map((facility, idx) => (
-                  <CircleMarker
-                    key={`${facility.company}-${facility.city}-${idx}`}
-                    center={[facility.lat, facility.lng]}
-                    radius={6}
-                    pathOptions={{
-                      color: COMPANY_COLORS[facility.company] || '#0ea5e9',
-                      fillColor: COMPANY_COLORS[facility.company] || '#0ea5e9',
-                      fillOpacity: 1,
-                      weight: 2,
-                    }}
-                  >
-                    <LeafletTooltip direction="top" offset={[0, -4]} opacity={0.95}>
-                      <div className="text-xs">
-                        <div className="font-semibold">{facility.city}</div>
-                        <div>{facility.company} • {facility.country}</div>
-                      </div>
-                    </LeafletTooltip>
-                  </CircleMarker>
-                ))}
-              </MapContainer>
+              <FactoryFootprintGlobe
+                marketRegion={marketRegion}
+                facilities={visibleMapFacilities}
+                companyColors={COMPANY_COLORS}
+              />
               <div className="pointer-events-none absolute left-3 bottom-3 z-[500] rounded-md bg-white/90 dark:bg-slate-900/85 border border-slate-200 dark:border-slate-700 px-2 py-1 text-[12px] text-slate-600 dark:text-slate-300">
                 View: {MARKET_REGION_LABELS[marketRegion]} • {selectedMapCompany || 'All Companies'} • {visibleMapFacilities.length} sites
               </div>

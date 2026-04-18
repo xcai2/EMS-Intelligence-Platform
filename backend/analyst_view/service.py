@@ -19,7 +19,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 from backend.core.cache import analytics_cache
-from backend.core.config import BRAVE_API_KEY
+from backend.core.config import ANALYST_VIEW_BRAVE_ENABLED, BRAVE_API_KEY
 from backend.core.llm_client import llm_structured
 from backend.rag.web_search import search_web_with_diagnostics
 
@@ -168,6 +168,13 @@ async def get_all_company_intel() -> dict:
     Hits the per-ticker cache (30 min in analytics_cache) first;
     only fires new searches for stale / missing entries.
     """
+    if not ANALYST_VIEW_BRAVE_ENABLED:
+        return {
+            "companies": [],
+            "cached_at": datetime.now(timezone.utc).isoformat(),
+            "warning": "Analyst View Brave calls temporarily disabled (ANALYST_VIEW_BRAVE_ENABLED=False).",
+        }
+
     if not BRAVE_API_KEY:
         return {
             "companies": [],
@@ -273,6 +280,13 @@ async def get_all_analyst_summaries() -> dict:
     cached = analytics_cache.get(_ANALYST_SUMMARIES_CACHE_KEY)
     if cached is not None:
         return cached
+
+    if not ANALYST_VIEW_BRAVE_ENABLED:
+        return {
+            "analysts": [],
+            "cached_at": datetime.now(timezone.utc).isoformat(),
+            "warning": "Analyst View Brave calls temporarily disabled (ANALYST_VIEW_BRAVE_ENABLED=False).",
+        }
 
     if not BRAVE_API_KEY:
         return {
