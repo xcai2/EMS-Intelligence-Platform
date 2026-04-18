@@ -1002,7 +1002,14 @@ async def _stream_response(request: ChatRequest):
     if use_agentic:
         try:
             from backend.rag.agentic import agentic_stream
-            add_message(session_id, "user", query)
+            # 去掉 instruction prefix，只保存实际问题
+            clean_query = query
+            if "\n\n" in query:
+                clean_query = query.split("\n\n")[-1].strip()
+            if "Structure every response" in clean_query:
+                parts = clean_query.strip().split("\n\n")
+                clean_query = parts[-1].strip()
+            add_message(session_id, "user", clean_query)
             async for event_type, event_data in agentic_stream(query):
                 yield _sse_event(event_type, event_data)
             return
@@ -1253,7 +1260,14 @@ async def _stream_response(request: ChatRequest):
                     _compose_generic_fallback_synthesis(fallback_text, provider_used),
                 )
                 yield _sse_event("token", {"text": hybrid_text})
-                add_message(session_id, "user", query)
+                # 去掉 instruction prefix，只保存实际问题
+                clean_query = query
+                if "\n\n" in query:
+                    clean_query = query.split("\n\n")[-1].strip()
+                if "Structure every response" in clean_query:
+                    parts = clean_query.strip().split("\n\n")
+                    clean_query = parts[-1].strip()
+                add_message(session_id, "user", clean_query)
                 add_message(session_id, "assistant", hybrid_text)
             else:
                 yield _sse_event("token", {"text": _compose_hybrid_three_part_response(
@@ -1267,8 +1281,14 @@ async def _stream_response(request: ChatRequest):
         yield _sse_event("done", {"session_id": session_id})
         return
 
-    # Save user message to session
-    add_message(session_id, "user", query)
+    # Save user message to session (去掉 instruction prefix，只保存实际问题)
+    clean_query = query
+    if "\n\n" in query:
+        clean_query = query.split("\n\n")[-1].strip()
+    if "Structure every response" in clean_query:
+        parts = clean_query.strip().split("\n\n")
+        clean_query = parts[-1].strip()
+    add_message(session_id, "user", clean_query)
 
     # 保存到对话历史（只在第一条消息时触发）
     history = get_conversation_history(session_id)
@@ -1515,7 +1535,14 @@ async def chat(request: ChatRequest):
     fallback_used = False
     provider_used = None
 
-    add_message(session_id, "user", query)
+    # 去掉 instruction prefix，只保存实际问题
+    clean_query = query
+    if "\n\n" in query:
+        clean_query = query.split("\n\n")[-1].strip()
+    if "Structure every response" in clean_query:
+        parts = clean_query.strip().split("\n\n")
+        clean_query = parts[-1].strip()
+    add_message(session_id, "user", clean_query)
 
     # 保存到对话历史（只在第一条消息时触发）
     history = get_conversation_history(session_id)
