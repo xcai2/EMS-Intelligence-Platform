@@ -23,8 +23,6 @@ SOURCE_DOMAIN_LABELS = {
     "globenewswire.com": "GlobeNewswire",
 }
 
-NEWS_MAX_AGE_DAYS = 90
-
 _RELATIVE_TIME_PATTERN = re.compile(
     r"^\s*(?:(?P<an>a|an)|(?P<count>\d+))\s+"
     r"(?P<unit>minute|minutes|hour|hours|day|days|week|weeks|month|months|year|years)\s+ago\s*$",
@@ -36,7 +34,28 @@ _TEXT_DATE_FORMATS = (
     "%b %d, %Y",
     "%B %d %Y",
     "%b %d %Y",
+    "%d %B %Y",
+    "%d %b %Y",
     "%Y-%m-%d",
+)
+
+_TITLE_DATE_PATTERNS = (
+    re.compile(r"\b\d{4}-\d{2}-\d{2}\b"),
+    re.compile(
+        r"\b(?:Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|"
+        r"Sep|Sept|September|Oct|October|Nov|November|Dec|December)\s+\d{1,2},\s+\d{4}\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b(?:Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|Aug|August|"
+        r"Sep|Sept|September|Oct|October|Nov|November|Dec|December)\s+\d{1,2}\s+\d{4}\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b\d{1,2}\s+(?:Jan|January|Feb|February|Mar|March|Apr|April|May|Jun|June|Jul|July|"
+        r"Aug|August|Sep|Sept|September|Oct|October|Nov|November|Dec|December)\s+\d{4}\b",
+        re.IGNORECASE,
+    ),
 )
 
 
@@ -113,29 +132,22 @@ def parse_published_dt(published: str) -> Optional[datetime]:
         return None
 
 
-def filter_items_by_max_age(items: list[dict], max_age_days: int = NEWS_MAX_AGE_DAYS) -> list[dict]:
-    """Drop items older than the configured window while keeping undated items."""
-    cutoff = datetime.now(timezone.utc) - timedelta(days=max_age_days)
-    filtered: list[dict] = []
-    for item in items:
-        published = (item.get("published") or "").strip()
-        if not published:
-            filtered.append(item)
+def extract_title_date_dt(title: str) -> Optional[datetime]:
+    """Extract a simple explicit date from the title when structured fields are missing.
+
+    This is a Phase 1 fallback only. It intentionally supports a small set of
+    obvious date forms and does not attempt fuzzy or semantic date inference.
+    """
+    value = (title or "").strip()
+    if not value:
+        return None
+
+    for pattern in _TITLE_DATE_PATTERNS:
+        match = pattern.search(value)
+        if not match:
             continue
-        published_dt = parse_published_dt(published)
-        if published_dt is None or published_dt >= cutoff:
-            filtered.append(item)
-    return filtered
+        parsed = parse_published_dt(match.group(0))
+        if parsed is not None:
+            return parsed
+    return None
 
-
-def sort_items_by_recency_and_relevance(items: list[dict]) -> list[dict]:
-    """Sort feed items by timestamp first, then by lightweight relevance score."""
-
-    def sort_key(item: dict) -> tuple[int, float, float]:
-        published_dt = parse_published_dt(item.get("published", ""))
-        has_date = 1 if published_dt else 0
-        published_epoch = published_dt.timestamp() if published_dt else 0.0
-        relevance = float(item.get("relevance_score", 0.0) or 0.0)
-        return (has_date, published_epoch, relevance)
-
-    return sorted(items, key=sort_key, reverse=True)

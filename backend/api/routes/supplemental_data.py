@@ -24,7 +24,7 @@ from backend.ingestion.ocp_scraper import (
     get_ocp_categories,
     get_ocp_member_info,
 )
-from backend.news.service import NewsFeed
+from backend.news import service as news_service
 
 router = APIRouter()
 
@@ -34,13 +34,13 @@ def _normalize_company_title(company: str) -> str:
 
 
 async def _get_company_news_snapshot(company_title: str) -> dict:
-    """Read the current cached company-news snapshot without using the removed legacy aggregator."""
+    """Read the current cached company-news snapshot."""
     ticker = COMPANY_NAME_TO_TICKER.get(company_title, company_title.upper())
-    news_feed = NewsFeed()
-    payload = await news_feed.get_company_news(ticker, count=5, force_refresh=False)
+    payload = await news_service.get_company_news(ticker, force_refresh=False)
+    items = payload.get("items", [])
     return {
-        "recent_articles": payload.get("total_found", 0),
-        "top_articles": payload.get("news", [])[:3],
+        "recent_articles": len(items),
+        "top_articles": items[:3],
     }
 
 

@@ -17,6 +17,8 @@ POST /api/analyst-view/extract-quotes         Extract quotes from a transcript (
 GET  /api/analyst-view/flex-benchmark         Flex vs EMS peers comparison
 GET  /api/analyst-view/earnings-calendar      Upcoming/recent earnings via Brave
 GET  /api/analyst-view/sentiment-timeline     Historical consensus score per ticker
+GET  /api/analyst-view/refresh-control        Get current auto-refresh pause state
+POST /api/analyst-view/refresh-control        Set auto-refresh pause state
 """
 import asyncio
 import json
@@ -42,7 +44,7 @@ from backend.analyst_view.service import (
 )
 from backend.analyst_view.themes_service import generate_weekly_themes, get_themes_history
 from backend.core.cache import api_cache
-from backend.core.config import BRAVE_API_KEY
+from backend.core.config import ANALYST_VIEW_BRAVE_ENABLED, BRAVE_API_KEY
 from backend.rag.web_search import search_web_with_diagnostics
 
 # Initialise SQLite tables on import
@@ -106,6 +108,13 @@ async def analyst_view_signals():
     cached = api_cache.get(SIGNALS_CACHE_KEY)
     if cached is not None:
         return cached
+
+    if not ANALYST_VIEW_BRAVE_ENABLED:
+        return {
+            "results": [],
+            "cached_at": datetime.now(timezone.utc).isoformat(),
+            "warning": "Analyst View Brave calls temporarily disabled (ANALYST_VIEW_BRAVE_ENABLED=False).",
+        }
 
     if not BRAVE_API_KEY:
         return {
@@ -256,6 +265,13 @@ async def earnings_calendar():
     if cached is not None:
         return cached
 
+    if not ANALYST_VIEW_BRAVE_ENABLED:
+        return {
+            "events": [],
+            "cached_at": datetime.now(timezone.utc).isoformat(),
+            "warning": "Analyst View Brave calls temporarily disabled (ANALYST_VIEW_BRAVE_ENABLED=False).",
+        }
+
     events: list[dict] = []
     for ticker, company, kind in TRACKED_COMPANIES:
         query = f"{company} {ticker} earnings date Q2 Q3 2025"
@@ -398,6 +414,35 @@ async def force_generate_weekly_themes():
     payload = await generate_weekly_themes(force=True)
     payload["history"] = get_themes_history(limit=8)
     return payload
+
+
+# ---------------------------------------------------------------------------
+# Component 10: Flex Benchmark vs EMS peers
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# Refresh control — pause / resume the frontend auto-refresh
+# ---------------------------------------------------------------------------
+
+_refresh_paused: bool = False
+
+
+class RefreshControlBody(BaseModel):
+    paused: bool
+
+
+@router.get("/analyst-view/refresh-control")
+async def get_refresh_control():
+    """Return the current auto-refresh pause state."""
+    return {"paused": _refresh_paused}
+
+
+@router.post("/analyst-view/refresh-control")
+async def set_refresh_control(body: RefreshControlBody):
+    """Set the auto-refresh pause state (paused=true stops the 5-min cycle)."""
+    global _refresh_paused
+    _refresh_paused = body.paused
+    return {"paused": _refresh_paused}
 
 
 # ---------------------------------------------------------------------------
