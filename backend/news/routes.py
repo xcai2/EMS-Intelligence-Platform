@@ -32,14 +32,16 @@ from backend.news.registry import (
     list_companies,
     delete_company,
     save_company,
+    seed_initial_companies,
     update_company_queries,
     upgrade_templates_count_to_50,
 )
 from backend.news import service
 from backend.news.company_resolver import suggest as resolver_suggest, resolve as resolver_resolve
 
-# Idempotent startup: create tables, then run one-time migrations.
+# Idempotent startup: create tables, seed built-ins, then run one-time migrations.
 init_db()
+seed_initial_companies()
 upgrade_templates_count_to_50()
 backfill_builtin_company_websites()
 
