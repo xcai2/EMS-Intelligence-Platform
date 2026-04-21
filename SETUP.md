@@ -1,6 +1,6 @@
 # Flex Competitive Intelligence Platform - Complete Setup Guide
 
-> **Last updated:** February 23, 2026
+> **Last updated:** April 20, 2026
 >
 > Follow every step below in order. If you get stuck, check the [Troubleshooting](#troubleshooting) section at the bottom before asking for help.
 
@@ -82,7 +82,7 @@ If not installed:
 Open your Terminal (Mac) or Command Prompt/PowerShell (Windows) and run:
 
 ```bash
-git clone https://github.com/sjagannathan17/Flex-Practicum-Project-2026.git
+git clone https://github.com/xcai2/Flex-Practicum-Project-2026.git
 ```
 
 Then navigate into the project folder:
@@ -118,10 +118,22 @@ Copy-Item backend\.env.example backend\.env
 Now open `backend/.env` in any text editor (VS Code, Notepad, TextEdit) and replace the placeholder values:
 
 ```
-# REQUIRED - Get from https://console.anthropic.com/
-ANTHROPIC_API_KEY=sk-ant-api03-YOUR-ACTUAL-KEY-HERE
+# LLM Provider: "openai" (default) | "anthropic" | "gemini"
+LLM_PROVIDER=openai
 
-# OPTIONAL but recommended - Get from https://brave.com/search/api/
+# REQUIRED (default LLM) - Get from https://platform.openai.com/api-keys
+OPENAI_API_KEY=sk-your-openai-key-here
+
+# OPTIONAL - only needed if switching LLM_PROVIDER to "anthropic"
+# Get from https://console.anthropic.com/
+ANTHROPIC_API_KEY=
+
+# OPTIONAL - only needed if switching LLM_PROVIDER to "gemini"
+# Get from https://aistudio.google.com/
+GOOGLE_API_KEY=
+
+# OPTIONAL but recommended - web search (FREE: 2,000 queries/month)
+# Get from https://brave.com/search/api/
 BRAVE_API_KEY=BSA-YOUR-ACTUAL-KEY-HERE
 
 # Leave this as-is
@@ -131,10 +143,12 @@ SEC_USER_AGENT=CapExIntel/1.0 (your-email@example.com)
 #### How to get the API keys:
 
 
-| Key                   | Where to get it                                                                                                  | Cost                       |
-| --------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------------- |
-| **ANTHROPIC_API_KEY** | Go to [https://console.anthropic.com/](https://console.anthropic.com/) → Sign up → Go to "API Keys" → Create Key | ~$20-50/month usage        |
-| **BRAVE_API_KEY**     | Go to [https://brave.com/search/api/](https://brave.com/search/api/) → Sign up → Get free API key                | FREE (2,000 queries/month) |
+| Key                 | Where to get it                                                                                                    | Cost                          | Required?              |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------- | ---------------------- |
+| **OPENAI_API_KEY**  | [https://platform.openai.com/api-keys](https://platform.openai.com/api-keys) → Sign up → Create key              | ~$20-50/month usage           | **Yes** (default LLM)  |
+| **ANTHROPIC_API_KEY** | [https://console.anthropic.com/](https://console.anthropic.com/) → Sign up → API Keys → Create Key             | ~$20-50/month usage           | Optional (alt LLM)     |
+| **GOOGLE_API_KEY**  | [https://aistudio.google.com/](https://aistudio.google.com/) → Get API Key                                        | Free tier available           | Optional (alt LLM)     |
+| **BRAVE_API_KEY**   | [https://brave.com/search/api/](https://brave.com/search/api/) → Sign up → Get free API key                       | FREE (2,000 queries/month)    | Optional (web search)  |
 
 
 > **Ask the team lead** if you don't want to create your own keys — they can share the existing ones.
@@ -230,7 +244,7 @@ The app uses a vector database (ChromaDB) to search through SEC filings. This da
 
 > **Note:** This step only needs to be done **once**. It takes about 15-30 minutes depending on your computer. You can skip it initially if you just want to explore the UI — the app will work but queries won't return document results.
 
-**Before running this**, make sure the company data folders are present in `data/raw/` (`Flex/`, `Jabil/`, `Celestica/`, `Benchmark/`, `Sanmina/`). They should already be there from cloning.
+**Before running this**, make sure the company data folders are present in `data/raw/` (`Flex/`, `Jabil/`, `Celestica/`, `Benchmark/`, `Sanmina/`, `Plexus/`). They should already be there from cloning.
 
 From the project root folder:
 
@@ -359,20 +373,22 @@ You should get an AI-generated response with data from SEC filings.
 ## 9. Available Pages
 
 
-| Page          | URL                                                                | What It Does                                                 |
-| ------------- | ------------------------------------------------------------------ | ------------------------------------------------------------ |
-| **Dashboard** | [http://localhost:3000/dashboard](http://localhost:3000/dashboard) | Overview with charts, metrics, and company summaries         |
-| **AI Chat**   | [http://localhost:3000/chat](http://localhost:3000/chat)           | Ask questions about companies — AI answers using SEC filings |
-| **Companies** | [http://localhost:3000/companies](http://localhost:3000/companies) | Browse all 5 tracked companies                               |
-| **Analysis**  | [http://localhost:3000/analysis](http://localhost:3000/analysis)   | Detailed CapEx analysis and comparisons                      |
-| **Sentiment** | [http://localhost:3000/sentiment](http://localhost:3000/sentiment) | Sentiment analysis over time                                 |
-| **News Feed** | [http://localhost:3000/news](http://localhost:3000/news)           | Latest news about tracked companies                          |
-| **Heatmap**   | [http://localhost:3000/heatmap](http://localhost:3000/heatmap)     | Geographic map of company facilities                         |
-| **Reports**   | [http://localhost:3000/reports](http://localhost:3000/reports)     | Generate PDF/Excel/PowerPoint reports                        |
-| **Alerts**    | [http://localhost:3000/alerts](http://localhost:3000/alerts)       | Manage notifications for SEC filings and anomalies           |
-| **Calendar**  | [http://localhost:3000/calendar](http://localhost:3000/calendar)   | Earnings calendar                                            |
-| **Settings**  | [http://localhost:3000/settings](http://localhost:3000/settings)   | Ingestion and configuration settings                         |
-| **Compare**   | [http://localhost:3000/compare](http://localhost:3000/compare)     | Side-by-side company comparison                              |
+| Page                        | URL                                                                                            | What It Does                                                   |
+| --------------------------- | ---------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| **Dashboard**               | [http://localhost:3000/dashboard](http://localhost:3000/dashboard)                             | Overview with charts, metrics, and company summaries           |
+| **AI Chat**                 | [http://localhost:3000/chat](http://localhost:3000/chat)                                       | Ask questions about companies — AI answers using SEC filings   |
+| **Companies**               | [http://localhost:3000/companies](http://localhost:3000/companies)                             | Browse all 6 tracked EMS companies                             |
+| **Analysis**                | [http://localhost:3000/analysis](http://localhost:3000/analysis)                               | Detailed CapEx analysis and comparisons                        |
+| **Analyst View**            | [http://localhost:3000/analyst-view](http://localhost:3000/analyst-view)                       | Analyst intelligence: consensus, price targets, ratings feed   |
+| **Facility Map**            | [http://localhost:3000/map](http://localhost:3000/map)                                         | Interactive map of EMS facilities across 6 companies           |
+| **AI Investments**          | [http://localhost:3000/ai-investments](http://localhost:3000/ai-investments)                   | AI-related investment trends across EMS peers                  |
+| **Competitor Investments**  | [http://localhost:3000/competitor-investments](http://localhost:3000/competitor-investments)   | Competitor capex and investment comparison                     |
+| **News Feed**               | [http://localhost:3000/news](http://localhost:3000/news)                                       | Latest news about tracked companies                            |
+| **Reports**                 | [http://localhost:3000/reports](http://localhost:3000/reports)                                 | Generate PDF/Excel/PowerPoint reports                          |
+| **Alerts**                  | [http://localhost:3000/alerts](http://localhost:3000/alerts)                                   | Manage notifications for SEC filings and anomalies             |
+| **Calendar**                | [http://localhost:3000/calendar](http://localhost:3000/calendar)                               | Earnings calendar                                              |
+| **Settings**                | [http://localhost:3000/settings](http://localhost:3000/settings)                               | Ingestion and configuration settings                           |
+| **Compare**                 | [http://localhost:3000/compare](http://localhost:3000/compare)                                 | Side-by-side company comparison                                |
 
 
 ### Backend API Docs (for developers)
@@ -406,10 +422,6 @@ python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8001
 
 # 4. Start frontend (Terminal 2)
 cd frontend && npm run dev
-
-重启 后端
-pkill -f "uvicorn backend.main:app --host 0.0.0.0 --port 8001" ; python3 -m uvicorn backend.main:app --host 0.0.0.0 --port 8001 --reload
-
 ```
 
 Then open **[http://localhost:3000](http://localhost:3000)** in your browser.
