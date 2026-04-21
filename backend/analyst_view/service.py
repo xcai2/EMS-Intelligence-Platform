@@ -19,7 +19,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 from backend.core.cache import analytics_cache
-from backend.core.config import ANALYST_VIEW_BRAVE_ENABLED, BRAVE_API_KEY
+from backend.core.config import BRAVE_API_KEY
 from backend.core.llm_client import llm_structured
 from backend.rag.web_search import search_web_with_diagnostics
 
@@ -161,20 +161,34 @@ async def _fetch_and_extract(ticker: str, company: str, kind: str) -> CompanyInt
 # Public API
 # ---------------------------------------------------------------------------
 
-async def get_all_company_intel() -> dict:
+async def get_all_company_intel(force: bool = False) -> dict:
     """
     Return analyst intel for all tracked companies.
 
-    Hits the per-ticker cache (30 min in analytics_cache) first;
-    only fires new searches for stale / missing entries.
+    force=False (default): serve from cache only; never call Brave.
+                           Returns empty list with a hint if cache is cold.
+    force=True:            bypass cache, fetch fresh data from Brave,
+                           update cache entries.
     """
-    if not ANALYST_VIEW_BRAVE_ENABLED:
+    if not force:
+        # Cache-only path — never triggers Brave calls
+        cached_results: list[dict] = []
+        for ticker, _, _ in TRACKED_COMPANIES:
+            hit = analytics_cache.get(_cache_key(ticker))
+            if hit is not None:
+                cached_results.append(hit)
+
+        order = {ticker: i for i, (ticker, _, _) in enumerate(TRACKED_COMPANIES)}
+        cached_results.sort(key=lambda x: order.get(x.get("ticker", ""), 99))
+
+        warning = None if cached_results else "No cached data yet. Click Refresh to fetch the latest analyst intel."
         return {
-            "companies": [],
+            "companies": cached_results,
             "cached_at": datetime.now(timezone.utc).isoformat(),
-            "warning": "Analyst View Brave calls temporarily disabled (ANALYST_VIEW_BRAVE_ENABLED=False).",
+            "warning": warning,
         }
 
+    # Force-refresh path — calls Brave for all companies
     if not BRAVE_API_KEY:
         return {
             "companies": [],
@@ -182,40 +196,27 @@ async def get_all_company_intel() -> dict:
             "warning": "Brave API key not configured (BRAVE_API_KEY). Company intel unavailable.",
         }
 
-    cached_results: list[dict] = []
-    to_fetch: list[tuple[str, str, str]] = []
-
+    fresh_results: list[dict] = []
     for ticker, company, kind in TRACKED_COMPANIES:
-        hit = analytics_cache.get(_cache_key(ticker))
-        if hit is not None:
-            cached_results.append(hit)
-        else:
-            to_fetch.append((ticker, company, kind))
+        try:
+            result = await _fetch_and_extract(ticker, company, kind)
+        except Exception as exc:
+            result = CompanyIntelResult(
+                ticker=ticker, company=company, kind=kind,
+                consensus="Unknown", price_target="—",
+                recent_actions=[], key_view="Error fetching data.",
+                sources=[], updated_at=datetime.now(timezone.utc).isoformat(),
+                error=str(exc),
+            )
+        r_dict = result.model_dump()
+        analytics_cache.set(_cache_key(ticker), r_dict)
+        fresh_results.append(r_dict)
 
-    if to_fetch:
-        # Process companies one at a time so Brave searches queue through the
-        # rate-limiter in web_search.py without bursting.
-        for ticker, company, kind in to_fetch:
-            try:
-                result = await _fetch_and_extract(ticker, company, kind)
-            except Exception as exc:
-                result = CompanyIntelResult(
-                    ticker=ticker, company=company, kind=kind,
-                    consensus="Unknown", price_target="—",
-                    recent_actions=[], key_view="Error fetching data.",
-                    sources=[], updated_at=datetime.now(timezone.utc).isoformat(),
-                    error=str(exc),
-                )
-            r_dict = result.model_dump()
-            analytics_cache.set(_cache_key(ticker), r_dict)
-            cached_results.append(r_dict)
-
-    # Restore original order
     order = {ticker: i for i, (ticker, _, _) in enumerate(TRACKED_COMPANIES)}
-    cached_results.sort(key=lambda x: order.get(x.get("ticker", ""), 99))
+    fresh_results.sort(key=lambda x: order.get(x.get("ticker", ""), 99))
 
     return {
-        "companies": cached_results,
+        "companies": fresh_results,
         "cached_at": datetime.now(timezone.utc).isoformat(),
         "warning": None,
     }
@@ -270,22 +271,25 @@ ANALYST_ROSTER_META: list[tuple[str, str, str]] = [
 ]
 
 
-async def get_all_analyst_summaries() -> dict:
+async def get_all_analyst_summaries(force: bool = False) -> dict:
     """
     For each analyst, search Brave by *institution + covered stocks* (not by
     analyst name — names are rarely indexed).  Deduplicate searches for analysts
     who share a firm, then batch all snippets into ONE LLM call.
-    Cached 30 min.
+
+    force=False: serve from cache only; never calls Brave.
+    force=True:  bypass cache, fetch fresh from Brave.
     """
     cached = analytics_cache.get(_ANALYST_SUMMARIES_CACHE_KEY)
-    if cached is not None:
+    if cached is not None and not force:
         return cached
 
-    if not ANALYST_VIEW_BRAVE_ENABLED:
+    if not force:
+        warning = None if cached else "No cached data yet. Click Refresh to fetch analyst summaries."
         return {
-            "analysts": [],
+            "analysts": cached["analysts"] if cached else [],
             "cached_at": datetime.now(timezone.utc).isoformat(),
-            "warning": "Analyst View Brave calls temporarily disabled (ANALYST_VIEW_BRAVE_ENABLED=False).",
+            "warning": warning,
         }
 
     if not BRAVE_API_KEY:

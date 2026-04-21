@@ -44,7 +44,7 @@ from backend.analyst_view.service import (
 )
 from backend.analyst_view.themes_service import generate_weekly_themes, get_themes_history
 from backend.core.cache import api_cache
-from backend.core.config import ANALYST_VIEW_BRAVE_ENABLED, BRAVE_API_KEY
+from backend.core.config import BRAVE_API_KEY
 from backend.rag.web_search import search_web_with_diagnostics
 
 # Initialise SQLite tables on import
@@ -94,26 +94,26 @@ ALL_TICKERS = ["FLEX", "JBL", "CLS", "BHE", "SANM", "PLXS",
 # ---------------------------------------------------------------------------
 
 @router.get("/analyst-view/company-intel")
-async def company_intel():
-    return await get_all_company_intel()
+async def company_intel(force: bool = Query(False)):
+    return await get_all_company_intel(force=force)
 
 
 @router.get("/analyst-view/analyst-summaries")
-async def analyst_summaries():
-    return await get_all_analyst_summaries()
+async def analyst_summaries(force: bool = Query(False)):
+    return await get_all_analyst_summaries(force=force)
 
 
 @router.get("/analyst-view/signals")
-async def analyst_view_signals():
+async def analyst_view_signals(force: bool = Query(False)):
     cached = api_cache.get(SIGNALS_CACHE_KEY)
-    if cached is not None:
+    if cached is not None and not force:
         return cached
 
-    if not ANALYST_VIEW_BRAVE_ENABLED:
+    if not force:
         return {
-            "results": [],
+            "results": cached["results"] if cached else [],
             "cached_at": datetime.now(timezone.utc).isoformat(),
-            "warning": "Analyst View Brave calls temporarily disabled (ANALYST_VIEW_BRAVE_ENABLED=False).",
+            "warning": None if cached else "No cached data yet. Click Refresh to fetch signals.",
         }
 
     if not BRAVE_API_KEY:
@@ -259,17 +259,17 @@ async def coverage_map():
 # ---------------------------------------------------------------------------
 
 @router.get("/analyst-view/earnings-calendar")
-async def earnings_calendar():
+async def earnings_calendar(force: bool = Query(False)):
     cache_key = "analyst_view:earnings_calendar"
     cached = api_cache.get(cache_key)
-    if cached is not None:
+    if cached is not None and not force:
         return cached
 
-    if not ANALYST_VIEW_BRAVE_ENABLED:
+    if not force:
         return {
-            "events": [],
+            "events": cached["events"] if cached else [],
             "cached_at": datetime.now(timezone.utc).isoformat(),
-            "warning": "Analyst View Brave calls temporarily disabled (ANALYST_VIEW_BRAVE_ENABLED=False).",
+            "warning": None if cached else "No cached data yet. Click Refresh to fetch earnings dates.",
         }
 
     events: list[dict] = []

@@ -171,7 +171,10 @@ export default function AnalystViewPageFeature() {
     }
 
     try {
-      const res = await fetch(`${API_URL}/api/analyst-view/company-intel`);
+      const url = manual
+        ? `${API_URL}/api/analyst-view/company-intel?force=true`
+        : `${API_URL}/api/analyst-view/company-intel`;
+      const res = await fetch(url);
       const data: CompanyIntelResponse = await res.json();
       setIntel(data);
       setIntelWarning(data.warning ?? null);
