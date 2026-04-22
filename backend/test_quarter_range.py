@@ -13,6 +13,7 @@ COMPANY_FY_START = {
     "Celestica": 1,
     "Benchmark": 1,
     "Sanmina":  10,
+    "Plexus":   10,
 }
 
 _QUARTER_COUNT_WORDS = {

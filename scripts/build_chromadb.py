@@ -130,6 +130,14 @@ SOURCES = {
         ("SanminaEarningsPresentations", "Earnings Presentation"),
         ("SanminaPressReleases",   "Press Release"),
     ],
+    "Plexus": [
+        ("10K",                    "10-K"),
+        ("10Q",                    "10-Q"),
+        ("8K",                     "8-K"),
+        ("Earnings Call",          "Earnings Transcript"),
+        ("Earnings Presentation",  "Earnings Presentation"),
+        ("Press Release",          "Press Release"),
+    ],
 }
 
 COMPANY_DISPLAY = {
@@ -138,6 +146,7 @@ COMPANY_DISPLAY = {
     "Celestica/Celestica": "Celestica",
     "Benchmark": "Benchmark",
     "Sanmina": "Sanmina",
+    "Plexus": "Plexus",
 }
 
 # ---------------------------------------------------------------------------
