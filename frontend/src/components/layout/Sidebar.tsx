@@ -7,7 +7,6 @@ import {
   MessageSquare,
   Building2,
   Settings,
-  FileText,
   TrendingUp,
   Database,
   Sparkles,
@@ -78,7 +77,6 @@ const navGroups: NavGroup[] = [
     id: 'reports',
     label: 'Reports & System',
     items: [
-      { href: '/reports', label: 'Reports', icon: FileText },
       { href: '/alerts', label: 'Alerts', icon: Bell },
       { href: '/data', label: 'Data Center', icon: Database },
       { href: '/settings', label: 'Settings', icon: Settings },
