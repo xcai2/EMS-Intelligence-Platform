@@ -58,11 +58,23 @@ const navGroups: NavGroup[] = [
     ],
   },
   {
-    id: 'intelligence',
-    label: 'Competitive Intelligence',
+    id: 'companies',
+    label: 'Companies',
     items: [
       { href: '/companies', label: 'Companies', icon: Building2 },
+    ],
+  },
+  {
+    id: 'hyperscaler',
+    label: 'Hyperscaler',
+    items: [
       { href: '/ai-investments', label: 'Hyperscaler', icon: TrendingUp, badge: 'NEW' },
+    ],
+  },
+  {
+    id: 'facilities-map',
+    label: 'Facilities Map',
+    items: [
       { href: '/map', label: 'Facilities Map', icon: Globe, badge: 'NEW' },
     ],
   },
@@ -93,7 +105,9 @@ export function Sidebar() {
     news: true,
     'analyst-view': true,
     'ai-research-chat': true,
-    intelligence: true,
+    companies: true,
+    hyperscaler: true,
+    'facilities-map': true,
     calendar: true,
     reports: false,
   });
