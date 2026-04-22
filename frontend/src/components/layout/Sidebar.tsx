@@ -15,7 +15,6 @@ import {
   ChevronRight,
   Brain,
   Globe,
-  GitCompare,
   Bell,
   Newspaper,
   LineChart,
@@ -59,7 +58,6 @@ const navGroups: NavGroup[] = [
     id: 'intelligence',
     label: 'Competitive Intelligence',
     items: [
-      { href: '/competitor-investments', label: 'Competitors', icon: GitCompare, badge: 'NEW' },
       { href: '/ai-investments', label: 'Hyperscaler', icon: TrendingUp, badge: 'NEW' },
       { href: '/map', label: 'Facilities Map', icon: Globe, badge: 'NEW' },
     ],
