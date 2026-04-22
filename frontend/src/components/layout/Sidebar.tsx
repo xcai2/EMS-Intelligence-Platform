@@ -38,10 +38,16 @@ type NavGroup = {
 
 const navGroups: NavGroup[] = [
   {
-    id: 'news-desk',
+    id: 'news',
     label: 'NEWs',
     items: [
       { href: '/news', label: 'NEWs', icon: Newspaper, badge: 'NEW' },
+    ],
+  },
+  {
+    id: 'analyst-view',
+    label: 'Analyst View',
+    items: [
       { href: '/analyst-view', label: 'Analyst View', icon: LineChart },
     ],
   },
@@ -86,7 +92,8 @@ export function Sidebar() {
   const [isDark, setIsDark] = useState<boolean>(true);
   const [hydrated, setHydrated] = useState(false);
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
-    'news-desk': true,
+    news: true,
+    'analyst-view': true,
     'ai-research-chat': true,
     intelligence: true,
     calendar: true,
