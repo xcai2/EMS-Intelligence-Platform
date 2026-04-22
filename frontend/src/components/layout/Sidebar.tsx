@@ -277,20 +277,20 @@ export function Sidebar() {
                   const Icon = item.icon;
 
                   return (
-                    <div key={group.id} className={cn('rounded-2xl border', theme.groupCard)}>
+                    <div key={group.id}>
                       <Link
                         href={item.href}
                         className={cn(
-                          'group relative flex items-center gap-3 rounded-2xl px-4 py-3 transition-all duration-200',
+                          'group relative flex items-center gap-3 rounded-xl px-3 py-2 transition-all duration-200',
                           isActive ? theme.itemActive : theme.itemInactiveDirect
                         )}
                       >
-                        <Icon className={cn('h-5 w-5 transition-transform group-hover:scale-110', isActive && 'drop-shadow-lg')} />
-                        <span className="font-semibold tracking-wide">{item.label}</span>
+                        <Icon className={cn('h-4 w-4 transition-transform group-hover:scale-110', isActive && 'drop-shadow-lg')} />
+                        <span className="text-[13px] font-semibold tracking-wide">{item.label}</span>
                         {item.badge && (
                           <span
                             className={cn(
-                              'ml-auto rounded-full px-2 py-0.5 text-xs font-semibold',
+                              'ml-auto rounded-full px-2 py-0.5 text-[11px] font-semibold',
                               isActive ? theme.badgeActive : theme.badgeInactive
                             )}
                           >
@@ -303,21 +303,21 @@ export function Sidebar() {
                 }
 
                 return (
-                  <div key={group.id} className={cn('rounded-2xl border', theme.groupCard)}>
+                  <div key={group.id}>
                     <button
                       type="button"
                       onClick={() => toggleGroup(group.id)}
                       className={cn(
-                        'flex w-full items-center justify-between rounded-xl border px-4 py-3 text-left transition-colors',
+                        'flex w-full items-center justify-between rounded-xl px-3 py-2 text-left transition-colors',
                         hasActiveItem ? theme.groupHeaderActive : theme.groupHeaderInactive
                       )}
                     >
-                      <span className="text-sm font-semibold tracking-wide">{group.label}</span>
-                      {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
+                      <span className="text-[13px] font-semibold tracking-wide">{group.label}</span>
+                      {isOpen ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
                     </button>
 
                     {isOpen && (
-                      <ul className="space-y-1.5 px-2 pb-2">
+                      <ul className="space-y-1 px-1 pb-1">
                         {group.items.map((item) => {
                           const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
                           const Icon = item.icon;
@@ -327,16 +327,16 @@ export function Sidebar() {
                               <Link
                                 href={item.href}
                                 className={cn(
-                                  'group relative flex items-center gap-3 rounded-xl px-3 py-3 transition-all duration-200',
+                                  'group relative flex items-center gap-3 rounded-xl px-3 py-2 transition-all duration-200',
                                   isActive ? theme.itemActive : theme.itemInactiveNested
                                 )}
                               >
-                                <Icon className={cn('h-5 w-5 transition-transform group-hover:scale-110', isActive && 'drop-shadow-lg')} />
-                                <span className="font-medium">{item.label}</span>
+                                <Icon className={cn('h-4 w-4 transition-transform group-hover:scale-110', isActive && 'drop-shadow-lg')} />
+                                <span className="text-[13px] font-medium">{item.label}</span>
                                 {item.badge && (
                                   <span
                                     className={cn(
-                                      'ml-auto rounded-full px-2 py-0.5 text-xs font-semibold',
+                                      'ml-auto rounded-full px-2 py-0.5 text-[11px] font-semibold',
                                       isActive ? theme.badgeActive : theme.badgeInactive
                                     )}
                                   >
