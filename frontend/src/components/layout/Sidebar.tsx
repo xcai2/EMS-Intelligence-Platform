@@ -8,12 +8,10 @@ import {
   Building2,
   Settings,
   FileText,
-  BarChart3,
   TrendingUp,
   Database,
   Sparkles,
   ChevronRight,
-  Brain,
   Globe,
   Bell,
   Newspaper,
@@ -58,18 +56,16 @@ const navGroups: NavGroup[] = [
     id: 'intelligence',
     label: 'Competitive Intelligence',
     items: [
+      { href: '/companies', label: 'Companies', icon: Building2 },
       { href: '/ai-investments', label: 'Hyperscaler', icon: TrendingUp, badge: 'NEW' },
       { href: '/map', label: 'Facilities Map', icon: Globe, badge: 'NEW' },
     ],
   },
   {
-    id: 'other',
-    label: 'Other',
+    id: 'calendar',
+    label: 'Calendar',
     items: [
       { href: '/calendar', label: 'Calendar', icon: CalendarDays },
-      { href: '/companies', label: 'Companies', icon: Building2 },
-      { href: '/analysis', label: 'Analysis', icon: BarChart3 },
-      { href: '/analytics', label: 'Analytics', icon: Brain },
     ],
   },
   {
@@ -93,7 +89,7 @@ export function Sidebar() {
     'news-desk': true,
     'ai-research-chat': true,
     intelligence: true,
-    other: false,
+    calendar: true,
     reports: false,
   });
 
