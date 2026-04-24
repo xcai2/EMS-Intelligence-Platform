@@ -38,9 +38,9 @@ type NavGroup = {
 const navGroups: NavGroup[] = [
   {
     id: 'news',
-    label: 'NEWs',
+    label: 'News',
     items: [
-      { href: '/news', label: 'NEWs', icon: Newspaper, badge: 'NEW' },
+      { href: '/news', label: 'News', icon: Newspaper },
     ],
   },
   {
@@ -54,7 +54,7 @@ const navGroups: NavGroup[] = [
     id: 'ai-research-chat',
     label: 'AI Chat',
     items: [
-      { href: '/chat', label: 'AI Chat', icon: MessageSquare, badge: 'NEW' },
+      { href: '/chat', label: 'AI Chat', icon: MessageSquare },
     ],
   },
   {
@@ -68,14 +68,14 @@ const navGroups: NavGroup[] = [
     id: 'hyperscaler',
     label: 'Hyperscaler',
     items: [
-      { href: '/ai-investments', label: 'Hyperscaler', icon: TrendingUp, badge: 'NEW' },
+      { href: '/ai-investments', label: 'Hyperscaler', icon: TrendingUp },
     ],
   },
   {
     id: 'facilities-map',
     label: 'Facilities Map',
     items: [
-      { href: '/map', label: 'Facilities Map', icon: Globe, badge: 'NEW' },
+      { href: '/map', label: 'Facilities Map', icon: Globe },
     ],
   },
   {
@@ -182,17 +182,17 @@ export function Sidebar() {
         'relative h-screen shrink-0 overflow-hidden flex flex-col transition-[width] duration-300 shadow-2xl',
         theme.asideBg,
         theme.asideText,
-        isCollapsed ? 'w-16' : 'w-72'
+        isCollapsed ? 'w-16' : 'w-52'
       )}
     >
       {isCollapsed ? (
         <div className="flex h-full flex-col items-center justify-between py-3">
-          <div className="flex flex-col items-center gap-3">
+          <div className="flex flex-col items-center gap-1">
             <button
               type="button"
               onClick={() => setIsCollapsed(false)}
               className={cn(
-                'inline-flex h-10 w-10 items-center justify-center rounded-xl border transition-colors',
+                'inline-flex h-9 w-9 items-center justify-center rounded-xl border transition-colors',
                 theme.expandBtn
               )}
               aria-label="Expand sidebar"
@@ -203,17 +203,39 @@ export function Sidebar() {
 
             <Link
               href="/"
-              className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 shadow-lg shadow-blue-500/25"
+              className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 shadow-lg shadow-blue-500/25"
               title="Go to home"
             >
               <span className="text-[9px] font-black tracking-[0.08em] text-white">FLEX</span>
             </Link>
+
+            <div className="mt-1 flex flex-col items-center gap-0.5 overflow-y-auto">
+              {navGroups.flatMap((group) =>
+                group.items.map((item) => {
+                  const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+                  const Icon = item.icon;
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      title={item.label}
+                      className={cn(
+                        'group relative inline-flex h-9 w-9 items-center justify-center rounded-xl transition-all duration-200',
+                        isActive ? theme.itemActive : theme.itemInactiveDirect
+                      )}
+                    >
+                      <Icon className="h-4 w-4" />
+                    </Link>
+                  );
+                })
+              )}
+            </div>
           </div>
 
           <button
             type="button"
             onClick={toggleTheme}
-            className={cn('inline-flex h-10 w-10 items-center justify-center rounded-xl border text-sm', theme.themeToggleBtn)}
+            className={cn('inline-flex h-9 w-9 items-center justify-center rounded-xl border text-sm', theme.themeToggleBtn)}
             aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
             title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
           >
