@@ -400,7 +400,106 @@ export default function MapPage() {
           </div>
       </div>
 
-      {/* ============ Section 2: Facility Locations ============ */}
+      {/* ============ Section 2: Factory Footprint Globe ============ */}
+      <Card className="border-0 shadow-xl overflow-hidden bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 mb-4">
+          <CardHeader className="pb-2">
+            <CardTitle>
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2">
+                  <Globe className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
+                  Factory Footprint Globe
+                </div>
+              </div>
+            </CardTitle>
+            <div className="mt-3 flex items-center gap-2 flex-wrap">
+              {(['all', 'americas', 'europe', 'asia'] as const).map(region => (
+                <button
+                  key={region}
+                  onClick={() => setMarketRegion(region)}
+                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all border ${
+                    marketRegion === region
+                      ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 border-slate-900 dark:border-slate-100'
+                      : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800'
+                  }`}
+                >
+                  {{ all: 'All Regions', americas: 'Americas', europe: 'Europe', asia: 'Asia' }[region]}
+                </button>
+              ))}
+            </div>
+          </CardHeader>
+          <CardContent className="pt-1 pb-4">
+            <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-4">
+              <div className="relative h-full min-h-[440px] overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
+                <GlobeMap facilities={visibleMapFacilities} marketRegion={marketRegion} />
+                <div className="pointer-events-none absolute left-3 bottom-3 z-[500] rounded-md bg-white/90 dark:bg-slate-900/85 border border-slate-200 dark:border-slate-700 px-2 py-1 text-[12px] text-slate-600 dark:text-slate-300">
+                  {selectedMapCompany || 'All Companies'} · {visibleMapFacilities.length} sites
+                </div>
+
+                {/* Legend */}
+                <div className="pointer-events-none absolute right-3 bottom-3 z-[500] rounded-md bg-white/90 dark:bg-slate-900/85 border border-slate-200 dark:border-slate-700 px-2 py-1.5 text-[11px] text-slate-600 dark:text-slate-300 space-y-1">
+                  {COMPANY_ORDER.map(c => (
+                    <div key={c} className="flex items-center gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ backgroundColor: COMPANY_COLORS[c] }} />
+                      {c}
+                    </div>
+                  ))}
+                  <div className="flex items-center gap-1.5 pt-0.5 border-t border-slate-200 dark:border-slate-700">
+                    <span className="text-sm leading-none">⭐</span>
+                    Shared Location
+                  </div>
+                </div>
+              </div>
+
+              {/* Right sidebar: company cards */}
+              <div className="grid grid-cols-1 gap-2.5">
+                {marketCompanyCards.map(row => (
+                  <button
+                    key={row.company}
+                    type="button"
+                    onClick={() => setSelectedMapCompany(prev => prev === row.company ? null : row.company)}
+                    className={`text-left rounded-lg border p-2.5 transition-all ${
+                      selectedMapCompany === row.company
+                        ? 'border-slate-900 dark:border-slate-100 bg-slate-100 dark:bg-slate-800'
+                        : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/80 hover:border-slate-300 dark:hover:border-slate-500'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-semibold text-slate-900 dark:text-slate-100">{row.company}</span>
+                      <span
+                        className="text-[11px] px-2 py-0.5 rounded-full border"
+                        style={{
+                          color: COMPANY_COLORS[row.company],
+                          borderColor: COMPANY_COLORS[row.company],
+                          backgroundColor: `${COMPANY_COLORS[row.company]}1a`,
+                        }}
+                      >
+                        {selectedMapCompany === row.company ? 'Focused' : 'View'}
+                      </span>
+                    </div>
+                    <div className="mt-2 text-[12px] text-slate-600 dark:text-slate-300">
+                      <div>Sites: <span className="font-semibold text-slate-900 dark:text-slate-100">{row.total}</span></div>
+                      <div className="mt-1">Regions: <span className="font-semibold text-slate-900 dark:text-slate-100">{row.regions.join(' · ') || 'N/A'}</span></div>
+                    </div>
+                    {row.sourceUrl && (
+                      <a
+                        href={row.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={e => e.stopPropagation()}
+                        className="mt-1.5 flex items-center gap-1 text-[11px] text-blue-600 dark:text-blue-400 hover:underline"
+                      >
+                        <ExternalLink className="h-3 w-3" />
+                        {row.sourceUrl.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
+                      </a>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+      </Card>
+
+      {/* ============ Section 3: Facility Locations ============ */}
       <div className="space-y-4 mb-4">
           {/* Controls */}
           <div className="flex items-center justify-between flex-wrap gap-3">
@@ -572,105 +671,6 @@ export default function MapPage() {
             </div>
           )}
       </div>
-
-      {/* ============ Section 3: Factory Footprint Globe ============ */}
-      <Card className="border-0 shadow-xl overflow-hidden bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100">
-          <CardHeader className="pb-2">
-            <CardTitle>
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2">
-                  <Globe className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
-                  Factory Footprint Globe
-                </div>
-              </div>
-            </CardTitle>
-            <div className="mt-3 flex items-center gap-2 flex-wrap">
-              {(['all', 'americas', 'europe', 'asia'] as const).map(region => (
-                <button
-                  key={region}
-                  onClick={() => setMarketRegion(region)}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all border ${
-                    marketRegion === region
-                      ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 border-slate-900 dark:border-slate-100'
-                      : 'bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800'
-                  }`}
-                >
-                  {{ all: 'All Regions', americas: 'Americas', europe: 'Europe', asia: 'Asia' }[region]}
-                </button>
-              ))}
-            </div>
-          </CardHeader>
-          <CardContent className="pt-1 pb-4">
-            <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-4">
-              <div className="relative h-full min-h-[440px] overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800">
-                <GlobeMap facilities={visibleMapFacilities} marketRegion={marketRegion} />
-                <div className="pointer-events-none absolute left-3 bottom-3 z-[500] rounded-md bg-white/90 dark:bg-slate-900/85 border border-slate-200 dark:border-slate-700 px-2 py-1 text-[12px] text-slate-600 dark:text-slate-300">
-                  {selectedMapCompany || 'All Companies'} · {visibleMapFacilities.length} sites
-                </div>
-
-                {/* Legend */}
-                <div className="pointer-events-none absolute right-3 bottom-3 z-[500] rounded-md bg-white/90 dark:bg-slate-900/85 border border-slate-200 dark:border-slate-700 px-2 py-1.5 text-[11px] text-slate-600 dark:text-slate-300 space-y-1">
-                  {COMPANY_ORDER.map(c => (
-                    <div key={c} className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ backgroundColor: COMPANY_COLORS[c] }} />
-                      {c}
-                    </div>
-                  ))}
-                  <div className="flex items-center gap-1.5 pt-0.5 border-t border-slate-200 dark:border-slate-700">
-                    <span className="text-sm leading-none">⭐</span>
-                    Shared Location
-                  </div>
-                </div>
-              </div>
-
-              {/* Right sidebar: company cards */}
-              <div className="grid grid-cols-1 gap-2.5">
-                {marketCompanyCards.map(row => (
-                  <button
-                    key={row.company}
-                    type="button"
-                    onClick={() => setSelectedMapCompany(prev => prev === row.company ? null : row.company)}
-                    className={`text-left rounded-lg border p-2.5 transition-all ${
-                      selectedMapCompany === row.company
-                        ? 'border-slate-900 dark:border-slate-100 bg-slate-100 dark:bg-slate-800'
-                        : 'border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/80 hover:border-slate-300 dark:hover:border-slate-500'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="font-semibold text-slate-900 dark:text-slate-100">{row.company}</span>
-                      <span
-                        className="text-[11px] px-2 py-0.5 rounded-full border"
-                        style={{
-                          color: COMPANY_COLORS[row.company],
-                          borderColor: COMPANY_COLORS[row.company],
-                          backgroundColor: `${COMPANY_COLORS[row.company]}1a`,
-                        }}
-                      >
-                        {selectedMapCompany === row.company ? 'Focused' : 'View'}
-                      </span>
-                    </div>
-                    <div className="mt-2 text-[12px] text-slate-600 dark:text-slate-300">
-                      <div>Sites: <span className="font-semibold text-slate-900 dark:text-slate-100">{row.total}</span></div>
-                      <div className="mt-1">Regions: <span className="font-semibold text-slate-900 dark:text-slate-100">{row.regions.join(' · ') || 'N/A'}</span></div>
-                    </div>
-                    {row.sourceUrl && (
-                      <a
-                        href={row.sourceUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className="mt-1.5 flex items-center gap-1 text-[11px] text-blue-600 dark:text-blue-400 hover:underline"
-                      >
-                        <ExternalLink className="h-3 w-3" />
-                        {row.sourceUrl.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')}
-                      </a>
-                    )}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </CardContent>
-      </Card>
 
       {/* Footer: data source attribution */}
       <div className="mt-4 text-center text-[11px] text-slate-400 dark:text-slate-500">
