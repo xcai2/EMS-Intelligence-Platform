@@ -81,6 +81,7 @@ COMPANY_FY_START = {
     "Celestica": 1, # 自然年
     "Benchmark": 1, # 自然年
     "Sanmina": 10,  # 10月开始，9月结束
+    "Plexus": 10,   # 10月开始，9月结束
 }
 
 _QUARTER_COUNT_WORDS = {

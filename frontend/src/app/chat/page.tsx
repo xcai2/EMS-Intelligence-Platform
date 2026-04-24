@@ -334,7 +334,11 @@ export default function ChatPage() {
   // Close question dropdown on outside click or ESC
   useEffect(() => {
     if (!openMenuId) return;
-    const handleClick = () => setOpenMenuId(null);
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.closest('[data-history-menu]')) return;
+      setOpenMenuId(null);
+    };
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, [openMenuId]);
@@ -414,16 +418,26 @@ export default function ChatPage() {
   };
 
   const deleteHistorySession = async (session_id: string) => {
+    setOpenMenuId(null);
     try {
-      setChatHistory((prev) => prev.filter((h) => h.session_id !== session_id));
+      const sessionRes = await fetch(`${API_URL}/api/chat/sessions/${session_id}`, { method: 'DELETE' });
+      const historyRes = await fetch(`${API_URL}/api/chat/history/${session_id}`, { method: 'DELETE' });
+      console.log('[delete] session:', sessionRes.status, 'history:', historyRes.status);
+      if (!historyRes.ok) {
+        alert(`Delete failed: ${historyRes.status} ${await historyRes.text()}`);
+        return;
+      }
+      const refreshed = await fetch(`${API_URL}/api/chat/history`);
+      const data = await refreshed.json();
+      setChatHistory(data.history || []);
       if (currentSessionId === session_id) {
         setMessages([]);
         setCurrentSessionId(`session_${Date.now()}`);
       }
-      await fetch(`${API_URL}/api/chat/sessions/${session_id}`, { method: 'DELETE' });
-      await fetch(`${API_URL}/api/chat/history/${session_id}`, { method: 'DELETE' });
-    } catch {}
-    setOpenMenuId(null);
+    } catch (err) {
+      console.error('[delete] error:', err);
+      alert(`Delete error: ${err instanceof Error ? err.message : String(err)}`);
+    }
   };
 
   const sendMessage = async (query?: string, forceMode?: SearchMode) => {
@@ -709,10 +723,12 @@ export default function ChatPage() {
                       </button>
 
                       {openMenuId === h.session_id && (
-                        <div className="absolute right-0 top-8 z-50 w-28 rounded-lg border border-slate-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-900">
+                        <div data-history-menu className="absolute right-0 top-8 z-50 w-28 rounded-lg border border-slate-200 bg-white shadow-lg dark:border-slate-700 dark:bg-slate-900">
                           <button
-                            onClick={(e) => {
+                            onMouseDown={(e) => {
                               e.stopPropagation();
+                              e.preventDefault();
+                              console.log('[delete] mousedown fired for', h.session_id);
                               deleteHistorySession(h.session_id);
                             }}
                             className="flex w-full items-center gap-2 px-3 py-2 text-xs text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-900/20 rounded-lg"
