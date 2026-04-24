@@ -324,15 +324,29 @@ def get_full_earnings_calendar(
     all_events.sort(key=lambda e: e["release_date"])
 
     today_str = today.isoformat()
-    upcoming = [e for e in all_events if e["release_date"] >= today_str]
-    recent = [e for e in all_events if e["release_date"] < today_str]
+    upcoming_all = [e for e in all_events if e["release_date"] >= today_str]
+    recent_all = [e for e in all_events if e["release_date"] < today_str]
+
+    # Keep only the first (nearest) event per company
+    def _first_per_ticker(events: list[dict]) -> list[dict]:
+        seen: set[str] = set()
+        out: list[dict] = []
+        for e in events:
+            if e["ticker"] not in seen:
+                seen.add(e["ticker"])
+                out.append(e)
+        return out
+
+    upcoming = _first_per_ticker(upcoming_all)
+    # recent is sorted descending (most recent first), so first-per-ticker = most recent past date
+    recent = _first_per_ticker(list(reversed(recent_all)))
 
     return {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "horizon": f"{horizon_start.isoformat()} to {horizon_end.isoformat()}",
-        "total_events": len(all_events),
+        "total_events": len(upcoming) + len(recent),
         "upcoming": upcoming,
-        "recent": list(reversed(recent)),
+        "recent": recent,
         "companies": [c["ticker"] for c in _COMPANIES],
     }
 
