@@ -10,6 +10,7 @@ from statistics import mean, stdev
 from backend.core.cache import analytics_cache, cached
 from backend.core.config import TRACKED_COMPANY_NAMES
 from backend.rag.retriever import search_documents, get_company_documents
+from backend.analytics.sentiment import _filing_weight
 
 
 def extract_percentages(text: str) -> list[float]:
@@ -124,11 +125,11 @@ def analyze_company_trends(company: str) -> dict:
         n_results=100,
     )
     
-    capex_by_year = defaultdict(int)
+    capex_by_year: defaultdict = defaultdict(float)
     for doc in capex_docs:
         year = doc.get("fiscal_year", "Unknown")
         if year != "Unknown":
-            capex_by_year[year] += 1
+            capex_by_year[year] += _filing_weight(doc.get("filing_type", "Unknown"))
     
     if len(capex_by_year) >= 2:
         sorted_years = sorted(capex_by_year.keys())
@@ -148,15 +149,16 @@ def analyze_company_trends(company: str) -> dict:
         n_results=100,
     )
     
-    ai_by_year = defaultdict(int)
+    ai_by_year: defaultdict = defaultdict(float)
     ai_keywords = ["ai", "artificial intelligence", "machine learning", "gpu", "data center"]
-    
+
     for doc in ai_docs:
         year = doc.get("fiscal_year", "Unknown")
         if year != "Unknown":
+            w = _filing_weight(doc.get("filing_type", "Unknown"))
             content_lower = doc["content"].lower()
             for keyword in ai_keywords:
-                ai_by_year[year] += content_lower.count(keyword)
+                ai_by_year[year] += content_lower.count(keyword) * w
     
     if len(ai_by_year) >= 2:
         sorted_years = sorted(ai_by_year.keys())
@@ -169,20 +171,29 @@ def analyze_company_trends(company: str) -> dict:
             "confidence": forecast.get("confidence", 0),
         }
     
-    # Analyze sentiment trend
+    # Analyze sentiment trend — weighted by filing type
     from backend.analytics.sentiment import analyze_lexicon_sentiment
-    
+
     docs = get_company_documents(company, limit=100)
-    sentiment_by_year = defaultdict(list)
-    
+    # Each entry is (score, weight) so we can compute a weighted mean per year
+    sentiment_by_year: defaultdict = defaultdict(list)
+
     for doc in docs:
-        year = doc.get("metadata", {}).get("fiscal_year", "Unknown")
+        meta = doc.get("metadata") or {}
+        year = meta.get("fiscal_year", "Unknown")
         if year != "Unknown":
-            analysis = analyze_lexicon_sentiment(doc["content"])
-            sentiment_by_year[year].append(analysis["sentiment_score"])
-    
+            filing_type = meta.get("filing_type", "Unknown")
+            w = _filing_weight(filing_type)
+            content = doc.get("content")
+            if content:
+                analysis = analyze_lexicon_sentiment(content)
+                sentiment_by_year[year].append((analysis["sentiment_score"], w))
+
     if len(sentiment_by_year) >= 2:
-        avg_sentiment_by_year = {y: mean(scores) for y, scores in sentiment_by_year.items()}
+        avg_sentiment_by_year = {
+            y: sum(s * w for s, w in pairs) / sum(w for _, w in pairs)
+            for y, pairs in sentiment_by_year.items()
+        }
         sorted_years = sorted(avg_sentiment_by_year.keys())
         values = [avg_sentiment_by_year[y] for y in sorted_years]
         forecast = forecast_next_value(values)

@@ -116,9 +116,16 @@ def get_all_company_collections() -> dict:
 
 
 def has_company_collections() -> bool:
-    """Check if per-company collections exist and have data."""
-    company_cols = list_company_collections()
-    return len(company_cols) > 0
+    """Check if per-company collections exist AND contain data."""
+    client = get_chroma_client()
+    for col_meta in list_company_collections():
+        try:
+            col = client.get_collection(col_meta if isinstance(col_meta, str) else col_meta.name)
+            if col.count() > 0:
+                return True
+        except Exception:
+            continue
+    return False
 
 
 def delete_company_collection(company: str):

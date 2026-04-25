@@ -71,20 +71,18 @@ class JobScraper:
         
         try:
             results = await search_web(query, count=15)
-            
-            for result in results.get('results', []):
+            for result in results:
                 job_info = self._parse_job_result(result, company)
                 if job_info:
                     all_jobs.append(job_info)
         except Exception as e:
             print(f"Job search error for {company}: {e}")
-        
+
         # Also search for specific career page
         try:
             career_query = f'{company} careers site:linkedin.com OR site:indeed.com'
             career_results = await search_web(career_query, count=10)
-            
-            for result in career_results.get('results', []):
+            for result in career_results:
                 job_info = self._parse_job_result(result, company)
                 if job_info:
                     all_jobs.append(job_info)
@@ -117,8 +115,8 @@ class JobScraper:
     def _parse_job_result(self, result: dict, company: str) -> Optional[dict]:
         """Parse a search result into job info."""
         title = result.get('title', '')
-        snippet = result.get('snippet', '')
-        url = result.get('url', '')
+        snippet = result.get('snippet') or result.get('description') or result.get('body', '')
+        url = result.get('url') or result.get('href', '')
         
         # Check if it's a job posting
         is_job = any(term in title.lower() or term in url.lower() 

@@ -15,6 +15,36 @@ from backend.core.config import COMPANIES, SEC_USER_AGENT, DATA_DIR
 EDGAR_SUBMISSIONS_URL = "https://data.sec.gov/submissions/CIK{cik}.json"
 EDGAR_FILING_URL = "https://www.sec.gov/Archives/edgar/data/{cik}/{accession}/{filename}"
 
+# ---------------------------------------------------------------------------
+# FISCAL PERIOD HELPER
+# ---------------------------------------------------------------------------
+_FISCAL_YEAR_END_MONTH: dict[str, int] = {
+    "FLEX": 3, "JBL": 8, "CLS": 12, "BHE": 12, "SANM": 9, "PLXS": 9,
+}
+
+
+def _infer_fiscal_period(period_of_report: str, ticker: str) -> tuple[str, str]:
+    """
+    Derive fiscal year label and quarter from a period-end date string and ticker.
+    Returns ("FY25", "Q3") style labels, or ("Unknown", "") on failure.
+    """
+    if not period_of_report or ticker not in _FISCAL_YEAR_END_MONTH:
+        return "Unknown", ""
+    try:
+        dt = datetime.strptime(period_of_report, "%Y-%m-%d")
+    except ValueError:
+        return "Unknown", ""
+
+    fy_end = _FISCAL_YEAR_END_MONTH[ticker]
+    fy_year = dt.year if dt.month <= fy_end else dt.year + 1
+    fy_label = f"FY{str(fy_year)[-2:]}"
+
+    fy_start_month = fy_end % 12 + 1
+    months_into_fy = (dt.month - fy_start_month) % 12
+    q_label = f"Q{months_into_fy // 3 + 1}"
+
+    return fy_label, q_label
+
 
 class SECDownloader:
     """Downloads SEC filings from EDGAR."""
@@ -88,36 +118,46 @@ class SECDownloader:
         
         cutoff_date = datetime.now() - timedelta(days=days_back)
         
-        forms = recent.get("form", [])
-        dates = recent.get("filingDate", [])
-        accessions = recent.get("accessionNumber", [])
+        forms        = recent.get("form", [])
+        dates        = recent.get("filingDate", [])
+        accessions   = recent.get("accessionNumber", [])
         primary_docs = recent.get("primaryDocument", [])
         descriptions = recent.get("primaryDocDescription", [])
-        
+        periods      = recent.get("periodOfReport", [])
+
         for i in range(len(forms)):
             form = forms[i]
             if form not in filing_types:
                 continue
-            
+
             filing_date = datetime.strptime(dates[i], "%Y-%m-%d")
             if filing_date < cutoff_date:
                 continue
-            
-            accession = accessions[i].replace("-", "")
-            filing_id = f"{ticker}_{form}_{dates[i]}_{accession}"
-            
+
+            accession  = accessions[i].replace("-", "")
+            filing_id  = f"{ticker}_{form}_{dates[i]}_{accession}"
+            period_of_report = periods[i] if i < len(periods) else ""
+            fy_label, q_label = _infer_fiscal_period(period_of_report, ticker)
+
             filings.append({
-                "ticker": ticker,
-                "company": company["name"],
-                "cik": cik,
-                "form": form,
-                "filing_date": dates[i],
-                "accession": accession,
+                "ticker":             ticker,
+                "company":            company["name"],
+                "cik":                cik,
+                "form":               form,
+                "filing_date":        dates[i],
+                "accession":          accession,
                 "accession_formatted": accessions[i],
-                "primary_doc": primary_docs[i],
-                "description": descriptions[i] if i < len(descriptions) else "",
-                "filing_id": filing_id,
+                "primary_doc":        primary_docs[i],
+                "description":        descriptions[i] if i < len(descriptions) else "",
+                "filing_id":          filing_id,
                 "already_downloaded": filing_id in self.downloaded,
+                "period_of_report":   period_of_report,
+                # Aliases expected by process_new_filings():
+                "filing_type":        form,
+                "filepath":           "",                          # set after download
+                "company_short":      company["name"].split()[0],  # "Flex" not "Flex Ltd"
+                "fiscal_year":        fy_label,
+                "quarter":            q_label,
             })
         
         return filings
@@ -195,6 +235,9 @@ class SECDownloader:
                 path = await self.download_filing(filing)
                 if path:
                     filing["local_path"] = str(path)
+                    # Populate aliases that process_new_filings() requires
+                    filing["filepath"] = str(path)
+                    filing["company"]  = filing["company_short"]
                     new_filings.append(filing)
         
         return new_filings

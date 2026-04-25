@@ -8,12 +8,10 @@ import {
   Building2,
   Settings,
   FileText,
-  BarChart3,
   TrendingUp,
   Database,
   Sparkles,
   ChevronRight,
-  Brain,
   Globe,
   GitCompare,
   Bell,
@@ -70,8 +68,6 @@ const navGroups: NavGroup[] = [
     items: [
       { href: '/calendar', label: 'Calendar', icon: CalendarDays },
       { href: '/companies', label: 'Companies', icon: Building2 },
-      { href: '/analysis', label: 'Analysis', icon: BarChart3 },
-      { href: '/analytics', label: 'Analytics', icon: Brain },
     ],
   },
   {

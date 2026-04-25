@@ -86,12 +86,13 @@ async def get_capex_analysis():
     # Aggregate by company
     company_data = {}
     for doc in results:
-        company = doc["company"]
+        company = doc.get("company", "Unknown")
         if company not in company_data:
             company_data[company] = {"count": 0, "contexts": []}
         company_data[company]["count"] += 1
         if len(company_data[company]["contexts"]) < 5:
-            snippet = doc["content"][:300].strip()
+            content = doc.get("content") or ""
+            snippet = content[:300].strip()
             if snippet:
                 company_data[company]["contexts"].append(snippet)
     
@@ -172,16 +173,16 @@ async def get_ai_investments():
     # Aggregate AI mentions by company
     ai_by_company = {}
     for doc in ai_results:
-        company = doc["company"]
-        content_lower = doc["content"].lower()
+        company = doc.get("company", "Unknown")
+        content_lower = (doc.get("content") or "").lower()
         if any(term in content_lower for term in ["ai", "artificial intelligence", "machine learning", "gpu", "neural", "deep learning"]):
             ai_by_company[company] = ai_by_company.get(company, 0) + 1
-    
+
     # Aggregate data center mentions by company
     dc_by_company = {}
     for doc in dc_results:
-        company = doc["company"]
-        content_lower = doc["content"].lower()
+        company = doc.get("company", "Unknown")
+        content_lower = (doc.get("content") or "").lower()
         if any(term in content_lower for term in ["data center", "datacenter", "hyperscale", "cloud", "server farm"]):
             dc_by_company[company] = dc_by_company.get(company, 0) + 1
     

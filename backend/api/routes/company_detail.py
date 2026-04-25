@@ -14,6 +14,7 @@ from backend.analytics.classifier import classify_company_investments
 from backend.analytics.geographic import get_company_facilities, get_regional_distribution
 from backend.analytics.anomaly import detect_capex_anomalies, detect_ai_investment_changes
 from backend.analytics.table_extractor import extract_company_financials, extract_capex_breakdown
+from backend.analytics.financial_service import get_company_financials
 
 router = APIRouter()
 
@@ -83,6 +84,7 @@ async def get_company_overview(company: str):
                 "positive_count": sentiment.get("positive_count", 0),
                 "negative_count": sentiment.get("negative_count", 0),
                 "ai_mentions": sentiment.get("ai_mentions", 0),
+                "method": sentiment.get("method", "finbert"),
             },
             "trends": {
                 "outlook": trends.get("overall_outlook", "neutral"),
@@ -154,20 +156,13 @@ async def get_company_filings(company: str, filing_type: Optional[str] = None, l
 @router.get("/company/{company}/financials")
 async def get_company_financial_data(company: str):
     """
-    Get extracted financial data for a company.
+    Get financial data for a company.
+    Primary source: yfinance. Fallback: vector DB extraction.
     """
     try:
         company_title = company.title()
-        
-        financials = extract_company_financials(company_title)
-        capex_breakdown = extract_capex_breakdown(company_title)
-        
-        return {
-            "company": company_title,
-            "financials": financials.get("fiscal_years", {}),
-            "capex_breakdown": capex_breakdown.get("breakdown", {}),
-            "primary_capex_focus": capex_breakdown.get("primary_focus"),
-        }
+        data = get_company_financials(company_title)
+        return {"company": company_title, **data}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
