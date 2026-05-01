@@ -3,6 +3,7 @@ Chat API routes with SSE streaming, query analysis, and smart routing.
 """
 import re
 import json
+import threading
 import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -1427,6 +1428,38 @@ async def chat_stream(request: ChatRequest):
             "X-Accel-Buffering": "no",
         },
     )
+
+
+# ---------------------------------------------------------------------------
+# Financial cache manual refresh endpoint
+# ---------------------------------------------------------------------------
+# Runs `refresh_all()` synchronously inside the FastAPI thread pool (the
+# endpoint is `def`, not `async def`, so FastAPI offloads it). The refresh
+# fetches all 11 tickers from SEC EDGAR + yfinance and overwrites the SQLite
+# cache. Takes ~5–10 minutes, so the frontend should show a loading state.
+# ---------------------------------------------------------------------------
+
+_FIN_REFRESH_LOCK = threading.Lock()
+
+
+@router.post("/financial/refresh")
+def refresh_financial_cache():
+    """Manually re-fetch all tracked tickers and overwrite the cache.
+
+    Returns the per-ticker result dict from `service.refresh_all()`.
+    Returns HTTP 409 if a refresh is already in progress.
+    """
+    if not _FIN_REFRESH_LOCK.acquire(blocking=False):
+        raise HTTPException(
+            status_code=409,
+            detail="A financial cache refresh is already running. Please wait.",
+        )
+    try:
+        # Lazy import — keeps yfinance off the import path until actually used.
+        from backend.aichat.financial_cache.service import refresh_all
+        return refresh_all()
+    finally:
+        _FIN_REFRESH_LOCK.release()
 
 
 @router.post("/chat")

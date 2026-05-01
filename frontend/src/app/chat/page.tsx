@@ -25,6 +25,7 @@ import {
   Settings,
   PanelLeftClose,
   PanelLeftOpen,
+  RefreshCw,
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { TableAnswer } from '@/features/chat/TableAnswer';
@@ -236,6 +237,8 @@ export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [refreshNotice, setRefreshNotice] = useState<string | null>(null);
   const [mode, setMode] = useState<SearchMode>('rag');
   const [selectedCompanies, setSelectedCompanies] = useState<CompanyFilter[]>([]);
   const [timeHorizon, setTimeHorizon] = useState<TimeHorizon>('Any Time');
@@ -513,6 +516,29 @@ export default function ChatPage() {
 
   const clearChat = () => { setMessages([]); setLastCopiedId(null); inputRef.current?.focus(); };
 
+  const refreshFinancialCache = async () => {
+    if (isRefreshing) return;
+    setIsRefreshing(true);
+    setRefreshNotice('Refreshing financial cache… this can take 5–10 minutes.');
+    try {
+      const res = await fetch(`${API_URL}/api/financial/refresh`, { method: 'POST' });
+      if (!res.ok) {
+        const detail = await res.text();
+        throw new Error(`HTTP ${res.status}: ${detail}`);
+      }
+      const data = await res.json();
+      setRefreshNotice(
+        `Financial cache refreshed: ${data.ok}/${data.total} ok, ${data.partial} partial, ${data.error} error.`,
+      );
+    } catch (err) {
+      setRefreshNotice(`Refresh failed: ${err instanceof Error ? err.message : String(err)}`);
+    } finally {
+      setIsRefreshing(false);
+      // Auto-clear the notice after 8s.
+      setTimeout(() => setRefreshNotice(null), 8000);
+    }
+  };
+
   const copyMessage = async (message: Message) => {
     try {
       await navigator.clipboard.writeText(message.content);
@@ -539,6 +565,22 @@ export default function ChatPage() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           <h1 className="text-xl font-semibold tracking-tight text-slate-950 dark:text-slate-100">AI Chat</h1>
           <div className="flex items-center gap-2">
+            {refreshNotice && (
+              <span className="hidden md:inline text-xs text-slate-500 dark:text-slate-400 max-w-xs truncate" title={refreshNotice}>
+                {refreshNotice}
+              </span>
+            )}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={refreshFinancialCache}
+              disabled={isRefreshing}
+              title="Re-fetch all 11 tickers from SEC EDGAR + yfinance and rebuild the local SQLite cache"
+              className="border-slate-300 text-slate-600 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800"
+            >
+              <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+              {isRefreshing ? 'Refreshing…' : 'Refresh Data'}
+            </Button>
             {messages.length > 0 && (
               <Button variant="outline" size="sm" onClick={clearChat} className="border-slate-300 text-slate-600 dark:border-slate-600 dark:text-slate-200 dark:hover:bg-slate-800">
                 <Trash2 className="h-4 w-4" />
