@@ -23,6 +23,11 @@ JOB_CATEGORIES = {
     "sales": ["sales", "account manager", "business development", "customer success"],
 }
 
+# Disambiguate company names that share a prefix with other companies
+SEARCH_NAME_OVERRIDES = {
+    "Flex": '"Flex Ltd"',
+}
+
 # Location keywords for geographic analysis
 LOCATION_REGIONS = {
     "americas": ["USA", "United States", "Mexico", "Brazil", "Canada"],
@@ -61,14 +66,15 @@ class JobScraper:
             return cached
         
         # Build search query
+        search_name = SEARCH_NAME_OVERRIDES.get(company, company)
         if category and category in JOB_CATEGORIES:
             keywords = JOB_CATEGORIES[category][:3]
-            query = f'{company} jobs careers {" OR ".join(keywords)}'
+            query = f'{search_name} jobs careers {" OR ".join(keywords)}'
         else:
-            query = f'{company} jobs careers hiring'
-        
+            query = f'{search_name} jobs careers hiring'
+
         all_jobs = []
-        
+
         try:
             results = await search_web(query, count=15)
             for result in results:
@@ -80,7 +86,7 @@ class JobScraper:
 
         # Also search for specific career page
         try:
-            career_query = f'{company} careers site:linkedin.com OR site:indeed.com'
+            career_query = f'{search_name} careers site:linkedin.com OR site:indeed.com'
             career_results = await search_web(career_query, count=10)
             for result in career_results:
                 job_info = self._parse_job_result(result, company)
