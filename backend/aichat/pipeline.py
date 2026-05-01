@@ -14,6 +14,7 @@ from backend.rag.generator import generate_response
 from backend.rag.web_search import search_web
 from backend.aichat.memory import add_message, get_conversation_history
 from backend.rag.assembled_retriever import get_assembled_retriever
+from backend.aichat.financial_cache.service import answer_financial_query
 
 
 def _format_docs(docs: list[dict]) -> str:
@@ -35,6 +36,8 @@ def _format_web_results(results: list[dict]) -> str:
     for r in results:
         parts.append(f"**{r.get('title', '')}**\n{r.get('description', '')}\nSource: {r.get('url', '')}")
     return "\n\n".join(parts)
+
+
 
 
 async def process_query(
@@ -65,6 +68,21 @@ async def process_query(
     web_context = ""
     sources = []
     analysis = None
+
+    # Financial cache short-circuit: numeric financial questions hit SQLite
+    # and skip RAG/web entirely. CapEx breakdown / non-numeric questions
+    # fall through to the original flow. See docs/financial_cache/design.zh.md §6.
+    try:
+        cache_result = answer_financial_query(query)
+    except Exception:
+        cache_result = None
+    if cache_result is not None:
+        if session_id:
+            add_message(session_id, "user", query)
+            add_message(session_id, "assistant", cache_result["response"])
+        # Drop the internal `context` field before returning to API consumers.
+        cache_result.pop("context", None)
+        return cache_result
 
     # NEW: Assembled retriever mode with pluggable strategies
     if mode == "assembled":

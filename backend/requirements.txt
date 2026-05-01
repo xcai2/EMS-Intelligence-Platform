@@ -29,3 +29,6 @@ typing-extensions>=4.9.0
 # Export Libraries
 openpyxl>=3.1.0
 python-pptx>=0.6.0
+
+# Financial Data (AI Chat financial cache)
+yfinance>=0.2.40

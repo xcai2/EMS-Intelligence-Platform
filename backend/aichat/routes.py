@@ -29,6 +29,7 @@ from backend.aichat.memory import (
     cleanup_expired_sessions,
 )
 from backend.rag.web_search import search_web, search_web_with_diagnostics, format_web_results_for_context, enrich_web_results
+from backend.aichat.financial_cache.service import answer_financial_query as _answer_financial_query
 from backend.core.config import COMPANIES
 from backend.core.config import OPENAI_API_KEY, ANTHROPIC_API_KEY, LLM_MODEL, ANTHROPIC_MODEL, GOOGLE_API_KEY, GEMINI_MODEL
 from backend.core.config import DATA_DIR
@@ -127,11 +128,10 @@ def _fallback_enabled(request: ChatRequest) -> bool:
 
 
 _TABLE_PATTERNS = re.compile(
-    r"\b(in\s+(?:a\s+)?table(?:\s+format)?|show.*?table|table.*?format|"
-    r"compare.*?table|not\s+paragraph|year.over.year\s+change|"
-    r"numbers?\s+in\s+a\s+table|tabular\s+form|"
-    r"give.*?table|as\s+a\s+table|display.*?table|"
-    r"table\s+of|put.*?table|in\s+table)\b",
+    # Match any standalone mention of "table" (covers "provide table",
+    # "provide a table", "give me a table", "in a table", etc.) plus a
+    # few keyword phrases that imply tabular output without using the word.
+    r"\btable\b|\b(not\s+paragraph|year.over.year\s+change|tabular\s+form)\b",
     re.IGNORECASE | re.DOTALL,
 )
 
@@ -983,6 +983,68 @@ async def _stream_response(request: ChatRequest):
         "detail": f"Companies: {effective_companies or 'auto'} | Metrics: {metrics or 'general'}",
     })
 
+    # Step 2: Financial cache check — numeric financial questions hit SQLite
+    # and short-circuit the rest of the pipeline (any mode). Non-numeric
+    # questions fall through to the normal retrieval flow below.
+    # See docs/financial_cache/design.zh.md §6.
+    try:
+        cache_result = _answer_financial_query(query)
+    except Exception:
+        cache_result = None
+    if cache_result is not None:
+        yield _sse_event("step", {
+            "icon": "📊",
+            "label": "Financial Cache",
+            "detail": (
+                f"Hit · {cache_result['data']['ticker']} · "
+                f"{cache_result['data']['metric']} · "
+                f"{len(cache_result['data']['series'])} period(s) from yfinance cache"
+            ),
+        })
+        # When the user asked for a table layout, emit narrative as token and
+        # the structured table payload as a separate SSE event so the frontend
+        # renders it with its dedicated table component.
+        table_payload = cache_result.get("table_payload")
+        if table_payload:
+            narrative = cache_result.get("narrative_text") or cache_result["response"]
+            yield _sse_event("token", {"text": narrative})
+            yield _sse_event("table", {
+                "narrative_text": narrative,
+                "table_payload":  table_payload,
+            })
+            persisted_text = narrative
+        else:
+            yield _sse_event("token", {"text": cache_result["response"]})
+            persisted_text = cache_result["response"]
+        # Strip the frontend's STRUCTURED_RESPONSE_INSTRUCTION prefix so the
+        # saved message and sidebar title only carry the user's real question.
+        clean_query = query
+        if "\n\n" in clean_query:
+            clean_query = clean_query.split("\n\n")[-1].strip()
+        if "Structure every response" in clean_query:
+            clean_query = clean_query.strip().split("\n\n")[-1].strip()
+        add_message(session_id, "user", clean_query)
+        # Sidebar list — only add on the first message of a session.
+        if len(get_conversation_history(session_id)) <= 1:
+            _add_to_chat_history(session_id, clean_query)
+        add_message(session_id, "assistant", persisted_text)
+        # Persist to disk so the chat history sidebar picks this session up.
+        # Attach table_payload / narrative_text to the last message so the
+        # frontend can re-render the table when the user reopens this session.
+        all_messages = get_conversation_history(session_id)
+        if all_messages and table_payload:
+            all_messages[-1]["table_payload"]  = table_payload
+            all_messages[-1]["narrative_text"] = cache_result.get("narrative_text")
+        _save_session_messages(session_id, all_messages)
+        yield _sse_event("done", {"session_id": session_id})
+        return
+
+    yield _sse_event("step", {
+        "icon": "📊",
+        "label": "Financial Cache",
+        "detail": "Miss — falling back to document retrieval",
+    })
+
     # Step 2: Determine routing
     use_agentic = is_comparison and len(effective_companies) >= 2 and not company_scope
 
@@ -1375,6 +1437,7 @@ async def chat(request: ChatRequest):
     session_id = request.session_id or str(uuid.uuid4())
     query = request.query.strip()
 
+    # Step 1: Query analysis (mirrors /chat/stream order).
     companies = _detect_companies(query)
     company_scope = _parse_company_scope(request.company_filter)
     effective_companies = company_scope if company_scope else companies
@@ -1383,6 +1446,38 @@ async def chat(request: ChatRequest):
     effective_include_web = request.include_web or request.mode in ("web", "hybrid")
     is_comparison = _is_comparison_query(query, effective_companies)
     n_quarters = _extract_quarter_range(query)
+
+    # Step 2: Financial cache check — short-circuits the rest of the pipeline
+    # for numeric financial questions (any mode). Non-numeric questions fall
+    # through to the normal retrieval flow below.
+    try:
+        cache_result = _answer_financial_query(query)
+    except Exception:
+        cache_result = None
+    if cache_result is not None:
+        # Strip the frontend's STRUCTURED_RESPONSE_INSTRUCTION prefix so the
+        # saved message and sidebar title only carry the user's real question.
+        clean_query = query
+        if "\n\n" in clean_query:
+            clean_query = clean_query.split("\n\n")[-1].strip()
+        if "Structure every response" in clean_query:
+            clean_query = clean_query.strip().split("\n\n")[-1].strip()
+        add_message(session_id, "user", clean_query)
+        # Sidebar list — only add on the first message of a session.
+        if len(get_conversation_history(session_id)) <= 1:
+            _add_to_chat_history(session_id, clean_query)
+        add_message(session_id, "assistant", cache_result["response"])
+        # Persist to disk so the history sidebar picks this session up.
+        all_messages = get_conversation_history(session_id)
+        table_payload  = cache_result.get("table_payload")
+        narrative_text = cache_result.get("narrative_text")
+        if all_messages and table_payload:
+            all_messages[-1]["table_payload"]  = table_payload
+            all_messages[-1]["narrative_text"] = narrative_text
+        _save_session_messages(session_id, all_messages)
+        cache_result.pop("context", None)
+        cache_result["session_id"] = session_id
+        return cache_result
 
     # Detect historical query early so we can choose optimal retrieval strategy
     from backend.rag.generator import detect_query_type as detect_gen_query_type
