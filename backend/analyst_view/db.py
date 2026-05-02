@@ -116,6 +116,7 @@ def save_key_quotes(quotes: list[dict]) -> None:
 
 def get_key_quotes(
     company: str | None = None,
+    ticker: str | None = None,
     theme: str | None = None,
     days: int = 90,
     limit: int = 50,
@@ -127,6 +128,9 @@ def get_key_quotes(
     if company:
         clauses.append("company = ?")
         params.append(company)
+    if ticker:
+        clauses.append("ticker = ?")
+        params.append(ticker.upper())
     if theme:
         clauses.append("theme = ?")
         params.append(theme)

@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { ExternalLink, Search, User } from 'lucide-react';
+import { ExternalLink, RefreshCw, Search, User } from 'lucide-react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
@@ -184,22 +184,31 @@ function AnalystCard({
 export default function AnalystCards() {
   const [summaries, setSummaries] = useState<AnalystSummary[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [warning, setWarning] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [institutionFilter, setInstitutionFilter] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const fetchSummaries = useCallback(async () => {
+  const fetchSummaries = useCallback(async (force = false) => {
     try {
-      setLoading(true);
+      if (force) setRefreshing(true);
+      else setLoading(true);
       setError(null);
-      const res = await fetch(`${API_URL}/api/analyst-view/analyst-summaries`);
+      setWarning(null);
+      const url = force
+        ? `${API_URL}/api/analyst-view/analyst-summaries?force=true`
+        : `${API_URL}/api/analyst-view/analyst-summaries`;
+      const res = await fetch(url);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
       setSummaries(data.analysts ?? []);
+      if (data.warning) setWarning(data.warning);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to load summaries');
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   }, []);
 
@@ -247,7 +256,22 @@ export default function AnalystCards() {
         <span className="text-xs text-slate-400 dark:text-slate-500">
           {filtered.length} of {ANALYST_ROSTER.length} analysts
         </span>
+        <button
+          onClick={() => fetchSummaries(true)}
+          disabled={refreshing}
+          className="ml-auto flex items-center gap-1.5 rounded-lg border border-slate-300 bg-slate-100 px-3 py-1.5 text-xs text-slate-600 transition-colors hover:border-slate-400 hover:text-slate-800 disabled:opacity-50 dark:border-[#2a3045] dark:bg-[#1a1f2e] dark:text-gray-400 dark:hover:border-gray-500 dark:hover:text-gray-200"
+        >
+          <RefreshCw size={12} className={refreshing ? 'animate-spin' : ''} />
+          {refreshing ? 'Refreshing…' : 'Refresh Summaries'}
+        </button>
       </div>
+
+      {/* Warning (e.g. no cache yet) */}
+      {warning && !error && (
+        <div className="rounded-xl border border-yellow-200 bg-yellow-50 px-4 py-2.5 text-xs text-yellow-700 dark:border-yellow-800/40 dark:bg-yellow-900/10 dark:text-yellow-400">
+          {warning}
+        </div>
+      )}
 
       {/* Error */}
       {error && (

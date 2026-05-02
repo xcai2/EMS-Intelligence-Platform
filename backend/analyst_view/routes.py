@@ -302,10 +302,11 @@ async def earnings_calendar(force: bool = Query(False)):
 @router.get("/analyst-view/key-quotes")
 async def key_quotes(
     company: Optional[str] = Query(None),
+    ticker: Optional[str] = Query(None),
     theme: Optional[str] = Query(None),
     days: int = Query(90),
 ):
-    rows = fetch_key_quotes(company=company, theme=theme, days=days)
+    rows = fetch_key_quotes(company=company, ticker=ticker, theme=theme, days=days)
     return {"quotes": rows, "total": len(rows)}
 
 

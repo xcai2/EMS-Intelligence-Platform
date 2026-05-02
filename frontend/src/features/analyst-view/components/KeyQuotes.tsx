@@ -56,7 +56,7 @@ export default function KeyQuotes() {
     setError(null);
     try {
       const params = new URLSearchParams({ days: "90" });
-      if (selectedTicker !== "All") params.set("company", selectedTicker);
+      if (selectedTicker !== "All") params.set("ticker", selectedTicker);
       if (selectedTheme !== "All") params.set("theme", selectedTheme);
       const res = await fetch(`/api/analyst-view/key-quotes?${params}`);
       const data: QuotesResponse = await res.json();

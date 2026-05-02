@@ -222,10 +222,11 @@ async def extract_quotes_for_company(
 
 def fetch_key_quotes(
     company: str | None = None,
+    ticker: str | None = None,
     theme: str | None = None,
     days: int = 90,
 ) -> list[dict]:
-    rows = get_key_quotes(company=company, theme=theme, days=days)
+    rows = get_key_quotes(company=company, ticker=ticker, theme=theme, days=days)
     return [dict(r) for r in rows]
 
 
