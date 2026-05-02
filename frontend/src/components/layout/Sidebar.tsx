@@ -6,13 +6,11 @@ import { useEffect, useState } from 'react';
 import {
   MessageSquare,
   Building2,
-  Settings,
   TrendingUp,
   Database,
   Sparkles,
   ChevronRight,
   Globe,
-  Bell,
   Newspaper,
   LineChart,
   CalendarDays,
@@ -86,12 +84,10 @@ const navGroups: NavGroup[] = [
     ],
   },
   {
-    id: 'reports',
-    label: 'Reports & System',
+    id: 'data-center',
+    label: 'Data Center',
     items: [
-      { href: '/alerts', label: 'Alerts', icon: Bell },
       { href: '/data', label: 'Data Center', icon: Database },
-      { href: '/settings', label: 'Settings', icon: Settings },
     ],
   },
 ];
@@ -109,7 +105,6 @@ export function Sidebar() {
     hyperscaler: true,
     'facilities-map': true,
     calendar: true,
-    reports: false,
   });
 
   const toggleGroup = (groupId: string) => {

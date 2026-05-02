@@ -3,6 +3,7 @@ API routes for data ingestion management.
 """
 import asyncio
 import logging
+from pathlib import Path
 from fastapi import APIRouter, BackgroundTasks, HTTPException
 from typing import Optional
 from pydantic import BaseModel
@@ -17,9 +18,30 @@ from backend.ingestion.scheduler import (
 )
 from backend.ingestion.processor import process_new_filings
 from backend.ingestion.transcript_ingester import TranscriptIngester
+from backend.core.config import DATA_DIR, COMPANY_NAME_TO_TICKER
 
 router = APIRouter()
 logger = logging.getLogger(__name__)
+
+
+def _count_raw_files() -> dict:
+    raw_dir = DATA_DIR / "raw"
+    by_company: dict[str, int] = {}
+    for company_name, ticker in COMPANY_NAME_TO_TICKER.items():
+        company_dir = raw_dir / company_name
+        if not company_dir.exists():
+            by_company[ticker] = 0
+            continue
+        count = sum(
+            1
+            for path in company_dir.rglob("*")
+            if path.is_file() and not path.name.startswith(".")
+        )
+        by_company[ticker] = count
+    return {
+        "total": sum(by_company.values()),
+        "by_company": by_company,
+    }
 
 
 class FilingCheckRequest(BaseModel):
@@ -35,10 +57,12 @@ async def get_ingestion_status():
     downloader = SECDownloader()
     download_stats = downloader.get_download_stats()
     transcript_stats = TranscriptIngester().get_stats()
+    raw_file_stats = _count_raw_files()
 
     return {
         "scheduler":   scheduler_status,
         "downloads":   download_stats,
+        "raw_files":   raw_file_stats,
         "transcripts": transcript_stats,
     }
 
