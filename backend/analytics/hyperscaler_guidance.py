@@ -362,10 +362,13 @@ async def build_big5_capex_response() -> dict:
             "Amazon": "AMZN", "Microsoft": "MSFT", "Alphabet": "GOOGL",
             "Meta": "META", "Oracle": "ORCL",
         }
+        _COLORS = {"AMZN": "#FF9900", "MSFT": "#00A4EF", "GOOGL": "#4285F4", "META": "#0866FF", "ORCL": "#F80000"}
         companies = []
         for company_name, ticker in name_to_ticker.items():
             base = dict(seed_companies.get(ticker, {"ticker": ticker}))
             base.update(_FALLBACK.get(company_name, {}))
+            base.setdefault("name", company_name)
+            base.setdefault("color", _COLORS.get(ticker, "#64748b"))
             companies.append(base)
         total = sum(c.get("capex_2026_billions", 0) for c in companies)
         return {
@@ -393,10 +396,16 @@ async def build_big5_capex_response() -> dict:
         "Oracle":    "ORCL",
     }
 
+    _COLORS = {"AMZN": "#FF9900", "MSFT": "#00A4EF", "GOOGL": "#4285F4", "META": "#0866FF", "ORCL": "#F80000"}
     for company_name, ticker in name_to_ticker.items():
         base = dict(seed_companies.get(ticker, {"ticker": ticker}))
-        g = guidance.get(company_name)
+        # Apply fallback first as defaults, then Brave live data overrides
+        for k, v in _FALLBACK.get(company_name, {}).items():
+            base.setdefault(k, v)
+        base.setdefault("name", company_name)
+        base.setdefault("color", _COLORS.get(ticker, "#64748b"))
 
+        g = guidance.get(company_name)
         if g and g.source == "live":
             if g.capex_current_billions is not None:
                 base["capex_2026_billions"] = g.capex_current_billions

@@ -123,6 +123,8 @@ function formatAISubdomainLabel(area: string): string {
 export default function AIInvestmentsPage() {
   const [data, setData] = useState<Big5Data | null>(null);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshStatus, setRefreshStatus] = useState<string | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<Big5Company | null>(null);
   const [historicalData, setHistoricalData] = useState<HyperscalerFinancialsData | null>(null);
   const [historicalLoading, setHistoricalLoading] = useState(true);
@@ -145,6 +147,34 @@ export default function AIInvestmentsPage() {
       console.error('Failed to fetch Big 5 data:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const refreshGuidance = async () => {
+    setRefreshing(true);
+    setRefreshStatus(null);
+    try {
+      const prevCompanies = data?.companies ?? [];
+      await fetch(`${API_URL}/api/intelligence/hyperscaler/guidance/cache`, { method: 'DELETE' });
+      const res = await fetch(`${API_URL}/api/intelligence/big5-capex`);
+      if (!res.ok) { setRefreshStatus('Failed to fetch latest data.'); return; }
+      const json: Big5Data = await res.json();
+      const changes: string[] = [];
+      json.companies?.forEach((newC) => {
+        const old = prevCompanies.find(o => o.ticker === newC.ticker);
+        if (!old) return;
+        if (old.capex_2026_billions !== newC.capex_2026_billions) {
+          changes.push(`${newC.name}: $${old.capex_2026_billions}B → $${newC.capex_2026_billions}B`);
+        }
+      });
+      setData(json);
+      if (json.companies && json.companies.length > 0) setSelectedCompany(json.companies[0]);
+      setRefreshStatus(changes.length > 0 ? `Updated: ${changes.join(' | ')}` : 'No changes — data is current.');
+    } catch (err) {
+      setRefreshStatus('Error refreshing guidance data.');
+    } finally {
+      setRefreshing(false);
+      setTimeout(() => setRefreshStatus(null), 8000);
     }
   };
 
@@ -212,19 +242,27 @@ export default function AIInvestmentsPage() {
               FY2026 AI Infrastructure Spending
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            {data.last_updated && (
-              <Badge className="bg-green-100 text-green-700">
-                Updated: {data.last_updated}
-              </Badge>
+          <div className="flex flex-col items-end gap-1">
+            <div className="flex items-center gap-3">
+              {data.last_updated && (
+                <Badge className="bg-green-100 text-green-700">
+                  Updated: {data.last_updated}
+                </Badge>
+              )}
+              <button
+                onClick={refreshGuidance}
+                disabled={refreshing}
+                className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm disabled:opacity-50"
+              >
+                <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+                {refreshing ? 'Fetching latest...' : 'Refresh Guidance'}
+              </button>
+            </div>
+            {refreshStatus && (
+              <p className={`text-xs ${refreshStatus.startsWith('Updated') ? 'text-green-600' : 'text-slate-500'}`}>
+                {refreshStatus}
+              </p>
             )}
-            <button
-              onClick={fetchData}
-            className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm"
-          >
-            <RefreshCw className="h-4 w-4" />
-            Refresh
-          </button>
           </div>
         </div>
       </div>
@@ -524,7 +562,7 @@ export default function AIInvestmentsPage() {
                       tick={{ fontSize: 11 }}
                       label={{ value: 'USD Billions', angle: -90, position: 'insideLeft', style: { fontSize: 10 } }}
                     />
-                    <Tooltip formatter={(v) => [v != null ? `$${v}B` : '—', '']} />
+                    <Tooltip formatter={(v, name) => [v != null ? `$${Number(v).toFixed(2)}B` : '—', name]} />
                     <Legend wrapperStyle={{ fontSize: 11 }} />
                     {historicalData.companies.map(c => (
                       <Line
