@@ -543,7 +543,6 @@ export default function NewsPage() {
       const newsMap: Record<string, NewsItem[]> = {};
       const topNewsMap: Record<string, NewsItem[]> = {};
       const weeklySummaryMap: Record<string, { text: string; status: string }> = {};
-      tickers.forEach((t) => { newsMap[t] = []; topNewsMap[t] = []; weeklySummaryMap[t] = { text: '', status: '' }; });
       const secItems: UnifiedNewsItem[] = [];
       tickers.forEach((ticker, idx) => {
         const result = results[idx];
@@ -556,9 +555,10 @@ export default function NewsPage() {
           );
         }
       });
-      setCompanyNews(newsMap);
-      setCompanyTopNews(topNewsMap);
-      setCompanyWeeklySummary(weeklySummaryMap);
+      // Merge with existing data so UI doesn't flash empty during refresh
+      setCompanyNews((prev) => ({ ...prev, ...newsMap }));
+      setCompanyTopNews((prev) => ({ ...prev, ...topNewsMap }));
+      setCompanyWeeklySummary((prev) => ({ ...prev, ...weeklySummaryMap }));
       setAllSecItems(secItems);
 
       // Fetch aggregate view: global weekly summary and trending

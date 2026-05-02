@@ -11,11 +11,10 @@ Jobs:
 """
 import asyncio
 import logging
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
-from apscheduler.triggers.date import DateTrigger
 from apscheduler.triggers.interval import IntervalTrigger
 
 from backend.core.config import INGESTION_SCHEDULE
@@ -155,17 +154,7 @@ def start_scheduler():
         max_instances=1,
     )
 
-    # 4. One-shot transcript check 60 s after startup (index warm-up)
-    startup_time = datetime.now(timezone.utc) + timedelta(seconds=60)
-    scheduler.add_job(
-        scheduled_transcript_check,
-        DateTrigger(run_date=startup_time),
-        id="transcript_check_startup",
-        name="One-shot transcript check on startup",
-        replace_existing=True,
-    )
-
-    # 5. Analyst cache warmup every 30 min
+    # 4. Analyst cache warmup every 30 min
     scheduler.add_job(
         warm_analyst_cache,
         IntervalTrigger(minutes=30),

@@ -39,3 +39,26 @@ chromadb_store/
 # Runtime caches (do not commit)
 data/news_runtime_cache.json
 data/competitor_dynamic_cache.json
+data/preset_questions_cache.json
+
+# Hyperscaler Gemini cache (runtime, regenerated on refresh)
+data/hyperscaler/big5_capex_view_model.json
+data/hyperscaler/big5_capex_api_raw.json
+
+# News runtime cache
+data/news_cache/
+
+# Databases (runtime, not for version control)
+data/*.db
+data/*.db-shm
+data/*.db-wal
+data/news/*.db
+data/news/*.db-shm
+data/news/*.db-wal
+
+# Chat session data (user-specific runtime data)
+data/chat_history.json
+data/chat_messages/
+
+# Analyst intel DB (runtime)
+data/analyst_intel.db

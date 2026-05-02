@@ -10,6 +10,7 @@ from datetime import datetime
 from typing import Optional
 
 from backend.core.cache import SimpleCache
+from backend.hyperscaler.models import HyperscalerCompanyFinancials, HyperscalerFinancialsResponse
 
 logger = logging.getLogger(__name__)
 
@@ -31,10 +32,8 @@ COMPANY_COLORS: dict[str, str] = {
     "Oracle":    "#F80000",
 }
 
-# Possible yfinance row labels for Capital Expenditures across versions
 _CAPEX_KEYS = ("Capital Expenditure", "Capital Expenditures", "Purchase Of Property Plant And Equipment")
 
-# Daily TTL — financial statements don't change intraday
 _cache: SimpleCache = SimpleCache(default_ttl=86400)
 
 _INCOME_MAP = {
@@ -51,25 +50,20 @@ def _to_billions(val) -> Optional[float]:
         return None
 
 
-def fetch_hyperscaler_financials(company: str) -> dict:
-    """
-    Fetch income statement + cash flow for one hyperscaler from yfinance.
-    Revenue, operating income, net income, and capex are all in USD billions.
-    Returns the last 5 fiscal years of data.
-    """
+def fetch_hyperscaler_financials(company: str) -> HyperscalerCompanyFinancials:
     cache_key = f"hyperscaler:financials:{company}"
     cached = _cache.get(cache_key)
     if cached is not None:
-        return cached
+        return HyperscalerCompanyFinancials(**cached)
 
     ticker_symbol = HYPERSCALER_TICKERS.get(company)
     if not ticker_symbol:
-        return {"error": f"Unknown hyperscaler: {company}"}
+        return HyperscalerCompanyFinancials(company=company, ticker="", color="", error=f"Unknown hyperscaler: {company}")
 
     try:
         import yfinance as yf
     except ImportError:
-        return {"error": "yfinance not installed"}
+        return HyperscalerCompanyFinancials(company=company, ticker=ticker_symbol, color="", error="yfinance not installed")
 
     try:
         ticker = yf.Ticker(ticker_symbol)
@@ -77,7 +71,7 @@ def fetch_hyperscaler_financials(company: str) -> dict:
         cashflow = ticker.cashflow
     except Exception as exc:
         logger.error("yfinance fetch failed for %s (%s): %s", company, ticker_symbol, exc)
-        return {"error": str(exc)}
+        return HyperscalerCompanyFinancials(company=company, ticker=ticker_symbol, color="", error=str(exc))
 
     fiscal_years: dict[str, dict] = {}
 
@@ -103,7 +97,6 @@ def fetch_hyperscaler_financials(company: str) -> dict:
                 if key in cashflow.index:
                     val = _to_billions(cashflow.loc[key, col])
                     if val is not None:
-                        # CapEx is a cash outflow (negative); store as positive
                         entry["capex"] = abs(val)
                     break
 
@@ -111,7 +104,7 @@ def fetch_hyperscaler_financials(company: str) -> dict:
     keep = {str(y) for y in range(current_year - 4, current_year + 1)}
     filtered = {yr: data for yr, data in fiscal_years.items() if yr in keep}
 
-    result = {
+    result_dict = {
         "company":      company,
         "ticker":       ticker_symbol,
         "color":        COMPANY_COLORS.get(company, "#64748B"),
@@ -120,22 +113,21 @@ def fetch_hyperscaler_financials(company: str) -> dict:
         "fetched_at":   datetime.now().isoformat(),
     }
 
-    _cache.set(cache_key, result)
-    return result
+    _cache.set(cache_key, result_dict)
+    return HyperscalerCompanyFinancials(**result_dict)
 
 
 def fetch_all_hyperscaler_financials() -> dict:
-    """Fetch financials for all 5 hyperscalers, assembled from per-company cache."""
     companies = []
     errors    = []
 
     for company in HYPERSCALER_TICKERS:
         try:
-            data = fetch_hyperscaler_financials(company)
-            if "error" in data:
-                errors.append({"company": company, "error": data["error"]})
+            result = fetch_hyperscaler_financials(company)
+            if result.error:
+                errors.append({"company": company, "error": result.error})
             else:
-                companies.append(data)
+                companies.append(result.model_dump())
         except Exception as exc:
             logger.error("Failed to fetch financials for %s: %s", company, exc)
             errors.append({"company": company, "error": str(exc)})
@@ -148,8 +140,7 @@ def fetch_all_hyperscaler_financials() -> dict:
     }
 
 
-def invalidate_cache(company: Optional[str] = None) -> None:
-    """Evict one company's cache entry, or all if company is None."""
+def invalidate_financials_cache(company: Optional[str] = None) -> None:
     if company:
         _cache.delete(f"hyperscaler:financials:{company}")
     else:

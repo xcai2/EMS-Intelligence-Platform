@@ -11,6 +11,7 @@ from backend.api.routes import ingestion, sentiment, earnings, analytics, geogra
 from backend.api.routes import reports as reports_router
 from backend.api.routes import dashboard as dashboard_router
 from backend.api.routes import intelligence as intelligence_router
+from backend.hyperscaler.routes import router as hyperscaler_router
 from backend.news.routes import router as news_router
 from backend.analyst_view.routes import router as analyst_view_router
 from backend.core.database import get_collection, get_collection_stats, get_embedding_model
@@ -58,6 +59,23 @@ async def lifespan(app: FastAPI):
             print("✓ Cache warmed for initial companies")
         except Exception as e:
             print(f"⚠ Cache warmup failed: {e}")
+
+        try:
+            from backend.hyperscaler.financials import fetch_all_hyperscaler_financials
+            from backend.hyperscaler.service import build_response_from_cache
+            await asyncio.to_thread(fetch_all_hyperscaler_financials)
+            build_response_from_cache()
+            print("✓ Hyperscaler data pre-loaded")
+        except Exception as e:
+            print(f"⚠ Hyperscaler warmup failed: {e}")
+
+        try:
+            from backend.news.service import get_all_companies_news
+            await get_all_companies_news()
+            print("✓ News cache pre-loaded")
+        except Exception as e:
+            print(f"⚠ News warmup failed: {e}")
+
     asyncio.create_task(warmup_cache_background())
     yield
     print("Shutting down...")
@@ -95,6 +113,7 @@ app.include_router(news_router, prefix="/api", tags=["News"])
 app.include_router(analyst_view_router, prefix="/api", tags=["Analyst View"])
 app.include_router(exports.router, prefix="/api", tags=["Exports"])
 app.include_router(intelligence_router.router, prefix="/api/intelligence", tags=["Competitive Intelligence"])
+app.include_router(hyperscaler_router, prefix="/api/intelligence", tags=["Hyperscaler"])
 app.include_router(supplemental_data.router, prefix="/api", tags=["Supplemental Data"])
 app.include_router(reports_router.router, prefix="/api", tags=["Reports & Calendar"])
 app.include_router(dashboard_router.router, prefix="/api", tags=["Dashboard"])

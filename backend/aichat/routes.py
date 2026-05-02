@@ -911,8 +911,9 @@ async def _build_hyperscaler_capex_context() -> str:
     plain-text context block for injection into the LLM prompt.
     """
     try:
-        from backend.analytics.hyperscaler_guidance import build_big5_capex_response
-        data = await build_big5_capex_response()
+        from backend.hyperscaler.service import build_response_from_cache
+        raw = build_response_from_cache()
+        data = raw.model_dump()
     except Exception:
         return ""
 

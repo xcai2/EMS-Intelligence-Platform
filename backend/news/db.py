@@ -14,7 +14,7 @@ from pathlib import Path
 
 from backend.core.config import DATA_DIR
 
-DB_PATH = Path(DATA_DIR) / "news_config.db"
+DB_PATH = Path(DATA_DIR) / "news" / "news_config.db"
 
 
 def get_connection() -> sqlite3.Connection:
