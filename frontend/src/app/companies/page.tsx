@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { readPersistentCache, writePersistentCache } from '@/lib/persistentCache';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -42,6 +43,26 @@ import {
 } from 'recharts';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
+
+// Module-level cache — survives component unmount/remount on Next.js navigation
+const _cache: {
+  companies: Company[];
+  analytics: Record<string, AnalyticsData>;
+  capexData: CapExMention[];
+  aiData: AIInvestmentMention[];
+  trends: any;
+  classification: any;
+  anomalies: any;
+} = {
+  companies: [],
+  analytics: {},
+  capexData: [],
+  aiData: [],
+  trends: null,
+  classification: null,
+  anomalies: null,
+};
+let _cachePopulated = false;
 
 interface Company {
   ticker: string;
@@ -103,20 +124,44 @@ const COMPANY_COLORS: Record<string, string> = {
 type Tab = 'overview' | 'analysis' | 'trends';
 
 export default function CompaniesPage() {
-  const [companies, setCompanies] = useState<Company[]>([]);
-  const [analytics, setAnalytics] = useState<Record<string, AnalyticsData>>({});
-  const [capexData, setCapexData] = useState<CapExMention[]>([]);
-  const [aiData, setAiData] = useState<AIInvestmentMention[]>([]);
-  const [trends, setTrends] = useState<any>(null);
-  const [classification, setClassification] = useState<any>(null);
-  const [anomalies, setAnomalies] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [companies, setCompanies] = useState<Company[]>(_cache.companies);
+  const [analytics, setAnalytics] = useState<Record<string, AnalyticsData>>(_cache.analytics);
+  const [capexData, setCapexData] = useState<CapExMention[]>(_cache.capexData);
+  const [aiData, setAiData] = useState<AIInvestmentMention[]>(_cache.aiData);
+  const [trends, setTrends] = useState<any>(_cache.trends);
+  const [classification, setClassification] = useState<any>(_cache.classification);
+  const [anomalies, setAnomalies] = useState<any>(_cache.anomalies);
+  const [loading, setLoading] = useState(!_cachePopulated);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshMsg, setRefreshMsg] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<Tab>('overview');
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchData();
+    if (_cachePopulated) return;
+    // Seed module-level cache from localStorage so the page renders instantly
+    const persisted = readPersistentCache<typeof _cache>('cache:companies:index:v1');
+    if (persisted) {
+      _cache.companies = persisted.companies ?? [];
+      _cache.analytics = persisted.analytics ?? {};
+      _cache.capexData = persisted.capexData ?? [];
+      _cache.aiData = persisted.aiData ?? [];
+      _cache.trends = persisted.trends ?? null;
+      _cache.classification = persisted.classification ?? null;
+      _cache.anomalies = persisted.anomalies ?? null;
+      _cachePopulated = true;
+      setCompanies(_cache.companies);
+      setAnalytics(_cache.analytics);
+      setCapexData(_cache.capexData);
+      setAiData(_cache.aiData);
+      setTrends(_cache.trends);
+      setClassification(_cache.classification);
+      setAnomalies(_cache.anomalies);
+      setLoading(false);
+    } else {
+      fetchData();
+    }
   }, []);
 
   // Per-request fetch that never throws — returns null on any error or non-2xx
@@ -140,7 +185,8 @@ export default function CompaniesPage() {
       setLoading(false);
       return;
     }
-    setCompanies(companiesData.companies ?? []);
+    const newCompanies = companiesData.companies ?? [];
+    setCompanies(newCompanies);
 
     // Wave 2: analytics overlays — run in parallel but failures are silent
     const [classData, sentimentData, trendsData, geoData] = await Promise.all([
@@ -197,9 +243,125 @@ export default function CompaniesPage() {
       safeFetch(`${API_URL}/api/analysis/ai-investments`),
       safeFetch(`${API_URL}/api/analytics/anomalies`),
     ]);
-    if (capexResult) setCapexData(capexResult.mentions ?? []);
-    if (aiResult) setAiData(aiResult.mentions ?? []);
+    const newCapex = capexResult?.mentions ?? [];
+    const newAi = aiResult?.mentions ?? [];
+    if (capexResult) setCapexData(newCapex);
+    if (aiResult) setAiData(newAi);
     if (anomalyResult) setAnomalies(anomalyResult);
+
+    // Populate module-level cache
+    _cache.companies = newCompanies;
+    _cache.analytics = analyticsMap;
+    _cache.capexData = newCapex;
+    _cache.aiData = newAi;
+    _cache.trends = trendsData ?? _cache.trends;
+    _cache.classification = classData ?? _cache.classification;
+    _cache.anomalies = anomalyResult ?? _cache.anomalies;
+    _cachePopulated = true;
+    writePersistentCache('cache:companies:index:v1', { ..._cache });
+  };
+
+  const refreshData = async () => {
+    setRefreshing(true);
+    setRefreshMsg(null);
+
+    const companiesData = await safeFetch(`${API_URL}/api/companies`);
+    if (!companiesData) {
+      setRefreshing(false);
+      setRefreshMsg('刷新失败，无法连接后端');
+      return;
+    }
+    const newCompanies = companiesData.companies ?? [];
+
+    const [classData, sentimentData, trendsData, geoData] = await Promise.all([
+      safeFetch(`${API_URL}/api/analytics/classification`),
+      safeFetch(`${API_URL}/api/sentiment/compare`),
+      safeFetch(`${API_URL}/api/analytics/trends`),
+      safeFetch(`${API_URL}/api/geographic/compare`),
+    ]);
+
+    const analyticsMap: Record<string, AnalyticsData> = {};
+    if (classData) {
+      classData.companies?.forEach((c: any) => {
+        analyticsMap[c.company] = {
+          company: c.company,
+          ai_focus: c.overall_ai_focus_percentage || 0,
+          sentiment: 0,
+          trend: 'neutral',
+          facilities: 0,
+        };
+      });
+    }
+    if (sentimentData) {
+      sentimentData.companies?.forEach((c: any) => {
+        if (analyticsMap[c.company])
+          analyticsMap[c.company].sentiment = (c.sentiment_score || 0) * 100;
+      });
+    }
+    if (trendsData) {
+      trendsData.companies?.forEach((c: any) => {
+        if (analyticsMap[c.company])
+          analyticsMap[c.company].trend = c.overall_outlook || 'neutral';
+      });
+    }
+    if (geoData) {
+      geoData.companies?.forEach((c: any) => {
+        if (analyticsMap[c.company])
+          analyticsMap[c.company].facilities = c.total_facilities || 0;
+      });
+    }
+
+    const [capexResult, aiResult, anomalyResult] = await Promise.all([
+      safeFetch(`${API_URL}/api/analysis/capex`),
+      safeFetch(`${API_URL}/api/analysis/ai-investments`),
+      safeFetch(`${API_URL}/api/analytics/anomalies`),
+    ]);
+    const newCapex = capexResult?.mentions ?? _cache.capexData;
+    const newAi = aiResult?.mentions ?? _cache.aiData;
+    const newAnomalies = anomalyResult ?? _cache.anomalies;
+
+    // Only update state + cache when something actually changed
+    let changed = false;
+    if (JSON.stringify(newCompanies) !== JSON.stringify(_cache.companies)) {
+      setCompanies(newCompanies);
+      _cache.companies = newCompanies;
+      changed = true;
+    }
+    if (JSON.stringify(analyticsMap) !== JSON.stringify(_cache.analytics)) {
+      setAnalytics(analyticsMap);
+      _cache.analytics = analyticsMap;
+      changed = true;
+    }
+    if (classData && JSON.stringify(classData) !== JSON.stringify(_cache.classification)) {
+      setClassification(classData);
+      _cache.classification = classData;
+      changed = true;
+    }
+    if (trendsData && JSON.stringify(trendsData) !== JSON.stringify(_cache.trends)) {
+      setTrends(trendsData);
+      _cache.trends = trendsData;
+      changed = true;
+    }
+    if (JSON.stringify(newCapex) !== JSON.stringify(_cache.capexData)) {
+      setCapexData(newCapex);
+      _cache.capexData = newCapex;
+      changed = true;
+    }
+    if (JSON.stringify(newAi) !== JSON.stringify(_cache.aiData)) {
+      setAiData(newAi);
+      _cache.aiData = newAi;
+      changed = true;
+    }
+    if (JSON.stringify(newAnomalies) !== JSON.stringify(_cache.anomalies)) {
+      setAnomalies(newAnomalies);
+      _cache.anomalies = newAnomalies;
+      changed = true;
+    }
+
+    if (changed) writePersistentCache('cache:companies:index:v1', { ..._cache });
+    setRefreshing(false);
+    setRefreshMsg(changed ? '数据已更新' : '数据无变化，缓存保持不变');
+    setTimeout(() => setRefreshMsg(null), 3000);
   };
 
   const getTrendIcon = (direction: string) => {
@@ -300,13 +462,21 @@ export default function CompaniesPage() {
               <p className="text-slate-500 mt-1">Electronics Manufacturing Services intelligence hub</p>
             </div>
           </div>
-          <button
-            onClick={fetchData}
-            className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm"
-          >
-            <RefreshCw className="h-4 w-4" />
-            Refresh
-          </button>
+          <div className="flex items-center gap-3">
+            {refreshMsg && (
+              <span className={`text-sm font-medium ${refreshMsg.includes('无变化') ? 'text-slate-500' : 'text-green-600'}`}>
+                {refreshMsg}
+              </span>
+            )}
+            <button
+              onClick={refreshData}
+              disabled={refreshing}
+              className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm disabled:opacity-60"
+            >
+              <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+              {refreshing ? '刷新中...' : '刷新'}
+            </button>
+          </div>
         </div>
       </div>
 

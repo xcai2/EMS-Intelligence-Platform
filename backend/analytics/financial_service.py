@@ -84,6 +84,41 @@ def fetch_yfinance_financials(company: str) -> dict:
     return {"fiscal_years": years, "source": "yfinance", "ticker": ticker_symbol}
 
 
+_CAPEX_KEYS = (
+    "Capital Expenditure",
+    "Capital Expenditures",
+    "Purchase Of Property Plant And Equipment",
+)
+
+
+def fetch_yfinance_capex(company: str) -> dict:
+    """Return {year_str: capex_millions} for 2022-2026 from yfinance cash flow statement."""
+    import yfinance as yf
+
+    ticker_symbol = COMPANY_NAME_TO_TICKER.get(company)
+    if not ticker_symbol:
+        return {}
+    try:
+        cashflow = yf.Ticker(ticker_symbol).cashflow
+    except Exception:
+        return {}
+    if cashflow is None or cashflow.empty:
+        return {}
+
+    result = {}
+    for col in cashflow.columns:
+        year_label = str(col.year) if hasattr(col, "year") else str(col)[:4]
+        if year_label not in YEAR_RANGE:
+            continue
+        for key in _CAPEX_KEYS:
+            if key in cashflow.index:
+                val = _format_millions(cashflow.loc[key, col])
+                if val is not None:
+                    result[year_label] = abs(val)
+                break
+    return result
+
+
 def get_company_financials(company: str) -> dict:
     """Primary: yfinance. Fallback: ChromaDB vector DB extraction."""
     try:

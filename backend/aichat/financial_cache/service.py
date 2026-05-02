@@ -555,7 +555,7 @@ def _answer_multi_ticker(query: str, intents: list[dict], original_query: str) -
     fetched_ats = [s["fetched_at"] for series in all_series.values() for s in series]
     fetched_at = max(fetched_ats) if fetched_ats else ""
 
-    return {
+    result: dict = {
         "response":          response,
         "sources":           [],
         "mode":              "financial_cache",
@@ -563,6 +563,25 @@ def _answer_multi_ticker(query: str, intents: list[dict], original_query: str) -
         "fetched_at":        fetched_at,
         "reranking_enabled": False,
     }
+
+    if wants_table:
+        columns = ["Company", "Period", f"{label} (USD Millions)"]
+        rows = []
+        for ticker, series in all_series.items():
+            for s in series:
+                fy_lbl = fiscal_label(ticker, s["period_end"]) or s["period_end"]
+                if intent["period_type"] == "annual" and " Q" in fy_lbl:
+                    fy_lbl = fy_lbl.split(" ")[0]
+                v_fmt = _format_value(s["value"], flip_sign=flip_sign)
+                rows.append([ticker, fy_lbl, v_fmt])
+        result["table_payload"] = {
+            "title": f"{label} Comparison (USD Millions)",
+            "columns": columns,
+            "rows": rows,
+        }
+        result["narrative_text"] = f"{label} comparison across {len(all_series)} companies."
+
+    return result
 
 
 def answer_financial_query(query: str) -> Optional[dict]:

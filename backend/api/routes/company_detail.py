@@ -14,7 +14,7 @@ from backend.analytics.classifier import classify_company_investments
 from backend.analytics.geographic import get_company_facilities, get_regional_distribution
 from backend.analytics.anomaly import detect_capex_anomalies, detect_ai_investment_changes
 from backend.analytics.table_extractor import extract_company_financials, extract_capex_breakdown
-from backend.analytics.financial_service import get_company_financials
+from backend.analytics.financial_service import get_company_financials, fetch_yfinance_capex
 
 router = APIRouter()
 
@@ -206,40 +206,64 @@ async def get_company_ai_analysis(company: str):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+def _detect_capex_anomaly(trend: list) -> dict:
+    actuals = [t for t in trend if t["source_type"] == "actual" and t.get("capex_millions")]
+    if len(actuals) < 2:
+        return {"has_anomaly": False, "reason": "Insufficient historical data for anomaly detection."}
+    current = actuals[-1]
+    historical = actuals[:-1]
+    hist_avg = sum(t["capex_millions"] for t in historical) / len(historical)
+    pct_change = (current["capex_millions"] - hist_avg) / hist_avg * 100
+    has_anomaly = abs(pct_change) >= 20
+    direction = "spike" if pct_change > 0 else "drop"
+    severity = "high" if abs(pct_change) >= 50 else "medium"
+    above_below = "above" if pct_change > 0 else "below"
+    return {
+        "has_anomaly": has_anomaly,
+        "direction": direction if has_anomaly else None,
+        "severity": severity if has_anomaly else None,
+        "current_year": current["fiscal_year"],
+        "current_value_millions": current["capex_millions"],
+        "historical_average_millions": round(hist_avg, 2),
+        "pct_change_from_history": round(pct_change, 1),
+        "reason": (
+            f"{current['fiscal_year']} CapEx (${current['capex_millions']:.0f}M) is "
+            f"{abs(pct_change):.1f}% {above_below} the prior-year average (${hist_avg:.0f}M)."
+            if has_anomaly else
+            "No abnormal CapEx movement detected based on the available trend data."
+        ),
+    }
+
+
 @router.get("/company/{company}/capex")
 async def get_company_capex_analysis(company: str):
     """
-    Get CapEx analysis for a company.
+    Returns historical CapEx trend from yfinance + anomaly insight + investment focus breakdown.
     """
     try:
         company_title = company.title()
-        
-        anomalies = detect_capex_anomalies(company_title)
+
+        raw_capex = fetch_yfinance_capex(company_title)
+        capex_trend = [
+            {
+                "fiscal_year": f"FY{year}",
+                "capex_millions": raw_capex[year],
+                "source_type": "actual",
+                "source": "yfinance",
+            }
+            for year in sorted(raw_capex.keys())
+        ]
+
+        anomaly = _detect_capex_anomaly(capex_trend)
         capex_breakdown = extract_capex_breakdown(company_title)
-        
-        # Search for CapEx content
-        capex_docs = search_documents(
-            query=f"{company_title} capital expenditure CapEx investment property plant equipment",
-            company_filter=company_title,
-            n_results=20,
-        )
-        
-        capex_mentions = []
-        for doc in capex_docs[:10]:
-            capex_mentions.append({
-                "source": doc.get("source", "Unknown"),
-                "fiscal_year": doc.get("fiscal_year", "Unknown"),
-                "preview": doc["content"][:200] + "...",
-            })
-        
+
         return {
             "company": company_title,
-            "anomalies": anomalies.get("anomalies", []),
-            "has_anomalies": anomalies.get("has_anomalies", False),
-            "period_data": anomalies.get("period_data", {}),
+            "capex_trend": capex_trend,
+            "anomaly": anomaly,
+            "has_anomalies": anomaly.get("has_anomaly", False),
             "breakdown": capex_breakdown.get("breakdown", {}),
             "primary_focus": capex_breakdown.get("primary_focus"),
-            "sample_mentions": capex_mentions,
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

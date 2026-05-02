@@ -15,7 +15,6 @@ import FlexBenchmark from "./components/FlexBenchmark";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8001";
 const CACHE_KEY = "analyst_view_intel_cache";
-const CACHE_TTL_MS = 5 * 60 * 1000; // 5 min cache TTL
 // const REFRESH_INTERVAL_MS = 5 * 60 * 1000; // [AUTO-REFRESH] uncomment when re-enabling auto mode
 
 // ---------------------------------------------------------------------------
@@ -154,18 +153,16 @@ export default function AnalystViewPageFeature() {
   const fetchIntel = useCallback(async (manual = false) => {
     if (manual) setRefreshing(true);
 
-    // Serve from sessionStorage cache if still fresh (avoids unnecessary API calls)
+    // Serve from localStorage cache (no TTL — valid until user clicks Refresh)
     if (!manual) {
       try {
-        const raw = sessionStorage.getItem(CACHE_KEY);
+        const raw = localStorage.getItem(CACHE_KEY);
         if (raw) {
-          const { payload, ts } = JSON.parse(raw) as { payload: CompanyIntelResponse; ts: number };
-          if (Date.now() - ts < CACHE_TTL_MS) {
-            setIntel(payload);
-            setIntelWarning(payload.warning ?? null);
-            setIntelLoading(false);
-            return;
-          }
+          const { payload } = JSON.parse(raw) as { payload: CompanyIntelResponse };
+          setIntel(payload);
+          setIntelWarning(payload.warning ?? null);
+          setIntelLoading(false);
+          return;
         }
       } catch { /* ignore */ }
     }
@@ -179,7 +176,7 @@ export default function AnalystViewPageFeature() {
       setIntel(data);
       setIntelWarning(data.warning ?? null);
       try {
-        sessionStorage.setItem(CACHE_KEY, JSON.stringify({ payload: data, ts: Date.now() }));
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ payload: data, ts: Date.now() }));
       } catch { /* storage full — skip */ }
     } catch {
       setIntelWarning("Failed to connect to backend.");
@@ -216,7 +213,7 @@ export default function AnalystViewPageFeature() {
   //     es = new EventSource(`${API_URL}/api/analyst-view/stream`);
   //     es.addEventListener("connected", () => { retryDelay = 3_000; });
   //     es.addEventListener("cache_refreshed", () => {
-  //       sessionStorage.removeItem(CACHE_KEY);
+  //       localStorage.removeItem(CACHE_KEY);
   //       fetchIntel();
   //     });
   //     es.onerror = () => {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { readPersistentCache, writePersistentCache } from '@/lib/persistentCache';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -158,6 +159,14 @@ export default function HyperscalerPageFeature() {
   }, []);
 
   const fetchData = async () => {
+    // Serve from localStorage cache if present (avoids loading on restart)
+    const cached = readPersistentCache<Big5Data>('cache:hyperscaler:guidance:v1');
+    if (cached) {
+      setData(cached);
+      if (cached.companies && cached.companies.length > 0) setSelectedCompany(cached.companies[0]);
+      setLoading(false);
+      return;
+    }
     try {
       setLoading(true);
       const res = await fetch(`${API_URL}/api/intelligence/big5-capex`);
@@ -165,6 +174,7 @@ export default function HyperscalerPageFeature() {
         const json = await res.json();
         setData(json);
         if (json.companies && json.companies.length > 0) setSelectedCompany(json.companies[0]);
+        writePersistentCache('cache:hyperscaler:guidance:v1', json);
       }
     } catch (err) {
       console.error('Failed to fetch Big 5 data:', err);
@@ -203,6 +213,7 @@ export default function HyperscalerPageFeature() {
       });
       setData(json);
       if (json.companies && json.companies.length > 0) setSelectedCompany(json.companies[0]);
+      writePersistentCache('cache:hyperscaler:guidance:v1', json);
       const message = changes.length > 0 ? `Updated: ${changes.join(' | ')}` : 'No changes — data is current.';
       setRefreshStatus(message);
       savePersistedStatus(message);
@@ -216,10 +227,21 @@ export default function HyperscalerPageFeature() {
   };
 
   const fetchHistoricalData = async () => {
+    // Serve from localStorage cache if present
+    const cached = readPersistentCache<HyperscalerFinancialsData>('cache:hyperscaler:historical:v1');
+    if (cached) {
+      setHistoricalData(cached);
+      setHistoricalLoading(false);
+      return;
+    }
     try {
       setHistoricalLoading(true);
       const res = await fetch(`${API_URL}/api/intelligence/hyperscaler/all/financials`);
-      if (res.ok) setHistoricalData(await res.json());
+      if (res.ok) {
+        const json = await res.json();
+        setHistoricalData(json);
+        writePersistentCache('cache:hyperscaler:historical:v1', json);
+      }
     } catch (err) {
       console.error('Failed to fetch hyperscaler historical data:', err);
     } finally {

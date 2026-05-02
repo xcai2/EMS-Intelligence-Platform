@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { readPersistentCache, writePersistentCache } from '@/lib/persistentCache';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -39,6 +40,23 @@ import {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 
+// Module-level cache keyed by company slug — survives navigation unmount/remount
+type DetailCache = {
+  overview: any;
+  filings: any;
+  financials: any;
+  capexData: any;
+  hiring: any;
+};
+const _detailCache: Record<string, DetailCache> = {};
+
+function getDetailCache(key: string): DetailCache {
+  if (!_detailCache[key]) {
+    _detailCache[key] = { overview: null, filings: null, financials: null, capexData: null, hiring: null };
+  }
+  return _detailCache[key];
+}
+
 const COMPANY_COLORS: Record<string, string> = {
   'flex': '#3B82F6',
   'jabil': '#10B981',
@@ -63,19 +81,41 @@ export default function CompanyDetailPage() {
   const params = useParams();
   const company = (params.company as string)?.charAt(0).toUpperCase() + (params.company as string)?.slice(1);
   const companyKey = params.company as string;
-  
+
+  const cache = getDetailCache(companyKey);
+
   const [activeTab, setActiveTab] = useState<TabType>('overview');
-  const [overview, setOverview] = useState<any>(null);
-  const [filings, setFilings] = useState<any>(null);
-  const [financials, setFinancials] = useState<any>(null);
-  const [capexData, setCapexData] = useState<any>(null);
-  const [hiring, setHiring] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const [overview, setOverview] = useState<any>(cache.overview);
+  const [filings, setFilings] = useState<any>(cache.filings);
+  const [financials, setFinancials] = useState<any>(cache.financials);
+  const [capexData, setCapexData] = useState<any>(cache.capexData);
+  const [hiring, setHiring] = useState<any>(cache.hiring);
+  const [loading, setLoading] = useState(!cache.overview);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshMsg, setRefreshMsg] = useState<string | null>(null);
 
   useEffect(() => {
-    if (company) {
+    if (!company) return;
+    const c = getDetailCache(companyKey);
+    if (c.overview) return; // already in module-level cache
+    // Seed module-level cache from localStorage first
+    const persisted = readPersistentCache<DetailCache>(`cache:company-detail:${companyKey}:v1`);
+    if (persisted) {
+      c.overview    = persisted.overview    ?? null;
+      c.filings     = persisted.filings     ?? null;
+      c.financials  = persisted.financials  ?? null;
+      c.capexData   = persisted.capexData   ?? null;
+      c.hiring      = persisted.hiring      ?? null;
+      setOverview(c.overview);
+      setFilings(c.filings);
+      setFinancials(c.financials);
+      setCapexData(c.capexData);
+      setHiring(c.hiring);
+      setLoading(false);
+    } else {
       fetchOverview();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [company]);
 
   useEffect(() => {
@@ -89,7 +129,10 @@ export default function CompanyDetailPage() {
     try {
       const res = await fetch(`${API_URL}/api/company/${company}/overview`);
       if (res.ok) {
-        setOverview(await res.json());
+        const data = await res.json();
+        setOverview(data);
+        getDetailCache(companyKey).overview = data;
+        writePersistentCache(`cache:company-detail:${companyKey}:v1`, getDetailCache(companyKey));
       }
     } catch (err) {
       console.error('Failed to fetch overview:', err);
@@ -99,36 +142,82 @@ export default function CompanyDetailPage() {
   };
 
   const fetchTabData = async (tab: TabType) => {
+    const c = getDetailCache(companyKey);
     try {
       switch (tab) {
         case 'filings':
-          if (!filings) {
+          if (!c.filings) {
             const res = await fetch(`${API_URL}/api/company/${company}/filings`);
-            if (res.ok) setFilings(await res.json());
+            if (res.ok) { const d = await res.json(); setFilings(d); c.filings = d; writePersistentCache(`cache:company-detail:${companyKey}:v1`, c); }
           }
           break;
         case 'financials':
-          if (!financials) {
+          if (!c.financials) {
             const res = await fetch(`${API_URL}/api/company/${company}/financials`);
-            if (res.ok) setFinancials(await res.json());
+            if (res.ok) { const d = await res.json(); setFinancials(d); c.financials = d; writePersistentCache(`cache:company-detail:${companyKey}:v1`, c); }
           }
           break;
         case 'capex':
-          if (!capexData) {
+          if (!c.capexData) {
             const res = await fetch(`${API_URL}/api/company/${company}/capex`);
-            if (res.ok) setCapexData(await res.json());
+            if (res.ok) { const d = await res.json(); setCapexData(d); c.capexData = d; writePersistentCache(`cache:company-detail:${companyKey}:v1`, c); }
           }
           break;
         case 'hiring':
-          if (!hiring) {
+          if (!c.hiring) {
             const res = await fetch(`${API_URL}/api/jobs/${company}`);
-            if (res.ok) setHiring(await res.json());
+            if (res.ok) { const d = await res.json(); setHiring(d); c.hiring = d; writePersistentCache(`cache:company-detail:${companyKey}:v1`, c); }
           }
           break;
       }
     } catch (err) {
       console.error(`Failed to fetch ${tab} data:`, err);
     }
+  };
+
+  const refreshData = async () => {
+    const c = getDetailCache(companyKey);
+    setRefreshing(true);
+    setRefreshMsg(null);
+    let changed = false;
+
+    // Always refresh overview
+    try {
+      const res = await fetch(`${API_URL}/api/company/${company}/overview`);
+      if (res.ok) {
+        const data = await res.json();
+        if (JSON.stringify(data) !== JSON.stringify(c.overview)) {
+          setOverview(data); c.overview = data; changed = true;
+        }
+      }
+    } catch {}
+
+    // Refresh only tabs that have been visited (cache != null)
+    const tabFetches: Array<{ key: keyof DetailCache; url: string; setter: (d: any) => void }> = [
+      { key: 'filings',   url: `${API_URL}/api/company/${company}/filings`,   setter: setFilings },
+      { key: 'financials',url: `${API_URL}/api/company/${company}/financials`, setter: setFinancials },
+      { key: 'capexData', url: `${API_URL}/api/company/${company}/capex`,     setter: setCapexData },
+      { key: 'hiring',    url: `${API_URL}/api/jobs/${company}`,              setter: setHiring },
+    ];
+    await Promise.all(
+      tabFetches
+        .filter(({ key }) => c[key] !== null)
+        .map(async ({ key, url, setter }) => {
+          try {
+            const res = await fetch(url);
+            if (!res.ok) return;
+            const data = await res.json();
+            if (JSON.stringify(data) !== JSON.stringify(c[key])) {
+              setter(data); c[key] = data; changed = true;
+            }
+          } catch {}
+        })
+    );
+
+    if (changed) writePersistentCache(`cache:company-detail:${companyKey}:v1`, c);
+    setRefreshing(false);
+    setRefreshMsg(changed ? '数据已更新' : '数据无变化，缓存保持不变');
+    setTimeout(() => setRefreshMsg(null), 3000);
   };
 
   const getTrendIcon = (direction: string) => {
@@ -165,11 +254,45 @@ export default function CompanyDetailPage() {
     { id: 'hiring', label: 'Hiring', icon: Users },
   ];
 
-  // CapEx breakdown for chart
-  const capexBreakdownData = capexData?.breakdown ? Object.entries(capexData.breakdown).map(([key, val]: [string, any]) => ({
-    name: key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
-    value: val.mentions || 0,
-  })).filter(d => d.value > 0) : [];
+  // CapEx trend chart data
+  const capexTrendChart = (capexData?.capex_trend ?? []).map((row: any) => ({
+    year: row.fiscal_year,
+    capex: row.capex_millions,
+  }));
+
+  // CapEx metrics table: CapEx/Revenue % + YoY growth rate (client-side derived)
+  const capexMetrics = capexTrendChart.map((row: any, idx: number) => {
+    const yearKey = row.year.replace('FY', '');
+    const rev = financials?.fiscal_years?.[yearKey]?.revenue;
+    const capexPct = rev && rev > 0 ? ((row.capex / rev) * 100).toFixed(1) : null;
+    const prev = capexTrendChart[idx - 1];
+    const yoy = prev?.capex && prev.capex > 0
+      ? (((row.capex - prev.capex) / prev.capex) * 100).toFixed(1)
+      : null;
+    return { ...row, capexPct, yoy };
+  });
+
+  // Investment Focus — breakdown with labels
+  const CATEGORY_LABELS: Record<string, string> = {
+    property_plant_equipment: 'Property, Plant & Equipment',
+    technology_infrastructure: 'Technology Infrastructure',
+    data_center: 'Data Center',
+    machinery_equipment: 'Machinery & Equipment',
+    facility_expansion: 'Facility Expansion',
+  };
+  const breakdownEntries: Array<{ key: string; label: string; mentions: number; quotes: string[] }> =
+    capexData?.breakdown
+      ? Object.entries(capexData.breakdown)
+          .map(([k, v]: [string, any]) => ({
+            key: k,
+            label: CATEGORY_LABELS[k] ?? k.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+            mentions: v.mentions ?? 0,
+            quotes: v.sample_quotes ?? [],
+          }))
+          .filter((e) => e.mentions > 0)
+          .sort((a, b) => b.mentions - a.mentions)
+      : [];
+  const maxMentions = breakdownEntries[0]?.mentions ?? 1;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 p-6">
@@ -203,12 +326,18 @@ export default function CompanyDetailPage() {
                 {overview.trends.outlook.charAt(0).toUpperCase() + overview.trends.outlook.slice(1)} Outlook
               </Badge>
             )}
+            {refreshMsg && (
+              <span className={`text-sm font-medium ${refreshMsg.includes('无变化') ? 'text-slate-500' : 'text-green-600'}`}>
+                {refreshMsg}
+              </span>
+            )}
             <button
-              onClick={fetchOverview}
-              className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm"
+              onClick={refreshData}
+              disabled={refreshing}
+              className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm disabled:opacity-60"
             >
-              <RefreshCw className="h-4 w-4" />
-              Refresh
+              <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
+              {refreshing ? '刷新中...' : '刷新'}
             </button>
           </div>
         </div>
@@ -550,77 +679,186 @@ export default function CompanyDetailPage() {
         )}
 
         {activeTab === 'capex' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="space-y-6">
+
+            {/* ── CapEx Trend ── */}
             <Card className="border-0 shadow-xl">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2">
-                    <BarChart3 className="h-5 w-5 text-orange-600" />
-                    CapEx Breakdown
+                    <BarChart3 className="h-5 w-5 text-blue-600" />
+                    Historical CapEx Trend
                   </CardTitle>
-                  <span className="text-xs px-2 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200">
-                    Source: ChromaDB · SEC Filings
+                  <span className="text-xs px-2 py-1 rounded-full bg-blue-50 text-blue-600 border border-blue-200">
+                    Source: yfinance · Actual
                   </span>
                 </div>
               </CardHeader>
               <CardContent>
-                {capexBreakdownData.length > 0 ? (
-                  <ResponsiveContainer width="100%" height={250}>
-                    <BarChart data={capexBreakdownData} layout="vertical">
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis type="number" />
-                      <YAxis type="category" dataKey="name" width={120} tick={{ fontSize: 11 }} />
-                      <Tooltip />
-                      <Bar dataKey="value" fill="#F59E0B" radius={[0, 4, 4, 0]} />
+                {capexTrendChart.length > 0 ? (
+                  <ResponsiveContainer width="100%" height={260}>
+                    <BarChart data={capexTrendChart} margin={{ top: 8, right: 16, left: 0, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
+                      <XAxis dataKey="year" tick={{ fontSize: 12 }} />
+                      <YAxis tickFormatter={(v) => `$${v}M`} tick={{ fontSize: 11 }} width={70} />
+                      <Tooltip formatter={(value: any) => [`$${value}M`, 'CapEx']} />
+                      <Bar dataKey="capex" fill="#3B82F6" radius={[4, 4, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 ) : (
-                  <p className="text-slate-500 text-center py-8">Loading CapEx data...</p>
+                  <p className="text-slate-500 text-center py-8">Loading CapEx trend data...</p>
                 )}
               </CardContent>
             </Card>
 
+            {/* ── Metrics Table ── */}
+            {capexMetrics.length > 0 && (
+              <Card className="border-0 shadow-xl">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    <DollarSign className="h-5 w-5 text-slate-600" />
+                    CapEx Metrics by Year
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-slate-200 bg-slate-50">
+                          <th className="text-left py-3 px-4 font-semibold text-slate-600">Fiscal Year</th>
+                          <th className="text-right py-3 px-4 font-semibold text-slate-600">CapEx ($M)</th>
+                          <th className="text-right py-3 px-4 font-semibold text-slate-600">CapEx / Revenue</th>
+                          <th className="text-right py-3 px-4 font-semibold text-slate-600">YoY Change</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {capexMetrics.map((row: any) => (
+                          <tr key={row.year} className="border-b border-slate-100 hover:bg-slate-50">
+                            <td className="py-3 px-4 font-medium">{row.year}</td>
+                            <td className="py-3 px-4 text-right">{row.capex != null ? `$${row.capex.toLocaleString()}M` : '—'}</td>
+                            <td className="py-3 px-4 text-right">{row.capexPct != null ? `${row.capexPct}%` : '—'}</td>
+                            <td className="py-3 px-4 text-right">
+                              {row.yoy != null ? (
+                                <span className={parseFloat(row.yoy) >= 0 ? 'text-green-600' : 'text-red-600'}>
+                                  {parseFloat(row.yoy) >= 0 ? '▲' : '▼'} {Math.abs(parseFloat(row.yoy))}%
+                                </span>
+                              ) : '—'}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {!financials && (
+                    <p className="text-xs text-slate-400 mt-3">
+                      Visit the Financials tab to load revenue data for CapEx/Revenue ratio.
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+
+            {/* ── Anomaly Insight ── */}
             <Card className="border-0 shadow-xl">
               <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle className="flex items-center gap-2">
-                    <AlertTriangle className="h-5 w-5 text-red-600" />
-                    CapEx Anomalies
-                  </CardTitle>
-                  <span className="text-xs px-2 py-1 rounded-full bg-red-50 text-red-600 border border-red-200">
-                    Source: ChromaDB · SEC Filings
-                  </span>
-                </div>
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <AlertTriangle className="h-5 w-5 text-orange-500" />
+                  CapEx Anomaly Insight
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                {capexData?.has_anomalies ? (
-                  <div className="space-y-3">
-                    {capexData.anomalies?.map((anomaly: any, idx: number) => (
-                      <div key={idx} className={`p-4 rounded-xl border ${
-                        anomaly.severity === 'high' ? 'bg-red-50 border-red-200' : 'bg-orange-50 border-orange-200'
-                      }`}>
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium">{anomaly.period}</span>
-                          <Badge className={anomaly.severity === 'high' ? 'bg-red-200 text-red-800' : 'bg-orange-200 text-orange-800'}>
-                            {anomaly.direction}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-slate-600">
-                          {anomaly.pct_change_from_mean > 0 ? '+' : ''}{anomaly.pct_change_from_mean}% from mean
-                        </p>
+                {capexData?.anomaly?.has_anomaly ? (
+                  <div className={`p-4 rounded-xl border ${
+                    capexData.anomaly.severity === 'high'
+                      ? 'bg-red-50 border-red-200'
+                      : 'bg-orange-50 border-orange-200'
+                  }`}>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-semibold text-slate-800">{capexData.anomaly.current_year}</span>
+                      <div className="flex items-center gap-2">
+                        <Badge className={capexData.anomaly.severity === 'high'
+                          ? 'bg-red-100 text-red-700 border border-red-300'
+                          : 'bg-orange-100 text-orange-700 border border-orange-300'}>
+                          {capexData.anomaly.direction === 'spike' ? '▲ Spike' : '▼ Drop'}
+                        </Badge>
+                        <Badge className="bg-slate-100 text-slate-600 border border-slate-200">
+                          {capexData.anomaly.severity}
+                        </Badge>
                       </div>
-                    ))}
+                    </div>
+                    <p className="text-sm text-slate-700">{capexData.anomaly.reason}</p>
+                    <p className="text-xs text-slate-500 mt-1">
+                      Historical avg: ${capexData.anomaly.historical_average_millions?.toFixed(0)}M &nbsp;·&nbsp;
+                      Δ {capexData.anomaly.pct_change_from_history > 0 ? '+' : ''}{capexData.anomaly.pct_change_from_history}%
+                    </p>
                   </div>
                 ) : (
-                  <div className="text-center py-8">
-                    <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                      <TrendingUp className="h-8 w-8 text-green-600" />
+                  <div className="flex items-center gap-4 p-4 bg-green-50 rounded-xl border border-green-200">
+                    <div className="bg-green-100 rounded-full p-2 shrink-0">
+                      <TrendingUp className="h-5 w-5 text-green-600" />
                     </div>
-                    <p className="text-slate-600">No anomalies detected</p>
+                    <p className="text-sm text-slate-700">
+                      {capexData?.anomaly?.reason ?? 'No abnormal CapEx movement detected based on the available trend data.'}
+                    </p>
                   </div>
                 )}
               </CardContent>
             </Card>
+
+            {/* ── Investment Focus ── */}
+            {breakdownEntries.length > 0 && (
+              <Card className="border-0 shadow-xl">
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2 text-base">
+                      <Brain className="h-5 w-5 text-purple-600" />
+                      Investment Focus
+                    </CardTitle>
+                    <span className="text-xs px-2 py-1 rounded-full bg-purple-50 text-purple-600 border border-purple-200">
+                      SEC Filings · Keyword Frequency
+                    </span>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {breakdownEntries.map((entry) => (
+                      <div key={entry.key} className="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="font-semibold text-slate-800 text-sm">{entry.label}</span>
+                          <Badge className="bg-blue-100 text-blue-700 border border-blue-200">
+                            {entry.mentions} mentions
+                          </Badge>
+                        </div>
+                        <div className="h-1.5 bg-slate-200 rounded-full mb-3">
+                          <div
+                            className="h-1.5 bg-blue-400 rounded-full"
+                            style={{ width: `${(entry.mentions / maxMentions) * 100}%` }}
+                          />
+                        </div>
+                        {entry.quotes.length > 0 && (
+                          <details className="text-sm">
+                            <summary className="cursor-pointer text-blue-500 hover:underline text-xs">
+                              View quotes from filings ({entry.quotes.length})
+                            </summary>
+                            <ul className="mt-2 space-y-1.5">
+                              {entry.quotes.map((q, i) => (
+                                <li key={i} className="pl-3 border-l-2 border-blue-200 text-slate-600 italic text-xs">
+                                  "{q}"
+                                </li>
+                              ))}
+                            </ul>
+                          </details>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-400 mt-4">
+                    Investment Focus reflects how often each topic is discussed in CapEx-related contexts in SEC filings — not actual dollar allocation.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+
           </div>
         )}
 

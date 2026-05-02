@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { readPersistentCache, writePersistentCache } from '@/lib/persistentCache';
 import {
   RefreshCw,
   Flame,
@@ -562,16 +563,28 @@ export default function NewsPage() {
       setAllSecItems(secItems);
 
       // Fetch aggregate view: global weekly summary and trending
+      let aggregateSummary = { text: '', status: '' };
+      let aggregateTrending: TrendingCluster[] = [];
       try {
         const allResp = await fetch(`${API_URL}/api/news/all`, forceRefresh ? { cache: 'no-store' } : {});
         if (allResp.ok) {
           const allData = await allResp.json();
-          setWeeklyTopNewsSummary({ text: allData.weekly_summary || '', status: allData.weekly_summary_meta?.summary_status || '' });
-          setAllTrending(allData.trending || []);
+          aggregateSummary = { text: allData.weekly_summary || '', status: allData.weekly_summary_meta?.summary_status || '' };
+          aggregateTrending = allData.trending || [];
+          setWeeklyTopNewsSummary(aggregateSummary);
+          setAllTrending(aggregateTrending);
         }
       } catch {
         // Non-blocking
       }
+      writePersistentCache('cache:news:v1', {
+        companyNews: newsMap,
+        companyTopNews: topNewsMap,
+        companyWeeklySummary: weeklySummaryMap,
+        allSecItems: secItems,
+        weeklyTopNewsSummary: aggregateSummary,
+        allTrending: aggregateTrending,
+      });
     } catch (err) {
       console.error('Failed to fetch news:', err);
     } finally {
@@ -580,7 +593,27 @@ export default function NewsPage() {
   };
 
   useEffect(() => {
-    loadCompanies().then(() => fetchAllNews(true));
+    loadCompanies().then(() => {
+      const cached = readPersistentCache<{
+        companyNews: Record<string, NewsItem[]>;
+        companyTopNews: Record<string, NewsItem[]>;
+        companyWeeklySummary: Record<string, { text: string; status: string }>;
+        allSecItems: UnifiedNewsItem[];
+        weeklyTopNewsSummary: { text: string; status: string };
+        allTrending: TrendingCluster[];
+      }>('cache:news:v1');
+      if (cached) {
+        setCompanyNews(cached.companyNews ?? {});
+        setCompanyTopNews(cached.companyTopNews ?? {});
+        setCompanyWeeklySummary(cached.companyWeeklySummary ?? {});
+        setAllSecItems(cached.allSecItems ?? []);
+        setWeeklyTopNewsSummary(cached.weeklyTopNewsSummary ?? { text: '', status: '' });
+        setAllTrending(cached.allTrending ?? []);
+        setLoading(false);
+      } else {
+        fetchAllNews(true);
+      }
+    });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

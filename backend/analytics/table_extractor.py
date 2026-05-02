@@ -234,46 +234,33 @@ def extract_capex_breakdown(company: str) -> dict:
     }
     
     category_mentions = defaultdict(int)
-    category_amounts = defaultdict(list)
-    
+    category_quotes: dict = defaultdict(list)
+
     for doc in docs:
-        content_lower = doc["content"].lower()
-        
+        content = doc["content"]
+        content_lower = content.lower()
+
         for category, patterns in categories.items():
             for pattern in patterns:
-                matches = re.findall(pattern, content_lower)
-                category_mentions[category] += len(matches)
-                
-                # Try to extract amounts near category mentions
                 for match in re.finditer(pattern, content_lower):
-                    # Look for dollar amounts nearby
-                    context = content_lower[max(0, match.start()-50):min(len(content_lower), match.end()+100)]
-                    amount_match = re.search(r'\$?([\d,.]+)\s*(billion|million|B|M)?', context)
-                    if amount_match:
-                        try:
-                            value = float(amount_match.group(1).replace(",", ""))
-                            if amount_match.group(2):
-                                mult = amount_match.group(2).lower()
-                                if mult in ["billion", "b"]:
-                                    value *= 1_000_000_000
-                                elif mult in ["million", "m"]:
-                                    value *= 1_000_000
-                            category_amounts[category].append(value)
-                        except ValueError:
-                            pass
-    
+                    category_mentions[category] += 1
+                    if len(category_quotes[category]) < 3:
+                        start = max(0, match.start() - 20)
+                        end = min(len(content), match.end() + 180)
+                        snippet = content[start:end].strip().replace("\n", " ")
+                        if snippet and snippet not in category_quotes[category]:
+                            category_quotes[category].append(snippet)
+
     # Calculate summary
     total_mentions = sum(category_mentions.values())
     breakdown = {}
-    
+
     for category in categories:
         mentions = category_mentions[category]
-        amounts = category_amounts[category]
-        
         breakdown[category] = {
             "mentions": mentions,
             "percentage_of_mentions": round(mentions / total_mentions * 100, 1) if total_mentions > 0 else 0,
-            "amount_samples": sorted(set(amounts))[:5] if amounts else [],
+            "sample_quotes": category_quotes[category],
         }
     
     return {

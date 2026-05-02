@@ -90,6 +90,7 @@ COMPANIES = {
         "cik": "0000866374",
         "sector": "EMS",
         "headquarters": "Austin, Texas, US",
+        "fiscal_year_end": "March",
         "description": "Global electronics manufacturing services provider",
     },
     "JBL": {
@@ -97,6 +98,7 @@ COMPANIES = {
         "cik": "0000898293",
         "sector": "EMS",
         "headquarters": "St. Petersburg, Florida, US",
+        "fiscal_year_end": "August",
         "description": "Worldwide manufacturing services and solutions provider",
     },
     "CLS": {
@@ -104,6 +106,7 @@ COMPANIES = {
         "cik": "0001030894",
         "sector": "EMS",
         "headquarters": "Toronto, Canada",
+        "fiscal_year_end": "December",
         "description": "Global provider of electronics manufacturing services",
     },
     "BHE": {
@@ -111,6 +114,7 @@ COMPANIES = {
         "cik": "0001080020",
         "sector": "EMS",
         "headquarters": "Tempe, Arizona, US",
+        "fiscal_year_end": "December",
         "description": "Provider of integrated electronics manufacturing services",
     },
     "SANM": {
@@ -118,6 +122,7 @@ COMPANIES = {
         "cik": "0000897723",
         "sector": "EMS",
         "headquarters": "San Jose, California, US",
+        "fiscal_year_end": "September",
         "description": "Global electronics manufacturing services company",
     },
     "PLXS": {
@@ -125,6 +130,7 @@ COMPANIES = {
         "cik": "0000785786",
         "sector": "EMS",
         "headquarters": "Neenah, Wisconsin, US",
+        "fiscal_year_end": "September",
         "description": "Global product design, manufacturing, and aftermarket services provider",
     },
 }

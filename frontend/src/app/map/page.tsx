@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
+import { readPersistentCache, writePersistentCache } from '@/lib/persistentCache';
 import dynamic from 'next/dynamic';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -104,21 +105,50 @@ export default function MapPage() {
   useEffect(() => { loadFromCache(); }, []);
 
   const loadFromCache = async () => {
+    // Serve from localStorage first to avoid loading on restart
+    const cached = readPersistentCache<{
+      facilities: Facility[];
+      lastScraped: string | null;
+      dataSources: Record<string, string>;
+      comparison: MapComparison | null;
+    }>('cache:map:v1');
+    if (cached) {
+      setFacilities(cached.facilities ?? []);
+      setLastScraped(cached.lastScraped ?? null);
+      setDataSources(cached.dataSources ?? {});
+      setComparison(cached.comparison ?? null);
+      setLoading(false);
+      return;
+    }
     setLoading(true);
     try {
       const [facilitiesRes, compareRes] = await Promise.all([
         fetch(`${API_URL}/api/geographic/facilities`),
         fetch(`${API_URL}/api/geographic/compare`),
       ]);
+      let newFacilities: Facility[] = [];
+      let newLastScraped: string | null = null;
+      let newDataSources: Record<string, string> = {};
+      let newComparison: MapComparison | null = null;
       if (facilitiesRes.ok) {
         const data = await facilitiesRes.json();
-        setFacilities(data.facilities || []);
-        setLastScraped(data.last_scraped || null);
-        setDataSources(data.data_sources || {});
+        newFacilities = data.facilities || [];
+        newLastScraped = data.last_scraped || null;
+        newDataSources = data.data_sources || {};
+        setFacilities(newFacilities);
+        setLastScraped(newLastScraped);
+        setDataSources(newDataSources);
       }
       if (compareRes.ok) {
-        setComparison(await compareRes.json());
+        newComparison = await compareRes.json();
+        setComparison(newComparison);
       }
+      writePersistentCache('cache:map:v1', {
+        facilities: newFacilities,
+        lastScraped: newLastScraped,
+        dataSources: newDataSources,
+        comparison: newComparison,
+      });
     } catch (err) {
       console.error('Failed to fetch geographic data:', err);
     } finally {
@@ -133,14 +163,30 @@ export default function MapPage() {
       const res = await fetch(`${API_URL}/api/geographic/refresh`, { method: 'POST' });
       if (res.ok) {
         const data = await res.json();
+        let newFacilities: Facility[] = [];
+        let newLastScraped: string | null = null;
+        let newDataSources: Record<string, string> = {};
+        let newComparison: MapComparison | null = null;
         if (data.facilities) {
-          setFacilities(data.facilities.facilities || []);
-          setLastScraped(data.facilities.last_scraped || null);
-          setDataSources(data.facilities.data_sources || {});
+          newFacilities = data.facilities.facilities || [];
+          newLastScraped = data.facilities.last_scraped || null;
+          newDataSources = data.facilities.data_sources || {};
+          setFacilities(newFacilities);
+          setLastScraped(newLastScraped);
+          setDataSources(newDataSources);
         }
         // Refresh comparison too
         const compareRes = await fetch(`${API_URL}/api/geographic/compare`);
-        if (compareRes.ok) setComparison(await compareRes.json());
+        if (compareRes.ok) {
+          newComparison = await compareRes.json();
+          setComparison(newComparison);
+        }
+        writePersistentCache('cache:map:v1', {
+          facilities: newFacilities,
+          lastScraped: newLastScraped,
+          dataSources: newDataSources,
+          comparison: newComparison,
+        });
       }
     } catch (err) {
       console.error('Refresh failed:', err);
