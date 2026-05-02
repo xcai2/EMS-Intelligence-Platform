@@ -1,0 +1,44 @@
+[
+  {
+    "role": "user",
+    "content": "Please provide a table compare the CAPEX in FY2025 of 6 companies: Flex, Jabil, Celestica, Sanmina, Plexus，Benchmark"
+  },
+  {
+    "role": "assistant",
+    "content": "Full year total derived by summing quarterly figures from sources for some companies.",
+    "table_payload": {
+      "title": "FY2025 CapEx (USD Millions)",
+      "columns": [
+        "Company",
+        "CapEx"
+      ],
+      "rows": [
+        [
+          "Flex",
+          "438"
+        ],
+        [
+          "Jabil",
+          "1,030"
+        ],
+        [
+          "Celestica",
+          "N/A"
+        ],
+        [
+          "Sanmina",
+          "147"
+        ],
+        [
+          "Plexus",
+          "95.2"
+        ],
+        [
+          "Benchmark",
+          "N/A"
+        ]
+      ]
+    },
+    "narrative_text": "Full year total derived by summing quarterly figures from sources for some companies."
+  }
+]

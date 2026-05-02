@@ -1,0 +1,47 @@
+[
+  {
+    "role": "user",
+    "content": "what is the capex of Jabil in FY2025 Q2?"
+  },
+  {
+    "role": "assistant",
+    "content": "**JBL — Capital Expenditure** (cash outflow, shown as positive magnitude)\n\nFY2025 Q2 (period ending 2025-02-28): 116M\n\n_Source: yfinance cache (fetched 2026-05-01)._"
+  },
+  {
+    "role": "user",
+    "content": "what is the capex of Jabil in FY2025 Q2?give me a table"
+  },
+  {
+    "role": "assistant",
+    "content": "**JBL — Capital Expenditure** (shown as positive cash outflow magnitude)\n\n| Fiscal Period | Period End | Capital Expenditure |\n|---|---|---|\n| FY2025 Q2 | 2025-02-28 | 116M |\n\n_Source: yfinance cache (fetched 2026-05-01)._"
+  },
+  {
+    "role": "user",
+    "content": "what is the capex of Jabil in FY2025 Q2 and Q3?give me a table"
+  },
+  {
+    "role": "assistant",
+    "content": "**JBL — Capital Expenditure** (shown as positive cash outflow magnitude)\n\n| Fiscal Period | Period End | Capital Expenditure |\n|---|---|---|\n| FY2025 Q3 | 2025-05-31 | 86M |\n| FY2025 Q2 | 2025-02-28 | 116M |\n\n_Source: yfinance cache (fetched 2026-05-01)._",
+    "table_payload": {
+      "title": "JBL Capital Expenditure (Quarterly)",
+      "columns": [
+        "Fiscal Period",
+        "Period End",
+        "Capital Expenditure"
+      ],
+      "rows": [
+        [
+          "FY2025 Q3",
+          "2025-05-31",
+          "86M"
+        ],
+        [
+          "FY2025 Q2",
+          "2025-02-28",
+          "116M"
+        ]
+      ]
+    },
+    "narrative_text": "JBL Capital Expenditure (quarterly) from yfinance cache."
+  }
+]
