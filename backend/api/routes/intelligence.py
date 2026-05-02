@@ -69,7 +69,7 @@ def _extract_focus_areas(company: str) -> list[str]:
 
     theme_counter: Counter[str] = Counter()
     for doc in docs:
-        content = doc.get("content", "").lower()
+        content = (doc.get("content") or "").lower()
         for theme, keywords in theme_keywords.items():
             hits = sum(content.count(k) for k in keywords)
             if hits:
@@ -337,112 +337,9 @@ def _get_dynamic_analysis_cached(force_refresh: bool = False) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# BIG 5 AI CAPEX DATA (Based on Futurum Research Feb 2026)
+# BIG 5 AI CAPEX ENDPOINTS
 # ---------------------------------------------------------------------------
 
-BIG5_AI_CAPEX = {
-    "last_updated": "2026-02-25",
-    "source": "Futurum Research, Company Earnings Reports",
-    "total_2026_capex_billions": 675,  # $660-690B midpoint
-    "companies": [
-        {
-            "name": "Amazon (AWS)",
-            "ticker": "AMZN",
-            "capex_2026_billions": 200,
-            "capex_2025_billions": 100,
-            "yoy_growth_pct": 100,
-            "ai_focus_areas": ["AI (Compute)", "AI (Cloud Infrastructure)", "AI (Custom Chips)"],
-            "key_metrics": {
-                "aws_revenue_billions": 142,
-                "aws_growth_pct": 24,
-            },
-            "recent_announcements": [
-                "Q4 2025: $200B capex guidance for 2026",
-                "AI capacity being monetized as quickly as installed",
-                "Supply-constrained, not demand-constrained",
-            ],
-            "color": "#FF9900",
-        },
-        {
-            "name": "Alphabet (Google)",
-            "ticker": "GOOGL",
-            "capex_2026_billions": 180,  # $175-185B midpoint
-            "capex_2025_billions": 75,
-            "yoy_growth_pct": 140,
-            "ai_focus_areas": ["AI (TPU Clusters)", "AI (Model Infrastructure)", "AI (Cloud Platforms)"],
-            "key_metrics": {
-                "cloud_backlog_billions": 240,
-                "gemini_cost_reduction_pct": 78,
-            },
-            "recent_announcements": [
-                "Capex revised upward 3 times from initial $71-73B",
-                "Cloud backlog surged 55% sequentially to $240B+",
-                "Reduced Gemini serving costs by 78% through optimization",
-            ],
-            "color": "#4285F4",
-        },
-        {
-            "name": "Microsoft",
-            "ticker": "MSFT",
-            "capex_2026_billions": 120,
-            "capex_2025_billions": 80,
-            "yoy_growth_pct": 50,
-            "ai_focus_areas": ["AI (Azure Platform)", "AI (Model Partnerships)", "AI (Copilot Infrastructure)"],
-            "key_metrics": {
-                "azure_backlog_billions": 80,
-                "quarterly_capex_billions": 37.5,
-            },
-            "recent_announcements": [
-                "$80B Azure backlog unfulfilled due to power constraints",
-                "AI business larger than some established franchises",
-                "Quarterly capex run rate of $37.5B",
-            ],
-            "color": "#00A4EF",
-        },
-        {
-            "name": "Meta",
-            "ticker": "META",
-            "capex_2026_billions": 125,  # $115-135B midpoint
-            "capex_2025_billions": 40,
-            "yoy_growth_pct": 212,
-            "ai_focus_areas": ["AI (Foundation Models)", "AI (Recommendation Systems)", "AI (Hardware Labs)"],
-            "key_metrics": {
-                "ai_research_headcount": 25000,
-            },
-            "recent_announcements": [
-                "Building 1GW data center in Ohio",
-                "Louisiana facility could scale to 5GW",
-                "Capex range $115-135B for 2026",
-            ],
-            "color": "#1877F2",
-        },
-        {
-            "name": "Oracle",
-            "ticker": "ORCL",
-            "capex_2026_billions": 50,
-            "capex_2025_billions": 21,
-            "yoy_growth_pct": 136,
-            "ai_focus_areas": ["AI (OCI Platform)", "AI (Stargate Program)", "AI (Cloud Infrastructure)"],
-            "key_metrics": {
-                "remaining_obligations_billions": 523,
-            },
-            "recent_announcements": [
-                "Part of Stargate $500B AI infrastructure project",
-                "Capex increasing 136% from 2025",
-                "OCI demand exceeding supply",
-            ],
-            "color": "#F80000",
-        },
-    ],
-    "stargate_project": {
-        "total_investment_billions": 500,
-        "timeline": "2025-2029",
-        "partners": ["OpenAI", "SoftBank", "Oracle", "MGX"],
-        "initial_deployment_billions": 100,
-        "planned_capacity_gw": 7,
-        "locations": ["Texas", "New Mexico", "Ohio"],
-    },
-}
 
 
 # ---------------------------------------------------------------------------
@@ -499,157 +396,12 @@ DEFAULT_ANALYST_QUESTIONS = [
 # EMS COMPANY AI DYNAMICS
 # ---------------------------------------------------------------------------
 
-EMS_AI_DYNAMICS = {
-    "last_updated": "2026-02-25",
-    "companies": [
-        {
-            "company": "Flex",
-            "ticker": "FLEX",
-            "ai_revenue_growth_pct": 45,
-            "ai_revenue_mix_pct": 28,
-            "recent_highlights": [
-                "Expanded liquid cooling production capacity in Mexico",
-                "New AI server assembly line in Malaysia operational",
-                "Won major hyperscaler contract for GPU server racks",
-            ],
-            "investment_focus": ["Liquid cooling", "Power modules", "AI server assembly"],
-            "guidance_outlook": "Positive - expecting AI/DC to reach 35% of revenue by FY25",
-        },
-        {
-            "company": "Jabil",
-            "ticker": "JBL",
-            "ai_revenue_growth_pct": 52,
-            "ai_revenue_mix_pct": 32,
-            "recent_highlights": [
-                "Cloud segment revenue up 40% YoY",
-                "Investing in advanced thermal solutions",
-                "Partnership with major AI chip maker for packaging",
-            ],
-            "investment_focus": ["Cloud infrastructure", "Thermal management", "Advanced packaging"],
-            "guidance_outlook": "Strong - cloud and AI driving double-digit growth",
-        },
-        {
-            "company": "Celestica",
-            "ticker": "CLS",
-            "ai_revenue_growth_pct": 68,
-            "ai_revenue_mix_pct": 42,
-            "recent_highlights": [
-                "Highest AI exposure among EMS peers",
-                "HPS segment growing 50%+ for third consecutive quarter",
-                "New Singapore facility dedicated to AI hardware",
-            ],
-            "investment_focus": ["HPC/AI servers", "Networking equipment", "Storage solutions"],
-            "guidance_outlook": "Very bullish - AI/HPS now largest segment",
-        },
-        {
-            "company": "Benchmark",
-            "ticker": "BHE",
-            "ai_revenue_growth_pct": 25,
-            "ai_revenue_mix_pct": 15,
-            "recent_highlights": [
-                "Selective AI market entry through precision manufacturing",
-                "Focus on high-reliability AI components",
-                "Medical and Aerospace remain primary focus",
-            ],
-            "investment_focus": ["Precision manufacturing", "High-reliability components"],
-            "guidance_outlook": "Cautious - prioritizing margin over AI growth",
-        },
-        {
-            "company": "Sanmina",
-            "ticker": "SANM",
-            "ai_revenue_growth_pct": 30,
-            "ai_revenue_mix_pct": 18,
-            "recent_highlights": [
-                "Optical interconnect capabilities for AI racks",
-                "Defense and Industrial remain core",
-                "Selective participation in AI infrastructure",
-            ],
-            "investment_focus": ["Optical components", "Industrial automation"],
-            "guidance_outlook": "Stable - balanced portfolio approach",
-        },
-        {
-            "company": "Plexus",
-            "ticker": "PLXS",
-            "ai_revenue_growth_pct": 34,
-            "ai_revenue_mix_pct": 16,
-            "recent_highlights": [
-                "Expanding complex product-realization support for compute-adjacent customer programs",
-                "Healthcare, industrial, and aerospace/defense platforms remain the core execution base",
-                "Selective communications and cloud-adjacent builds provide upside without changing mix discipline",
-            ],
-            "investment_focus": ["Product realization", "Complex program ramps", "High-reliability systems"],
-            "guidance_outlook": "Stable - selective AI-adjacent participation with focus on complex regulated end markets",
-        },
-    ],
-}
 
 
 # ---------------------------------------------------------------------------
 # NEWS MONITORING DATA
 # ---------------------------------------------------------------------------
 
-MONITORED_NEWS = {
-    "press_releases": [
-        {
-            "company": "Flex",
-            "title": "Flex Announces Expansion of AI Manufacturing Capabilities",
-            "date": "2026-02-20",
-            "url": "https://flex.com/newsroom",
-            "summary": "New liquid cooling production line in Guadalajara, Mexico",
-            "category": "Capacity Expansion",
-        },
-        {
-            "company": "Jabil",
-            "title": "Jabil Reports Q2 FY2026 Results, Cloud Segment Up 40%",
-            "date": "2026-02-18",
-            "url": "https://investors.jabil.com",
-            "summary": "Cloud infrastructure demand driving record revenue",
-            "category": "Earnings",
-        },
-        {
-            "company": "Celestica",
-            "title": "Celestica HPS Segment Achieves 50% YoY Growth",
-            "date": "2026-02-15",
-            "url": "https://www.celestica.com/investors-hub",
-            "summary": "AI server demand from hyperscalers continues to accelerate",
-            "category": "Segment Performance",
-        },
-    ],
-    "ocp_news": [
-        {
-            "title": "OCP Open Chiplet Economy Leading Next Wave of AI: Inference",
-            "date": "2026-02-17",
-            "url": "https://www.opencompute.org/",
-            "relevance": "Industry standard for AI hardware design",
-            "companies_mentioned": ["Flex", "Jabil", "Celestica"],
-        },
-        {
-            "title": "OCP Steering Committee Elections 2026-2028",
-            "date": "2026-02-20",
-            "url": "https://www.opencompute.org/",
-            "relevance": "Industry governance and standards direction",
-            "companies_mentioned": [],
-        },
-    ],
-    "industry_news": [
-        {
-            "title": "AI Capex 2026: The $690B Infrastructure Sprint",
-            "source": "Futurum Research",
-            "date": "2026-02-12",
-            "url": "https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/",
-            "summary": "Big 5 tech companies commit $660-690B to AI infrastructure",
-            "relevance": "Major demand driver for EMS companies",
-        },
-        {
-            "title": "Hyperscaler Demand for AI Servers Exceeds Supply",
-            "source": "Industry Analysis",
-            "date": "2026-02-22",
-            "url": "#",
-            "summary": "All major cloud providers report supply constraints",
-            "relevance": "Strong tailwind for EMS manufacturing capacity",
-        },
-    ],
-}
 
 
 # ---------------------------------------------------------------------------
@@ -658,26 +410,89 @@ MONITORED_NEWS = {
 
 @router.get("/big5-capex")
 async def get_big5_capex():
-    """Get Big 5 AI CapEx tracker data."""
-    return BIG5_AI_CAPEX
+    """Get Big 5 AI CapEx data — fully live via Brave search + LLM extraction."""
+    from backend.analytics.hyperscaler_guidance import build_big5_capex_response
+    return await build_big5_capex_response()
 
 
 @router.get("/big5-capex/summary")
 async def get_big5_capex_summary():
-    """Get summary of Big 5 AI investments."""
-    total = sum(c["capex_2026_billions"] for c in BIG5_AI_CAPEX["companies"])
+    """Get summary of Big 5 AI investments — fully live."""
+    from backend.analytics.hyperscaler_guidance import build_big5_capex_response
+    data = await build_big5_capex_response()
     return {
-        "total_2026_billions": total,
+        "total_2026_billions": data.get("total_2026_capex_billions"),
         "companies": [
             {
-                "name": c["name"],
-                "capex_billions": c["capex_2026_billions"],
-                "growth_pct": c["yoy_growth_pct"],
+                "name": c.get("name"),
+                "capex_billions": c.get("capex_2026_billions"),
+                "growth_pct": c.get("yoy_growth_pct"),
             }
-            for c in BIG5_AI_CAPEX["companies"]
+            for c in data.get("companies", [])
         ],
-        "stargate_project": BIG5_AI_CAPEX["stargate_project"],
+        "stargate_project": data.get("stargate_project"),
+        "guidance_source": data.get("guidance_source"),
+        "last_updated": data.get("last_updated"),
     }
+
+
+@router.get("/hyperscaler/all/financials")
+async def get_all_hyperscaler_financials():
+    """Get yfinance income statement + cash flow for all 5 hyperscalers."""
+    import asyncio
+    from backend.analytics.hyperscaler_financials import fetch_all_hyperscaler_financials
+    return await asyncio.to_thread(fetch_all_hyperscaler_financials)
+
+
+@router.get("/hyperscaler/{company}/financials")
+async def get_hyperscaler_financials(company: str):
+    """Get yfinance income statement + cash flow for a single hyperscaler."""
+    import asyncio
+    from fastapi import HTTPException
+    from backend.analytics.hyperscaler_financials import fetch_hyperscaler_financials
+    result = await asyncio.to_thread(fetch_hyperscaler_financials, company.title())
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return result
+
+
+@router.delete("/hyperscaler/cache")
+async def invalidate_hyperscaler_cache(company: str | None = None):
+    """Evict hyperscaler financial cache (all companies, or one by name)."""
+    from backend.analytics.hyperscaler_financials import invalidate_cache
+    invalidate_cache(company)
+    return {"invalidated": company or "all"}
+
+
+@router.get("/hyperscaler/all/guidance")
+async def get_all_hyperscaler_guidance():
+    """Get live CapEx guidance for all 5 hyperscalers via Brave search + LLM extraction."""
+    from backend.analytics.hyperscaler_guidance import fetch_all_guidance
+    guidance = await fetch_all_guidance()
+    return {
+        "companies": [g.model_dump() for g in guidance.values()],
+        "fetched_at": __import__("datetime").datetime.now().isoformat(),
+    }
+
+
+@router.get("/hyperscaler/{company}/guidance")
+async def get_hyperscaler_guidance(company: str):
+    """Get live CapEx guidance for a single hyperscaler."""
+    from fastapi import HTTPException
+    from backend.analytics.hyperscaler_guidance import _fetch_one, GUIDANCE_QUERIES
+    name = company.title()
+    if name not in GUIDANCE_QUERIES:
+        raise HTTPException(status_code=404, detail=f"Unknown hyperscaler: {name}")
+    result = await _fetch_one(name)
+    return result.model_dump()
+
+
+@router.delete("/hyperscaler/guidance/cache")
+async def invalidate_guidance_cache(company: str | None = None):
+    """Evict guidance cache (all companies, or one by name)."""
+    from backend.analytics.hyperscaler_guidance import invalidate_guidance_cache
+    invalidate_guidance_cache(company)
+    return {"invalidated": company or "all"}
 
 
 @router.get("/default-questions")
@@ -691,42 +506,59 @@ async def get_default_questions():
 
 @router.get("/ems-ai-dynamics")
 async def get_ems_ai_dynamics():
-    """Get AI-related dynamics for EMS companies."""
-    return EMS_AI_DYNAMICS
+    """Get AI-related dynamics for all EMS companies (live data)."""
+    from backend.analytics.ems_ai_dynamics import get_all_dynamics
+    return await get_all_dynamics()
 
 
 @router.get("/ems-ai-dynamics/{company}")
 async def get_company_ai_dynamics(company: str):
-    """Get AI dynamics for a specific company."""
-    company_lower = company.lower()
-    for c in EMS_AI_DYNAMICS["companies"]:
-        if c["company"].lower() == company_lower:
-            return c
-    return {"error": f"Company {company} not found"}
+    """Get AI dynamics for a specific EMS company (live data)."""
+    from fastapi import HTTPException
+    from backend.analytics.ems_ai_dynamics import get_company_dynamics, EMS_COMPANIES
+    name = company.title()
+    if name not in EMS_COMPANIES:
+        raise HTTPException(status_code=404, detail=f"Company {company} not found")
+    return await get_company_dynamics(name)
 
 
 @router.get("/news/all")
 async def get_all_news():
-    """Get all monitored news."""
-    return MONITORED_NEWS
+    """Get all monitored news from the live news service."""
+    from backend.news import service as news_service
+    return await news_service.get_all_companies_news()
 
 
 @router.get("/news/press-releases")
 async def get_press_releases():
-    """Get company press releases."""
-    return {"press_releases": MONITORED_NEWS["press_releases"]}
+    """Get recent company news items from the live news service."""
+    from backend.news import service as news_service
+    payload = await news_service.get_all_companies_news()
+    items = payload.get("items") or []
+    return {"press_releases": items[:10], "source": "live"}
 
 
 @router.get("/news/ocp")
 async def get_ocp_news():
-    """Get OCP-related news."""
-    return {"ocp_news": MONITORED_NEWS["ocp_news"]}
+    """Get OCP-related news items from the live news service."""
+    from backend.news import service as news_service
+    payload = await news_service.get_all_companies_news()
+    items = payload.get("items") or []
+    ocp_items = [
+        i for i in items
+        if "ocp" in (i.get("title") or "").lower()
+        or "open compute" in (i.get("title") or "").lower()
+        or "ocp" in (i.get("content") or "").lower()
+    ]
+    return {"ocp_news": ocp_items[:10], "source": "live"}
 
 
 @router.get("/news/industry")
 async def get_industry_news():
-    """Get industry-wide AI news."""
-    return {"industry_news": MONITORED_NEWS["industry_news"]}
+    """Get industry-wide news items from the live news service."""
+    from backend.news import service as news_service
+    payload = await news_service.get_all_companies_news()
+    return {"industry_news": payload.get("top_news") or [], "source": "live"}
 
 
 @router.get("/competitor-investments")

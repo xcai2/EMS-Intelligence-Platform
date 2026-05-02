@@ -25,6 +25,8 @@ import {
   PieChart,
   Pie,
   Legend,
+  LineChart,
+  Line,
 } from 'recharts';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
@@ -32,30 +34,54 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 interface Big5Company {
   name: string;
   ticker: string;
-  capex_2026_billions: number;
-  capex_2025_billions: number;
-  yoy_growth_pct: number;
-  ai_focus_areas: string[];
-  key_metrics: Record<string, number>;
-  recent_announcements: string[];
+  capex_2026_billions?: number | null;
+  capex_2025_billions?: number | null;
+  yoy_growth_pct?: number | null;
+  ai_focus_areas?: string[];
+  key_metrics?: Record<string, number> | null;
+  recent_announcements?: string[];
   color: string;
 }
 
 interface StargateProject {
-  total_investment_billions: number;
-  timeline: string;
-  partners: string[];
-  initial_deployment_billions: number;
-  planned_capacity_gw: number;
-  locations: string[];
+  total_investment_billions?: number | null;
+  timeline?: string;
+  partners?: string[];
+  initial_deployment_billions?: number | null;
+  planned_capacity_gw?: number | null;
+  locations?: string[];
 }
 
 interface Big5Data {
-  last_updated: string;
-  source: string;
-  total_2026_capex_billions: number;
+  last_updated?: string | null;
+  source?: string;
+  total_2026_capex_billions?: number | null;
   companies: Big5Company[];
-  stargate_project: StargateProject;
+  stargate_project?: StargateProject | null;
+}
+
+interface HyperscalerFiscalYear {
+  revenue?: number;
+  operating_income?: number;
+  net_income?: number;
+  operating_margin?: number;
+  capex?: number;
+}
+
+interface HyperscalerCompanyFinancials {
+  company: string;
+  ticker: string;
+  color: string;
+  fiscal_years: Record<string, HyperscalerFiscalYear>;
+  source: string;
+  fetched_at: string;
+}
+
+interface HyperscalerFinancialsData {
+  companies: HyperscalerCompanyFinancials[];
+  fetched_at: string;
+  source: string;
+  errors: Array<{ company: string; error: string }> | null;
 }
 
 function formatAISubdomainLabel(area: string): string {
@@ -98,9 +124,12 @@ export default function AIInvestmentsPage() {
   const [data, setData] = useState<Big5Data | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedCompany, setSelectedCompany] = useState<Big5Company | null>(null);
+  const [historicalData, setHistoricalData] = useState<HyperscalerFinancialsData | null>(null);
+  const [historicalLoading, setHistoricalLoading] = useState(true);
 
   useEffect(() => {
     fetchData();
+    fetchHistoricalData();
   }, []);
 
   const fetchData = async () => {
@@ -116,6 +145,18 @@ export default function AIInvestmentsPage() {
       console.error('Failed to fetch Big 5 data:', err);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchHistoricalData = async () => {
+    try {
+      setHistoricalLoading(true);
+      const res = await fetch(`${API_URL}/api/intelligence/hyperscaler/all/financials`);
+      if (res.ok) setHistoricalData(await res.json());
+    } catch (err) {
+      console.error('Failed to fetch hyperscaler historical data:', err);
+    } finally {
+      setHistoricalLoading(false);
     }
   };
 
@@ -149,8 +190,11 @@ export default function AIInvestmentsPage() {
     color: c.color,
   }));
 
-  const totalCapex = data.companies.reduce((sum, c) => sum + c.capex_2026_billions, 0);
-  const avgGrowth = Math.round(data.companies.reduce((sum, c) => sum + c.yoy_growth_pct, 0) / data.companies.length);
+  const totalCapex = data.companies.reduce((sum, c) => sum + (c.capex_2026_billions ?? 0), 0);
+  const withGrowth = data.companies.filter(c => c.yoy_growth_pct != null);
+  const avgGrowth = withGrowth.length > 0
+    ? Math.round(withGrowth.reduce((sum, c) => sum + (c.yoy_growth_pct ?? 0), 0) / withGrowth.length)
+    : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100 p-4 dark:from-slate-950 dark:via-slate-950 dark:to-slate-950">
@@ -169,9 +213,11 @@ export default function AIInvestmentsPage() {
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <Badge className="bg-green-100 text-green-700">
-              Updated: {data.last_updated}
-            </Badge>
+            {data.last_updated && (
+              <Badge className="bg-green-100 text-green-700">
+                Updated: {data.last_updated}
+              </Badge>
+            )}
             <button
               onClick={fetchData}
             className="flex items-center gap-2 px-3 py-1.5 bg-white rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm"
@@ -215,9 +261,11 @@ export default function AIInvestmentsPage() {
                     <p className="text-sm text-slate-500 dark:text-slate-300">{company.ticker}</p>
                     <div className="mt-2">
                       <p className="text-base font-bold" style={{ color: company.color }}>
-                        ${company.capex_2026_billions}B
+                        {company.capex_2026_billions != null ? `$${company.capex_2026_billions}B` : '—'}
                       </p>
-                      <p className="text-xs text-green-600">+{company.yoy_growth_pct}% YoY</p>
+                      <p className="text-xs text-green-600">
+                        {company.yoy_growth_pct != null ? `+${company.yoy_growth_pct}% YoY` : ''}
+                      </p>
                     </div>
                   </button>
                 ))}
@@ -240,17 +288,23 @@ export default function AIInvestmentsPage() {
                       <div className="space-y-2">
                         <div className="flex justify-between rounded-lg bg-slate-50 p-2 text-sm dark:bg-slate-800/80">
                           <span className="text-slate-600 dark:text-slate-300">2026 CapEx</span>
-                          <span className="font-bold text-slate-900 dark:text-slate-100">${selectedCompany.capex_2026_billions}B</span>
+                          <span className="font-bold text-slate-900 dark:text-slate-100">
+                            {selectedCompany.capex_2026_billions != null ? `$${selectedCompany.capex_2026_billions}B` : '—'}
+                          </span>
                         </div>
                         <div className="flex justify-between rounded-lg bg-slate-50 p-2 text-sm dark:bg-slate-800/80">
                           <span className="text-slate-600 dark:text-slate-300">2025 CapEx</span>
-                          <span className="font-bold text-slate-900 dark:text-slate-100">${selectedCompany.capex_2025_billions}B</span>
+                          <span className="font-bold text-slate-900 dark:text-slate-100">
+                            {selectedCompany.capex_2025_billions != null ? `$${selectedCompany.capex_2025_billions}B` : '—'}
+                          </span>
                         </div>
                         <div className="flex justify-between rounded-lg bg-green-50 p-2 text-sm dark:bg-emerald-900/35">
                           <span className="text-slate-600 dark:text-slate-200">YoY Growth</span>
-                          <span className="font-bold text-green-600">+{selectedCompany.yoy_growth_pct}%</span>
+                          <span className="font-bold text-green-600">
+                            {selectedCompany.yoy_growth_pct != null ? `+${selectedCompany.yoy_growth_pct}%` : '—'}
+                          </span>
                         </div>
-                        {Object.entries(selectedCompany.key_metrics).map(([key, value]) => (
+                        {Object.entries(selectedCompany.key_metrics ?? {}).map(([key, value]) => (
                           <div key={key} className="flex justify-between rounded-lg bg-slate-50 p-2 text-sm dark:bg-slate-800/80">
                             <span className="text-slate-600 dark:text-slate-300">{key.replace(/_/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}</span>
                             <span className="font-bold text-slate-900 dark:text-slate-100">{typeof value === 'number' ? (value >= 1 ? `$${value}B` : `${value}%`) : value}</span>
@@ -262,7 +316,7 @@ export default function AIInvestmentsPage() {
                     <div>
                       <h4 className="mb-3 font-semibold text-slate-700 dark:text-slate-200">AI Focus Subdomains</h4>
                       <div className="space-y-2">
-                        {selectedCompany.ai_focus_areas.map((area, idx) => (
+                        {(selectedCompany.ai_focus_areas ?? []).map((area, idx) => (
                           <div key={idx} className="flex items-center gap-2 rounded-lg bg-purple-50 p-2 dark:bg-violet-900/35">
                             <Cpu className="h-4 w-4 text-purple-600 dark:text-violet-300" />
                             <span className="text-slate-700 dark:text-slate-100">{formatAISubdomainLabel(area)}</span>
@@ -274,7 +328,7 @@ export default function AIInvestmentsPage() {
                     <div>
                       <h4 className="mb-3 font-semibold text-slate-700 dark:text-slate-200">Recent Announcements</h4>
                       <div className="space-y-2">
-                        {selectedCompany.recent_announcements.map((announcement, idx) => (
+                        {(selectedCompany.recent_announcements ?? []).map((announcement, idx) => (
                           <div key={idx} className="rounded-lg bg-blue-50 p-3 dark:bg-sky-900/30">
                             <p className="text-sm text-slate-700 dark:text-slate-100">{announcement}</p>
                           </div>
@@ -298,7 +352,7 @@ export default function AIInvestmentsPage() {
               <CardContent className="p-2">
                 <p className="text-orange-100 text-[10px] leading-tight">Total 2026 CapEx</p>
                 <div className="mt-1 flex items-center gap-2">
-                  <p className="text-lg font-bold leading-tight">${totalCapex}B</p>
+                  <p className="text-lg font-bold leading-tight">{totalCapex > 0 ? `$${totalCapex.toFixed(0)}B` : '—'}</p>
                   <DollarSign className="h-5 w-5 text-orange-200" />
                 </div>
               </CardContent>
@@ -308,7 +362,7 @@ export default function AIInvestmentsPage() {
               <CardContent className="p-2">
                 <p className="text-slate-500 text-[10px] leading-tight">YoY Growth (Avg)</p>
                 <div className="mt-1 flex items-center gap-2">
-                  <p className="text-base font-bold text-green-600 leading-tight">+{avgGrowth}%</p>
+                  <p className="text-base font-bold text-green-600 leading-tight">{avgGrowth != null ? `+${avgGrowth}%` : '—'}</p>
                   <TrendingUp className="h-5 w-5 text-green-500" />
                 </div>
               </CardContent>
@@ -318,7 +372,9 @@ export default function AIInvestmentsPage() {
               <CardContent className="p-2">
                 <p className="text-slate-500 text-[10px] leading-tight">Stargate Project</p>
                 <div className="mt-1 flex items-center gap-2">
-                  <p className="text-base font-bold text-blue-600 leading-tight">${data.stargate_project.total_investment_billions}B</p>
+                  <p className="text-base font-bold text-blue-600 leading-tight">
+                    {data.stargate_project?.total_investment_billions != null ? `$${data.stargate_project.total_investment_billions}B` : '—'}
+                  </p>
                   <Server className="h-5 w-5 text-blue-500" />
                 </div>
               </CardContent>
@@ -328,7 +384,9 @@ export default function AIInvestmentsPage() {
               <CardContent className="p-2">
                 <p className="text-slate-500 text-[10px] leading-tight">Planned Capacity</p>
                 <div className="mt-1 flex items-center gap-2">
-                  <p className="text-base font-bold text-purple-600 leading-tight">{data.stargate_project.planned_capacity_gw}GW</p>
+                  <p className="text-base font-bold text-purple-600 leading-tight">
+                    {data.stargate_project?.planned_capacity_gw != null ? `${data.stargate_project.planned_capacity_gw}GW` : '—'}
+                  </p>
                   <Zap className="h-5 w-5 text-purple-500" />
                 </div>
               </CardContent>
@@ -368,7 +426,7 @@ export default function AIInvestmentsPage() {
               description="2025 vs 2026 CapEx by company. 2026 projections reflect near-doubling of AI infrastructure investment."
               source="Financial Statements + Futurum Research"
               sourceUrl="https://futurumgroup.com/insights/ai-capex-2026-the-690b-infrastructure-sprint/"
-              lastUpdated={data.last_updated}
+              lastUpdated={data.last_updated ?? undefined}
             />
           </CardContent>
         </Card>
@@ -413,6 +471,123 @@ export default function AIInvestmentsPage() {
         </Card>
         </div>
       </div>
+
+      {/* Historical CapEx Trend (live from yfinance) */}
+      <Card className="order-3 border-0 shadow-xl dark:border dark:border-slate-800 dark:bg-slate-900">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-green-600" />
+              Historical CapEx Trend
+            </CardTitle>
+            <div className="flex items-center gap-2">
+              <span className="text-xs px-2 py-1 rounded-full bg-green-50 text-green-700 border border-green-200">
+                Source: yfinance (live)
+              </span>
+              <button
+                onClick={fetchHistoricalData}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 bg-white rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm text-xs"
+              >
+                <RefreshCw className="h-3 w-3" />
+                Refresh
+              </button>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent>
+          {historicalLoading ? (
+            <div className="h-64 flex items-center justify-center text-slate-400 text-sm">
+              Loading historical data from yfinance...
+            </div>
+          ) : historicalData && historicalData.companies.length > 0 ? (() => {
+            const allYears = Array.from(
+              new Set(historicalData.companies.flatMap(c => Object.keys(c.fiscal_years)))
+            ).sort();
+
+            const lineData = allYears.map(year => {
+              const point: Record<string, string | number> = { year };
+              historicalData.companies.forEach(c => {
+                const capex = c.fiscal_years[year]?.capex;
+                if (capex != null) point[c.company] = capex;
+              });
+              return point;
+            });
+
+            return (
+              <div className="space-y-4">
+                <ResponsiveContainer width="100%" height={260}>
+                  <LineChart data={lineData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
+                    <XAxis dataKey="year" tick={{ fontSize: 11 }} />
+                    <YAxis
+                      tickFormatter={v => `$${v}B`}
+                      tick={{ fontSize: 11 }}
+                      label={{ value: 'USD Billions', angle: -90, position: 'insideLeft', style: { fontSize: 10 } }}
+                    />
+                    <Tooltip formatter={(v) => [v != null ? `$${v}B` : '—', '']} />
+                    <Legend wrapperStyle={{ fontSize: 11 }} />
+                    {historicalData.companies.map(c => (
+                      <Line
+                        key={c.ticker}
+                        type="monotone"
+                        dataKey={c.company}
+                        stroke={c.color}
+                        strokeWidth={2}
+                        dot={{ r: 4 }}
+                        connectNulls
+                      />
+                    ))}
+                  </LineChart>
+                </ResponsiveContainer>
+
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 pt-2 border-t border-slate-100">
+                  {historicalData.companies.map(c => {
+                    const years = Object.keys(c.fiscal_years).sort();
+                    const latestYear = years[years.length - 1];
+                    const latestCapex = c.fiscal_years[latestYear]?.capex;
+                    const prevCapex = years.length > 1
+                      ? c.fiscal_years[years[years.length - 2]]?.capex
+                      : undefined;
+                    const yoy = latestCapex != null && prevCapex != null
+                      ? Math.round(((latestCapex - prevCapex) / prevCapex) * 100)
+                      : null;
+                    return (
+                      <div key={c.ticker} className="text-center p-3 rounded-xl bg-slate-50 dark:bg-slate-800">
+                        <div
+                          className="w-7 h-7 rounded-md flex items-center justify-center text-white text-xs font-bold mx-auto mb-1.5"
+                          style={{ backgroundColor: c.color }}
+                        >
+                          {c.company.charAt(0)}
+                        </div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">{c.company}</p>
+                        <p className="font-bold text-slate-900 dark:text-slate-100 text-sm">
+                          {latestCapex != null ? `$${latestCapex}B` : '—'}
+                        </p>
+                        <p className="text-xs text-slate-400">{latestYear}</p>
+                        {yoy != null && (
+                          <p className={`text-xs font-medium ${yoy >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+                            {yoy >= 0 ? '+' : ''}{yoy}% YoY
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {historicalData.errors && historicalData.errors.length > 0 && (
+                  <p className="text-xs text-amber-600 mt-1">
+                    Failed to load: {historicalData.errors.map(e => e.company).join(', ')}
+                  </p>
+                )}
+              </div>
+            );
+          })() : (
+            <div className="h-64 flex items-center justify-center text-slate-400 text-sm">
+              No historical data available
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
       </div>
     </div>

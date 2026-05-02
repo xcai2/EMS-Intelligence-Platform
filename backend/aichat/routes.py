@@ -885,6 +885,103 @@ def _build_context(docs: list[dict]) -> str:
     return "\n\n---\n\n".join(parts)
 
 
+_HYPERSCALER_NAMES = {
+    "amazon", "aws", "microsoft", "azure", "alphabet", "google", "meta",
+    "facebook", "oracle", "oci", "hyperscaler", "hyperscalers",
+    "big5", "big 5", "big tech",
+}
+_HYPERSCALER_CAPEX_KEYWORDS = {
+    "capex", "capital expenditure", "capital expenditures", "infrastructure spend",
+    "infrastructure investment", "data center spend", "datacenter spend",
+    "ai investment", "ai spending", "fy2025", "fy2026", "stargate",
+}
+
+def _is_hyperscaler_capex_query(query: str) -> bool:
+    """Return True if the query is asking about hyperscaler CapEx / AI infrastructure spend."""
+    q = query.lower()
+    has_hyperscaler = any(name in q for name in _HYPERSCALER_NAMES)
+    has_capex_kw = any(kw in q for kw in _HYPERSCALER_CAPEX_KEYWORDS)
+    # Also catch generic "how much are they spending" type questions when a hyperscaler is named
+    return has_hyperscaler and (has_capex_kw or "spend" in q or "invest" in q or "guidance" in q)
+
+
+async def _build_hyperscaler_capex_context() -> str:
+    """
+    Fetch the live Big-5 CapEx data (7-day cached) and format it as a
+    plain-text context block for injection into the LLM prompt.
+    """
+    try:
+        from backend.analytics.hyperscaler_guidance import build_big5_capex_response
+        data = await build_big5_capex_response()
+    except Exception:
+        return ""
+
+    companies = data.get("companies", [])
+    if not companies:
+        return ""
+
+    lines = [
+        "=== HYPERSCALER AI CAPEX DATA (Live — use this as source of truth) ===",
+        f"Data as of: {data.get('last_updated', 'recent')} | "
+        f"Source: {data.get('source', 'Earnings guidance')}",
+        "",
+    ]
+
+    for c in companies:
+        name = c.get("name", c.get("ticker", ""))
+        cap26 = c.get("capex_2026_billions")
+        cap25 = c.get("capex_2025_billions")
+        yoy = c.get("yoy_growth_pct")
+        src_date = c.get("guidance_source_date", "")
+        confidence = c.get("guidance_confidence", "")
+
+        capex_str = f"${cap26}B" if cap26 is not None else "N/A"
+        prev_str  = f"${cap25}B" if cap25 is not None else "N/A"
+        yoy_str   = f"+{yoy}%" if yoy is not None else "N/A"
+
+        lines.append(f"**{name}**")
+        lines.append(f"  2026 CapEx guidance: {capex_str} | 2025 actual: {prev_str} | YoY: {yoy_str}")
+        if src_date:
+            lines.append(f"  Source date: {src_date} | Confidence: {confidence}")
+
+        focus = c.get("ai_focus_areas", [])
+        if focus:
+            lines.append(f"  AI focus: {', '.join(focus)}")
+
+        metrics = c.get("key_metrics") or {}
+        if metrics:
+            metric_parts = [
+                f"{k.replace('_', ' ').title()}: {v}"
+                for k, v in metrics.items()
+            ]
+            lines.append(f"  Key metrics: {' | '.join(metric_parts)}")
+
+        announcements = c.get("recent_announcements", [])
+        for ann in announcements[:2]:
+            lines.append(f"  • {ann}")
+        lines.append("")
+
+    stargate = data.get("stargate_project")
+    if stargate:
+        lines.append("**Stargate AI Project**")
+        inv = stargate.get("total_investment_billions")
+        if inv:
+            lines.append(f"  Total investment: ${inv}B | Timeline: {stargate.get('timeline', '')}")
+        partners = stargate.get("partners", [])
+        if partners:
+            lines.append(f"  Partners: {', '.join(partners)}")
+        for upd in (stargate.get("latest_updates") or [])[:2]:
+            lines.append(f"  • {upd}")
+        lines.append("")
+
+    total = data.get("total_2026_capex_billions")
+    if total:
+        lines.append(f"Combined Big-5 2026 CapEx: ${total}B")
+
+    lines.append("=== END HYPERSCALER DATA ===")
+    return "\n".join(lines)
+
+
 def _format_historical_response(result: dict) -> str:
     """Render historical structured output with clear section headings and line breaks."""
     sections: list[str] = []
@@ -1304,6 +1401,12 @@ async def _stream_response(request: ChatRequest):
             yield _sse_event("done", {"session_id": session_id})
             return
 
+    # Inject live hyperscaler CapEx data when the query is relevant
+    if _is_hyperscaler_capex_query(query):
+        hyp_context = await _build_hyperscaler_capex_context()
+        if hyp_context:
+            context = (hyp_context + "\n\n" + context).strip() if context else hyp_context
+
     if not context and not web_context:
         fallback_allowed = _fallback_enabled(request)
         if request.mode == "hybrid":
@@ -1660,6 +1763,12 @@ async def chat(request: ChatRequest):
                 web_context = f"[USE THESE WEB RESULTS AS SOURCE OF TRUTH FOR QUARTER LABELS AND DATES]\n\n{raw_web_context}"
         except Exception:
             pass
+
+    # Inject live hyperscaler CapEx data when the query is relevant
+    if _is_hyperscaler_capex_query(query):
+        hyp_context = await _build_hyperscaler_capex_context()
+        if hyp_context:
+            context = (hyp_context + "\n\n" + context).strip() if context else hyp_context
 
     fallback_used = False
     provider_used = None

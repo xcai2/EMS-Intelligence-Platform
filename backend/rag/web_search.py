@@ -1,11 +1,14 @@
 """
-Web search integration using Brave Search API.
+Web search integration using Brave Search API with DuckDuckGo fallback.
 """
 import asyncio
 import json
 import httpx
 from typing import Optional
 from backend.core.config import BRAVE_API_KEY, BRAVE_SEARCH_URL, WEB_SEARCH_RESULTS
+
+# Brave HTTP status codes that indicate quota/auth failure → trigger DDG fallback
+_BRAVE_FALLBACK_STATUSES = {401, 403, 429}
 
 # ---------------------------------------------------------------------------
 # Rate limiter — Brave free tier: ~1 req/sec.
@@ -54,19 +57,30 @@ def _extract_http_error_message(exc: httpx.HTTPStatusError) -> str:
     return f"Brave API HTTP {status_code}"
 
 
+async def _search_duckduckgo(query: str, count: int) -> list[dict]:
+    """DuckDuckGo fallback search — no API key required."""
+    try:
+        from ddgs import DDGS
+        results = []
+        with DDGS() as ddgs:
+            for r in ddgs.text(query, max_results=count):
+                results.append({
+                    "title": r.get("title", ""),
+                    "url": r.get("href", ""),
+                    "description": r.get("body", ""),
+                    "published": "",
+                })
+        return results
+    except Exception as e:
+        return []
+
+
 async def search_web(
     query: str,
     count: int = WEB_SEARCH_RESULTS,
 ) -> list[dict]:
     """
-    Search the web using Brave Search API.
-
-    Args:
-        query: Search query
-        count: Number of results to return
-
-    Returns:
-        List of web search results
+    Search the web. Uses Brave Search API with DuckDuckGo as fallback.
     """
     results, _error = await search_web_with_diagnostics(query, count)
     return results
@@ -88,7 +102,8 @@ async def search_web_with_diagnostics(
                    "pm" past month, "py" past year.  None = no filter.
     """
     if not BRAVE_API_KEY:
-        return [], "BRAVE_API_KEY not set"
+        ddg_results = await _search_duckduckgo(query, count)
+        return (ddg_results, None) if ddg_results else ([], "No search API available")
 
     headers = {
         "Accept": "application/json",
@@ -125,7 +140,12 @@ async def search_web_with_diagnostics(
             return results, None
 
         except httpx.HTTPStatusError as e:
-            return [], _extract_http_error_message(e)
+            error_msg = _extract_http_error_message(e)
+            if e.response.status_code in _BRAVE_FALLBACK_STATUSES:
+                ddg_results = await _search_duckduckgo(query, count)
+                if ddg_results:
+                    return ddg_results, None
+            return [], error_msg
         except httpx.RequestError as e:
             return [], f"Network request error: {e}"
         except Exception as e:

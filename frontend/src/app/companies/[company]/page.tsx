@@ -6,12 +6,11 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { 
-  Building2, 
-  TrendingUp, 
+  Building2,
+  TrendingUp,
   TrendingDown,
   Brain,
   Activity,
-  MapPin,
   FileText,
   ArrowLeft,
   RefreshCw,
@@ -20,12 +19,7 @@ import {
   BarChart3,
   Minus,
   DollarSign,
-  Newspaper,
-  Factory,
-  Briefcase,
-  Lightbulb,
-  Users,
-  Cloud
+  Users
 } from 'lucide-react';
 import {
   BarChart,
@@ -63,7 +57,7 @@ const COMPANY_NAMES: Record<string, string> = {
   'plexus': 'Plexus Corp',
 };
 
-type TabType = 'overview' | 'filings' | 'financials' | 'ai' | 'capex' | 'geographic' | 'news' | 'patents' | 'hiring' | 'ocp';
+type TabType = 'overview' | 'filings' | 'financials' | 'capex' | 'hiring';
 
 export default function CompanyDetailPage() {
   const params = useParams();
@@ -74,13 +68,8 @@ export default function CompanyDetailPage() {
   const [overview, setOverview] = useState<any>(null);
   const [filings, setFilings] = useState<any>(null);
   const [financials, setFinancials] = useState<any>(null);
-  const [aiAnalysis, setAiAnalysis] = useState<any>(null);
   const [capexData, setCapexData] = useState<any>(null);
-  const [geographic, setGeographic] = useState<any>(null);
-  const [news, setNews] = useState<any>(null);
-  const [patents, setPatents] = useState<any>(null);
   const [hiring, setHiring] = useState<any>(null);
-  const [ocp, setOcp] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -124,46 +113,16 @@ export default function CompanyDetailPage() {
             if (res.ok) setFinancials(await res.json());
           }
           break;
-        case 'ai':
-          if (!aiAnalysis) {
-            const res = await fetch(`${API_URL}/api/company/${company}/ai-analysis`);
-            if (res.ok) setAiAnalysis(await res.json());
-          }
-          break;
         case 'capex':
           if (!capexData) {
             const res = await fetch(`${API_URL}/api/company/${company}/capex`);
             if (res.ok) setCapexData(await res.json());
           }
           break;
-        case 'geographic':
-          if (!geographic) {
-            const res = await fetch(`${API_URL}/api/company/${company}/geographic`);
-            if (res.ok) setGeographic(await res.json());
-          }
-          break;
-        case 'news':
-          if (!news) {
-            const res = await fetch(`${API_URL}/api/company/${company}/news`);
-            if (res.ok) setNews(await res.json());
-          }
-          break;
-        case 'patents':
-          if (!patents) {
-            const res = await fetch(`${API_URL}/api/patents/${company}`);
-            if (res.ok) setPatents(await res.json());
-          }
-          break;
         case 'hiring':
           if (!hiring) {
             const res = await fetch(`${API_URL}/api/jobs/${company}`);
             if (res.ok) setHiring(await res.json());
-          }
-          break;
-        case 'ocp':
-          if (!ocp) {
-            const res = await fetch(`${API_URL}/api/ocp/${company}`);
-            if (res.ok) setOcp(await res.json());
           }
           break;
       }
@@ -202,21 +161,9 @@ export default function CompanyDetailPage() {
     { id: 'overview', label: 'Overview', icon: Building2 },
     { id: 'filings', label: 'Filings', icon: FileText },
     { id: 'financials', label: 'Financials', icon: DollarSign },
-    { id: 'ai', label: 'AI Analysis', icon: Brain },
     { id: 'capex', label: 'CapEx', icon: BarChart3 },
-    { id: 'geographic', label: 'Geographic', icon: Globe },
-    { id: 'news', label: 'News', icon: Newspaper },
-    { id: 'patents', label: 'Patents', icon: Lightbulb },
     { id: 'hiring', label: 'Hiring', icon: Users },
-    { id: 'ocp', label: 'Open Compute', icon: Cloud },
   ];
-
-  // Investment breakdown for chart
-  const investmentData = aiAnalysis?.investment_breakdown ? [
-    { name: 'AI/Data Center', value: aiAnalysis.investment_breakdown.ai_datacenter?.count || 0, fill: '#8B5CF6' },
-    { name: 'Traditional', value: aiAnalysis.investment_breakdown.traditional?.count || 0, fill: '#94A3B8' },
-    { name: 'Mixed', value: aiAnalysis.investment_breakdown.mixed?.count || 0, fill: '#F59E0B' },
-  ] : [];
 
   // CapEx breakdown for chart
   const capexBreakdownData = capexData?.breakdown ? Object.entries(capexData.breakdown).map(([key, val]: [string, any]) => ({
@@ -278,6 +225,7 @@ export default function CompanyDetailPage() {
             <p className="text-2xl font-bold text-slate-900">
               {overview?.investment?.ai_focus_percentage?.toFixed(0) || 0}%
             </p>
+            <p className="text-xs text-slate-400 mt-1">SEC Filings · NLP</p>
           </CardContent>
         </Card>
 
@@ -289,6 +237,9 @@ export default function CompanyDetailPage() {
             </div>
             <p className="text-2xl font-bold text-slate-900">
               {((overview?.sentiment?.score || 0) * 100).toFixed(0)}%
+            </p>
+            <p className="text-xs text-slate-400 mt-1">
+              {overview?.sentiment?.method === 'finbert' ? 'FinBERT · SEC Filings' : 'Lexicon · SEC Filings'}
             </p>
           </CardContent>
         </Card>
@@ -302,6 +253,7 @@ export default function CompanyDetailPage() {
             <p className="text-2xl font-bold text-slate-900">
               {overview?.facilities?.total || 0}
             </p>
+            <p className="text-xs text-slate-400 mt-1">SEC Filings · NLP</p>
           </CardContent>
         </Card>
 
@@ -314,6 +266,7 @@ export default function CompanyDetailPage() {
             <p className="text-2xl font-bold text-slate-900">
               {overview?.documents?.toLocaleString() || 0}
             </p>
+            <p className="text-xs text-slate-400 mt-1">ChromaDB Vector DB</p>
           </CardContent>
         </Card>
       </div>
@@ -348,10 +301,15 @@ export default function CompanyDetailPage() {
             {/* Trend Analysis */}
             <Card className="border-0 shadow-xl">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-green-600" />
-                  Trend Analysis
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2">
+                    <TrendingUp className="h-5 w-5 text-green-600" />
+                    Trend Analysis
+                  </CardTitle>
+                  <span className="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-500 border border-slate-200">
+                    Source: ChromaDB · SEC Filings
+                  </span>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -395,10 +353,15 @@ export default function CompanyDetailPage() {
             {/* Company Info */}
             <Card className="border-0 shadow-xl">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Building2 className="h-5 w-5 text-blue-600" />
-                  Company Information
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2">
+                    <Building2 className="h-5 w-5 text-blue-600" />
+                    Company Information
+                  </CardTitle>
+                  <span className="text-xs px-2 py-1 rounded-full bg-slate-100 text-slate-500 border border-slate-200">
+                    Source: SEC EDGAR Config
+                  </span>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -427,10 +390,15 @@ export default function CompanyDetailPage() {
         {activeTab === 'filings' && (
           <Card className="border-0 shadow-xl">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5 text-orange-600" />
-                Recent Filings
-              </CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5 text-orange-600" />
+                  Recent Filings
+                </CardTitle>
+                <span className="text-xs px-2 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200">
+                  Source: ChromaDB · SEC EDGAR
+                </span>
+              </div>
             </CardHeader>
             <CardContent>
               {filings?.filings?.length > 0 ? (
@@ -455,56 +423,129 @@ export default function CompanyDetailPage() {
           </Card>
         )}
 
-        {activeTab === 'ai' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="border-0 shadow-xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Brain className="h-5 w-5 text-purple-600" />
-                  AI Investment Focus
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-center mb-4">
-                  <p className="text-4xl font-bold text-purple-600">
-                    {aiAnalysis?.ai_focus_percentage?.toFixed(1) || 0}%
-                  </p>
-                  <p className="text-slate-500">{aiAnalysis?.investment_focus || 'N/A'}</p>
-                </div>
-                {investmentData.length > 0 && (
-                  <ResponsiveContainer width="100%" height={200}>
-                    <PieChart>
-                      <Pie data={investmentData} cx="50%" cy="50%" innerRadius={40} outerRadius={70} dataKey="value">
-                        {investmentData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.fill} />
-                        ))}
-                      </Pie>
-                      <Tooltip />
-                      <Legend />
-                    </PieChart>
-                  </ResponsiveContainer>
-                )}
-              </CardContent>
-            </Card>
+        {activeTab === 'financials' && (
+          <div className="space-y-6">
+            {/* Source badge */}
+            {financials && (
+              <div className="flex items-center gap-2">
+                <span className="text-xs px-2 py-1 rounded-full font-medium border bg-green-50 text-green-700 border-green-200">
+                  {financials.source === 'yfinance' ? 'Live data via Yahoo Finance' : 'Extracted from SEC filings'}
+                </span>
+                {financials.ticker && <span className="text-xs text-slate-400">{financials.ticker}</span>}
+              </div>
+            )}
 
-            <Card className="border-0 shadow-xl">
-              <CardHeader>
-                <CardTitle>AI Mentions</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3 max-h-80 overflow-y-auto">
-                  {aiAnalysis?.sample_ai_mentions?.map((mention: any, idx: number) => (
-                    <div key={idx} className="p-3 bg-purple-50 rounded-lg">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Badge variant="outline">{mention.source}</Badge>
-                        <span className="text-xs text-slate-500">{mention.fiscal_year}</span>
+            {financials?.fiscal_years && Object.keys(financials.fiscal_years).length > 0 ? (() => {
+              const years = Object.keys(financials.fiscal_years).sort();
+              const barData = years.map(yr => ({
+                year: yr,
+                'Total Revenue': financials.fiscal_years[yr].revenue ?? null,
+                'Operating Income': financials.fiscal_years[yr].operating_income ?? null,
+                'Net Income': financials.fiscal_years[yr].net_income ?? null,
+              }));
+              const marginData = years.map(yr => ({
+                year: yr,
+                'Operating Margin %': financials.fiscal_years[yr].operating_margin ?? null,
+              }));
+
+              return (
+                <>
+                  {/* Revenue / Income bar chart */}
+                  <Card className="border-0 shadow-xl">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <DollarSign className="h-5 w-5 text-blue-600" />
+                        Revenue & Income (USD millions)
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ResponsiveContainer width="100%" height={280}>
+                        <BarChart data={barData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="year" />
+                          <YAxis tickFormatter={(v) => `$${(v / 1000).toFixed(0)}B`} />
+                          <Tooltip formatter={(v: any) => [`$${Number(v).toLocaleString()}M`, '']} />
+                          <Legend />
+                          <Bar dataKey="Total Revenue" fill="#3B82F6" radius={[4, 4, 0, 0]} />
+                          <Bar dataKey="Operating Income" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
+                          <Bar dataKey="Net Income" fill="#10B981" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+
+                  {/* Operating Margin line chart */}
+                  <Card className="border-0 shadow-xl">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <Activity className="h-5 w-5 text-purple-600" />
+                        Operating Margin (%)
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ResponsiveContainer width="100%" height={220}>
+                        <LineChart data={marginData}>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="year" />
+                          <YAxis tickFormatter={(v) => `${v}%`} domain={['auto', 'auto']} />
+                          <Tooltip formatter={(v: any) => [`${Number(v).toFixed(2)}%`, 'Operating Margin']} />
+                          <Line type="monotone" dataKey="Operating Margin %" stroke="#8B5CF6" strokeWidth={2} dot={{ r: 4 }} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </CardContent>
+                  </Card>
+
+                  {/* Metrics table */}
+                  <Card className="border-0 shadow-xl">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-2">
+                        <BarChart3 className="h-5 w-5 text-slate-600" />
+                        Key Metrics by Year
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                          <thead>
+                            <tr className="border-b border-slate-200 bg-slate-50">
+                              <th className="text-left py-3 px-4 font-semibold text-slate-700">Metric</th>
+                              {years.map(yr => (
+                                <th key={yr} className="text-right py-3 px-4 font-semibold text-slate-700">{yr}</th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {[
+                              { key: 'revenue', label: 'Total Revenue', format: (v: number) => `$${v.toLocaleString()}M` },
+                              { key: 'operating_income', label: 'Operating Income', format: (v: number) => `$${v.toLocaleString()}M` },
+                              { key: 'net_income', label: 'Net Income', format: (v: number) => `$${v.toLocaleString()}M` },
+                              { key: 'eps', label: 'EPS (Diluted)', format: (v: number) => `$${v.toFixed(2)}` },
+                              { key: 'operating_margin', label: 'Operating Margin', format: (v: number) => `${v.toFixed(2)}%` },
+                            ].map(({ key, label, format }) => (
+                              <tr key={key} className="border-b border-slate-100 hover:bg-slate-50">
+                                <td className="py-3 px-4 font-medium text-slate-700">{label}</td>
+                                {years.map(yr => {
+                                  const val = (financials.fiscal_years[yr] as any)[key];
+                                  return (
+                                    <td key={yr} className="py-3 px-4 text-right text-slate-600">
+                                      {val != null ? format(val) : '—'}
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
-                      <p className="text-sm text-slate-600 line-clamp-2">{mention.preview}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+                    </CardContent>
+                  </Card>
+                </>
+              );
+            })() : (
+              <Card className="border-0 shadow-xl">
+                <CardContent className="py-12 text-center text-slate-500">Loading financials...</CardContent>
+              </Card>
+            )}
           </div>
         )}
 
@@ -512,10 +553,15 @@ export default function CompanyDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card className="border-0 shadow-xl">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="h-5 w-5 text-orange-600" />
-                  CapEx Breakdown
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5 text-orange-600" />
+                    CapEx Breakdown
+                  </CardTitle>
+                  <span className="text-xs px-2 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200">
+                    Source: ChromaDB · SEC Filings
+                  </span>
+                </div>
               </CardHeader>
               <CardContent>
                 {capexBreakdownData.length > 0 ? (
@@ -536,10 +582,15 @@ export default function CompanyDetailPage() {
 
             <Card className="border-0 shadow-xl">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <AlertTriangle className="h-5 w-5 text-red-600" />
-                  CapEx Anomalies
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2">
+                    <AlertTriangle className="h-5 w-5 text-red-600" />
+                    CapEx Anomalies
+                  </CardTitle>
+                  <span className="text-xs px-2 py-1 rounded-full bg-red-50 text-red-600 border border-red-200">
+                    Source: ChromaDB · SEC Filings
+                  </span>
+                </div>
               </CardHeader>
               <CardContent>
                 {capexData?.has_anomalies ? (
@@ -573,189 +624,19 @@ export default function CompanyDetailPage() {
           </div>
         )}
 
-        {activeTab === 'geographic' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="border-0 shadow-xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Globe className="h-5 w-5 text-blue-600" />
-                  Regional Distribution
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {geographic?.regional_distribution && (
-                  <div className="space-y-4">
-                    {Object.entries(geographic.regional_distribution).map(([region, count]) => (
-                      <div key={region}>
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-medium">{region}</span>
-                          <span className="text-slate-500">{count as number} facilities</span>
-                        </div>
-                        <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-blue-500 rounded-full"
-                            style={{ width: `${(geographic.regional_percentages?.[region] || 0)}%` }}
-                          />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Factory className="h-5 w-5 text-green-600" />
-                  Facilities
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {geographic?.headquarters && (
-                  <div className="mb-4 p-4 bg-amber-50 rounded-xl border border-amber-200">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Briefcase className="h-4 w-4 text-amber-600" />
-                      <span className="font-medium text-amber-900">Headquarters</span>
-                    </div>
-                    <p className="text-amber-800">{geographic.headquarters.city}, {geographic.headquarters.country}</p>
-                  </div>
-                )}
-                <div className="grid grid-cols-2 gap-2 max-h-60 overflow-y-auto">
-                  {geographic?.facilities?.map((facility: any, idx: number) => (
-                    <div key={idx} className="p-3 bg-slate-50 rounded-lg">
-                      <p className="font-medium text-sm">{facility.city}</p>
-                      <p className="text-xs text-slate-500">{facility.country}</p>
-                      <Badge variant="outline" className="mt-1 text-xs">{facility.type}</Badge>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
-
-        {activeTab === 'news' && (
-          <Card className="border-0 shadow-xl">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Newspaper className="h-5 w-5 text-blue-600" />
-                Recent News & Press Releases
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {news?.news?.length > 0 ? (
-                <div className="space-y-4">
-                  {news.news.map((item: any, idx: number) => (
-                    <div key={idx} className="p-4 bg-slate-50 rounded-xl">
-                      <div className="flex items-center gap-3 mb-2">
-                        <Badge>{item.filing_type}</Badge>
-                        <span className="text-sm text-slate-500">{item.fiscal_year}</span>
-                      </div>
-                      <p className="text-sm text-slate-600">{item.preview}</p>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-slate-500 text-center py-8">Loading news...</p>
-              )}
-            </CardContent>
-          </Card>
-        )}
-
-        {activeTab === 'patents' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="border-0 shadow-xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Lightbulb className="h-5 w-5 text-yellow-500" />
-                  Patent Activity
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {patents ? (
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-yellow-50 to-amber-50 rounded-xl">
-                      <div>
-                        <p className="text-sm text-slate-500">Total Patents Found</p>
-                        <p className="text-3xl font-bold text-yellow-600">{patents.total_patents || 0}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm text-slate-500">Innovation Score</p>
-                        <p className="text-3xl font-bold text-amber-600">{patents.innovation_score?.innovation_score || 0}</p>
-                      </div>
-                    </div>
-                    {patents.innovation_score?.focus_areas?.length > 0 && (
-                      <div>
-                        <p className="text-sm font-medium text-slate-700 mb-2">Focus Areas</p>
-                        <div className="flex flex-wrap gap-2">
-                          {patents.innovation_score.focus_areas.map((area: string, idx: number) => (
-                            <Badge key={idx} className="bg-purple-100 text-purple-700">{area}</Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                    <div className="border-t pt-4">
-                      <p className="text-sm font-medium text-slate-700 mb-2">By Category</p>
-                      <div className="space-y-2">
-                        {patents.by_category && Object.entries(patents.by_category).map(([cat, data]: [string, any]) => (
-                          <div key={cat} className="flex justify-between items-center p-2 bg-slate-50 rounded">
-                            <span className="text-sm capitalize">{cat.replace(/_/g, ' ')}</span>
-                            <Badge variant="outline">{data.count} patents</Badge>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <p className="text-slate-500 text-center py-8">Loading patents...</p>
-                )}
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-xl">
-              <CardHeader>
-                <CardTitle>Recent Patent Filings</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {patents?.patents?.length > 0 ? (
-                  <div className="space-y-3 max-h-96 overflow-y-auto">
-                    {patents.patents.slice(0, 10).map((patent: any, idx: number) => (
-                      <a
-                        key={idx}
-                        href={patent.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block p-3 bg-slate-50 rounded-xl hover:bg-slate-100 transition-colors"
-                      >
-                        <div className="flex items-start justify-between gap-2">
-                          <div className="flex-1">
-                            <p className="font-medium text-sm text-blue-600 hover:underline line-clamp-2">{patent.title}</p>
-                            <p className="text-xs text-slate-500 mt-1 line-clamp-2">{patent.snippet}</p>
-                          </div>
-                          <Badge variant="outline" className="text-xs shrink-0 capitalize">
-                            {patent.category?.replace(/_/g, ' ')}
-                          </Badge>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-slate-500 text-center py-8">No recent patents found</p>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        )}
-
         {activeTab === 'hiring' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <Card className="border-0 shadow-xl">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Users className="h-5 w-5 text-green-500" />
-                  Hiring Activity
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="flex items-center gap-2">
+                    <Users className="h-5 w-5 text-green-500" />
+                    Hiring Activity
+                  </CardTitle>
+                  <span className="text-xs px-2 py-1 rounded-full bg-green-50 text-green-600 border border-green-200">
+                    Source: Web Search · DuckDuckGo
+                  </span>
+                </div>
               </CardHeader>
               <CardContent>
                 {hiring ? (
@@ -804,7 +685,12 @@ export default function CompanyDetailPage() {
 
             <Card className="border-0 shadow-xl">
               <CardHeader>
-                <CardTitle>Current Job Openings</CardTitle>
+                <div className="flex items-center justify-between">
+                  <CardTitle>Current Job Openings</CardTitle>
+                  <span className="text-xs px-2 py-1 rounded-full bg-green-50 text-green-600 border border-green-200">
+                    Source: LinkedIn · Indeed · Web
+                  </span>
+                </div>
               </CardHeader>
               <CardContent>
                 {hiring?.jobs?.length > 0 ? (
@@ -842,121 +728,6 @@ export default function CompanyDetailPage() {
           </div>
         )}
 
-        {activeTab === 'ocp' && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="border-0 shadow-xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Cloud className="h-5 w-5 text-sky-500" />
-                  Open Compute Project Involvement
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                {ocp ? (
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between p-4 bg-gradient-to-r from-sky-50 to-blue-50 rounded-xl">
-                      <div>
-                        <p className="text-sm text-slate-500">Member Status</p>
-                        <p className="text-xl font-bold text-sky-600">{ocp.member_status || 'Unknown'}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-sm text-slate-500">Engagement Score</p>
-                        <p className="text-3xl font-bold text-blue-600">{ocp.engagement_score?.score || 0}</p>
-                      </div>
-                    </div>
-                    
-                    <div className="p-3 bg-slate-50 rounded-xl">
-                      <p className="text-sm font-medium text-slate-700 mb-2">Engagement Level</p>
-                      <Badge className={`${
-                        ocp.engagement_score?.level === 'High' ? 'bg-green-100 text-green-700' :
-                        ocp.engagement_score?.level === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
-                        'bg-slate-100 text-slate-700'
-                      }`}>
-                        {ocp.engagement_score?.level || 'Unknown'}
-                      </Badge>
-                    </div>
-
-                    {ocp.focus_areas?.length > 0 && (
-                      <div className="border-t pt-4">
-                        <p className="text-sm font-medium text-slate-700 mb-2">Focus Areas</p>
-                        <div className="flex flex-wrap gap-2">
-                          {ocp.focus_areas.map((area: string, idx: number) => (
-                            <Badge key={idx} variant="outline" className="bg-sky-50 text-sky-700">
-                              {area}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {ocp.ocp_categories?.length > 0 && (
-                      <div className="border-t pt-4">
-                        <p className="text-sm font-medium text-slate-700 mb-2">Active Categories</p>
-                        <div className="space-y-2">
-                          {ocp.ocp_categories.map((cat: any, idx: number) => (
-                            <div key={idx} className="flex justify-between items-center p-2 bg-slate-50 rounded">
-                              <span className="text-sm">{cat.name}</span>
-                              <Badge className={`${
-                                cat.relevance === 'high' ? 'bg-green-100 text-green-700' :
-                                'bg-blue-100 text-blue-700'
-                              }`}>
-                                {cat.relevance}
-                              </Badge>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <p className="text-slate-500 text-center py-8">Loading OCP data...</p>
-                )}
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 shadow-xl">
-              <CardHeader>
-                <CardTitle>Known Contributions</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {ocp?.known_contributions?.length > 0 ? (
-                  <div className="space-y-3">
-                    {ocp.known_contributions.map((contribution: string, idx: number) => (
-                      <div key={idx} className="p-3 bg-gradient-to-r from-sky-50 to-blue-50 rounded-xl flex items-start gap-3">
-                        <div className="w-6 h-6 rounded-full bg-sky-100 flex items-center justify-center text-sky-600 text-xs font-bold">
-                          {idx + 1}
-                        </div>
-                        <p className="text-sm text-slate-700">{contribution}</p>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-slate-500 text-center py-8">No specific contributions documented</p>
-                )}
-
-                {ocp?.recent_news?.length > 0 && (
-                  <div className="mt-6 border-t pt-4">
-                    <p className="text-sm font-medium text-slate-700 mb-3">Recent OCP News</p>
-                    <div className="space-y-2 max-h-64 overflow-y-auto">
-                      {ocp.recent_news.slice(0, 5).map((news: any, idx: number) => (
-                        <a
-                          key={idx}
-                          href={news.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="block p-2 bg-slate-50 rounded hover:bg-slate-100 transition-colors"
-                        >
-                          <p className="text-sm text-blue-600 hover:underline line-clamp-2">{news.title}</p>
-                          <p className="text-xs text-slate-500 mt-1 line-clamp-1">{news.description}</p>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        )}
       </div>
     </div>
   );

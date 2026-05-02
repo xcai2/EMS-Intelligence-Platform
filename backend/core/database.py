@@ -116,9 +116,15 @@ def get_all_company_collections() -> dict:
 
 
 def has_company_collections() -> bool:
-    """Check if per-company collections exist and have data."""
-    company_cols = list_company_collections()
-    return len(company_cols) > 0
+    """Check if per-company collections exist AND contain data."""
+    for company in KNOWN_COMPANIES:
+        try:
+            col = get_company_collection(company)
+            if col.count() > 0:
+                return True
+        except Exception:
+            continue
+    return False
 
 
 def delete_company_collection(company: str):

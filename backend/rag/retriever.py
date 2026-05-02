@@ -833,21 +833,32 @@ def search_documents(
     elif len(filters) == 1:
         where_filter = filters[0]
 
-    fetch_n = min(n_results * 3, collection.count())
+    total = collection.count()
+    # ChromaDB raises "Error finding id" above ~150 results on large collections;
+    # also crashes when where=None is passed explicitly — omit the kwarg when unused.
+    _CHROMA_MAX = 150
+    fetch_n = min(n_results * 3, _CHROMA_MAX, max(1, total - 1)) if total > 1 else 1
+
+    query_kwargs: dict = {
+        "query_embeddings": [query_embedding],
+        "n_results": fetch_n,
+        "include": ["documents", "metadatas", "distances"],
+    }
+    if where_filter is not None:
+        query_kwargs["where"] = where_filter
 
     try:
-        results = collection.query(
-            query_embeddings=[query_embedding],
-            n_results=fetch_n,
-            where=where_filter,
-            include=["documents", "metadatas", "distances"],
-        )
+        results = collection.query(**query_kwargs)
     except Exception:
-        results = collection.query(
-            query_embeddings=[query_embedding],
-            n_results=fetch_n,
-            include=["documents", "metadatas", "distances"],
-        )
+        # Retry without filter at a conservatively small count
+        try:
+            results = collection.query(
+                query_embeddings=[query_embedding],
+                n_results=min(50, max(1, total - 1)) if total > 1 else 1,
+                include=["documents", "metadatas", "distances"],
+            )
+        except Exception:
+            return []
 
     if not results or not results["documents"] or not results["documents"][0]:
         return []
@@ -860,6 +871,8 @@ def search_documents(
         results["metadatas"][0],
         results["distances"][0],
     ):
+        if metadata is None:
+            metadata = {}
         similarity = 1 - distance
         chunk_type = metadata.get("chunk_type", "unknown")
         parent_id = metadata.get("parent_id", "")
@@ -1154,6 +1167,8 @@ def search_documents(
                 injection_candidates = []
 
                 for doc_text, metadata in zip(cf_all["documents"], cf_all["metadatas"]):
+                    if metadata is None:
+                        metadata = {}
                     # Skip if not containing actual CapEx data
                     if not any(kw in doc_text.lower() for kw in [
                         "purchases of property", "capital expenditure", "investing activities",
@@ -1266,6 +1281,8 @@ def search_documents(
                     for doc_text, metadata in zip(
                         text_results["documents"], text_results["metadatas"]
                     ):
+                        if metadata is None:
+                            metadata = {}
                         # Skip if already handled as a cash_flow_statement table chunk
                         if metadata.get("table_type") == "cash_flow_statement":
                             continue
@@ -1691,16 +1708,28 @@ def get_company_documents(company: str, limit: int = 100) -> list[dict]:
     Returns dicts with 'content' and 'metadata' keys, matching the format
     expected by analytics modules.
     """
-    collection = get_collection()
+    if has_company_collections():
+        collection = get_company_collection(company)
+        use_where = False
+    else:
+        collection = get_collection()
+        use_where = True
+
     if collection.count() == 0:
         return []
 
     try:
-        results = collection.get(
-            where={"company": company},
-            include=["documents", "metadatas"],
-            limit=limit,
-        )
+        if use_where:
+            results = collection.get(
+                where={"company": company},
+                include=["documents", "metadatas"],
+                limit=limit,
+            )
+        else:
+            results = collection.get(
+                include=["documents", "metadatas"],
+                limit=limit,
+            )
     except Exception:
         return []
 

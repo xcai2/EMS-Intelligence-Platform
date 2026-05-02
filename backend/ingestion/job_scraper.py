@@ -23,6 +23,11 @@ JOB_CATEGORIES = {
     "sales": ["sales", "account manager", "business development", "customer success"],
 }
 
+# Disambiguate company names that share a prefix with other companies
+SEARCH_NAME_OVERRIDES = {
+    "Flex": '"Flex Ltd"',
+}
+
 # Location keywords for geographic analysis
 LOCATION_REGIONS = {
     "americas": ["USA", "United States", "Mexico", "Brazil", "Canada"],
@@ -61,30 +66,29 @@ class JobScraper:
             return cached
         
         # Build search query
+        search_name = SEARCH_NAME_OVERRIDES.get(company, company)
         if category and category in JOB_CATEGORIES:
             keywords = JOB_CATEGORIES[category][:3]
-            query = f'{company} jobs careers {" OR ".join(keywords)}'
+            query = f'{search_name} jobs careers {" OR ".join(keywords)}'
         else:
-            query = f'{company} jobs careers hiring'
-        
+            query = f'{search_name} jobs careers hiring'
+
         all_jobs = []
-        
+
         try:
             results = await search_web(query, count=15)
-            
-            for result in results.get('results', []):
+            for result in results:
                 job_info = self._parse_job_result(result, company)
                 if job_info:
                     all_jobs.append(job_info)
         except Exception as e:
             print(f"Job search error for {company}: {e}")
-        
+
         # Also search for specific career page
         try:
-            career_query = f'{company} careers site:linkedin.com OR site:indeed.com'
+            career_query = f'{search_name} careers site:linkedin.com OR site:indeed.com'
             career_results = await search_web(career_query, count=10)
-            
-            for result in career_results.get('results', []):
+            for result in career_results:
                 job_info = self._parse_job_result(result, company)
                 if job_info:
                     all_jobs.append(job_info)
@@ -117,8 +121,8 @@ class JobScraper:
     def _parse_job_result(self, result: dict, company: str) -> Optional[dict]:
         """Parse a search result into job info."""
         title = result.get('title', '')
-        snippet = result.get('snippet', '')
-        url = result.get('url', '')
+        snippet = result.get('snippet') or result.get('description') or result.get('body', '')
+        url = result.get('url') or result.get('href', '')
         
         # Check if it's a job posting
         is_job = any(term in title.lower() or term in url.lower() 

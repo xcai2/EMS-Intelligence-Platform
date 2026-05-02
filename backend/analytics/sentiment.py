@@ -1,18 +1,65 @@
 """
 Sentiment analysis for SEC filings and earnings documents.
-Uses a combination of financial lexicon and LLM for nuanced analysis.
+Uses FinBERT (ProsusAI/finbert) — a BERT model fine-tuned on financial text.
+Falls back to Loughran-McDonald lexicon if the model is unavailable.
 """
 import re
+import logging
 from collections import Counter
 from typing import Optional
-from openai import OpenAI
 
-from backend.core.config import OPENAI_API_KEY, LLM_MODEL, TRACKED_COMPANY_NAMES
+from backend.core.config import TRACKED_COMPANY_NAMES
 from backend.rag.retriever import search_documents, get_company_documents
 from backend.core.cache import analytics_cache, cached
 
+logger = logging.getLogger(__name__)
 
-# Financial sentiment lexicons (Loughran-McDonald inspired)
+# ---------------------------------------------------------------------------
+# Filing-type weights — earnings transcripts carry the most signal because
+# management speaks directly and unscripted about strategy and outlook.
+# ---------------------------------------------------------------------------
+FILING_WEIGHTS: dict[str, float] = {
+    "Earnings Transcript": 2.0,
+    "Earnings Call":       2.0,
+    "10-K":                1.5,
+    "Annual Report":       1.5,
+    "Press Release":       1.2,
+    "8-K":                 1.1,
+    "10-Q":                1.0,
+}
+_DEFAULT_FILING_WEIGHT = 1.0
+
+
+def _filing_weight(filing_type: str) -> float:
+    return FILING_WEIGHTS.get(filing_type, _DEFAULT_FILING_WEIGHT)
+
+
+# ---------------------------------------------------------------------------
+# FinBERT setup — loaded once at module level and reused across all calls
+# ---------------------------------------------------------------------------
+_finbert_pipeline = None
+
+def _get_finbert():
+    global _finbert_pipeline
+    if _finbert_pipeline is None:
+        try:
+            from transformers import pipeline
+            _finbert_pipeline = pipeline(
+                "text-classification",
+                model="ProsusAI/finbert",
+                top_k=3,
+                truncation=True,
+                max_length=512,
+            )
+            logger.info("FinBERT loaded successfully")
+        except Exception as e:
+            logger.warning("FinBERT failed to load: %s — will use lexicon fallback", e)
+    return _finbert_pipeline
+
+
+# ---------------------------------------------------------------------------
+# Loughran-McDonald lexicon — used as fallback only
+# ---------------------------------------------------------------------------
 POSITIVE_WORDS = {
     "growth", "increase", "improvement", "strong", "positive", "opportunity",
     "success", "successful", "gain", "profit", "profitable", "exceed", "exceeded",
@@ -31,13 +78,6 @@ NEGATIVE_WORDS = {
     "headwind", "headwinds", "litigation", "lawsuit", "penalty", "penalties",
 }
 
-UNCERTAINTY_WORDS = {
-    "may", "might", "could", "possibly", "uncertain", "uncertainty", "depends",
-    "contingent", "subject to", "if", "whether", "approximately", "estimate",
-    "estimated", "expect", "expected", "anticipate", "anticipated", "believe",
-    "intend", "plan", "planned", "potential", "potentially", "likely", "unlikely",
-}
-
 AI_INVESTMENT_WORDS = {
     "ai", "artificial intelligence", "machine learning", "deep learning", "neural",
     "gpu", "data center", "datacenter", "hyperscale", "cloud", "generative ai",
@@ -46,205 +86,215 @@ AI_INVESTMENT_WORDS = {
 
 
 def analyze_lexicon_sentiment(text: str) -> dict:
-    """
-    Analyze sentiment using financial lexicon.
-    
-    Returns:
-        Dict with sentiment scores and word counts
-    """
-    text_lower = text.lower()
-    words = re.findall(r'\b\w+\b', text_lower)
-    word_count = len(words)
-    
-    positive_count = sum(1 for w in words if w in POSITIVE_WORDS)
-    negative_count = sum(1 for w in words if w in NEGATIVE_WORDS)
-    uncertainty_count = sum(1 for w in words if w in UNCERTAINTY_WORDS)
-    ai_count = sum(1 for phrase in AI_INVESTMENT_WORDS if phrase in text_lower)
-    
-    # Calculate sentiment score (-1 to 1)
-    total_sentiment_words = positive_count + negative_count
-    if total_sentiment_words > 0:
-        sentiment_score = (positive_count - negative_count) / total_sentiment_words
-    else:
-        sentiment_score = 0.0
-    
-    # Normalize counts per 1000 words
-    normalize = lambda x: round(x / word_count * 1000, 2) if word_count > 0 else 0
-    
-    return {
-        "sentiment_score": round(sentiment_score, 3),
-        "positive_words": positive_count,
-        "negative_words": negative_count,
-        "uncertainty_words": uncertainty_count,
-        "ai_mentions": ai_count,
-        "positive_per_1k": normalize(positive_count),
-        "negative_per_1k": normalize(negative_count),
-        "word_count": word_count,
-    }
+    """Public alias kept for backwards compatibility."""
+    return _lexicon_sentiment(text)
 
 
 async def analyze_sentiment_llm(text: str, context: str = "") -> dict:
+    """Kept for backwards compatibility — now delegates to FinBERT."""
+    return _finbert_sentiment(text)
+
+
+def _lexicon_sentiment(text: str) -> dict:
+    """Loughran-McDonald lexicon fallback. Returns score in [-1, 1]."""
+    text_lower = text.lower()
+    words = re.findall(r'\b\w+\b', text_lower)
+    pos = sum(1 for w in words if w in POSITIVE_WORDS)
+    neg = sum(1 for w in words if w in NEGATIVE_WORDS)
+    total = pos + neg
+    score = (pos - neg) / total if total > 0 else 0.0
+    ai_count = sum(1 for phrase in AI_INVESTMENT_WORDS if phrase in text_lower)
+    return {
+        "sentiment_score": round(score, 3),
+        "positive_words": pos,
+        "negative_words": neg,
+        "ai_mentions": ai_count,
+        "method": "lexicon",
+    }
+
+
+def _chunk_text(text: str, max_tokens: int = 500) -> list[str]:
+    """Split text into chunks that fit within FinBERT's 512-token limit (~500 words)."""
+    words = text.split()
+    return [
+        " ".join(words[i: i + max_tokens])
+        for i in range(0, len(words), max_tokens)
+    ]
+
+
+def _finbert_sentiment(text: str) -> dict:
     """
-    Use OpenAI to analyze sentiment with nuanced understanding.
-    
-    Args:
-        text: Text to analyze
-        context: Additional context (e.g., company name, filing type)
-        
-    Returns:
-        Dict with LLM sentiment analysis
+    Run FinBERT over the text in chunks and aggregate scores.
+    Returns sentiment_score in [-1, 1] = positive_prob - negative_prob.
     """
-    if not OPENAI_API_KEY:
-        return {"error": "OPENAI_API_KEY not set"}
-    
-    client = OpenAI(api_key=OPENAI_API_KEY)
-    
-    # Truncate text if too long
-    if len(text) > 10000:
-        text = text[:10000] + "..."
-    
-    prompt = f"""Analyze the sentiment of the following financial text. {context}
+    pipe = _get_finbert()
+    if pipe is None:
+        return _lexicon_sentiment(text)
 
-Text:
-{text}
+    chunks = _chunk_text(text, max_tokens=450)
+    if not chunks:
+        return {"sentiment_score": 0.0, "method": "finbert"}
 
-Provide a JSON response with:
-1. overall_sentiment: "positive", "negative", or "neutral"
-2. sentiment_score: float from -1 (very negative) to 1 (very positive)
-3. confidence: float from 0 to 1
-4. key_themes: list of 3-5 main themes discussed
-5. outlook: "bullish", "bearish", or "neutral" on company prospects
-6. ai_focus: "high", "medium", "low", or "none" based on AI/data center discussion
-7. risk_level: "high", "medium", or "low" based on risk language
-8. brief_summary: 1-2 sentence summary of sentiment
+    pos_scores, neg_scores, neu_scores = [], [], []
 
-Return only valid JSON, no other text."""
+    for chunk in chunks:
+        try:
+            results = pipe(chunk)[0]  # list of {label, score}
+            label_map = {r["label"]: r["score"] for r in results}
+            pos_scores.append(label_map.get("positive", 0.0))
+            neg_scores.append(label_map.get("negative", 0.0))
+            neu_scores.append(label_map.get("neutral", 0.0))
+        except Exception as e:
+            logger.debug("FinBERT chunk error: %s", e)
 
-    try:
-        response = client.chat.completions.create(
-            model=LLM_MODEL,
-            max_tokens=500,
-            messages=[{"role": "user", "content": prompt}]
-        )
-        
-        response_text = response.choices[0].message.content.strip()
-        
-        # Try to parse JSON
-        import json
-        # Handle potential markdown code blocks
-        if response_text.startswith("```"):
-            response_text = re.sub(r'^```json?\s*', '', response_text)
-            response_text = re.sub(r'\s*```$', '', response_text)
-        
-        result = json.loads(response_text)
-        result["tokens_used"] = response.usage.total_tokens
-        return result
-        
-    except Exception as e:
-        return {"error": str(e)}
+    if not pos_scores:
+        return {"sentiment_score": 0.0, "method": "finbert"}
+
+    avg_pos = sum(pos_scores) / len(pos_scores)
+    avg_neg = sum(neg_scores) / len(neg_scores)
+    avg_neu = sum(neu_scores) / len(neu_scores)
+
+    # Score: positive probability minus negative probability → [-1, 1]
+    score = round(avg_pos - avg_neg, 3)
+
+    # Count AI mentions via simple scan (FinBERT doesn't classify this)
+    text_lower = text.lower()
+    ai_count = sum(1 for phrase in AI_INVESTMENT_WORDS if phrase in text_lower)
+
+    return {
+        "sentiment_score": score,
+        "positive_prob": round(avg_pos, 3),
+        "negative_prob": round(avg_neg, 3),
+        "neutral_prob": round(avg_neu, 3),
+        "chunks_analyzed": len(pos_scores),
+        "ai_mentions": ai_count,
+        "method": "finbert",
+    }
 
 
 @cached(analytics_cache, prefix="sentiment")
 def analyze_company_sentiment(company: str, n_chunks: int = 20) -> dict:
     """
-    Analyze overall sentiment for a company based on recent documents.
-    
-    Args:
-        company: Company name
-        n_chunks: Number of document chunks to analyze
-        
-    Returns:
-        Aggregated sentiment analysis
+    Analyze overall sentiment for a company using FinBERT.
+    Earnings transcripts are weighted 2× vs standard filings.
+    Falls back to lexicon if FinBERT is unavailable.
     """
-    # Get relevant documents
     docs = search_documents(
         query=f"{company} outlook strategy growth investment",
         company_filter=company,
         n_results=n_chunks,
     )
-    
+
     if not docs:
         return {"error": f"No documents found for {company}"}
-    
-    # Combine text for analysis
-    combined_text = " ".join([doc["content"] for doc in docs])
-    
-    # Run lexicon analysis
-    lexicon_result = analyze_lexicon_sentiment(combined_text)
-    
-    # Get document metadata
-    filing_types = Counter(doc.get("filing_type", "Unknown") for doc in docs)
-    fiscal_years = Counter(doc.get("fiscal_year", "Unknown") for doc in docs)
-    
+
+    # Weighted aggregation: run FinBERT per document so each doc's filing-type
+    # weight applies to its own score rather than diluting into a combined blob.
+    total_weight = 0.0
+    weighted_pos = weighted_neg = weighted_neu = 0.0
+    total_ai_mentions = 0
+    total_chunks = 0
+    filing_types: Counter = Counter()
+    fiscal_years: Counter = Counter()
+
+    for doc in docs:
+        content = doc.get("content")
+        if not content:
+            continue
+        filing_type = doc.get("filing_type", "Unknown")
+        w = _filing_weight(filing_type)
+
+        result = _finbert_sentiment(content)
+        weighted_pos += result.get("positive_prob", 0.0) * w
+        weighted_neg += result.get("negative_prob", 0.0) * w
+        weighted_neu += result.get("neutral_prob", 0.0) * w
+        total_ai_mentions += result.get("ai_mentions", 0)
+        total_chunks += result.get("chunks_analyzed", 1)
+        total_weight += w
+
+        filing_types[filing_type] += 1
+        fiscal_years[doc.get("fiscal_year", "Unknown")] += 1
+
+    if total_weight == 0:
+        return {"error": f"No processable documents for {company}"}
+
+    avg_pos = weighted_pos / total_weight
+    avg_neg = weighted_neg / total_weight
+    avg_neu = weighted_neu / total_weight
+
     return {
         "company": company,
         "documents_analyzed": len(docs),
         "filing_types": dict(filing_types),
         "fiscal_years": dict(fiscal_years),
-        **lexicon_result,
+        "sentiment_score": round(avg_pos - avg_neg, 3),
+        "positive_prob": round(avg_pos, 3),
+        "negative_prob": round(avg_neg, 3),
+        "neutral_prob": round(avg_neu, 3),
+        "chunks_analyzed": total_chunks,
+        "ai_mentions": total_ai_mentions,
+        "method": "finbert",
     }
 
 
 def compare_company_sentiments(companies: list[str] = None) -> list[dict]:
-    """
-    Compare sentiment across multiple companies.
-    
-    Args:
-        companies: List of company names (defaults to all tracked)
-        
-    Returns:
-        List of sentiment analyses for comparison
-    """
     if companies is None:
         companies = list(TRACKED_COMPANY_NAMES)
-    
+
     results = []
     for company in companies:
         analysis = analyze_company_sentiment(company)
         analysis.setdefault("company", company)
         results.append(analysis)
-    
-    # Sort by sentiment score
+
     results.sort(
         key=lambda x: x.get("sentiment_score", float("-inf")) if "error" not in x else float("-inf"),
         reverse=True,
     )
-    
     return results
 
 
+def _weighted_finbert_score(docs: list[dict], meta_key: str = "filing_type") -> dict:
+    """Run FinBERT per doc, return filing-type-weighted aggregate sentiment."""
+    total_weight = weighted_pos = weighted_neg = 0.0
+    ai_mentions = 0
+    for doc in docs:
+        content = doc.get("content")
+        if not content:
+            continue
+        filing_type = (doc.get("metadata") or {}).get(meta_key, doc.get(meta_key, "Unknown"))
+        w = _filing_weight(filing_type)
+        result = _finbert_sentiment(content)
+        weighted_pos += result.get("positive_prob", 0.0) * w
+        weighted_neg += result.get("negative_prob", 0.0) * w
+        ai_mentions += result.get("ai_mentions", 0)
+        total_weight += w
+    if total_weight == 0:
+        return {"sentiment_score": 0.0, "method": "finbert"}
+    avg_pos = weighted_pos / total_weight
+    avg_neg = weighted_neg / total_weight
+    return {"sentiment_score": round(avg_pos - avg_neg, 3), "ai_mentions": ai_mentions, "method": "finbert"}
+
+
 def detect_sentiment_changes(company: str) -> dict:
-    """
-    Detect significant sentiment changes over time for a company.
-    
-    Note: This is a simplified version. Full implementation would
-    require storing historical sentiment scores.
-    """
-    # Get recent vs older documents
     docs = get_company_documents(company, limit=100)
-    
+
     if len(docs) < 20:
         return {"error": "Not enough documents for trend analysis"}
-    
-    # Split into recent and older
+
     midpoint = len(docs) // 2
-    recent_docs = docs[:midpoint]
-    older_docs = docs[midpoint:]
-    
-    recent_text = " ".join([d["content"] for d in recent_docs])
-    older_text = " ".join([d["content"] for d in older_docs])
-    
-    recent_sentiment = analyze_lexicon_sentiment(recent_text)
-    older_sentiment = analyze_lexicon_sentiment(older_text)
-    
-    sentiment_change = recent_sentiment["sentiment_score"] - older_sentiment["sentiment_score"]
-    
+    recent = _weighted_finbert_score(docs[:midpoint], meta_key="filing_type")
+    older = _weighted_finbert_score(docs[midpoint:], meta_key="filing_type")
+
+    change = recent["sentiment_score"] - older["sentiment_score"]
+
     return {
         "company": company,
-        "recent_sentiment": recent_sentiment["sentiment_score"],
-        "older_sentiment": older_sentiment["sentiment_score"],
-        "sentiment_change": round(sentiment_change, 3),
-        "trend": "improving" if sentiment_change > 0.05 else "declining" if sentiment_change < -0.05 else "stable",
-        "recent_ai_focus": recent_sentiment["ai_mentions"],
-        "older_ai_focus": older_sentiment["ai_mentions"],
+        "recent_sentiment": recent["sentiment_score"],
+        "older_sentiment": older["sentiment_score"],
+        "sentiment_change": round(change, 3),
+        "trend": "improving" if change > 0.05 else "declining" if change < -0.05 else "stable",
+        "recent_ai_focus": recent.get("ai_mentions", 0),
+        "older_ai_focus": older.get("ai_mentions", 0),
+        "method": recent.get("method", "unknown"),
     }
