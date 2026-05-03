@@ -62,3 +62,12 @@ data/chat_messages/
 
 # Analyst intel DB (runtime)
 data/analyst_intel.db
+
+# Internal design/plan documents (local only, not for version control)
+docs/company_detail_cache_plan.md
+docs/persistent_startup_cache_plan.md
+docs/intro_video_plan.md
+docs/intro_video_script_en.md
+docs/DEMO_SHARING.md
+docs/MERGE_5_1_ANALYSIS.md
+docs/sprint-update-apr17-2026.md
