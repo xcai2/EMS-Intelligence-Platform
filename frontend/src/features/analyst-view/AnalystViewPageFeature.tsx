@@ -8,7 +8,6 @@ import AnalystCards from "./components/AnalystCards";
 import RatingsFeed from "./components/RatingsFeed";
 import ConsensusView from "./components/ConsensusView";
 import CoverageMap from "./components/CoverageMap";
-import EarningsCalendar from "./components/EarningsCalendar";
 import KeyQuotes from "./components/KeyQuotes";
 import WeeklyThemes from "./components/WeeklyThemes";
 import FlexBenchmark from "./components/FlexBenchmark";
@@ -47,7 +46,6 @@ type Tab =
   | "companies"
   | "analysts"
   | "quotes"
-  | "calendar"
   | "feed";
 
 // ---------------------------------------------------------------------------
@@ -83,7 +81,6 @@ const TABS: { id: Tab; label: string; icon: string; description: string }[] = [
   { id: "companies",  label: "Companies",  icon: "🏢", description: "Consensus & PTs" },
   { id: "analysts",   label: "Analysts",   icon: "👥", description: "Analyst roster" },
   { id: "quotes",     label: "Quotes",     icon: "💬", description: "Key Q&A" },
-  { id: "calendar",   label: "Calendar",   icon: "📅", description: "Earnings dates" },
   { id: "feed",       label: "Feed",       icon: "📡", description: "Live signals" },
 ];
 
@@ -324,12 +321,6 @@ export default function AnalystViewPageFeature() {
         {activeTab === "quotes" && (
           <div className="max-w-3xl mx-auto">
             <KeyQuotes />
-          </div>
-        )}
-
-{activeTab === "calendar" && (
-          <div className="max-w-3xl mx-auto">
-            <EarningsCalendar />
           </div>
         )}
 

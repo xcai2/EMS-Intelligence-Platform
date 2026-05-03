@@ -43,7 +43,6 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8001';
 // Module-level cache keyed by company slug — survives navigation unmount/remount
 type DetailCache = {
   overview: any;
-  filings: any;
   financials: any;
   capexData: any;
   hiring: any;
@@ -52,7 +51,7 @@ const _detailCache: Record<string, DetailCache> = {};
 
 function getDetailCache(key: string): DetailCache {
   if (!_detailCache[key]) {
-    _detailCache[key] = { overview: null, filings: null, financials: null, capexData: null, hiring: null };
+    _detailCache[key] = { overview: null, financials: null, capexData: null, hiring: null };
   }
   return _detailCache[key];
 }
@@ -75,7 +74,7 @@ const COMPANY_NAMES: Record<string, string> = {
   'plexus': 'Plexus Corp',
 };
 
-type TabType = 'overview' | 'filings' | 'financials' | 'capex' | 'hiring';
+type TabType = 'overview' | 'financials' | 'capex' | 'hiring';
 
 export default function CompanyDetailPage() {
   const params = useParams();
@@ -86,7 +85,6 @@ export default function CompanyDetailPage() {
 
   const [activeTab, setActiveTab] = useState<TabType>('overview');
   const [overview, setOverview] = useState<any>(cache.overview);
-  const [filings, setFilings] = useState<any>(cache.filings);
   const [financials, setFinancials] = useState<any>(cache.financials);
   const [capexData, setCapexData] = useState<any>(cache.capexData);
   const [hiring, setHiring] = useState<any>(cache.hiring);
@@ -102,12 +100,10 @@ export default function CompanyDetailPage() {
     const persisted = readPersistentCache<DetailCache>(`cache:company-detail:${companyKey}:v1`);
     if (persisted) {
       c.overview    = persisted.overview    ?? null;
-      c.filings     = persisted.filings     ?? null;
       c.financials  = persisted.financials  ?? null;
       c.capexData   = persisted.capexData   ?? null;
       c.hiring      = persisted.hiring      ?? null;
       setOverview(c.overview);
-      setFilings(c.filings);
       setFinancials(c.financials);
       setCapexData(c.capexData);
       setHiring(c.hiring);
@@ -145,12 +141,6 @@ export default function CompanyDetailPage() {
     const c = getDetailCache(companyKey);
     try {
       switch (tab) {
-        case 'filings':
-          if (!c.filings) {
-            const res = await fetch(`${API_URL}/api/company/${company}/filings`);
-            if (res.ok) { const d = await res.json(); setFilings(d); c.filings = d; writePersistentCache(`cache:company-detail:${companyKey}:v1`, c); }
-          }
-          break;
         case 'financials':
           if (!c.financials) {
             const res = await fetch(`${API_URL}/api/company/${company}/financials`);
@@ -194,7 +184,6 @@ export default function CompanyDetailPage() {
 
     // Refresh only tabs that have been visited (cache != null)
     const tabFetches: Array<{ key: keyof DetailCache; url: string; setter: (d: any) => void }> = [
-      { key: 'filings',   url: `${API_URL}/api/company/${company}/filings`,   setter: setFilings },
       { key: 'financials',url: `${API_URL}/api/company/${company}/financials`, setter: setFinancials },
       { key: 'capexData', url: `${API_URL}/api/company/${company}/capex`,     setter: setCapexData },
       { key: 'hiring',    url: `${API_URL}/api/jobs/${company}`,              setter: setHiring },
@@ -248,7 +237,6 @@ export default function CompanyDetailPage() {
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: Building2 },
-    { id: 'filings', label: 'Filings', icon: FileText },
     { id: 'financials', label: 'Financials', icon: DollarSign },
     { id: 'capex', label: 'CapEx', icon: BarChart3 },
     { id: 'hiring', label: 'Hiring', icon: Users },
@@ -516,41 +504,6 @@ export default function CompanyDetailPage() {
           </>
         )}
 
-        {activeTab === 'filings' && (
-          <Card className="border-0 shadow-xl">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-orange-600" />
-                  Recent Filings
-                </CardTitle>
-                <span className="text-xs px-2 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200">
-                  Source: ChromaDB · SEC EDGAR
-                </span>
-              </div>
-            </CardHeader>
-            <CardContent>
-              {filings?.filings?.length > 0 ? (
-                <div className="space-y-3">
-                  {filings.filings.map((filing: any, idx: number) => (
-                    <div key={idx} className="p-4 bg-slate-50 rounded-xl">
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-3">
-                          <Badge>{filing.filing_type}</Badge>
-                          <span className="text-sm text-slate-500">{filing.fiscal_year}</span>
-                        </div>
-                        <span className="text-xs text-slate-400">{filing.chunk_count} chunks</span>
-                      </div>
-                      <p className="text-sm text-slate-600 line-clamp-2">{filing.preview}</p>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-slate-500 text-center py-8">Loading filings...</p>
-              )}
-            </CardContent>
-          </Card>
-        )}
 
         {activeTab === 'financials' && (
           <div className="space-y-6">
