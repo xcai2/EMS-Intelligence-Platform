@@ -463,7 +463,11 @@ def _has_breakdown_intent(lowered: str) -> bool:
 _RE_Q_THEN_YEAR = re.compile(r"\bq([1-4])\s*(?:fy)?\s*(\d{4})\b", re.IGNORECASE)
 _RE_FY_THEN_Q  = re.compile(r"\bfy\s*(\d{4})\s*q([1-4])\b",        re.IGNORECASE)
 _RE_FY_YEAR    = re.compile(r"\bfy\s*(\d{4})\b",                   re.IGNORECASE)
-_RE_PAST_N     = re.compile(r"\b(?:past|last)\s+(\d+)\s+(quarter|year)s?\b", re.IGNORECASE)
+_RE_PAST_N     = re.compile(
+    r"\b(?:past|last)\s+(\d+|one|two|three|four|five|six|seven|eight|nine|ten)"
+    r"\s+(?:fiscal\s+)?(quarter|year)s?\b",
+    re.IGNORECASE,
+)
 _RE_PAST_N_ZH  = re.compile(r"(?:过去|最近)\s*(\d+|[一二三四五六七八九十])\s*(季|年)")
 # Counts standalone quarter mentions ("Q2", "Q3", etc.) — used to bump limit
 # for multi-quarter requests like "FY2025 Q2 and Q3".
@@ -471,6 +475,8 @@ _RE_Q_TOKEN    = re.compile(r"\bq[1-4]\b", re.IGNORECASE)
 
 _ZH_NUM = {"一": 1, "二": 2, "三": 3, "四": 4, "五": 5,
            "六": 6, "七": 7, "八": 8, "九": 9, "十": 10}
+_EN_NUM = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5,
+           "six": 6, "seven": 7, "eight": 8, "nine": 9, "ten": 10}
 
 # When the query references specific FY/quarter periods, return a wider window
 # so the LLM can pick the right rows instead of seeing only the latest one.
@@ -488,7 +494,8 @@ def _parse_period(query: str) -> tuple[str, int, Optional[str]]:
     # "past 4 quarters" / "last 5 years"
     m = _RE_PAST_N.search(lowered)
     if m:
-        n = int(m.group(1))
+        raw = m.group(1)
+        n = int(raw) if raw.isdigit() else _EN_NUM.get(raw.lower(), 1)
         unit = m.group(2)
         return ("annual" if unit == "year" else "quarterly", min(n, 12), None)
 

@@ -76,6 +76,21 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             print(f"⚠ News warmup failed: {e}")
 
+        for _fn_name, _fn_import in [
+            ("sentiment",    lambda: __import__('backend.analytics.sentiment',    fromlist=['compare_company_sentiments']).compare_company_sentiments),
+            ("classifier",   lambda: __import__('backend.analytics.classifier',   fromlist=['compare_investment_focus']).compare_investment_focus),
+            ("trends",       lambda: __import__('backend.analytics.trends',       fromlist=['compare_company_trends']).compare_company_trends),
+            ("anomaly",      lambda: __import__('backend.analytics.anomaly',      fromlist=['get_all_anomalies']).get_all_anomalies),
+            ("geographic",   lambda: __import__('backend.analytics.geographic',   fromlist=['compare_geographic_footprints']).compare_geographic_footprints),
+        ]:
+            try:
+                _fn = _fn_import()
+                await asyncio.to_thread(_fn)
+                print(f"  ✓ companies/{_fn_name} cached")
+            except Exception as e:
+                print(f"  ⚠ companies/{_fn_name} failed: {e}")
+        print("✓ Companies analytics pre-loaded")
+
     asyncio.create_task(warmup_cache_background())
     yield
     print("Shutting down...")

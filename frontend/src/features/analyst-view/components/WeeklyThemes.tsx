@@ -70,8 +70,8 @@ function ThemeCard({ theme, rank }: { theme: ThemeItem; rank: number }) {
               <div>
                 <p className="text-[10px] uppercase tracking-wider text-slate-500 dark:text-gray-500 mb-1.5">Analysts</p>
                 <div className="flex flex-wrap gap-1">
-                  {theme.supporting_analysts.map((a) => (
-                    <span key={a} className="text-[11px] bg-slate-100 dark:bg-[#1a1f2e] border border-slate-300 dark:border-[#2a3045] text-slate-700 dark:text-gray-300 px-2 py-0.5 rounded">
+                  {theme.supporting_analysts.map((a, i) => (
+                    <span key={`${a}-${i}`} className="text-[11px] bg-slate-100 dark:bg-[#1a1f2e] border border-slate-300 dark:border-[#2a3045] text-slate-700 dark:text-gray-300 px-2 py-0.5 rounded">
                       {a}
                     </span>
                   ))}

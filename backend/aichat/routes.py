@@ -1091,14 +1091,19 @@ async def _stream_response(request: ChatRequest):
     except Exception:
         cache_result = None
     if cache_result is not None:
+        _cd = cache_result.get("data", {})
+        if "tickers" in _cd:
+            _cache_detail = f"Hit · {', '.join(_cd['tickers'])} · {_cd.get('metric', '')} from cache"
+        else:
+            _cache_detail = (
+                f"Hit · {_cd.get('ticker', '')} · "
+                f"{_cd.get('metric', '')} · "
+                f"{len(_cd.get('series', []))} period(s) from yfinance cache"
+            )
         yield _sse_event("step", {
             "icon": "📊",
             "label": "Financial Cache",
-            "detail": (
-                f"Hit · {cache_result['data']['ticker']} · "
-                f"{cache_result['data']['metric']} · "
-                f"{len(cache_result['data']['series'])} period(s) from yfinance cache"
-            ),
+            "detail": _cache_detail,
         })
         # When the user asked for a table layout, emit narrative as token and
         # the structured table payload as a separate SSE event so the frontend
