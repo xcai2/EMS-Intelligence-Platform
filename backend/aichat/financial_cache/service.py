@@ -178,8 +178,9 @@ def format_series_context(intent: dict, series: list[dict]) -> str:
     return "\n".join(lines)
 
 
-_RE_FY_TOKEN = re.compile(r"\bfy\s*(\d{4})\b", re.IGNORECASE)
-_RE_Q_TOKEN  = re.compile(r"\bq([1-4])\b",     re.IGNORECASE)
+_RE_FY_TOKEN  = re.compile(r"\bfy\s*(\d{4})\b",                          re.IGNORECASE)
+_RE_FY_RANGE  = re.compile(r"\bfy\s*(\d{4})\s*[-–—]\s*(\d{4})\b",        re.IGNORECASE)
+_RE_Q_TOKEN   = re.compile(r"\bq([1-4])\b",                               re.IGNORECASE)
 
 # Table-intent keyword patterns — same as routes.py is_table_query, kept local
 # so we don't import routes from service (which would be a circular dep).
@@ -252,6 +253,12 @@ def _extract_fiscal_filter(query: str) -> tuple[set[str], set[str]]:
             specific.add(f"FY{year} {q}")
     if specific:
         return specific, set()
+
+    # Detect year ranges like "FY2020–2024" and expand to all years in between.
+    for m in _RE_FY_RANGE.finditer(query):
+        start, end = int(m.group(1)), int(m.group(2))
+        if 2000 <= start <= end <= 2100 and (end - start) <= 20:
+            return set(), {f"FY{y}" for y in range(start, end + 1)}
 
     # Fall through to FY-only detection (annual queries with no quarter).
     years = set(_RE_FY_TOKEN.findall(query))
@@ -565,20 +572,43 @@ def _answer_multi_ticker(query: str, intents: list[dict], original_query: str) -
     }
 
     if wants_table:
-        columns = ["Company", "Period", f"{label} (USD Millions)"]
-        rows = []
-        for ticker, series in all_series.items():
-            for s in series:
-                fy_lbl = fiscal_label(ticker, s["period_end"]) or s["period_end"]
-                if intent["period_type"] == "annual" and " Q" in fy_lbl:
-                    fy_lbl = fy_lbl.split(" ")[0]
-                v_fmt = _format_value(s["value"], flip_sign=flip_sign)
-                rows.append([ticker, fy_lbl, v_fmt])
-        result["table_payload"] = {
-            "title": f"{label} Comparison (USD Millions)",
-            "columns": columns,
-            "rows": rows,
-        }
+        if intent["period_type"] == "annual":
+            # Pivot: rows = companies, columns = fiscal years (sorted ascending).
+            fy_labels: dict[str, dict[str, str]] = {}
+            all_fy: set[str] = set()
+            for ticker, series in all_series.items():
+                fy_labels[ticker] = {}
+                for s in series:
+                    lbl = fiscal_label(ticker, s["period_end"]) or s["period_end"]
+                    if " Q" in lbl:
+                        lbl = lbl.split(" ")[0]
+                    fy_labels[ticker][lbl] = _format_value(s["value"], flip_sign=flip_sign)
+                    all_fy.add(lbl)
+            sorted_fy = sorted(all_fy)
+            fy_range = f"{sorted_fy[0]}–{sorted_fy[-1]}" if len(sorted_fy) > 1 else sorted_fy[0]
+            columns = ["Company"] + sorted_fy
+            rows = [
+                [ticker] + [fy_labels[ticker].get(fy, "N/A") for fy in sorted_fy]
+                for ticker in all_series
+            ]
+            result["table_payload"] = {
+                "title": f"Annual {label} (USD Millions) {fy_range}",
+                "columns": columns,
+                "rows": rows,
+            }
+        else:
+            columns = ["Company", "Period", f"{label} (USD Millions)"]
+            rows = []
+            for ticker, series in all_series.items():
+                for s in series:
+                    fy_lbl = fiscal_label(ticker, s["period_end"]) or s["period_end"]
+                    v_fmt = _format_value(s["value"], flip_sign=flip_sign)
+                    rows.append([ticker, fy_lbl, v_fmt])
+            result["table_payload"] = {
+                "title": f"{label} Comparison (USD Millions)",
+                "columns": columns,
+                "rows": rows,
+            }
         result["narrative_text"] = f"{label} comparison across {len(all_series)} companies."
 
     return result

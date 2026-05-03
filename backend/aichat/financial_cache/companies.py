@@ -48,14 +48,21 @@ def fiscal_label(ticker: str, period_end: str) -> Optional[str]:
     if not info or "fy_end_month" not in info:
         return None
     try:
-        y, m, _ = period_end.split("-")
-        y, m = int(y), int(m)
+        y, m, d = period_end.split("-")
+        y, m, d = int(y), int(m), int(d)
     except (ValueError, AttributeError):
         return None
     fy_end = info["fy_end_month"]
     if m > fy_end:
-        fy = y + 1
-        q = (m - fy_end - 1) // 3 + 1
+        # 52/53-week calendars let period_end drift into the first days of the
+        # month after FY-end (e.g. SANM FY2021 ends 2021-10-02, not 2021-09-30).
+        # Absorb up to 7 days of drift so the label stays in the correct FY.
+        if m == fy_end + 1 and d <= 7:
+            fy = y
+            q = 4
+        else:
+            fy = y + 1
+            q = (m - fy_end - 1) // 3 + 1
     else:
         fy = y
         q = (m + 12 - fy_end - 1) // 3 + 1
