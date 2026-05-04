@@ -85,9 +85,9 @@ const navGroups: NavGroup[] = [
   },
   {
     id: 'data-center',
-    label: 'Data Center',
+    label: 'Document Center',
     items: [
-      { href: '/data', label: 'Data Center', icon: Database },
+      { href: '/data', label: 'Document Center', icon: Database },
     ],
   },
 ];
@@ -253,11 +253,8 @@ export function Sidebar() {
 
           <div className={cn('border-b p-6', theme.headerBorder)}>
             <Link href="/" className="group flex items-center gap-4">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 shadow-lg shadow-blue-500/25 transition-shadow group-hover:shadow-blue-500/40">
-                <span className="text-[10px] font-black tracking-[0.08em] text-white">FLEX</span>
-              </div>
               <div>
-                <h1 className="text-2xl font-bold leading-tight tracking-tight">FLEX Insight</h1>
+                <h1 className="text-2xl font-bold leading-tight tracking-tight">EMS Intelligence</h1>
                 <div className="mt-1 flex items-center gap-1.5">
                   <Sparkles className="h-3 w-3 text-purple-400" />
                   <p className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-xs font-medium text-transparent">AI Powered</p>

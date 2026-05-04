@@ -325,7 +325,7 @@ export default function CompanyDetailPage() {
               className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-all shadow-sm disabled:opacity-60"
             >
               <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-              {refreshing ? '刷新中...' : '刷新'}
+              {refreshing ? 'Refreshing...' : 'Refresh'}
             </button>
           </div>
         </div>
