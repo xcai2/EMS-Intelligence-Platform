@@ -1,0 +1,43 @@
+The electronics manufacturing services industry powers the devices, servers, and infrastructure that run the modern world.
+
+Companies like Flex, Jabil, Celestica, Benchmark, Sanmina, and Plexus collectively manufacture hundreds of billions of dollars of hardware every year — from AI servers to medical devices to automotive systems.
+
+Yet tracking their financial health, strategic bets, and competitive positioning requires hours of manual work across filings, earnings calls, and scattered news sources.
+
+We built the EMS Intelligence Platform to change that.
+
+Our platform is a full-stack financial intelligence system built specifically for the EMS sector.
+
+At its core is a RAG-powered document engine — thousands of pages of SEC filings are indexed in a vector database, making any passage instantly searchable.
+
+On top of that, we layer live financial data, multi-source news intelligence, and AI-generated analysis — all synthesized into eight integrated modules.
+
+And thanks to a persistent cache layer built across every page, the entire platform loads instantly — even after a server restart.
+
+The News module aggregates stories from company IR feeds, SEC RSS, and the open web — all in one place. Click a topic preset like Data Center or AI Infrastructure, and the feed filters instantly. Every company gets an AI-generated weekly digest.
+
+Analyst View synthesizes sell-side ratings, analyst coverage, and strategic consensus themes into an executive summary — refreshed with a single click. No more reading through twenty separate research notes.
+
+The AI Chat interface lets you query the entire knowledge base in natural language. Choose between RAG mode — grounded in SEC filings — web search mode, or a hybrid of both. Filter by company, time period, and AI provider. It's like having a research analyst available around the clock.
+
+The Companies dashboard gives you an at-a-glance view of all six players — AI investment focus, sentiment scores, and CapEx anomaly alerts.
+
+Click into any company for a full deep-dive: five-year financials, CapEx trend analysis with automatic anomaly detection, investment focus breakdown from SEC filings, and real-time hiring signals.
+
+The Hyperscaler tracker monitors capital expenditure from Amazon, Microsoft, Google, Meta, and Apple — updated via Gemini with Google Search grounding. This is the demand side of the EMS equation: where the hyperscalers spend tells you exactly where EMS growth is headed.
+
+The Facilities Map renders every manufacturing location across six continents on an interactive globe — with regional distribution analysis and competitor facility overlap detection.
+
+The Earnings Calendar tracks upcoming and recent earnings releases and conference calls for all six companies — with direct links to IR pages and webcasts, so you never miss a reporting event.
+
+Behind the scenes, the Data Center manages automated SEC filing ingestion — scheduling downloads, tracking status by company and filing type, and keeping the knowledge base continuously up to date.
+
+Who is this built for?
+
+Equity analysts benchmarking EMS valuations across six companies simultaneously. Supply chain strategists tracking capacity shifts and geographic expansion. Corporate development teams reading competitor AI investment signals from primary source documents. And portfolio managers connecting hyperscaler CapEx commitments to the manufacturers who build the hardware.
+
+What used to take a research team days of manual work now takes seconds.
+
+The EMS Intelligence Platform turns fragmented, hard-to-access data into clear, actionable intelligence — so analysts and decision-makers can focus on the insight, not the data hunt.
+
+This is research infrastructure purpose-built for one of the most strategically important corners of the global technology supply chain.
