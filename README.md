@@ -57,41 +57,41 @@ cd frontend && npm run dev
 ## Architecture
 
 ```mermaid
-flowchart TB
-    subgraph Sources[Data Sources]
-        SEC[SEC EDGAR\n20+ years]
-        News[News & RSS]
-        Brave[Brave Search]
-    end
+flowchart LR
+    SEC["📄 SEC EDGAR\n20+ years"]
+    NEWS["📰 News & RSS"]
+    BRAVE["🔍 Brave Search"]
 
-    subgraph Processing[Processing Layer]
-        Fetcher[Financial Fetcher\nXBRL → SQLite]
-        Embedder[Document Embedder\nSentence Transformers]
-        Analytics[Analytics Engine\nSentiment · Anomaly · Classifier]
-    end
+    FETCH["Financial Fetcher\nXBRL → SQLite"]
+    EMBED["Document Embedder\nSentence Transformers"]
+    ANAL["Analytics Engine\nSentiment · Anomaly · Classifier"]
 
-    subgraph Storage[Storage]
-        SQLite[(SQLite\nFinancial Cache)]
-        ChromaDB[(ChromaDB\nVector Store)]
-        JSON[(JSON\nNews · Presets · Analytics)]
-    end
+    SQL[("SQLite\nFinancial Cache")]
+    CHROMA[("ChromaDB\nVector Store")]
+    JCACHE[("JSON\nNews & Analytics")]
 
-    subgraph AI[AI Layer]
-        RAG[RAG Pipeline\nRetrieval + Claude]
-        Cache[Financial Cache\nShort-circuit for numeric queries]
-    end
+    SCACHE["⚡ Cache Lookup\n&lt; 1 sec"]
+    RAG["🤖 RAG Pipeline\nRetrieval + Claude"]
 
-    subgraph Frontend[Next.js Frontend]
-        Modules[8 Modules\nNews · Analyst · Chat · Companies\nAI Investments · Map · Calendar · Data Center]
-    end
+    UI["Next.js Frontend\n8 Modules"]
 
-    SEC --> Fetcher --> SQLite
-    SEC --> Embedder --> ChromaDB
-    News --> JSON
-    SQLite --> Cache --> Frontend
-    ChromaDB --> RAG --> Frontend
-    Brave --> RAG
-    Analytics --> JSON --> Frontend
+    SEC --> FETCH --> SQL --> SCACHE --> UI
+    SEC --> EMBED --> CHROMA --> RAG --> UI
+    SEC --> ANAL --> JCACHE --> UI
+    NEWS --> JCACHE
+    BRAVE --> RAG
+
+    classDef source fill:#dbeafe,stroke:#3b82f6,color:#1e3a5f
+    classDef process fill:#ede9fe,stroke:#7c3aed,color:#3b0764
+    classDef storage fill:#fef9c3,stroke:#ca8a04,color:#451a03
+    classDef ai fill:#dcfce7,stroke:#16a34a,color:#052e16
+    classDef frontend fill:#fee2e2,stroke:#dc2626,color:#450a0a
+
+    class SEC,NEWS,BRAVE source
+    class FETCH,EMBED,ANAL process
+    class SQL,CHROMA,JCACHE storage
+    class SCACHE,RAG ai
+    class UI frontend
 ```
 
 ---
