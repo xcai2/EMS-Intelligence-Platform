@@ -4,42 +4,42 @@
       "id": "ai-infra",
       "label": "AI Infrastructure Leadership",
       "questions": [
-        "Who is gaining share in AI data center?",
-        "Compare AI server ramp speeds across companies",
-        "What is the demand for AI infrastructure?",
-        "Analyze AI data center revenue impact"
+        "Who is expanding AI data center capabilities?",
+        "Which company leads AI server deployments?",
+        "Analyze growth in hyperscaler partnerships",
+        "Compare AI infrastructure investment strategies"
       ]
     },
     {
       "id": "capacity",
       "label": "Capacity & Footprint",
       "questions": [
-        "Compare nearshoring strategies among peers",
-        "Analyze liquid cooling adoption rates",
-        "What is driving manufacturing expansion?",
-        "How has capacity utilization changed?"
+        "Compare nearshoring strategies by manufacturers",
+        "How has manufacturing capacity evolved recently?",
+        "Which firm is leading liquid cooling adoption?",
+        "Analyze trends in manufacturing expansion"
       ]
     },
     {
       "id": "financial",
       "label": "Financial Performance",
       "questions": [
-        "Compare gross margin trends across companies",
-        "Which company shows strongest revenue growth?",
-        "Analyze CapEx spending trends",
-        "What is current backlog status?"
+        "Compare revenue growth across companies",
+        "What is the trend in gross margins?",
+        "Analyze CapEx spending patterns",
+        "Which company is prioritizing backlog reduction?"
       ]
     },
     {
       "id": "risks",
       "label": "Risks & External Factors",
       "questions": [
-        "Compare tariff exposure by company",
-        "How has geopolitics impacted operations?",
-        "What supply chain risks are present?",
-        "Which company faces greatest tariff risk?"
+        "Compare tariff impacts on operations",
+        "Which company faces greatest geopolitical risks?",
+        "How has supply chain been affected recently?",
+        "Analyze exposure to global trade tensions"
       ]
     }
   ],
-  "cached_at": "2026-04-17T13:35:36.218980"
+  "cached_at": "2026-05-02T17:24:34.552955"
 }

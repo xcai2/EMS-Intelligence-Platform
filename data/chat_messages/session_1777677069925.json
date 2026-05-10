@@ -1,47 +1,72 @@
 [
   {
     "role": "user",
-    "content": "what is the capex of Jabil in FY2025 Q2?"
+    "content": "Compare the capital expenditures (CapEx) of Flex, Jabil, Celestica, Sanmina, Plexus, and Benchmark over the last five fiscal years (FY2020–FY2024). Present the data in a table"
   },
   {
     "role": "assistant",
-    "content": "**JBL — Capital Expenditure** (cash outflow, shown as positive magnitude)\n\nFY2025 Q2 (period ending 2025-02-28): 116M\n\n_Source: yfinance cache (fetched 2026-05-01)._"
-  },
-  {
-    "role": "user",
-    "content": "what is the capex of Jabil in FY2025 Q2?give me a table"
-  },
-  {
-    "role": "assistant",
-    "content": "**JBL — Capital Expenditure** (shown as positive cash outflow magnitude)\n\n| Fiscal Period | Period End | Capital Expenditure |\n|---|---|---|\n| FY2025 Q2 | 2025-02-28 | 116M |\n\n_Source: yfinance cache (fetched 2026-05-01)._"
-  },
-  {
-    "role": "user",
-    "content": "what is the capex of Jabil in FY2025 Q2 and Q3?give me a table"
-  },
-  {
-    "role": "assistant",
-    "content": "**JBL — Capital Expenditure** (shown as positive cash outflow magnitude)\n\n| Fiscal Period | Period End | Capital Expenditure |\n|---|---|---|\n| FY2025 Q3 | 2025-05-31 | 86M |\n| FY2025 Q2 | 2025-02-28 | 116M |\n\n_Source: yfinance cache (fetched 2026-05-01)._",
+    "content": "**Capital Expenditure**\n\n- FLEX FY2024 (period ending 2024-03-31): 530M\n- FLEX FY2023 (period ending 2023-03-31): 635M\n- FLEX FY2022 (period ending 2022-03-31): 443M\n- FLEX FY2021 (period ending 2021-03-31): 351M\n- FLEX FY2020 (period ending 2020-03-31): 462M\n- JBL FY2024 (period ending 2024-08-31): 784M\n- JBL FY2023 (period ending 2023-08-31): 1.03B\n- JBL FY2022 (period ending 2022-08-31): 1.39B\n- JBL FY2021 (period ending 2021-08-31): 1.16B\n- JBL FY2020 (period ending 2020-08-31): 983M\n- CLS FY2024 (period ending 2024-12-31): 171M\n- CLS FY2023 (period ending 2023-12-31): 125M\n- CLS FY2022 (period ending 2022-12-31): 109M\n- BHE FY2024 (period ending 2024-12-31): 31M\n- BHE FY2023 (period ending 2023-12-31): 73M\n- BHE FY2022 (period ending 2022-12-31): 43M\n- BHE FY2021 (period ending 2021-12-31): 39M\n- BHE FY2020 (period ending 2020-12-31): 35M\n- SANM FY2024 (period ending 2024-09-28): 111M\n- SANM FY2023 (period ending 2023-09-30): 191M\n- SANM FY2023 (period ending 2022-10-01): 139M\n- SANM FY2022 (period ending 2021-10-02): 73M\n- SANM FY2021 (period ending 2020-10-03): 66M\n- PLXS FY2024 (period ending 2024-09-28): 95M\n- PLXS FY2023 (period ending 2023-09-30): 104M\n- PLXS FY2023 (period ending 2022-10-01): 102M\n- PLXS FY2022 (period ending 2021-10-02): 57M\n- PLXS FY2021 (period ending 2020-10-03): 50M",
     "table_payload": {
-      "title": "JBL Capital Expenditure (Quarterly)",
+      "title": "Capital Expenditure Comparison (USD Millions)",
       "columns": [
-        "Fiscal Period",
-        "Period End",
-        "Capital Expenditure"
+        "Company",
+        "FY2020",
+        "FY2021",
+        "FY2022",
+        "FY2023",
+        "FY2024"
       ],
       "rows": [
         [
-          "FY2025 Q3",
-          "2025-05-31",
-          "86M"
+          "FLEX",
+          "462M",
+          "351M",
+          "443M",
+          "635M",
+          "530M"
         ],
         [
-          "FY2025 Q2",
-          "2025-02-28",
-          "116M"
+          "JBL",
+          "983M",
+          "1.16B",
+          "1.39B",
+          "1.03B",
+          "784M"
+        ],
+        [
+          "CLS",
+          "—",
+          "—",
+          "109M",
+          "125M",
+          "171M"
+        ],
+        [
+          "BHE",
+          "35M",
+          "39M",
+          "43M",
+          "73M",
+          "31M"
+        ],
+        [
+          "SANM",
+          "—",
+          "66M",
+          "73M",
+          "139M",
+          "111M"
+        ],
+        [
+          "PLXS",
+          "—",
+          "50M",
+          "57M",
+          "102M",
+          "95M"
         ]
       ]
     },
-    "narrative_text": "JBL Capital Expenditure (quarterly) from yfinance cache."
+    "narrative_text": "Capital Expenditure comparison across 6 companies."
   }
 ]
