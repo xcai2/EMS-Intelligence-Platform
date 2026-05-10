@@ -30,16 +30,16 @@ from backend.core.config import OPENAI_API_KEY, RERANK_MODEL, LLM_MODEL, TRACKED
 
 class EventType(str, Enum):
     """CapEx/Investment event types (A3 from spec)."""
-    CAPEX_GUIDANCE = "CAPEX_GUIDANCE"  # 资本开支指引/预算
-    FACILITY_OPEN_EXPAND = "FACILITY_OPEN_EXPAND"  # 新建/扩建工厂、园区、产线
-    EQUIPMENT_PURCHASE = "EQUIPMENT_PURCHASE"  # 设备采购
-    DATA_CENTER_CAPACITY = "DATA_CENTER_CAPACITY"  # 数据中心产能扩张
-    R_AND_D_INVESTMENT = "R_AND_D_INVESTMENT"  # 研发投入
-    M_AND_A = "M_AND_A"  # 并购/资产收购
-    PARTNERSHIP_JV = "PARTNERSHIP_JV"  # 合资/战略合作
-    SUPPLY_CHAIN_CAPACITY = "SUPPLY_CHAIN_CAPACITY"  # 供应链/垂直整合
-    RESTRUCTURING_EXIT = "RESTRUCTURING_EXIT"  # 关厂/重组（反向信号）
-    HIRING_SKILL_BUILD = "HIRING_SKILL_BUILD"  # 大规模招聘/团队建设
+    CAPEX_GUIDANCE = "CAPEX_GUIDANCE"
+    FACILITY_OPEN_EXPAND = "FACILITY_OPEN_EXPAND"
+    EQUIPMENT_PURCHASE = "EQUIPMENT_PURCHASE"
+    DATA_CENTER_CAPACITY = "DATA_CENTER_CAPACITY"
+    R_AND_D_INVESTMENT = "R_AND_D_INVESTMENT"
+    M_AND_A = "M_AND_A"
+    PARTNERSHIP_JV = "PARTNERSHIP_JV"
+    SUPPLY_CHAIN_CAPACITY = "SUPPLY_CHAIN_CAPACITY"
+    RESTRUCTURING_EXIT = "RESTRUCTURING_EXIT"
+    HIRING_SKILL_BUILD = "HIRING_SKILL_BUILD"
 
 
 class BucketL1(str, Enum):
@@ -52,12 +52,12 @@ class BucketL1(str, Enum):
 
 class BucketL2_AIDC(str, Enum):
     """Level 2 categories for AI/DC bucket."""
-    POWER = "POWER"  # 电源、UPS、电源模块
-    COMPUTE = "COMPUTE"  # Server build、HPC、AI rack
-    COOLING = "COOLING"  # Liquid cooling、CDU、cold plate
-    NETWORKING = "NETWORKING"  # Switch、interconnect、optics
-    DC_INFRASTRUCTURE = "DC_INFRASTRUCTURE"  # 数据中心基础设施
-    AI_SUPPLY_CHAIN = "AI_SUPPLY_CHAIN"  # AI链条相关但不明确
+    POWER = "POWER"
+    COMPUTE = "COMPUTE"
+    COOLING = "COOLING"
+    NETWORKING = "NETWORKING"
+    DC_INFRASTRUCTURE = "DC_INFRASTRUCTURE"
+    AI_SUPPLY_CHAIN = "AI_SUPPLY_CHAIN"
 
 
 class BucketL2_Traditional(str, Enum):
@@ -84,9 +84,9 @@ class DocType(str, Enum):
 
 class ConfidenceTier(str, Enum):
     """Source confidence tiers."""
-    HIGH = "HIGH"  # SEC / 官方稿
-    MEDIUM = "MEDIUM"  # 一手媒体
-    LOW = "LOW"  # 转载 / 博客
+    HIGH = "HIGH"
+    MEDIUM = "MEDIUM"
+    LOW = "LOW"
 
 
 # ---------------------------------------------------------------------------

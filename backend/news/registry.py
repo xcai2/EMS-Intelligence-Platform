@@ -266,7 +266,6 @@ _COMPANY_META: dict[str, dict] = {
 }
 
 # Phase 1 query templates: (intent, query_template, freshness, count)
-# Templates from §14 of 新架构设计说明 Phase 1.md
 _COMPANY_TEMPLATES: dict[str, list[tuple]] = {
     "FLEX": [
         ("official_name",    '"Flex Ltd." news',                     None, 40),

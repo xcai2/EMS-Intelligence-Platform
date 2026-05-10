@@ -74,14 +74,13 @@ _RECENCY_KEYWORDS = {
 # QUARTER RANGE EXTRACTION
 # ---------------------------------------------------------------------------
 
-# 各公司财年开始月份
 COMPANY_FY_START = {
-    "Flex": 4,      # 4月开始，3月结束
-    "Jabil": 9,     # 9月开始，8月结束
-    "Celestica": 1, # 自然年
-    "Benchmark": 1, # 自然年
-    "Sanmina": 10,  # 10月开始，9月结束
-    "Plexus": 10,   # 10月开始，9月结束
+    "Flex": 4,
+    "Jabil": 9,
+    "Celestica": 1,
+    "Benchmark": 1,
+    "Sanmina": 10,
+    "Plexus": 10,
 }
 
 _QUARTER_COUNT_WORDS = {
@@ -105,7 +104,6 @@ def _extract_quarter_range(query: str) -> Optional[int]:
     """
     q_lower = query.lower()
 
-    # 变体1: last/past/previous/prior/recent + 英文数字 + quarter(s)
     pattern = r'\b(?:last|past|previous|prior|recent)\s+(\w+)\s+quarters?\b'
     match = re.search(pattern, q_lower)
     if match:
@@ -114,7 +112,6 @@ def _extract_quarter_range(query: str) -> Optional[int]:
         if count:
             return count
 
-    # 变体2: last/past/previous/prior/recent + 阿拉伯数字 + quarter(s)
     digit_match = re.search(
         r'\b(?:last|past|previous|prior|recent)\s+(\d+)\s+quarters?\b',
         q_lower
@@ -124,14 +121,12 @@ def _extract_quarter_range(query: str) -> Optional[int]:
         if 1 <= count <= 12:
             return count
 
-    # 变体3: "last few/several/some/multiple quarters" -> 默认 3
     if re.search(
         r'\b(?:last|past|previous|prior|recent)\s+(?:few|several|some|multiple)\s+quarters?\b',
         q_lower
     ):
         return 3
 
-    # 变体4: 单独的 "last/recent quarter"（单数）
     if re.search(r'\b(?:last|past|previous|prior|recent)\s+quarter\b', q_lower):
         return 1
 
@@ -151,7 +146,6 @@ def _extract_explicit_periods(query: str) -> list[tuple[str, str]]:
     q_lower = query.lower()
     periods = []
 
-    # 模式1: FY2025 Q1 to/through/- Q3 (同一财年内的连续范围)
     m = re.search(
         r'\bfy\s*(\d{2,4})\s+q([1-4])\s*(?:to|through|-)\s*q([1-4])\b',
         q_lower
@@ -165,7 +159,6 @@ def _extract_explicit_periods(query: str) -> list[tuple[str, str]]:
             periods.append((year, f"Q{q}"))
         return periods
 
-    # 模式2: Q1 to Q3 / Q1-Q3 / Q1 through Q3 (没有指定财年)
     m2 = re.search(r'\bq([1-4])\s*(?:to|through|-)\s*q([1-4])\b', q_lower)
     if m2:
         start_q = int(m2.group(1))
@@ -175,8 +168,6 @@ def _extract_explicit_periods(query: str) -> list[tuple[str, str]]:
                 periods.append(("", f"Q{q}"))
             return periods
 
-    # 模式3: FY2024 Q1, Q2, Q3 或 Q2 and Q3 FY2024 (同一财年，列举)
-    # 只有一个 FY 时才走这里，多个 FY 留给模式4处理
     all_years = re.findall(r'\bfy\s*(\d{2,4})\b', q_lower)
     q_matches = re.findall(r'\bq([1-4])\b', q_lower)
     if len(all_years) == 1 and q_matches:
@@ -188,8 +179,6 @@ def _extract_explicit_periods(query: str) -> list[tuple[str, str]]:
                 periods.append(p)
         return periods
 
-    # 模式4: FY24 Q3 and FY25 Q1 (跨财年，各自指定)
-    # 先找所有 FY+year 的位置，再找紧跟其后的 Q
     cross_matches = re.findall(r'\bfy\s*(\d{2,4})\b[^fy]*?\bq([1-4])\b', q_lower)
     if len(cross_matches) >= 2:
         for year, q in cross_matches:
@@ -213,7 +202,6 @@ def _extract_quarters_ago(query: str, company: str = None) -> list[tuple[str, st
     """
     q_lower = query.lower()
 
-    # 匹配 "N quarters ago"
     pattern = r'\b(\w+)\s+quarters?\s+ago\b'
     match = re.search(pattern, q_lower)
     if not match:
@@ -224,20 +212,17 @@ def _extract_quarters_ago(query: str, company: str = None) -> list[tuple[str, st
     if not count:
         return []
 
-    # 从今天往前数 count 个季度，再多数1个跳过当前季度
     today = date.today()
     fy_start = COMPANY_FY_START.get(company, 1) if company else 1
 
     month = today.month
     year = today.year
 
-    # 先跳过当前季度
     month -= 3
     if month <= 0:
         month += 12
         year -= 1
 
-    # 再往前数 count 个季度
     for _ in range(count - 1):
         month -= 3
         if month <= 0:
@@ -269,10 +254,9 @@ def _get_recent_fiscal_periods(n_quarters: int, company: str = None) -> list[tup
     year = today.year
     month = today.month
 
-    # 多算一个，用来跳过当前还没结束的季度
     for _ in range(n_quarters + 1):
-        fy_month = (month - fy_start) % 12      # 在财年内是第几个月（0-based）
-        q_num = fy_month // 3 + 1               # 第几季度
+        fy_month = (month - fy_start) % 12
+        q_num = fy_month // 3 + 1
 
         # FY label logic:
         # - Calendar year (fy_start=1): FY = current year
@@ -289,13 +273,11 @@ def _get_recent_fiscal_periods(n_quarters: int, company: str = None) -> list[tup
         fy_label = f"FY{fy_year % 100:02d}"
         periods.append((fy_label, f"Q{q_num}"))
 
-        # 往前退3个月
         month -= 3
         if month <= 0:
             month += 12
             year -= 1
 
-    # 去重、跳过第一个（当前进行中的季度）、取 N 个
     seen = []
     for p in periods:
         if p not in seen:
@@ -937,7 +919,6 @@ def search_documents(
             if any(v.lower() in fy.lower() for v in variants):
                 doc["similarity"] += 0.15
 
-    # 最高优先：用户说了 "N quarters ago"（特指某一个季度）
     ago_periods = _extract_quarters_ago(query, company_filter)
     explicit_periods = _extract_explicit_periods(query)
     n_quarters = _extract_quarter_range(query)
@@ -959,7 +940,6 @@ def search_documents(
         }
         docs.insert(0, note_doc)
 
-        # 检测缺失
         found = any(
             str(doc.get("fiscal_year", "")) == fy and doc.get("quarter", "") == q
             for doc in docs
@@ -981,7 +961,6 @@ def search_documents(
             }
             docs.insert(1, warning_doc)
 
-        # boost / 降权
         for doc in docs:
             period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
             if period == (fy, q):
@@ -989,9 +968,7 @@ def search_documents(
             else:
                 doc["similarity"] -= 0.15
 
-    # 次优先：用户显式指定了具体 periods（如 "FY2025 Q1 to Q3"）
     elif explicit_periods:
-        # 生成时间范围说明
         periods_str = ", ".join(
             f"FY{fy} {q}" if fy else q for fy, q in explicit_periods
         )
@@ -1010,7 +987,6 @@ def search_documents(
         }
         docs.insert(0, note_doc)
 
-        # 检测缺失
         found_periods = set()
         for doc in docs:
             period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
@@ -1040,7 +1016,6 @@ def search_documents(
             }
             docs.insert(1, warning_doc)
 
-        # boost / 降权
         for doc in docs:
             period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
             if period in explicit_periods:
@@ -1048,22 +1023,17 @@ def search_documents(
             else:
                 doc["similarity"] -= 0.15
 
-    # 其次：用户说了 last N quarters
     elif n_quarters is not None:
-        # 根据今天日期精确计算目标 periods
         target_periods = _get_recent_fiscal_periods(n_quarters, company_filter)
 
-        # 检测数据库中实际存在哪些 target periods
         found_periods = set()
         for doc in docs:
             period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
             if period in target_periods:
                 found_periods.add(period)
 
-        # 找出缺失的 periods
         missing_periods = [p for p in target_periods if p not in found_periods]
 
-        # 生成当前季度未完结的提示，注入到 docs 最前面
         quarter_note = _build_quarter_range_note(n_quarters, company_filter)
         note_doc = {
             "content": quarter_note,
@@ -1078,7 +1048,6 @@ def search_documents(
         }
         docs.insert(0, note_doc)
 
-        # 如果有缺失，再插入一条数据缺失警告
         if missing_periods:
             # fy already has "FY" prefix ("FY26") — don't prepend again
             missing_str = ", ".join(f"{fy} {q}" for fy, q in missing_periods)
@@ -1100,7 +1069,6 @@ def search_documents(
             }
             docs.insert(1, warning_doc)
 
-        # boost / 降权
         for doc in docs:
             period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
             if period in target_periods:
@@ -1449,14 +1417,12 @@ def search_multi_company_by_periods(
             f"  - {company}: " + ", ".join(f"{fy} {q}" for fy, q in target_periods)
         )
 
-        # 用该公司自己的 target_periods 去检索
         company_docs = search_documents(
             query=query,
             company_filter=company,
             n_results=n_results,
         )
 
-        # 检测缺失
         found_periods = set()
         for doc in company_docs:
             period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
@@ -1467,7 +1433,6 @@ def search_multi_company_by_periods(
         for p in missing:
             all_missing.append((company, p[0], p[1]))
 
-        # boost / 降权
         for doc in company_docs:
             period = (str(doc.get("fiscal_year", "")), doc.get("quarter", ""))
             if period in target_periods:
@@ -1477,7 +1442,6 @@ def search_multi_company_by_periods(
 
         all_docs.extend(company_docs)
 
-    # 注入多公司财年对齐说明
     alignment_note = (
         "[MULTI-COMPANY TIME ALIGNMENT] Each company uses its own fiscal calendar. "
         f"The last {n_quarters} completed quarters for each company are:\n"
@@ -1496,7 +1460,6 @@ def search_multi_company_by_periods(
     }
     all_docs.insert(0, note_doc)
 
-    # 如果有缺失数据，再注入警告
     if all_missing:
         missing_str = ", ".join(f"{company} FY{fy} {q}" for company, fy, q in all_missing)
         warning_doc = {

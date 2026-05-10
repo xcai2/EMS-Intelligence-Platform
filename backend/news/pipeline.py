@@ -7,7 +7,7 @@ Phase 2 pipeline:
   4. Categorize         — assign display-layer category tags via keyword matching (filtering.py)
   5. Sort               — descending by published date; undated items go last
 
-Phase 3 addition (§八):
+Phase 3 addition:
   2b. Cross-source merge — after exact dedup, fold reprints of the same press release into
       one primary record; assign canonical_event_key, merged_sources, merged_urls.
       Insertion point: normalize → exact dedup → cross-source merge → age filter → sort.
@@ -240,7 +240,6 @@ def deduplicate_exact_items(items: list[NewsItem]) -> list[NewsItem]:
 
 
 # ---------------------------------------------------------------------------
-# Phase 3 Step 2b: Cross-source merge / event-level merge (§八)
 # ---------------------------------------------------------------------------
 
 # Press-release origin domains — items from these are treated as primary sources (§8.3.1)

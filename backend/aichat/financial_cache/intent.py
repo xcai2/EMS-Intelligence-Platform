@@ -499,7 +499,6 @@ def _parse_period(query: str) -> tuple[str, int, Optional[str]]:
         unit = m.group(2)
         return ("annual" if unit == "year" else "quarterly", min(n, 12), None)
 
-    # "过去四季度" / "最近 4 年"
     m = _RE_PAST_N_ZH.search(query)
     if m:
         raw = m.group(1)

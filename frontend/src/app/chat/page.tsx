@@ -277,7 +277,6 @@ export default function ChatPage() {
           setStrategyCategories(data.categories);
         }
       } catch {
-        // 加载失败时保留默认问题
       } finally {
         setCategoriesLoading(false);
       }

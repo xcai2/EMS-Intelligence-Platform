@@ -304,7 +304,6 @@ def _truncate_by_max_words(text: str, max_words: Optional[int]) -> str:
 
     import re as _re
     cjk_chars = _re.findall(r"[\u4e00-\u9fff]", text)
-    # If many CJK chars exist, user likely expects "字数" control
     if len(cjk_chars) >= 20:
         count = 0
         out = []
@@ -498,11 +497,9 @@ def _get_available_et_periods(company: str, n_recent: int) -> list[tuple[str, st
         if col.count() == 0:
             return []
 
-        # 先尝试搜 Earnings Transcript
         results = col.get(where={"filing_type": "Earnings Transcript"}, limit=5000)
         metas = results.get("metadatas", [])
 
-        # 没有 transcript，fallback 到所有文档
         if not metas:
             results = col.get(limit=5000)
             metas = results.get("metadatas", [])
@@ -515,7 +512,6 @@ def _get_available_et_periods(company: str, n_recent: int) -> list[tuple[str, st
     for m in metas:
         fy = m.get("fiscal_year", "")
         q = m.get("quarter", "")
-        # quarter 为空时用 Q1 占位，保证有数据可以返回
         if fy and fy not in ("Unknown", ""):
             q = q if q else "Q1"
             seen.add((fy, q))
@@ -574,7 +570,6 @@ def _search_historical_docs(
             query_embedding = embed_text(query)
 
             for fy, q in target_periods:
-                # quarter 是占位 Q1 时（原始元数据无 quarter 字段）不加 quarter 过滤
                 if q == "Q1" and fy:
                     where_filter = {"fiscal_year": fy}
                 else:
@@ -629,7 +624,6 @@ def _extract_calendar_year(query: str) -> Optional[int]:
     Only activate if user explicitly says 'calendar year'.
     """
     q = query.lower()
-    # 只有明确说 calendar year 才走日历年逻辑
     if "calendar year" not in q and "calendar 20" not in q:
         return None
     # Reject FY forms
@@ -1169,7 +1163,6 @@ async def _stream_response(request: ChatRequest):
     if use_agentic:
         try:
             from backend.rag.agentic import agentic_stream
-            # 去掉 instruction prefix，只保存实际问题
             clean_query = query
             if "\n\n" in query:
                 clean_query = query.split("\n\n")[-1].strip()
@@ -1433,7 +1426,6 @@ async def _stream_response(request: ChatRequest):
                     _compose_generic_fallback_synthesis(fallback_text, provider_used),
                 )
                 yield _sse_event("token", {"text": hybrid_text})
-                # 去掉 instruction prefix，只保存实际问题
                 clean_query = query
                 if "\n\n" in query:
                     clean_query = query.split("\n\n")[-1].strip()
@@ -1454,7 +1446,6 @@ async def _stream_response(request: ChatRequest):
         yield _sse_event("done", {"session_id": session_id})
         return
 
-    # Save user message to session (去掉 instruction prefix，只保存实际问题)
     clean_query = query
     if "\n\n" in query:
         clean_query = query.split("\n\n")[-1].strip()
@@ -1463,7 +1454,6 @@ async def _stream_response(request: ChatRequest):
         clean_query = parts[-1].strip()
     add_message(session_id, "user", clean_query)
 
-    # 保存到对话历史（只在第一条消息时触发）
     history = get_conversation_history(session_id)
     if len(history) <= 1:
         _add_to_chat_history(session_id, query)
@@ -1779,7 +1769,6 @@ async def chat(request: ChatRequest):
     fallback_used = False
     provider_used = None
 
-    # 去掉 instruction prefix，只保存实际问题
     clean_query = query
     if "\n\n" in query:
         clean_query = query.split("\n\n")[-1].strip()
@@ -1788,7 +1777,6 @@ async def chat(request: ChatRequest):
         clean_query = parts[-1].strip()
     add_message(session_id, "user", clean_query)
 
-    # 保存到对话历史（只在第一条消息时触发）
     history = get_conversation_history(session_id)
     if len(history) <= 1:
         _add_to_chat_history(session_id, query)
@@ -1950,7 +1938,6 @@ async def chat(request: ChatRequest):
             response_text = narrative_text_out or response_text
 
     add_message(session_id, "assistant", response_text)
-    # 持久化保存，包含 table_payload 和 narrative_text
     all_messages = get_conversation_history(session_id)
     if all_messages and (table_payload_out or narrative_text_out):
         all_messages[-1]["table_payload"] = table_payload_out
@@ -2090,12 +2077,11 @@ def _save_chat_history(history: list[dict]) -> None:
 
 
 def _add_to_chat_history(session_id: str, first_message: str) -> None:
-    """保存对话到历史记录，最多保留10条。"""
+    """Save conversation to history, keeping up to 10 entries."""
     history = _load_chat_history()
     if any(h["session_id"] == session_id for h in history):
         return
 
-    # 去掉 STRUCTURED_RESPONSE_INSTRUCTION prefix
     clean_message = first_message
     if "\n\nConstraints:" in clean_message:
         clean_message = clean_message.split("\n\nConstraints:")[0]
@@ -2115,17 +2101,16 @@ def _add_to_chat_history(session_id: str, first_message: str) -> None:
 
 @router.get("/chat/history")
 async def get_chat_history():
-    """获取最近5条对话记录。"""
+    """Return the most recent 5 chat history entries."""
     history = _load_chat_history()
     return {"history": history}
 
 
-# 对话消息持久化文件目录
 CHAT_MESSAGES_DIR = Path(DATA_DIR) / "chat_messages"
 
 
 def _save_session_messages(session_id: str, messages: list[dict]) -> None:
-    """持久化保存 session 消息到文件。"""
+    """Persist session messages to disk."""
     CHAT_MESSAGES_DIR.mkdir(parents=True, exist_ok=True)
     file_path = CHAT_MESSAGES_DIR / f"{session_id}.json"
     with open(file_path, "w", encoding="utf-8") as f:
@@ -2133,7 +2118,7 @@ def _save_session_messages(session_id: str, messages: list[dict]) -> None:
 
 
 def _load_session_messages(session_id: str) -> list[dict]:
-    """从文件读取 session 消息。"""
+    """Load session messages from disk."""
     file_path = CHAT_MESSAGES_DIR / f"{session_id}.json"
     if not file_path.exists():
         return []
@@ -2146,7 +2131,7 @@ def _load_session_messages(session_id: str) -> list[dict]:
 
 @router.get("/chat/history/{session_id}")
 async def get_chat_session_history(session_id: str):
-    """获取某个对话的完整消息记录。先从文件读，文件没有再从内存读。"""
+    """Return full message history for a session. Reads from disk first, falls back to memory."""
     messages = _load_session_messages(session_id)
     if not messages:
         messages = get_conversation_history(session_id)

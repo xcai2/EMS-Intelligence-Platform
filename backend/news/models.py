@@ -100,7 +100,6 @@ class NewsItem:
     canonical_url: str = ""               # Phase 2: stable dedup/cache key
     matched_intents: List[str] = field(default_factory=list)  # Phase 2: all intents that hit this URL
     match_count: int = 0                  # Phase 2: len(matched_intents)
-    # Phase 3 cross-source merge fields (§八)
     canonical_event_key: str = ""         # stable event key across reprint sites
     merged_sources: List[str] = field(default_factory=list)   # source_types merged into this record
     merged_urls: List[str] = field(default_factory=list)      # all URLs that mapped to this event

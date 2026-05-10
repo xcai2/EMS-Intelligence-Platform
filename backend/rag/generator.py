@@ -407,8 +407,8 @@ def detect_query_type(query: str) -> str:
         "used to say", "said before", "position evolved", "stance evolved",
         "q1 to q", "q2 to q", "q3 to q", "q4 to q",
         "earnings ago", "what did", "what has", "how has",
-        "q1 and q", "q2 and q", "q3 and q",  # 新增：覆盖 "Q2 and Q3" 这类问题
-        "q1, q", "q2, q", "q3, q",            # 新增：覆盖 "Q1, Q2, Q3" 这类问题
+        "q1 and q", "q2 and q", "q3 and q",
+        "q1, q", "q2, q", "q3, q",
         "last 2 quarters", "last 3 quarters", "last two", "last three",
         "past quarter", "past 2", "past 3",
     ]
