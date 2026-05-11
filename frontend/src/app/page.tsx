@@ -50,7 +50,7 @@ export default function Home() {
             <div className="chip-layer chip-front">
               <div className="chip-grid" />
               <div className="chip-core">
-                <span>FLEX</span>
+                <span>EMS</span>
               </div>
             </div>
           </div>
@@ -61,7 +61,7 @@ export default function Home() {
           <div className="spark spark-c" />
         </div>
 
-        <h1 className="mb-2 text-5xl font-black tracking-tight text-white">FLEX Insight</h1>
+        <h1 className="mb-2 text-5xl font-black tracking-tight text-white">EMS Insight</h1>
         <p className="mb-8 text-lg text-slate-300">Initializing News Desk</p>
 
         <div className="mx-auto w-64 overflow-hidden rounded-full border border-slate-600/60 bg-slate-800/70">

@@ -8,7 +8,6 @@ import {
   Building2,
   TrendingUp,
   Database,
-  Sparkles,
   ChevronRight,
   Globe,
   Newspaper,
@@ -17,7 +16,10 @@ import {
   ChevronDown,
   PanelLeftClose,
   PanelLeftOpen,
+  Sun,
+  Moon,
 } from 'lucide-react';
+import { EMSIntelligenceLogo } from '@/components/EMSIntelligenceLogo';
 import { cn } from '@/lib/utils';
 
 type NavItem = {
@@ -239,42 +241,39 @@ export function Sidebar() {
         </div>
       ) : (
         <>
-          <button
-            type="button"
-            onClick={() => setIsCollapsed(true)}
-            className={cn(
-              'absolute right-3 top-3 z-20 inline-flex h-9 w-9 items-center justify-center rounded-md border transition-colors',
-              theme.collapseBtn
-            )}
-            aria-label="Collapse sidebar"
-          >
-            <PanelLeftClose className="h-4 w-4" />
-          </button>
-
-          <div className={cn('border-b p-6', theme.headerBorder)}>
-            <Link href="/" className="group flex items-center gap-4">
+          <div className={cn('border-b p-4', theme.headerBorder)}>
+            <Link href="/" className="flex items-center gap-3">
+              <EMSIntelligenceLogo size={40} />
               <div>
-                <h1 className="text-2xl font-bold leading-tight tracking-tight">EMS Intelligence</h1>
-                <div className="mt-1 flex items-center gap-1.5">
-                  <Sparkles className="h-3 w-3 text-purple-400" />
-                  <p className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-xs font-medium text-transparent">AI Powered</p>
-                </div>
+                <h1 className="text-xl font-bold leading-tight tracking-tight">EMS Intelligence</h1>
+                <p className="mt-0.5 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-xs font-medium text-transparent">AI Powered</p>
               </div>
             </Link>
           </div>
 
           <nav className="flex-1 overflow-y-auto p-4">
-            <div className="mb-4 flex items-center justify-between px-4">
+            <div className="mb-4 flex items-center justify-between px-1">
               <p className={cn('text-xs font-semibold uppercase tracking-wider', theme.navTitle)}>Navigation</p>
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className={cn('inline-flex h-7 w-7 items-center justify-center rounded-md border text-sm', theme.themeToggleBtn)}
-                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-                title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              >
-                {isDark ? '🌞' : '🌛'}
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="p-1.5 rounded-md text-gray-400 hover:text-gray-200 hover:bg-white/5 transition-colors"
+                  aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                  title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                >
+                  {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsCollapsed(true)}
+                  className="p-1.5 rounded-md text-gray-400 hover:text-gray-200 hover:bg-white/5 transition-colors"
+                  aria-label="Collapse sidebar"
+                  title="Collapse sidebar"
+                >
+                  <PanelLeftClose className="h-4 w-4" />
+                </button>
+              </div>
             </div>
             <div className="space-y-3">
               {navGroups.map((group) => {
