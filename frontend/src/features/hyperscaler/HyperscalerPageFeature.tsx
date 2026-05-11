@@ -410,7 +410,7 @@ export default function HyperscalerPageFeature() {
                         return (
                           <div className="space-y-2">
                             <div className="flex justify-between rounded-lg bg-amber-50 p-2 text-sm dark:bg-amber-900/20">
-                              <span className="text-slate-600 dark:text-slate-300">2026 CapEx <span className="text-[10px] text-slate-400">(Gemini)</span></span>
+                              <span className="text-slate-600 dark:text-slate-300">2026 CapEx <span className="text-[10px] text-slate-400">(Guidance)</span></span>
                               <span className="font-bold text-amber-700 dark:text-amber-400">
                                 {selectedCompany.capex_2026_billions != null ? `$${selectedCompany.capex_2026_billions}B` : '—'}
                               </span>
@@ -495,7 +495,7 @@ export default function HyperscalerPageFeature() {
               <p className="text-xl font-bold text-slate-900 dark:text-slate-100 my-1">
                 {totalCapex2026 > 0 ? `$${totalCapex2026.toFixed(0)}B` : '—'}
               </p>
-              <p className="text-[9px] text-slate-400">Big 5 combined · Gemini</p>
+              <p className="text-[9px] text-slate-400">Big 5 combined · 2026 guidance</p>
             </CardContent>
           </Card>
 
@@ -568,7 +568,7 @@ export default function HyperscalerPageFeature() {
                     content={() => (
                       <div className="flex gap-4 justify-center text-xs text-slate-600">
                         <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: '#94A3B8' }} />2025 Actual (yfinance)</span>
-                        <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: '#F59E0B' }} />2026 Outlook (Gemini)</span>
+                        <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: '#F59E0B' }} />2026 Outlook (Guidance)</span>
                       </div>
                     )}
                   />
@@ -577,7 +577,7 @@ export default function HyperscalerPageFeature() {
                 </BarChart>
               </ResponsiveContainer>
               <p className="text-xs text-slate-400 mt-2">
-                2025 actual from SEC filings (yfinance) · 2026 outlook from latest earnings guidance (Gemini)
+                2025 actual from SEC filings (yfinance) · 2026 outlook from latest earnings calls and company guidance
                 {data.last_updated && ` · Updated ${data.last_updated}`}
               </p>
             </CardContent>
@@ -614,7 +614,7 @@ export default function HyperscalerPageFeature() {
                   <Tooltip formatter={(value) => [`$${value}B`, 'CapEx']} />
                 </PieChart>
               </ResponsiveContainer>
-              <p className="text-xs text-slate-400 mt-2">Share of 2026 CapEx by company · Source: Gemini</p>
+              <p className="text-xs text-slate-400 mt-2">Share of 2026 CapEx by company · Based on company guidance</p>
             </CardContent>
           </Card>
         </div>
