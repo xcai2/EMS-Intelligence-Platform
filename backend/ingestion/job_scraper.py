@@ -9,6 +9,7 @@ from collections import defaultdict
 
 from backend.core.config import COMPANIES
 from backend.rag.web_search import search_web
+from backend.scraper.careers_scraper import load_cached_careers, is_cache_stale
 
 
 # Job categories relevant to strategic analysis
@@ -34,6 +35,16 @@ LOCATION_REGIONS = {
     "asia_pacific": ["China", "Malaysia", "Singapore", "India", "Vietnam", "Thailand", "Taiwan"],
     "europe": ["Germany", "UK", "Poland", "Hungary", "Czech", "Ireland", "Netherlands"],
 }
+
+
+def _get_cached_official_jobs(company: str, category: Optional[str] = None) -> list[dict]:
+    """Read jobs for a company from the official-website JSON cache."""
+    all_jobs = load_cached_careers()
+    jobs = [j for j in all_jobs if j["company"].lower() == company.lower()]
+    if category and category in JOB_CATEGORIES:
+        keywords = [k.lower() for k in JOB_CATEGORIES[category]]
+        jobs = [j for j in jobs if any(kw in j["title"].lower() for kw in keywords)]
+    return jobs
 
 
 class JobScraper:
@@ -75,25 +86,32 @@ class JobScraper:
 
         all_jobs = []
 
+        # Primary path: read from official-website JSON cache
         try:
-            results = await search_web(query, count=15)
-            for result in results:
-                job_info = self._parse_job_result(result, company)
-                if job_info:
-                    all_jobs.append(job_info)
+            all_jobs = _get_cached_official_jobs(company, category)
         except Exception as e:
-            print(f"Job search error for {company}: {e}")
+            print(f"Official careers cache read error for {company}: {e}")
 
-        # Also search for specific career page
-        try:
-            career_query = f'{search_name} careers site:linkedin.com OR site:indeed.com'
-            career_results = await search_web(career_query, count=10)
-            for result in career_results:
-                job_info = self._parse_job_result(result, company)
-                if job_info:
-                    all_jobs.append(job_info)
-        except Exception as e:
-            print(f"Career search error for {company}: {e}")
+        # Fallback: web search if cache is empty or stale
+        if not all_jobs:
+            try:
+                results = await search_web(query, count=15)
+                for result in results:
+                    job_info = self._parse_job_result(result, company)
+                    if job_info:
+                        all_jobs.append(job_info)
+            except Exception as e:
+                print(f"Job search error for {company}: {e}")
+
+            try:
+                career_query = f'{search_name} careers site:linkedin.com OR site:indeed.com'
+                career_results = await search_web(career_query, count=10)
+                for result in career_results:
+                    job_info = self._parse_job_result(result, company)
+                    if job_info:
+                        all_jobs.append(job_info)
+            except Exception as e:
+                print(f"Career search error for {company}: {e}")
         
         # Deduplicate
         seen = set()
