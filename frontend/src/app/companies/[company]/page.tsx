@@ -207,7 +207,7 @@ export default function CompanyDetailPage() {
 
     if (changed) writePersistentCache(`cache:company-detail:${companyKey}:v1`, c);
     setRefreshing(false);
-    setRefreshMsg(changed ? '数据已更新' : '数据无变化，缓存保持不变');
+    setRefreshMsg(changed ? 'Data updated' : 'No changes — cache unchanged');
     setTimeout(() => setRefreshMsg(null), 3000);
   };
 
@@ -343,7 +343,7 @@ export default function CompanyDetailPage() {
               </Badge>
             )}
             {refreshMsg && (
-              <span className={`text-sm font-medium ${refreshMsg.includes('无变化') ? 'text-slate-500' : 'text-green-600'}`}>
+              <span className={`text-sm font-medium ${refreshMsg.includes('No changes') ? 'text-slate-500' : 'text-green-600'}`}>
                 {refreshMsg}
               </span>
             )}

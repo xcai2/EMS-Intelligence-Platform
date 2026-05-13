@@ -12,7 +12,7 @@ CAREERS_CONFIG = {
         "search_url": "https://flextronics.wd1.myworkdayjobs.com/Careers",
         "base_url": "https://flextronics.wd1.myworkdayjobs.com",
         "next_button_selector": "button[aria-label='next']",
-        "max_pages": 10,   # 50 jobs/page → up to 500 jobs
+        "max_pages": 65,   # 20 jobs/page → up to 1300 jobs
         "wait_seconds": 6,
         "selectors": {
             "job_card": ["li[class*='css-']"],
