@@ -111,73 +111,38 @@ CAREERS_CONFIG = {
     },
     "Celestica": {
         "url": "https://careers.celestica.com/",
-        # Category pages are static HTML — requests works fine (bypasses JS cookie popup)
+        # Static HTML — requests bypasses the JS cookie popup
         "method": "requests",
-        "search_url": "https://careers.celestica.com/go/Engineering-Jobs/1280201/",
-        # Additional category pages scraped in sequence
-        "additional_urls": [
-            "https://careers.celestica.com/go/Operations-Jobs/1283401/",
-            "https://careers.celestica.com/go/Corporate-Jobs/8944401/",
-        ],
+        "search_url": "https://careers.celestica.com/search/?createNewAlert=false&q=&locationsearch=",
         "base_url": "https://careers.celestica.com",
+        # offset-style pagination: appends &startrow=25, &startrow=50, ...
+        "startrow_step": 25,
+        "page_param": "startrow",
+        "max_pages": 20,   # up to 500 jobs
         "selectors": {
-            "job_card": [
-                "tr.data-row",
-            ],
-            "title": [
-                "a.jobTitle-link",
-            ],
-            "location": [
-                ".jobLocation",
-            ],
-            "department": [
-                ".jobCategory",
-            ],
-            "link": [
-                "a.jobTitle-link",
-            ],
+            "job_card": ["tr.data-row"],
+            "title": ["a.jobTitle-link"],
+            "location": [".jobLocation"],
+            "department": [".jobCategory"],
+            "link": ["a.jobTitle-link"],
         },
-        "pagination": False,
-        "max_pages": 1,
-        "wait_seconds": 3,
     },
     "Plexus": {
-        "url": "https://www.plexus.com/careers/",
-        "method": "selenium",
-        "search_url": "https://www.plexus.com/careers/",
+        "url": "https://plexus.eightfold.ai/careers",
+        # Eightfold AI SPA — click-through pagination required
+        "method": "selenium_click",
+        "search_url": "https://plexus.eightfold.ai/careers?domain=plexus.com&triggerGoButton=true",
+        "base_url": "https://plexus.eightfold.ai",
+        "next_button_selector": "[class*='pagination-next']",
+        "max_pages": 27,
+        "wait_seconds": 7,
         "selectors": {
-            "job_card": [
-                ".job-card",
-                "[class*='position']",
-                "li.job",
-                "[class*='job-item']",
-                "article",
-            ],
-            "title": [
-                "h3", "h2",
-                ".job-title",
-                "[class*='title']",
-            ],
-            "location": [
-                ".location",
-                "[class*='location']",
-                "[class*='city']",
-            ],
-            "department": [
-                "[class*='category']",
-                "[class*='dept']",
-                "[class*='function']",
-            ],
-            "link": [
-                "a[href*='/careers/']",
-                "a[href*='/jobs/']",
-                "a",
-            ],
+            "job_card": ["[data-test-id='job-listing']"],
+            "title": ["[class*='title-']"],
+            "location": ["[class*='fieldValue-']"],
+            "department": [],
+            "link": ["a[href*='/careers/job/']"],
         },
-        "pagination": True,
-        "max_pages": 3,
-        "page_param": "page",
-        "wait_seconds": 4,
     },
     "Benchmark": {
         "url": "https://www.bench.com/careers",

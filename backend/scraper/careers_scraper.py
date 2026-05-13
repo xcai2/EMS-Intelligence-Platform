@@ -205,19 +205,27 @@ def _parse_html(html: str, company: str, config: dict, source_url: str) -> list[
 
 def _scrape_with_requests(company: str, config: dict) -> list[dict]:
     """Static-HTML scraping path using requests + BeautifulSoup.
-    Supports multiple URLs via the optional 'additional_urls' config key.
+    Supports multiple URLs via the optional 'additional_urls' config key,
+    and offset-based pagination via 'startrow_step'.
     """
     all_jobs: list[dict] = []
     seen_titles: set[str] = set()
     base_url = config.get("base_url", config["search_url"])
     max_pages = config.get("max_pages", 1)
     page_param = config.get("page_param", "page")
+    startrow_step = config.get("startrow_step")
 
     urls_to_scrape = [config["search_url"]] + config.get("additional_urls", [])
 
     for url in urls_to_scrape:
         for page_num in range(1, max_pages + 1):
-            page_url = f"{url}?{page_param}={page_num}" if page_num > 1 else url
+            if startrow_step:
+                offset = (page_num - 1) * startrow_step
+                sep = "&" if "?" in url else "?"
+                page_url = url if offset == 0 else f"{url}{sep}{page_param}={offset}"
+            else:
+                page_url = f"{url}?{page_param}={page_num}" if page_num > 1 else url
+
             try:
                 resp = requests.get(page_url, headers=_REQUESTS_HEADERS, timeout=20)
                 resp.raise_for_status()
@@ -226,14 +234,13 @@ def _scrape_with_requests(company: str, config: dict) -> list[dict]:
                 break
 
             page_jobs = _parse_html(resp.text, company, config, base_url)
-            # Cross-URL dedup by title
             new_jobs = [j for j in page_jobs if j["title"].lower()[:60] not in seen_titles]
             for j in new_jobs:
                 seen_titles.add(j["title"].lower()[:60])
-            logger.info("[%s] %s page %d (requests): %d jobs (%d new)", company, url, page_num, len(page_jobs), len(new_jobs))
+            logger.info("[%s] page %d (requests): %d jobs (%d new)", company, page_num, len(page_jobs), len(new_jobs))
             all_jobs.extend(new_jobs)
 
-            if not config.get("pagination") or len(page_jobs) == 0:
+            if len(new_jobs) == 0:
                 break
 
             time.sleep(1.5)
@@ -280,6 +287,52 @@ def _scrape_with_selenium(company: str, config: dict) -> list[dict]:
     return all_jobs
 
 
+def _scrape_with_selenium_click(company: str, config: dict) -> list[dict]:
+    """Selenium scraper that advances through click-based pagination (e.g. Eightfold AI)."""
+    from selenium.webdriver.common.by import By
+
+    all_jobs: list[dict] = []
+    seen_titles: set[str] = set()
+    url = config["search_url"]
+    base_url = config.get("base_url", url)
+    max_pages = config.get("max_pages", 5)
+    wait_secs = config.get("wait_seconds", 6)
+    next_btn_sel = config.get("next_button_selector", "[class*='pagination-next']")
+
+    driver = _make_driver()
+    try:
+        driver.get(url)
+        time.sleep(wait_secs)
+
+        for page_num in range(1, max_pages + 1):
+            html = driver.page_source
+            page_jobs = _parse_html(html, company, config, base_url)
+            new_jobs = [j for j in page_jobs if j["title"].lower()[:60] not in seen_titles]
+            for j in new_jobs:
+                seen_titles.add(j["title"].lower()[:60])
+            logger.info("[%s] page %d (selenium-click): %d jobs (%d new)", company, page_num, len(page_jobs), len(new_jobs))
+            all_jobs.extend(new_jobs)
+
+            if page_num >= max_pages:
+                break
+
+            try:
+                next_btn = driver.find_element(By.CSS_SELECTOR, next_btn_sel)
+                btn_classes = next_btn.get_attribute("class") or ""
+                if "disabled" in btn_classes:
+                    logger.info("[%s] reached last page at %d", company, page_num)
+                    break
+                driver.execute_script("arguments[0].click();", next_btn)
+                time.sleep(wait_secs)
+            except Exception as exc:
+                logger.info("[%s] pagination ended at page %d: %s", company, page_num, exc)
+                break
+    finally:
+        driver.quit()
+
+    return all_jobs
+
+
 # ---------------------------------------------------------------------------
 # Public scraping functions
 # ---------------------------------------------------------------------------
@@ -300,10 +353,11 @@ def scrape_company_careers(company: str) -> list[dict]:
     try:
         if method == "requests":
             jobs = _scrape_with_requests(company, config)
-            # If static scrape returned almost nothing, fall back to selenium
             if len(jobs) < 5:
                 logger.info("[%s] requests returned %d jobs, escalating to selenium", company, len(jobs))
                 jobs = _scrape_with_selenium(company, config)
+        elif method == "selenium_click":
+            jobs = _scrape_with_selenium_click(company, config)
         else:
             jobs = _scrape_with_selenium(company, config)
     except Exception as exc:
