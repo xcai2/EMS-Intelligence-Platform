@@ -6,42 +6,21 @@ Mirrors scraper_config.py (Facilities Map) in structure.
 
 CAREERS_CONFIG = {
     "Flex": {
-        "url": "https://flex.com/careers",
-        "method": "selenium",
-        # Flex careers listing is JS-rendered; search page requires interaction
-        "search_url": "https://flex.com/careers/search-jobs",
+        "url": "https://flextronics.wd1.myworkdayjobs.com/Careers",
+        # Flex uses Workday ATS — click-through pagination
+        "method": "selenium_click",
+        "search_url": "https://flextronics.wd1.myworkdayjobs.com/Careers",
+        "base_url": "https://flextronics.wd1.myworkdayjobs.com",
+        "next_button_selector": "button[aria-label='next']",
+        "max_pages": 10,   # 50 jobs/page → up to 500 jobs
+        "wait_seconds": 6,
         "selectors": {
-            "job_card": [
-                "[data-automation='jobTitle']",
-                ".job-card",
-                "li[class*='job']",
-                "article[class*='job']",
-            ],
-            "title": [
-                "[data-automation='jobTitle']",
-                ".job-title",
-                "h2", "h3",
-            ],
-            "location": [
-                "[data-automation='jobLocation']",
-                ".job-location",
-                "[class*='location']",
-            ],
-            "department": [
-                "[data-automation='jobCategory']",
-                "[class*='department']",
-                "[class*='category']",
-            ],
-            "link": [
-                "a[href*='/careers/']",
-                "a[href*='/jobs/']",
-                "a",
-            ],
+            "job_card": ["li[class*='css-']"],
+            "title": ["a[data-automation-id='jobTitle']"],
+            "location": ["[data-automation-id='locations']"],
+            "department": ["[data-automation-id='jobFamilyGroup']"],
+            "link": ["a[data-automation-id='jobTitle']"],
         },
-        "pagination": True,
-        "max_pages": 3,
-        "page_param": "page",
-        "wait_seconds": 4,
     },
     "Jabil": {
         "url": "https://jobs.jabil.com/en",

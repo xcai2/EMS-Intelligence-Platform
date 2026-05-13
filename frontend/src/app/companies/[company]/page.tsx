@@ -223,14 +223,14 @@ export default function CompanyDetailPage() {
         setHiring(data);
         c.hiring = data;
         writePersistentCache(`cache:company-detail:${companyKey}:v1`, c);
-        const addedPart = data.added > 0 ? ` · +${data.added} 新职位` : '';
-        const removedPart = data.removed > 0 ? ` / -${data.removed} 已下线` : '';
-        setRescrapeMsg(`已从官网更新${addedPart}${removedPart}`);
+        const addedPart = data.added > 0 ? ` · +${data.added} new` : '';
+        const removedPart = data.removed > 0 ? ` / -${data.removed} removed` : '';
+        setRescrapeMsg(`Updated from official site${addedPart}${removedPart}`);
       } else {
-        setRescrapeMsg('官网无变化，缓存保持不变');
+        setRescrapeMsg('No changes detected');
       }
     } catch {
-      setRescrapeMsg('抓取失败，请稍后重试');
+      setRescrapeMsg('Scrape failed, please retry');
     } finally {
       setRescraping(false);
       setTimeout(() => setRescrapeMsg(null), 5000);
@@ -864,7 +864,7 @@ export default function CompanyDetailPage() {
                       className="flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition-colors disabled:opacity-50"
                     >
                       <RefreshCw className={`h-3 w-3 ${rescraping ? 'animate-spin' : ''}`} />
-                      {rescraping ? '抓取中...' : '从官网更新'}
+                      {rescraping ? 'Scraping...' : 'Fetch from Official Site'}
                     </button>
                   </div>
                 </div>

@@ -121,6 +121,14 @@ def _classify_seniority(title: str) -> str:
     return "mid"
 
 
+def _clean_field(text: str) -> str:
+    """Strip known ATS label prefixes that bleed into text content."""
+    import re
+    text = re.sub(r'^locations\s*', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'^location\s*', '', text, flags=re.IGNORECASE)
+    return text.strip()
+
+
 def _normalize_job(
     title: str,
     location: str,
@@ -130,11 +138,12 @@ def _normalize_job(
     source_url: str,
 ) -> dict:
     """Build a normalized job record matching the shape expected by job_scraper.py."""
+    location = _clean_field(location)
     now = datetime.now(timezone.utc).isoformat()
     return {
         "company": company,
         "title": title.strip()[:200],
-        "location": location.strip()[:200],
+        "location": location[:200],
         "department": department.strip()[:100],
         "seniority": _classify_seniority(title),
         "region": _classify_region(location),
@@ -184,6 +193,10 @@ def _parse_html(html: str, company: str, config: dict, source_url: str) -> list[
 
         # Skip cards where no meaningful title was found
         if not title or len(title) < 4:
+            continue
+        # Skip bare ATS reference IDs (e.g. Workday "WD219341" entries with no real content)
+        import re as _re
+        if _re.match(r'^WD\d+$', title.strip()):
             continue
         # Skip navigation / footer noise
         if any(noise in title.lower() for noise in ["menu", "search", "login", "sign in", "cookie"]):

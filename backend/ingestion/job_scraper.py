@@ -34,7 +34,7 @@ class JobScraper:
     def __init__(self):
         self._cache = {}
         self._cache_time = {}
-        self._cache_ttl = 1800  # 30 min cache
+        self._cache_ttl = 180  # 3 min cache — careers_cache.json is the source of truth
     
     def _get_cached(self, key: str) -> Optional[dict]:
         """Get cached data if still valid."""
@@ -94,11 +94,11 @@ class JobScraper:
             except Exception as e:
                 print(f"Career search error for {company}: {e}")
         
-        # Deduplicate
+        # Deduplicate by title + location (same role at different sites = distinct jobs)
         seen = set()
         unique_jobs = []
         for job in all_jobs:
-            key = job.get('title', '')[:40].lower()
+            key = f"{job.get('title','')[:40].lower()}|{job.get('location','')[:30].lower()}"
             if key not in seen:
                 seen.add(key)
                 unique_jobs.append(job)
