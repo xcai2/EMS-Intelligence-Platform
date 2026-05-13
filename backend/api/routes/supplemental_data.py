@@ -73,6 +73,40 @@ async def get_company_patents(company: str, category: Optional[str] = None):
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@router.post("/jobs/{company}/rescrape")
+async def rescrape_company_careers(company: str):
+    """
+    Re-scrape the company's official careers page and update the cache if jobs changed.
+    Runs Selenium in a thread pool so it doesn't block the event loop.
+    """
+    import asyncio
+    from backend.scraper.careers_scraper import refresh_company_careers
+    from backend.ingestion.job_scraper import _job_scraper
+
+    try:
+        company_title = _normalize_company_title(company)
+        loop = asyncio.get_event_loop()
+        diff = await loop.run_in_executor(None, refresh_company_careers, company_title)
+
+        # Invalidate in-memory job cache so next read picks up fresh careers_cache.json
+        for suffix in [None, *list(__import__('backend.ingestion.job_scraper', fromlist=['JOB_CATEGORIES']).JOB_CATEGORIES.keys())]:
+            _job_scraper._cache.pop(f"jobs_{company_title}_{suffix}", None)
+
+        jobs_result = await search_company_jobs(company_title)
+        hiring_score = get_hiring_score(jobs_result)
+
+        return {
+            "changed": diff["changed"],
+            "added": diff["added"],
+            "removed": diff["removed"],
+            "scraped_at": diff["scraped_at"],
+            **jobs_result,
+            "hiring_score": hiring_score,
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
 @router.get("/jobs/compare/all")
 async def compare_hiring():
     """Compare hiring trends across all tracked companies."""

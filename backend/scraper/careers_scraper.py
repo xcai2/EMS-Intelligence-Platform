@@ -380,6 +380,54 @@ def is_cache_stale(max_age_hours: int = 24) -> bool:
 
 
 # ---------------------------------------------------------------------------
+# Per-company refresh with change detection
+# ---------------------------------------------------------------------------
+
+def refresh_company_careers(company: str) -> dict:
+    """
+    Re-scrape one company's careers page and update careers_cache.json only if jobs changed.
+    Returns a diff summary: {changed, added, removed, total, jobs, scraped_at}.
+    Designed to be called from a background thread (Selenium is blocking).
+    """
+    all_cached = load_cached_careers()
+    old_jobs = [j for j in all_cached if j["company"].lower() == company.lower()]
+    old_titles = {j["title"].lower()[:60] for j in old_jobs}
+
+    new_jobs = scrape_company_careers(company)
+    new_titles = {j["title"].lower()[:60] for j in new_jobs}
+
+    added = len(new_titles - old_titles)
+    removed = len(old_titles - new_titles)
+    changed = added > 0 or removed > 0
+
+    if changed:
+        other_jobs = [j for j in all_cached if j["company"].lower() != company.lower()]
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        with open(JSON_PATH, "w") as f:
+            json.dump(other_jobs + new_jobs, f, indent=2)
+
+        meta = load_scrape_meta_careers()
+        now = datetime.now(timezone.utc).isoformat()
+        meta.setdefault("companies", {})[company] = now
+        meta["scraped_at"] = now
+        with open(META_PATH, "w") as f:
+            json.dump(meta, f, indent=2)
+
+        logger.info("[%s] cache updated: +%d added, -%d removed", company, added, removed)
+    else:
+        logger.info("[%s] no changes detected; cache unchanged", company)
+
+    return {
+        "changed": changed,
+        "added": added,
+        "removed": removed,
+        "total": len(new_jobs),
+        "jobs": new_jobs,
+        "scraped_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+# ---------------------------------------------------------------------------
 # CLI entry point
 # ---------------------------------------------------------------------------
 

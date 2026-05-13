@@ -91,6 +91,8 @@ export default function CompanyDetailPage() {
   const [loading, setLoading] = useState(!cache.overview);
   const [refreshing, setRefreshing] = useState(false);
   const [refreshMsg, setRefreshMsg] = useState<string | null>(null);
+  const [rescraping, setRescraping] = useState(false);
+  const [rescrapeMsg, setRescrapeMsg] = useState<string | null>(null);
 
   useEffect(() => {
     if (!company) return;
@@ -207,6 +209,32 @@ export default function CompanyDetailPage() {
     setRefreshing(false);
     setRefreshMsg(changed ? '数据已更新' : '数据无变化，缓存保持不变');
     setTimeout(() => setRefreshMsg(null), 3000);
+  };
+
+  const handleRescrape = async () => {
+    const c = getDetailCache(companyKey);
+    setRescraping(true);
+    setRescrapeMsg(null);
+    try {
+      const res = await fetch(`${API_URL}/api/jobs/${company}/rescrape`, { method: 'POST' });
+      if (!res.ok) throw new Error('rescrape failed');
+      const data = await res.json();
+      if (data.changed) {
+        setHiring(data);
+        c.hiring = data;
+        writePersistentCache(`cache:company-detail:${companyKey}:v1`, c);
+        const addedPart = data.added > 0 ? ` · +${data.added} 新职位` : '';
+        const removedPart = data.removed > 0 ? ` / -${data.removed} 已下线` : '';
+        setRescrapeMsg(`已从官网更新${addedPart}${removedPart}`);
+      } else {
+        setRescrapeMsg('官网无变化，缓存保持不变');
+      }
+    } catch {
+      setRescrapeMsg('抓取失败，请稍后重试');
+    } finally {
+      setRescraping(false);
+      setTimeout(() => setRescrapeMsg(null), 5000);
+    }
   };
 
   const getTrendIcon = (direction: string) => {
@@ -824,9 +852,21 @@ export default function CompanyDetailPage() {
                     <Users className="h-5 w-5 text-green-500" />
                     Hiring Activity
                   </CardTitle>
-                  <span className="text-xs px-2 py-1 rounded-full bg-green-50 text-green-600 border border-green-200">
-                    Source: Web Search · DuckDuckGo
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {rescrapeMsg && (
+                      <span className={`text-xs font-medium ${rescrapeMsg.includes('失败') ? 'text-red-500' : rescrapeMsg.includes('无变化') ? 'text-slate-400' : 'text-green-600'}`}>
+                        {rescrapeMsg}
+                      </span>
+                    )}
+                    <button
+                      onClick={handleRescrape}
+                      disabled={rescraping}
+                      className="flex items-center gap-1 text-xs px-2 py-1 rounded-md bg-green-50 text-green-700 border border-green-200 hover:bg-green-100 transition-colors disabled:opacity-50"
+                    >
+                      <RefreshCw className={`h-3 w-3 ${rescraping ? 'animate-spin' : ''}`} />
+                      {rescraping ? '抓取中...' : '从官网更新'}
+                    </button>
+                  </div>
                 </div>
               </CardHeader>
               <CardContent>
@@ -879,7 +919,7 @@ export default function CompanyDetailPage() {
                 <div className="flex items-center justify-between">
                   <CardTitle>Current Job Openings</CardTitle>
                   <span className="text-xs px-2 py-1 rounded-full bg-green-50 text-green-600 border border-green-200">
-                    Source: LinkedIn · Indeed · Web
+                    Source: Official Careers Pages
                   </span>
                 </div>
               </CardHeader>
@@ -897,7 +937,7 @@ export default function CompanyDetailPage() {
                         <div className="flex items-start justify-between gap-2">
                           <div className="flex-1">
                             <p className="font-medium text-sm text-blue-600 hover:underline line-clamp-2">{job.title}</p>
-                            <p className="text-xs text-slate-500 mt-1 line-clamp-2">{job.snippet}</p>
+                            <p className="text-xs text-slate-500 mt-1">{job.location || job.snippet}</p>
                           </div>
                           <div className="flex flex-col gap-1">
                             <Badge variant="outline" className="text-xs capitalize">
