@@ -17,7 +17,7 @@ from bs4 import BeautifulSoup
 
 from backend.scraper.careers_config import CAREERS_CONFIG
 from backend.core.config import BASE_DIR
-from backend.ingestion.job_scraper import JOB_CATEGORIES, LOCATION_REGIONS
+from backend.ingestion.job_constants import JOB_CATEGORIES, LOCATION_REGIONS
 
 logger = logging.getLogger(__name__)
 
