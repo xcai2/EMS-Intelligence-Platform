@@ -204,29 +204,39 @@ def _parse_html(html: str, company: str, config: dict, source_url: str) -> list[
 # ---------------------------------------------------------------------------
 
 def _scrape_with_requests(company: str, config: dict) -> list[dict]:
-    """Static-HTML scraping path using requests + BeautifulSoup."""
+    """Static-HTML scraping path using requests + BeautifulSoup.
+    Supports multiple URLs via the optional 'additional_urls' config key.
+    """
     all_jobs: list[dict] = []
-    url = config["search_url"]
+    seen_titles: set[str] = set()
+    base_url = config.get("base_url", config["search_url"])
     max_pages = config.get("max_pages", 1)
     page_param = config.get("page_param", "page")
 
-    for page_num in range(1, max_pages + 1):
-        page_url = f"{url}?{page_param}={page_num}" if page_num > 1 else url
-        try:
-            resp = requests.get(page_url, headers=_REQUESTS_HEADERS, timeout=20)
-            resp.raise_for_status()
-        except Exception as exc:
-            logger.warning("[%s] requests GET failed for %s: %s", company, page_url, exc)
-            break
+    urls_to_scrape = [config["search_url"]] + config.get("additional_urls", [])
 
-        page_jobs = _parse_html(resp.text, company, config, url)
-        logger.info("[%s] page %d (requests): %d jobs", company, page_num, len(page_jobs))
-        all_jobs.extend(page_jobs)
+    for url in urls_to_scrape:
+        for page_num in range(1, max_pages + 1):
+            page_url = f"{url}?{page_param}={page_num}" if page_num > 1 else url
+            try:
+                resp = requests.get(page_url, headers=_REQUESTS_HEADERS, timeout=20)
+                resp.raise_for_status()
+            except Exception as exc:
+                logger.warning("[%s] requests GET failed for %s: %s", company, page_url, exc)
+                break
 
-        if not config.get("pagination") or len(page_jobs) == 0:
-            break
+            page_jobs = _parse_html(resp.text, company, config, base_url)
+            # Cross-URL dedup by title
+            new_jobs = [j for j in page_jobs if j["title"].lower()[:60] not in seen_titles]
+            for j in new_jobs:
+                seen_titles.add(j["title"].lower()[:60])
+            logger.info("[%s] %s page %d (requests): %d jobs (%d new)", company, url, page_num, len(page_jobs), len(new_jobs))
+            all_jobs.extend(new_jobs)
 
-        time.sleep(1.5)
+            if not config.get("pagination") or len(page_jobs) == 0:
+                break
+
+            time.sleep(1.5)
 
     return all_jobs
 

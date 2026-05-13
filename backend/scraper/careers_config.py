@@ -44,41 +44,33 @@ CAREERS_CONFIG = {
         "wait_seconds": 4,
     },
     "Jabil": {
-        "url": "https://careers.jabil.com/en/search-jobs",
+        "url": "https://jobs.jabil.com/en",
         "method": "selenium",
-        "search_url": "https://careers.jabil.com/en/search-jobs",
+        "search_url": "https://jobs.jabil.com/en/search-jobs",
         "selectors": {
             "job_card": [
-                ".job-list-item",
-                "article.job",
-                "li[class*='job']",
-                "[class*='job-result']",
+                "li.search-results-list__item",
             ],
             "title": [
-                ".job-title",
-                "h2", "h3",
-                "[class*='title']",
+                ".search-results-list__job-title",
             ],
             "location": [
+                ".job-location dd",
                 ".job-location",
-                "[class*='location']",
-                "[class*='city']",
             ],
             "department": [
-                "[class*='dept']",
-                "[class*='function']",
-                "[class*='category']",
+                ".job-category dd",
+                ".job-category",
             ],
             "link": [
-                "a[href*='/jobs/']",
-                "a[href*='/careers/']",
+                "a.search-results-list__job-link",
                 "a",
             ],
         },
         "pagination": True,
-        "max_pages": 3,
+        "max_pages": 5,
         "page_param": "page",
-        "wait_seconds": 4,
+        "wait_seconds": 6,
     },
     "Sanmina": {
         "url": "https://www.sanmina.com/careers/",
@@ -118,43 +110,35 @@ CAREERS_CONFIG = {
         "wait_seconds": 4,
     },
     "Celestica": {
-        "url": "https://www.celestica.com/careers/search-jobs",
-        # Static HTML — try requests first, fall back to selenium
+        "url": "https://careers.celestica.com/",
+        # Category pages are static HTML — requests works fine (bypasses JS cookie popup)
         "method": "requests",
-        "search_url": "https://www.celestica.com/careers/search-jobs",
+        "search_url": "https://careers.celestica.com/go/Engineering-Jobs/1280201/",
+        # Additional category pages scraped in sequence
+        "additional_urls": [
+            "https://careers.celestica.com/go/Operations-Jobs/1283401/",
+            "https://careers.celestica.com/go/Corporate-Jobs/8944401/",
+        ],
+        "base_url": "https://careers.celestica.com",
         "selectors": {
             "job_card": [
-                ".job-listing",
-                ".career-item",
-                "tr.job-row",
-                "[class*='job-result']",
-                "li[class*='job']",
+                "tr.data-row",
             ],
             "title": [
-                ".job-title",
-                "td:first-child",
-                "h3", "h2",
-                "[class*='title']",
+                "a.jobTitle-link",
             ],
             "location": [
-                ".location",
-                "td:nth-child(2)",
-                "[class*='location']",
+                ".jobLocation",
             ],
             "department": [
-                "[class*='dept']",
-                "[class*='category']",
-                "td:nth-child(3)",
+                ".jobCategory",
             ],
             "link": [
-                "a[href*='/careers/']",
-                "a[href*='/jobs/']",
-                "a",
+                "a.jobTitle-link",
             ],
         },
-        "pagination": True,
-        "max_pages": 3,
-        "page_param": "page",
+        "pagination": False,
+        "max_pages": 1,
         "wait_seconds": 3,
     },
     "Plexus": {
