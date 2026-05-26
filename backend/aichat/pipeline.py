@@ -10,11 +10,69 @@ Now supports AssembledRetriever for pluggable retrieval strategies:
 from typing import Optional
 
 from backend.rag.retriever import search_documents
-from backend.rag.generator import generate_response
+from backend.rag.generator import generate_response, is_comparative_financial
 from backend.rag.web_search import search_web
 from backend.aichat.memory import add_message, get_conversation_history
 from backend.rag.assembled_retriever import get_assembled_retriever
-from backend.aichat.financial_cache.service import answer_financial_query
+from backend.aichat.financial_cache.service import answer_financial_query, query_metric
+from backend.aichat.financial_cache.companies import resolve_all_tickers, fiscal_label as fc_fiscal_label
+
+
+def _build_financial_cache_context(query: str) -> str:
+    """Pre-fetch capex + revenue from financial_cache for each company in the query.
+
+    Injects authoritative yfinance numbers so the LLM can calculate % of revenue
+    and correctly identify the most recent quarter without relying on prose in SEC filings.
+    """
+    tickers = resolve_all_tickers(query)
+    if not tickers:
+        return ""
+
+    lines = ["## Financial Cache Data",
+             "Source: yfinance. Use these figures as ground truth for numeric values.",
+             ""]
+    for ticker in tickers:
+        capex_rows = query_metric(ticker, "Capital Expenditure", period_type="quarterly", limit=4)
+        capex_rows = [r for r in capex_rows if r.get("value") is not None]
+        rev_rows = query_metric(ticker, "Total Revenue", period_type="quarterly", limit=4)
+        rev_rows = [r for r in rev_rows if r.get("value") is not None]
+        ann_rev = query_metric(ticker, "Total Revenue", period_type="annual", limit=1)
+        ann_rev = [r for r in ann_rev if r.get("value") is not None]
+
+        if not capex_rows and not rev_rows:
+            continue
+
+        lines.append(f"### {ticker}")
+        for r in capex_rows[:3]:
+            lbl = fc_fiscal_label(ticker, r["period_end"]) or r["period_end"]
+            v = abs(r["value"])
+            lines.append(f"- CapEx {lbl} (period_end {r['period_end']}): ${v/1e6:,.0f}M")
+        for r in rev_rows[:3]:
+            lbl = fc_fiscal_label(ticker, r["period_end"]) or r["period_end"]
+            v = r["value"]
+            lines.append(f"- Revenue {lbl} (period_end {r['period_end']}): ${v/1e9:,.2f}B")
+        for r in ann_rev[:1]:
+            lbl = fc_fiscal_label(ticker, r["period_end"]) or r["period_end"]
+            fy = lbl.split(" ")[0] if " " in lbl else lbl
+            v = r["value"]
+            lines.append(f"- Annual Revenue {fy} (period_end {r['period_end']}): ${v/1e9:,.2f}B")
+        # Pre-compute quarterly CapEx as % of revenue for latest matching period
+        if capex_rows and rev_rows:
+            rev_by_period = {r["period_end"]: r["value"] for r in rev_rows if r.get("value")}
+            latest_cap = capex_rows[0]
+            period = latest_cap["period_end"]
+            if period in rev_by_period and rev_by_period[period] > 0:
+                cap_v = abs(latest_cap["value"])
+                rev_v = rev_by_period[period]
+                pct = cap_v / rev_v * 100
+                lbl = fc_fiscal_label(ticker, period) or period
+                lines.append(
+                    f"- CapEx % of Revenue {lbl} (quarterly): {pct:.1f}%"
+                    f" (${cap_v/1e6:,.0f}M / ${rev_v/1e9:,.2f}B)"
+                )
+        lines.append("")
+
+    return "\n".join(lines)
 
 
 def _format_docs(docs: list[dict]) -> str:
@@ -112,13 +170,23 @@ async def process_query(
         ]
     
     elif mode in ("rag", "hybrid"):
+        # Comparative financial queries need broader retrieval: more docs, no company filter
+        is_comp = is_comparative_financial(query)
+        eff_n = max(n_results, 20) if is_comp else n_results
+        eff_company = None if is_comp else company_filter
         docs = search_documents(
-            query, 
-            company_filter=company_filter, 
-            n_results=n_results,
+            query,
+            company_filter=eff_company,
+            n_results=eff_n,
             use_reranking=use_reranking,
         )
         context = _format_docs(docs)
+        # Prepend authoritative cache numbers so LLM can pick the most recent
+        # quarter and calculate % of revenue without relying on SEC filing prose.
+        if is_comp:
+            cache_ctx = _build_financial_cache_context(query)
+            if cache_ctx:
+                context = f"{cache_ctx}\n\n{context}"
         sources = [
             {
                 "company": d.get("company"),
@@ -127,7 +195,7 @@ async def process_query(
                 "fiscal_year": d.get("fiscal_year"),
                 "similarity": d.get("similarity"),
             }
-            for d in docs[:5]
+            for d in docs[:8]
         ]
 
     if mode in ("web", "hybrid"):

@@ -1,5 +1,25 @@
 [
   {
+    "session_id": "session_1779811873153",
+    "title": "Compare the capital expenditure (CAPEX) ...",
+    "created_at": "2026-05-26T16:14:02.895660"
+  },
+  {
+    "session_id": "session_1778861573621",
+    "title": "What did Celestica say about 2026 capex ...",
+    "created_at": "2026-05-15T16:15:19.038435"
+  },
+  {
+    "session_id": "session_1778825835119",
+    "title": "What did Celestica management say about ...",
+    "created_at": "2026-05-15T06:18:29.675638"
+  },
+  {
+    "session_id": "session_1778824214972",
+    "title": "What did Celestica say about 2026 capex ...",
+    "created_at": "2026-05-15T05:50:26.016356"
+  },
+  {
     "session_id": "session_1777839510245",
     "title": "what is the capex of Jabil in FY2024 Q2?",
     "created_at": "2026-05-03T20:18:45.622346"
@@ -28,10 +48,5 @@
     "session_id": "session_1777253057845",
     "title": "Analyze liquid cooling adoption rates — ...",
     "created_at": "2026-04-27T01:24:32.775641"
-  },
-  {
-    "session_id": "session_1777000455399",
-    "title": "What did Plexus say about tariffs in 202...",
-    "created_at": "2026-04-24T03:14:48.789036"
   }
 ]

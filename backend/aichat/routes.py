@@ -764,6 +764,72 @@ def _build_calendar_year_note_doc(company: str, calendar_year: int, periods: lis
     }
 
 
+def _prepend_comparative_cache_context(query: str, context: str) -> str:
+    """For comparative financial queries, prepend authoritative financial_cache numbers.
+
+    This gives the LLM ground-truth figures (capex, revenue, fiscal labels) so it can
+    pick the most recent quarter and calculate % of revenue without relying solely on
+    table prose inside SEC filings or press releases.
+    """
+    from backend.rag.generator import is_comparative_financial
+    if not is_comparative_financial(query):
+        return context
+    from backend.aichat.financial_cache.service import query_metric
+    from backend.aichat.financial_cache.companies import resolve_all_tickers, fiscal_label as fc_lbl
+
+    tickers = resolve_all_tickers(query)
+    if not tickers:
+        return context
+
+    lines = ["## Financial Cache Data",
+             "Source: yfinance. Use these as authoritative numbers for capex and revenue.",
+             ""]
+    for ticker in tickers:
+        capex_q = query_metric(ticker, "Capital Expenditure", period_type="quarterly", limit=4)
+        capex_q = [r for r in capex_q if r.get("value") is not None]
+        capex_a = query_metric(ticker, "Capital Expenditure", period_type="annual", limit=1)
+        capex_a = [r for r in capex_a if r.get("value") is not None]
+        rev_q = query_metric(ticker, "Total Revenue", period_type="quarterly", limit=4)
+        rev_q = [r for r in rev_q if r.get("value") is not None]
+        rev_a = query_metric(ticker, "Total Revenue", period_type="annual", limit=1)
+        rev_a = [r for r in rev_a if r.get("value") is not None]
+        if not capex_q and not rev_q:
+            continue
+        lines.append(f"### {ticker}")
+        for r in capex_q[:3]:
+            lbl = fc_lbl(ticker, r["period_end"]) or r["period_end"]
+            lines.append(f"- CapEx {lbl} (period_end {r['period_end']}): ${abs(r['value'])/1e6:,.0f}M")
+        for r in capex_a[:1]:
+            lbl = fc_lbl(ticker, r["period_end"]) or r["period_end"]
+            fy = lbl.split(" ")[0] if " " in lbl else lbl
+            lines.append(f"- CapEx {fy} annual (period_end {r['period_end']}): ${abs(r['value'])/1e6:,.0f}M")
+        for r in rev_q[:3]:
+            lbl = fc_lbl(ticker, r["period_end"]) or r["period_end"]
+            lines.append(f"- Revenue {lbl} (period_end {r['period_end']}): ${r['value']/1e9:,.2f}B")
+        for r in rev_a[:1]:
+            lbl = fc_lbl(ticker, r["period_end"]) or r["period_end"]
+            fy = lbl.split(" ")[0] if " " in lbl else lbl
+            lines.append(f"- Revenue {fy} annual (period_end {r['period_end']}): ${r['value']/1e9:,.2f}B")
+        # Pre-compute quarterly CapEx as % of revenue for latest matching period
+        if capex_q and rev_q:
+            rev_by_period = {r["period_end"]: r["value"] for r in rev_q if r.get("value")}
+            latest_cap = capex_q[0]
+            period = latest_cap["period_end"]
+            if period in rev_by_period and rev_by_period[period] > 0:
+                cap_v = abs(latest_cap["value"])
+                rev_v = rev_by_period[period]
+                pct = cap_v / rev_v * 100
+                lbl = fc_lbl(ticker, period) or period
+                lines.append(
+                    f"- CapEx % of Revenue {lbl} (quarterly): {pct:.1f}%"
+                    f" (${cap_v/1e6:,.0f}M / ${rev_v/1e9:,.2f}B)"
+                )
+        lines.append("")
+
+    cache_ctx = "\n".join(lines)
+    return f"{cache_ctx}\n\n{context}" if context else cache_ctx
+
+
 def _search_docs_for_scope(
     query: str,
     scope: list[str],
@@ -1466,7 +1532,10 @@ async def _stream_response(request: ChatRequest):
 
     # Stream tokens
     full_response = ""
-    
+
+    # Inject authoritative cache numbers for comparative financial queries
+    context = _prepend_comparative_cache_context(query, context)
+
     # Check if this is a historical query — use structured response instead
     from backend.rag.generator import generate_structured_response, detect_query_type as detect_gen_query_type
     gen_query_type = detect_gen_query_type(query)
@@ -1887,6 +1956,9 @@ async def chat(request: ChatRequest):
         else:
             response_text = NO_HIT_MESSAGE
     else:
+        # Inject authoritative cache numbers for comparative financial queries
+        context = _prepend_comparative_cache_context(query, context)
+
         from backend.rag.generator import generate_structured_response, detect_query_type as detect_gen_query_type
         gen_query_type = detect_gen_query_type(query)
         use_table = is_table_query(query) and (context or web_context)

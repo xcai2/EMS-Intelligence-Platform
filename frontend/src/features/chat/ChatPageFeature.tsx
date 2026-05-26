@@ -28,6 +28,19 @@ import {
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+
+// Parse the 3-section hybrid response into separate parts for collapsible display
+function parseHybridSections(content: string): { filing: string; web: string; synthesis: string } | null {
+  const s1 = content.indexOf('## 1) Filing Search Result\n');
+  const s2 = content.indexOf('## 2) Web Search Result\n');
+  const s3 = content.indexOf('## 3) AI Synthesis\n');
+  if (s1 === -1 || s2 === -1 || s3 === -1) return null;
+  return {
+    filing: content.slice(s1 + '## 1) Filing Search Result\n'.length, s2).trim(),
+    web: content.slice(s2 + '## 2) Web Search Result\n'.length, s3).trim(),
+    synthesis: content.slice(s3 + '## 3) AI Synthesis\n'.length).trim(),
+  };
+}
 import { createCustomQuestion, deleteCustomQuestion, fetchCustomQuestions, requestChat } from './api';
 import { TableAnswer, type TablePayload } from './TableAnswer';
 
@@ -274,6 +287,7 @@ export default function ChatPageFeature() {
       }, {})
   );
   const [lastCopiedId, setLastCopiedId] = useState<string | null>(null);
+  const [expandedSources, setExpandedSources] = useState<Record<string, boolean>>({});
   const [customQuestions, setCustomQuestions] = useState<CustomPresetQuestion[]>([]);
   const [openCustomGroup, setOpenCustomGroup] = useState(true);
   const [showAddPresetForm, setShowAddPresetForm] = useState(false);
@@ -958,11 +972,48 @@ export default function ChatPageFeature() {
                                 narrativeText={msg.narrative_text}
                                 tablePayload={msg.table_payload}
                               />
-                            ) : (
-                              <div className="prose prose-sm max-w-none prose-slate dark:prose-invert">
-                                <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
-                              </div>
-                            )
+                            ) : (() => {
+                              const hybrid = parseHybridSections(msg.content);
+                              if (hybrid) {
+                                const sourcesOpen = expandedSources[msg.id] ?? false;
+                                return (
+                                  <div className="space-y-3">
+                                    <div className="prose prose-sm max-w-none prose-slate dark:prose-invert">
+                                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{hybrid.synthesis}</ReactMarkdown>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => setExpandedSources((prev) => ({ ...prev, [msg.id]: !sourcesOpen }))}
+                                      className="flex items-center gap-1 text-[11px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                                    >
+                                      {sourcesOpen ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
+                                      {sourcesOpen ? 'Hide' : 'View'} search sources
+                                    </button>
+                                    {sourcesOpen && (
+                                      <div className="space-y-3 rounded-xl border border-slate-100 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-800/50">
+                                        <div>
+                                          <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">Filing Search Result</p>
+                                          <div className="prose prose-xs max-w-none prose-slate dark:prose-invert text-xs">
+                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{hybrid.filing}</ReactMarkdown>
+                                          </div>
+                                        </div>
+                                        <div>
+                                          <p className="mb-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">Web Search Result</p>
+                                          <div className="prose prose-xs max-w-none prose-slate dark:prose-invert text-xs">
+                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>{hybrid.web}</ReactMarkdown>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    )}
+                                  </div>
+                                );
+                              }
+                              return (
+                                <div className="prose prose-sm max-w-none prose-slate dark:prose-invert">
+                                  <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                                </div>
+                              );
+                            })()
                           ) : (
                             <p className="text-sm leading-6">{msg.content}</p>
                           )}

@@ -764,7 +764,11 @@ def search_documents(
         # Per-company collections exist but no company filter — search all companies
         from backend.core.database import KNOWN_COMPANIES
         all_docs = []
-        per_company_n = max(n_results, 10)
+        wants_latest = _wants_latest(query)
+        # Cast wider net for recency queries so recent earnings releases aren't cut off
+        per_company_n = max(n_results, 20) if wants_latest else max(n_results, 10)
+        # Compute embedding once outside the loop
+        mc_embedding = embed_text(query)
         for company in KNOWN_COMPANIES:
             try:
                 col = get_company_collection(company)
@@ -776,8 +780,7 @@ def search_documents(
                 if section_filter:
                     sub_filters.append({"section_header": section_filter})
                 where = {"$and": sub_filters} if len(sub_filters) > 1 else (sub_filters[0] if sub_filters else None)
-                query_embedding = embed_text(query)
-                kwargs = {"query_embeddings": [query_embedding], "n_results": per_company_n, "include": ["documents", "metadatas", "distances"]}
+                kwargs = {"query_embeddings": [mc_embedding], "n_results": per_company_n, "include": ["documents", "metadatas", "distances"]}
                 if where:
                     kwargs["where"] = where
                 results = col.query(**kwargs)
@@ -789,6 +792,60 @@ def search_documents(
                     all_docs.append({**meta, "content": doc, "similarity": similarity})
             except Exception:
                 continue
+        # For capex+latest queries: metadata-inject recent Earnings Release capex chunks
+        # Vector search misses these because short specific text loses to longer 10-K passages.
+        # Only inject parent chunks with actual financial amounts (avoid boilerplate).
+        if wants_latest and any(trigger in query.lower() for trigger in CAPEX_TRIGGERS):
+            existing_contents = {d.get("content", "")[:200] for d in all_docs}
+            for mc_company in KNOWN_COMPANIES:
+                try:
+                    mc_col = get_company_collection(mc_company)
+                    if mc_col.count() == 0:
+                        continue
+                    er_results = mc_col.get(
+                        where={"$and": [
+                            {"filing_type": {"$in": ["Earnings Release", "8-K"]}},
+                            {"section_header": "Capital Expenditures"},
+                            {"chunk_type": "parent"},
+                        ]},
+                        include=["documents", "metadatas"],
+                    )
+                    if er_results and er_results.get("documents"):
+                        for er_doc, er_meta in zip(er_results["documents"], er_results["metadatas"]):
+                            if er_meta is None:
+                                continue
+                            # Only inject if content has a dollar amount + capex keyword
+                            er_lower = er_doc.lower()
+                            has_amount = "$" in er_doc and any(
+                                kw in er_lower for kw in ["billion", "million", "%"]
+                            )
+                            has_capex = any(kw in er_lower for kw in ["capital expenditure", "capex", "cap ex"])
+                            if not (has_amount and has_capex):
+                                continue
+                            # Dedup by content prefix
+                            if er_doc[:200] in existing_contents:
+                                continue
+                            existing_contents.add(er_doc[:200])
+                            all_docs.append({
+                                **er_meta,
+                                "content": er_doc,
+                                "similarity": 0.72,  # targeted injection base score
+                            })
+                except Exception:
+                    continue
+        # Apply year boost (same logic as single-company path)
+        mc_detected_year = _extract_year_from_query(query)
+        if mc_detected_year:
+            mc_variants = _fiscal_year_variants(mc_detected_year)
+            for doc in all_docs:
+                fy = str(doc.get("fiscal_year", ""))
+                if any(v.lower() in fy.lower() for v in mc_variants):
+                    doc["similarity"] += 0.15
+        # Apply recency boost for "latest" queries: prefer Earnings Releases specifically
+        if wants_latest:
+            for doc in all_docs:
+                if doc.get("filing_type") == "Earnings Release":
+                    doc["similarity"] += 0.10
         all_docs.sort(key=lambda d: d["similarity"], reverse=True)
         docs = all_docs[:n_results]
         if use_reranking and len(all_docs) > n_results:

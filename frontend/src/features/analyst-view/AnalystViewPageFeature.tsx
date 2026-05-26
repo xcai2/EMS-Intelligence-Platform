@@ -296,7 +296,7 @@ export default function AnalystViewPageFeature() {
 
         {activeTab === "companies" && (
           <div className="space-y-6">
-            <ConsensusView />
+            <ConsensusView companies={intel?.companies} loading={intelLoading} />
             <div className="border-t border-slate-200 dark:border-[#1e2535] pt-6">
               <p className="text-xs font-semibold text-slate-600 dark:text-gray-400 uppercase tracking-wider mb-4">
                 Flex vs EMS Peers

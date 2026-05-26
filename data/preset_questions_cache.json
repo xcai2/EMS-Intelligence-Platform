@@ -4,42 +4,42 @@
       "id": "ai-infra",
       "label": "AI Infrastructure Leadership",
       "questions": [
-        "Who is expanding AI data center capabilities?",
-        "Which company leads AI server deployments?",
-        "Analyze growth in hyperscaler partnerships",
-        "Compare AI infrastructure investment strategies"
+        "Who is leading in AI server ramps?",
+        "What is the AI data center market trend?",
+        "Compare AI infrastructure growth among competitors",
+        "Analyze impact of AI on manufacturing outputs"
       ]
     },
     {
       "id": "capacity",
       "label": "Capacity & Footprint",
       "questions": [
-        "Compare nearshoring strategies by manufacturers",
-        "How has manufacturing capacity evolved recently?",
-        "Which firm is leading liquid cooling adoption?",
-        "Analyze trends in manufacturing expansion"
+        "Which company is expanding nearshoring efforts?",
+        "Who is investing in liquid cooling technologies?",
+        "How has manufacturing expansion affected production?",
+        "What is the capacity utilization trend?"
       ]
     },
     {
       "id": "financial",
       "label": "Financial Performance",
       "questions": [
-        "Compare revenue growth across companies",
-        "What is the trend in gross margins?",
-        "Analyze CapEx spending patterns",
-        "Which company is prioritizing backlog reduction?"
+        "Compare recent revenue across these EMS firms",
+        "Which company shows best margin improvement?",
+        "Who is leading in CapEx spending?",
+        "What is backlog status for major companies?"
       ]
     },
     {
       "id": "risks",
       "label": "Risks & External Factors",
       "questions": [
-        "Compare tariff impacts on operations",
-        "Which company faces greatest geopolitical risks?",
-        "How has supply chain been affected recently?",
-        "Analyze exposure to global trade tensions"
+        "Analyze tariff impact on supply chains",
+        "What geopolitical challenges are companies facing?",
+        "Compare company's supply chain vulnerabilities",
+        "Who is most exposed to global trade risks?"
       ]
     }
   ],
-  "cached_at": "2026-05-02T17:24:34.552955"
+  "cached_at": "2026-05-26T09:11:33.306439"
 }

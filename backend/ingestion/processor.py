@@ -350,11 +350,14 @@ def process_filing(
     fiscal_year: str = "Unknown",
     quarter: str = "",
     use_parent_child: bool = True,
+    collection=None,
 ) -> int:
     """
     Process a single filing: extract, chunk, embed, and upsert into ChromaDB.
-    
+
     Uses parent-child chunking for better retrieval when use_parent_child=True.
+    Pass `collection` to write to a specific collection (e.g. company-specific);
+    defaults to the shared collection from get_collection().
 
     Returns the number of chunks added.
     """
@@ -362,7 +365,8 @@ def process_filing(
     if not text or len(text.strip()) < 100:
         return 0
 
-    collection = get_collection()
+    if collection is None:
+        collection = get_collection()
     safe_stem = re.sub(r"[^a-zA-Z0-9_\-]", "_", filepath.stem)
 
     if use_parent_child:

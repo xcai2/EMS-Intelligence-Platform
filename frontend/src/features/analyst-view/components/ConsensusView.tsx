@@ -200,26 +200,36 @@ function SectionHeader({ title, count }: { title: string; count: number }) {
 // Main component
 // ---------------------------------------------------------------------------
 
-export default function ConsensusView() {
-  const [companies, setCompanies] = useState<CompanyIntel[]>([]);
-  const [loading, setLoading] = useState(true);
+type Props = {
+  companies?: CompanyIntel[];
+  loading?: boolean;
+};
+
+export default function ConsensusView({ companies: propCompanies, loading: propLoading }: Props = {}) {
+  const [ownCompanies, setOwnCompanies] = useState<CompanyIntel[]>([]);
+  const [ownLoading, setOwnLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sortMode, setSortMode] = useState<SortMode>('consensus');
 
+  // If parent passed data, use it directly; otherwise fetch independently
+  const companies = propCompanies ?? ownCompanies;
+  const loading = propLoading ?? ownLoading;
+
   const fetchIntel = useCallback(async () => {
+    if (propCompanies !== undefined) return; // parent is managing data
     try {
-      setLoading(true);
+      setOwnLoading(true);
       setError(null);
       const res = await fetch(`${API_URL}/api/analyst-view/company-intel`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data = await res.json();
-      setCompanies(data.companies ?? []);
+      setOwnCompanies(data.companies ?? []);
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Failed to load company intel');
     } finally {
-      setLoading(false);
+      setOwnLoading(false);
     }
-  }, []);
+  }, [propCompanies]);
 
   useEffect(() => {
     fetchIntel();
