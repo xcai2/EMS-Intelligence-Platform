@@ -171,10 +171,9 @@ const TIME_HORIZONS: TimeHorizon[] = ['Any Time', 'FY2026', 'FY2025', 'Last 12 M
 
 const COMPARE_SUFFIX = ' — Compare Flex vs Jabil vs Celestica vs Benchmark vs Sanmina';
 
-const STRUCTURED_RESPONSE_INSTRUCTION = `Structure every response with exactly three sections:
+const STRUCTURED_RESPONSE_INSTRUCTION = `Structure every response with exactly two sections:
 1. KEY CONCLUSION: 2-3 sentences ranking companies or stating the main finding
 2. SUPPORTING EVIDENCE: 3-5 bullet points with specific data points
-3. IMPLICATION FOR FLEX: 1-2 sentences on what Flex should do or watch
 
 `;
 
