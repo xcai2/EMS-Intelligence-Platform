@@ -54,8 +54,26 @@ def get_collection():
 # PER-COMPANY COLLECTIONS (RAG-Challenge-2 Style)
 # ---------------------------------------------------------------------------
 
+_TICKER_TO_COLLECTION: dict[str, str] = {
+    "FLEX": "flex",
+    "JBL":  "jabil",
+    "CLS":  "celestica",
+    "BHE":  "benchmark",
+    "SANM": "sanmina",
+    "PLXS": "plexus",
+}
+
+
 def _normalize_company_name(company: str) -> str:
-    """Normalize company name for collection naming."""
+    """Normalize company name for collection naming.
+
+    Tickers are mapped to the short names used at ingestion time so that
+    lookups like get_company_collection("JBL") resolve to company_jabil
+    instead of the empty company_jbl collection.
+    """
+    upper = company.strip().upper()
+    if upper in _TICKER_TO_COLLECTION:
+        return _TICKER_TO_COLLECTION[upper]
     return company.lower().replace(" ", "_").replace("-", "_")
 
 
