@@ -200,10 +200,11 @@ export function Sidebar() {
 
             <Link
               href="/"
-              className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-cyan-500 shadow-lg shadow-blue-500/25"
+              className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-[#7C5CBF] shadow-lg shadow-purple-500/30"
               title="Go to home"
             >
-              <span className="text-[9px] font-black tracking-[0.08em] text-white">FLEX</span>
+              <span className="text-[11px] font-black tracking-tight text-white">Ei</span>
+              <span className="absolute -top-0.5 -right-0.5 text-[8px] leading-none text-yellow-400">✦</span>
             </Link>
 
             <div className="mt-1 flex flex-col items-center gap-0.5 overflow-y-auto">
