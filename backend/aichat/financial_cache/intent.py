@@ -449,6 +449,17 @@ _BREAKDOWN_TRIGGERS = [
     "where", "用途", "拆分", "分类", "构成", "哪些", "花在", "分布", "明细", "细分",
 ]
 
+# Words that indicate the user wants management narrative/quotes, not just a number.
+# These queries must fall through to RAG so earnings transcripts get retrieved.
+_NARRATIVE_TRIGGERS = [
+    "what did", "what has", "say about", "said about", "said on",
+    "earnings call", "earnings release", "earnings transcript",
+    "guidance", "outlook", "forward guidance", "full-year guidance",
+    "commentary", "comment on", "discussed", "mentioned",
+    "management said", "ceo said", "cfo said",
+    "latest call", "most recent call", "recent earnings",
+]
+
 
 def _has_breakdown_intent(lowered: str) -> bool:
     """True if the query asks for *how* CapEx is split, not the number itself."""
@@ -457,6 +468,15 @@ def _has_breakdown_intent(lowered: str) -> bool:
     if not capex_present:
         return False
     return any(trig in lowered for trig in _BREAKDOWN_TRIGGERS)
+
+
+def _has_narrative_intent(lowered: str) -> bool:
+    """True if the user wants management commentary/quotes, not just a raw number.
+
+    Such queries must bypass the financial cache and go through RAG so that
+    earnings transcripts and filings are retrieved for verbatim quotes.
+    """
+    return any(trig in lowered for trig in _NARRATIVE_TRIGGERS)
 
 
 # Period parsing
@@ -549,6 +569,9 @@ def detect_financial_intent(query: str) -> Optional[FinancialIntent]:
     if _has_breakdown_intent(lowered):
         return None
 
+    if _has_narrative_intent(lowered):
+        return None
+
     ticker = resolve_ticker(query)
     if ticker is None or ticker not in COMPANIES:
         return None
@@ -583,6 +606,8 @@ def detect_all_financial_intents(query: str) -> list[dict]:
     from backend.aichat.financial_cache.companies import resolve_all_tickers
     lowered = query.lower()
     if _has_breakdown_intent(lowered):
+        return []
+    if _has_narrative_intent(lowered):
         return []
     tickers = resolve_all_tickers(query)
     if not tickers:
