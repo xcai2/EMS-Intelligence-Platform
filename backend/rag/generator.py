@@ -181,11 +181,10 @@ Benchmark and Sanmina typically report in thousands.
 Flex, Jabil, and Celestica typically report in millions.
 
 === Required Response Structure ===
-Structure every response with exactly three sections:
+Structure every response with exactly two sections:
 
 1. KEY CONCLUSION: 2-3 sentences ranking companies or stating the main finding
-2. SUPPORTING EVIDENCE: 3-5 bullet points with specific data points
-3. IMPLICATION FOR FLEX: 1-2 sentences on what Flex should do or watch"""
+2. SUPPORTING EVIDENCE: 3-5 bullet points with specific data points"""
 
 
 COT_SYSTEM_PROMPT = BASE_SYSTEM_PROMPT + """
@@ -215,7 +214,7 @@ Rules:
 - If no relevant information is found in any web result, say: "No relevant information found in web search results."
 - Do NOT hallucinate numbers — only report figures explicitly found in the web content.
 - Give the answer directly without describing your search process.
-- Follow the Required Response Structure (KEY CONCLUSION / SUPPORTING EVIDENCE / IMPLICATION FOR FLEX) defined above."""
+- Follow the Required Response Structure (KEY CONCLUSION / SUPPORTING EVIDENCE) defined above."""
 
 
 NUMERIC_SYSTEM_PROMPT = BASE_SYSTEM_PROMPT + """
@@ -453,8 +452,36 @@ def _active_api_key() -> str:
     return ANTHROPIC_API_KEY if LLM_PROVIDER == "anthropic" else OPENAI_API_KEY
 
 
-def _select_system_prompt(context: str, web_context: str) -> str:
-    """Pick the right system prompt: web-specific when only web context is present."""
+# EMS company names/tickers used for comparative query detection
+_EMS_NAMES = {"flex", "jabil", "celestica", "benchmark", "sanmina", "plexus",
+              "jbl", "cls", "bhe", "sanm", "plxs"}
+
+_COMPARATIVE_NARRATIVE_TRIGGERS = [
+    "compare", "vs", "versus", "how does", "how do",
+    "what did", "what has", "say about", "said about",
+    "earnings call", "guidance", "commentary", "outlook",
+]
+
+_FINANCIAL_METRIC_TRIGGERS = [
+    "capex", "capital expenditure", "capital spending", "revenue", "margin",
+    "guidance", "spending", "investment", "cash flow",
+]
+
+
+def is_comparative_financial(query: str) -> bool:
+    """True when query compares 2+ EMS companies on a financial metric with narrative intent."""
+    q = query.lower()
+    company_count = sum(1 for n in _EMS_NAMES if n in q)
+    has_narrative = any(t in q for t in _COMPARATIVE_NARRATIVE_TRIGGERS)
+    has_metric = any(t in q for t in _FINANCIAL_METRIC_TRIGGERS)
+    return company_count >= 2 and has_narrative and has_metric
+
+
+def _select_system_prompt(context: str, web_context: str, query: str = "") -> str:
+    """Pick the right system prompt based on query type and available context."""
+    if query and is_comparative_financial(query):
+        from backend.rag.advanced_prompts import COMPARATIVE_FINANCIAL_PROMPT
+        return COMPARATIVE_FINANCIAL_PROMPT
     if web_context and not context:
         return WEB_SYSTEM_PROMPT
     return SYSTEM_PROMPT
@@ -470,13 +497,15 @@ def generate_response(
         return f"Error: {LLM_PROVIDER.upper()}_API_KEY is not configured. Please set it in backend/.env"
 
     user_prompt = _build_prompt(query, context, web_context)
-    system = _select_system_prompt(context, web_context)
+    system = _select_system_prompt(context, web_context, query)
+    # Comparative financial answers need more tokens for the structured format
+    max_tok = 3000 if is_comparative_financial(query) else 2000
     try:
         return llm_complete(
             messages=[{"role": "user", "content": user_prompt}],
             system=system,
             model_key="main",
-            max_tokens=2000,
+            max_tokens=max_tok,
         )
     except Exception as e:
         return f"Error generating response: {e}"
@@ -493,7 +522,7 @@ def generate_response_streaming(
         return
 
     user_prompt = _build_prompt(query, context, web_context)
-    system = _select_system_prompt(context, web_context)
+    system = _select_system_prompt(context, web_context, query)
     try:
         gen = llm_complete(
             messages=[{"role": "user", "content": user_prompt}],
