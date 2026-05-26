@@ -891,7 +891,7 @@ export default function ChatPage() {
               </div>
             ) : (
               /* Message list */
-              <div className="mx-auto max-w-4xl space-y-5">
+              <div className="w-full space-y-5">
                 {messages.map((msg) => (
                   <div key={msg.id} className={`flex gap-2.5 ${msg.role === 'user' ? 'justify-end' : ''}`}>
                     {msg.role === 'assistant' && (
@@ -900,7 +900,7 @@ export default function ChatPage() {
                       </div>
                     )}
 
-                    <div className={`min-w-0 ${msg.role === 'user' ? 'max-w-[70%]' : 'max-w-[85%]'}`}>
+                    <div className={`min-w-0 ${msg.role === 'user' ? 'max-w-[60%]' : 'w-full'}`}>
                       <div
                         className={`rounded-xl px-4 py-2.5 ${
                           msg.role === 'user'
@@ -998,7 +998,7 @@ export default function ChatPage() {
           >
             <form
               onSubmit={(e) => { e.preventDefault(); sendMessage(); }}
-              className="mx-auto max-w-4xl"
+              className="w-full"
             >
               <div className="flex gap-2.5">
                 <Input
@@ -1020,7 +1020,7 @@ export default function ChatPage() {
                 </Button>
               </div>
             </form>
-            <div className="mx-auto mt-1.5 flex max-w-4xl items-center justify-between gap-2 text-[11px] text-slate-400 dark:text-slate-500">
+            <div className="mt-1.5 flex w-full items-center justify-between gap-2 text-[11px] text-slate-400 dark:text-slate-500">
               <span>Using SEC docs · Powered by Claude + ChromaDB</span>
               <span>Scope: {companyScopeLabel} · {timeHorizon}</span>
             </div>
