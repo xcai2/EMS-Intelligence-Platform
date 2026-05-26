@@ -554,7 +554,8 @@ def _match_metric(query: str) -> Optional[tuple[str, str, str]]:
     """Return (yfinance_field, statement, label) or None."""
     lowered = query.lower()
     for keyword, field, statement, label in _METRIC_VOCAB:
-        if keyword in lowered:
+        pattern = r'\b' + re.escape(keyword) + r'\b'
+        if re.search(pattern, lowered):
             return field, statement, label
     return None
 
