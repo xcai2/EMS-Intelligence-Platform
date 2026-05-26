@@ -594,11 +594,11 @@ def generate_structured_response(
     # Select schema and prompt based on query type
     query_type = force_query_type or detect_query_type(query)
 
-    # For historical queries, inject current date + fiscal year context so the LLM
-    # can correctly resolve relative time expressions like "last 3 quarters".
+    # Inject current date for all query types so the LLM can resolve
+    # relative time expressions like "recent" or "last N quarters".
+    from datetime import date as _date
+    today = _date.today()
     if query_type == "historical":
-        from datetime import date as _date
-        today = _date.today()
         date_note = (
             f"[TODAY: {today.strftime('%B %d, %Y')}]\n"
             f"[FISCAL YEAR REFERENCE: Jabil FY starts Sep 1 | Flex FY starts Apr 1 | "
@@ -608,9 +608,15 @@ def generate_structured_response(
             f"Do NOT output a quarter just because it should exist — only include it if evidence "
             f"is actually present. If fewer than N quarters have evidence, cover only those that do.\n\n"
         )
-        augmented_query = date_note + query
     else:
-        augmented_query = query
+        date_note = (
+            f"[TODAY: {today.strftime('%B %d, %Y')}]\n"
+            f"[FISCAL YEAR REFERENCE: Jabil FY starts Sep 1 | Flex FY starts Apr 1 | "
+            f"Sanmina FY starts Oct 1 | Celestica & Benchmark use calendar year]\n"
+            f"When the user says 'recent', prioritize the most recent quarters available "
+            f"in the Retrieved Documents relative to today's date.\n\n"
+        )
+    augmented_query = date_note + query
 
     user_prompt = _build_prompt(augmented_query, context, web_context)
 
