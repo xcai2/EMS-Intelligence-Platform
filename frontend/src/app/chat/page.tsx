@@ -650,7 +650,7 @@ export default function ChatPage() {
       </div>
 
       {/* ── MAIN LAYOUT ─────────────────────────────────────────────────── */}
-      <div className="mx-auto flex min-h-0 w-full max-w-7xl flex-1 flex-col overflow-hidden px-6 py-3">
+      <div className="flex min-h-0 w-full flex-1 flex-col overflow-hidden px-3 py-3">
 
         {/* ── SECTION 1: Competitive Signals strip ─────────────────────── */}
         <div className="mb-2 shrink-0">
